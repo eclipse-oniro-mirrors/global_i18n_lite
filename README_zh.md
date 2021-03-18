@@ -17,16 +17,16 @@
 
 ```
 /base/global/
-├── i18n_lite                # 国际化框架代码仓
-│   ├──  frameworks         # 国际化框架核心代码
-│   │   ├── i18n           # 国际化模块
-│   │   │   ├── include   # 接口文件
-│   │   │   ├── src       # 实现代码
-│   │   │   └── test      # 测试用例
-│   ├──  interfaces         # 国际化框架接口
-│   │   ├── kits           # 应用接口
-│   │   │   ├── i18n      # C/C++国际化能力接口
-│   │   │   └── js        # javascript接口的C/C++支持
+├── i18n_lite                 # 国际化框架代码仓
+│   ├──  frameworks           # 国际化框架核心代码
+│   │   ├── i18n              # 国际化模块
+│   │   │   ├── include       # 接口文件
+│   │   │   ├── src           # 实现代码
+│   │   │   └── test          # 测试用例
+│   ├──  interfaces           # 国际化框架接口
+│   │   ├── kits              # 应用接口
+│   │   │   ├── i18n          # C/C++国际化能力接口
+│   │   │   └── js            # javascript接口的C/C++支持
 ```
 
 ## 约束<a name="section568761318105"></a>
