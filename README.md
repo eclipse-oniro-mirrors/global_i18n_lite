@@ -17,16 +17,16 @@ The directory structure for the i18n module is as follows:
 
 ```
 /base/global/
-├── i18n_lite                # Code repository for the i18n framework
-│   ├──  frameworks         # Core code of the i18n framework
-│   │   ├── i18n           # i18n module
-│   │   │   ├── include   # Header files of external APIs
-│   │   │   ├── src       # Implementation code
-│   │   │   └── test      # Test cases
-│   ├──  interfaces         # i18n framework APIs
-│   │   ├── kits           # Application APIs
-│   │   │   ├── i18n      # C/C++ i18n APIs
-│   │   │   └── js        # C/C++ support for JavaScript APIs
+├── i18n_lite                 # Code repository for the i18n framework
+│   ├──  frameworks           # Core code of the i18n framework
+│   │   ├── i18n              # i18n module
+│   │   │   ├── include       # Header files of external APIs
+│   │   │   ├── src           # Implementation code
+│   │   │   └── test          # Test cases
+│   ├──  interfaces           # i18n framework APIs
+│   │   ├── kits              # Application APIs
+│   │   │   ├── i18n          # C/C++ i18n APIs
+│   │   │   └── js            # C/C++ support for JavaScript APIs
 ```
 
 ## Constraints<a name="section568761318105"></a>
@@ -100,13 +100,13 @@ output: 1 // Value 1 indicates plural rule type 1.
 
 ## Repositories Involved<a name="section15583142420413"></a>
 
-Globalization subsystem
+[Globalization subsystem](https://gitee.com/openharmony/docs/blob/master/en/readme/globalization.md)
 
-**hmf\_global\_i18n\_lite**
+[global\_resmgr\_lite](https://gitee.com/openharmony/global_resmgr_lite/blob/master/README.md)
 
-hmf\_global\_resmgr\_lite
+global\_i18n\_lite
 
-hmf\_global\_cust\_lite
+[global\_cust\_lite](https://gitee.com/openharmony/global_cust_lite/blob/master/README.md)
 
 ## Appendix<a name="section56601824115"></a>
 
