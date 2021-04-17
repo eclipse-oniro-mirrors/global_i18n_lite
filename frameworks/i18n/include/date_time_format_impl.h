@@ -39,6 +39,8 @@
 #define YEAR_SHORT_MONTH_ABBR_WEEKDAY_DAY_INDEX 7
 #define YEAR_ABBR_MONTH_WIDE_WEEKDAY_DAY_INDEX 8
 #define YEAR_WIDE_MONTH_DAY_INDEX 9
+#define WEEK_DAY_INDEX 10
+#define NUMBER_MONTH_ABBR_WEEK_DAY_INDEX 11
 #define YEAR_START 1900
 #define LENGTH_HOUR 12
 #define MAX_COUNT 10
@@ -87,6 +89,7 @@ private:
     uint32_t GetLength(int32_t value) const;
     std::string GetStringFromPattern(const AvailableDateTimeFormatPattern &requestpattern) const;
     std::string GetStringFromPattern2(const AvailableDateTimeFormatPattern &requestPattern) const;
+    std::string GetStringFromPattern3(const AvailableDateTimeFormatPattern &requestPattern) const;
     std::string AddSeconds(const std::string &hmPattern) const;
     AvailableDateTimeFormatPattern requestPattern;
     DateTimeData *data = nullptr;
