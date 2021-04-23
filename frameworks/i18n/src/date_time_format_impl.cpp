@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2021 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -138,6 +138,21 @@ string DateTimeFormatImpl::GetStringFromPattern2(const AvailableDateTimeFormatPa
         }
         case YEAR_WIDE_MONTH_DAY: {
             return data->GetPattern(YEAR_WIDE_MONTH_DAY_INDEX, PatternType::REGULAR_PATTERN);
+        }
+        default: {
+            return GetStringFromPattern3(requestPattern);
+        }
+    }
+}
+
+string DateTimeFormatImpl::GetStringFromPattern3(const AvailableDateTimeFormatPattern &requestPattern) const
+{
+    switch (requestPattern) {
+        case WEEK_DAY: {
+            return data->GetPattern(WEEK_DAY_INDEX, PatternType::REGULAR_PATTERN);
+        }
+        case NUMBER_MONTH_ABBR_WEEK_DAY: {
+            return data->GetPattern(NUMBER_MONTH_ABBR_WEEK_DAY_INDEX, PatternType::REGULAR_PATTERN);
         }
         default: {
             return "";
