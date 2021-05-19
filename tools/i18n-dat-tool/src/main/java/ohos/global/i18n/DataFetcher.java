@@ -38,12 +38,12 @@ import java.util.logging.Level;
  */
 public class DataFetcher {
     private static final ReentrantLock LOCK = new ReentrantLock();
-    private static final HashMap<Integer, ArrayList<LocaleConfig>> sLocalesConfigs = new HashMap<>(64);
     private static final ArrayList<Fetcher> sFetchers = new ArrayList<>();
     private static final HashMap<String, Integer> sIdMap = new HashMap<>(64);
     private static final HashMap<String, Integer> sLocales = new HashMap<>();
-    private static int validLocales = 0;
+    private static final HashMap<Integer, ArrayList<LocaleConfig>> sLocalesConfigs = new HashMap<>(64);
     private static final Logger LOG = Logger.getLogger("DataFetcher");
+    private static int validLocales = 0;
     private static int sStatus = 0;
 
     static {
@@ -66,10 +66,10 @@ public class DataFetcher {
                 ++count;
             }
         } catch (URISyntaxException e) {
-            LOG.log(Level.SEVERE, "Add fetchers failed");
+            LOG.log(Level.SEVERE, "Add fetchers failed: Url syntax execption");
             sStatus = 1;
         } catch (IOException e) {
-            LOG.log(Level.SEVERE, "Add fetchers failed");
+            LOG.log(Level.SEVERE, "Add fetchers failed: Io execption");
             sStatus = 1;
         }
     }
@@ -99,7 +99,7 @@ public class DataFetcher {
             ArrayList<LocaleConfig> temp = new ArrayList<>();
             sLocalesConfigs.put(index, temp);
             String fallbackLanguageTag = Utils.getFallback(languageTag);
-            // now we need to confirm whethe current fetcher's data should be write to i18n.dat
+            // now we need to confirm whether current fetcher's data should be write to i18n.dat
             // if current fetcher's fallback contains equivalent data, then we don't need current fetcher's data.
             if (!sLocales.containsKey(fallbackLanguageTag) || fallbackLanguageTag.equals(languageTag)) {
                 fallbackFetcher = null;
