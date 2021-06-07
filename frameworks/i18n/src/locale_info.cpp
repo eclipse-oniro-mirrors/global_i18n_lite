@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+#include "i18n_memory_adapter.h"
 #include "locale_info.h"
 #include "securec.h"
 #include "str_util.h"
@@ -105,20 +106,16 @@ LocaleInfo::LocaleInfo(const LocaleInfo &o)
 LocaleInfo::~LocaleInfo()
 {
     if (language != nullptr) {
-        delete[] language;
-        language = nullptr;
+        I18nFree(language);
     }
     if (script != nullptr) {
-        delete[] script;
-        script = nullptr;
+        I18nFree(script);
     }
     if (region != nullptr) {
-        delete[] region;
-        region = nullptr;
+        I18nFree(region);
     }
     if (id != nullptr) {
-        delete[] id;
-        id = nullptr;
+        I18nFree(id);
     }
 }
 
@@ -142,20 +139,16 @@ LocaleInfo &LocaleInfo::operator = (const LocaleInfo &o)
         return *this;
     }
     if ((language != nullptr) && (LenCharArray(language) > 0)) {
-        delete[] language;
-        language = nullptr;
+        I18nFree(language);
     }
     if ((script != nullptr) && (LenCharArray(script) > 0)) {
-        delete[] script;
-        script = nullptr;
+        I18nFree(script);
     }
     if ((region != nullptr) && (LenCharArray(region) > 0)) {
-        delete[] region;
-        region = nullptr;
+        I18nFree(region);
     }
     if ((id != nullptr) && (LenCharArray(id) > 0)) {
-        delete[] id;
-        id = nullptr;
+        I18nFree(id);
     }
     if (o.language != nullptr) {
         language = NewArrayAndCopy(o.language, strlen(o.language));

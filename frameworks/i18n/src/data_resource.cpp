@@ -15,6 +15,7 @@
 
 #include "data_resource.h"
 #include <cstring>
+#include "i18n_memory_adapter.h"
 #include "securec.h"
 #include "str_util.h"
 
@@ -37,139 +38,97 @@ DataResource::DataResource(const LocaleInfo *localeInfo)
             defaultMask = enMask;
         }
     }
-    for (int i = 0; i < RESOURCE_COUNT; ++i) {
-        loaded[i] = RESOURCE_COUNT;
+    for (int i = 0; i < DataResourceType::RESOURCE_TYPE_END; ++i) {
+        loaded[i] = DataResourceType::RESOURCE_TYPE_END;
     }
 }
 
 DataResource::~DataResource()
 {
-    if (resourceIndex) {
-        delete[] resourceIndex;
-        resourceIndex = nullptr;
-    }
-    if (resource) {
-        delete[] resource;
-        resource = nullptr;
+    if (resourceIndex != nullptr) {
+        I18nFree(resourceIndex);
     }
     if (fallbackResourceIndex) {
-        delete[] fallbackResourceIndex;
-        fallbackResourceIndex = nullptr;
-    }
-    if (fallbackResource) {
-        delete[] fallbackResource;
-        fallbackResource = nullptr;
+        I18nFree(fallbackResourceIndex);
     }
     if (defaultResourceIndex) {
-        delete[] defaultResourceIndex;
-        defaultResourceIndex = nullptr;
+        I18nFree(defaultResourceIndex);
     }
-    if (defaultResource) {
-        delete[] defaultResource;
-        defaultResource = nullptr;
+    FreeResource();
+}
+
+void DataResource::FreeResource()
+{
+    if (resource != nullptr) {
+        while (resourceCount > 0) {
+            if (resource[resourceCount - 1] != nullptr) {
+                I18nFree(resource[resourceCount - 1]);
+            }
+            --resourceCount;
+        }
+    }
+    if (resource != nullptr) {
+        I18nFree(resource);
+    }
+    if (fallbackResource != nullptr) {
+        while (fallbackResourceCount > 0) {
+            if (fallbackResource[fallbackResourceCount - 1] != nullptr) {
+                I18nFree(fallbackResource[fallbackResourceCount - 1]);
+            }
+            --fallbackResourceCount;
+        }
+    }
+    if (fallbackResource != nullptr) {
+        I18nFree(fallbackResource);
+    }
+    if (defaultResource != nullptr) {
+        while (defaultResourceCount > 0) {
+            if (defaultResource[defaultResourceCount - 1] != nullptr) {
+                I18nFree(defaultResource[defaultResourceCount - 1]);
+            }
+            --defaultResourceCount;
+        }
+    }
+    if (defaultResource != nullptr) {
+        I18nFree(defaultResource);
     }
 }
 
-string DataResource::GetString(DataResourceType type) const
+char *DataResource::GetString(DataResourceType type) const
 {
-    switch (type) {
-        case DataResourceType::DEFAULT_HOUR: {
-            return GetString(DefaultHourIndex);
-        }
-        case DataResourceType::GREGORIAN_AM_PMS: {
-            return GetString(GregorianAmPmsIndex);
-        }
-        case DataResourceType::GREGORIAN_DATE_PATTERNS: {
-            return GetString(GregorianDatePatternsIndex);
-        }
-        case DataResourceType::GREGORIAN_FORMAT_ABBR_MONTH: {
-            return GetString(GregorianFormatAbbMonthNamesIndex);
-        }
-        case DataResourceType::GREGORIAN_FORMAT_ABBR_DAY: {
-            return GetString(GregorianFormatAbbDayNamesIndex);
-        }
-        case DataResourceType::GREGORIAN_FORMAT_WIDE_MONTH: {
-            return GetString(GregorianFormatWideMonthNamesIndex);
-        }
-        case DataResourceType::GREGORIAN_STANDALONE_ABBR_MONTH: {
-            return GetString(GregorianStandaloneAbbMonthNamesIndex);
-        }
-        case DataResourceType::GREGORIAN_STANDALONE_ABBR_DAY: {
-            return GetString(GregorianStandaloneAbbDayNamesIndex);
-        }
-        case DataResourceType::GREGORIAN_TIME_PATTERNS: {
-            return GetString(GregorianTimePatternsIndex);
-        }
-        case DataResourceType::NUMBER_FORMAT: {
-            return GetString(NumberFormatIndex);
-        }
-        case DataResourceType::NUMBER_DIGIT: {
-            return GetString(NumberDigitIndex);
-        }
-        case DataResourceType::PLURAL: {
-            return GetString(PluralIndex);
-        }
-        case DataResourceType::TIME_SEPARATOR: {
-            return GetString(TimeSeparatorIndex);
-        }
-        default: {
-            return GetString2(type);
-        }
-    }
+    uint32_t index = static_cast<uint32_t>(type);
+    return GetString(index);
 }
 
-string DataResource::GetString2(DataResourceType type) const
+char *DataResource::GetString(uint32_t index) const
 {
-    switch (type) {
-        case DataResourceType::GREGORIAN_FULL_MEDIUM_SHORT_PATTERN: {
-            return GetString(GregorianFullMediumShortPatternsIndex);
-        }
-        case DataResourceType::GREGORIAN_FORMAT_WIDE_DAY: {
-            return GetString(GregorianFormatWideDayNamesIndex);
-        }
-        case DataResourceType::GREGORIAN_HOUR_MINUTE_SECOND_PATTERN: {
-            return GetString(GregorianHourMinuteSecondPatternsIndex);
-        }
-        case DataResourceType::GREGORIAN_STANDALONE_WIDE_DAY: {
-            return GetString(GregorianStandaloneWideDayNamesIndex);
-        }
-        case DataResourceType::GREGORIAN_STANDALONE_WIDE_MONTH: {
-            return GetString(GregorianStandaloneWideMonthNamesIndex);
-        }
-        default: {
-            return "";
-        }
-    }
-}
-
-string DataResource::GetString(uint32_t index) const
-{
-    string temp("");
-    if (index >= RESOURCE_COUNT) {
-        return "";
+    if (index >= DataResourceType::RESOURCE_TYPE_END) {
+        return nullptr;
     }
     uint32_t targetType = loaded[index];
-    if (targetType == RESOURCE_COUNT) {
-        return "";
+    if (targetType == DataResourceType::RESOURCE_TYPE_END) {
+        return nullptr;
     }
     switch (targetType) {
         case LocaleDataType::RESOURCE: {
-            return BinarySearchString(resourceIndex, resourceCount, index, resource);
+            return BinarySearchString(resourceIndex, resourceCount, index, resource, resourceCount);
         }
         case LocaleDataType::FALLBACK_RESOURCE: {
-            return BinarySearchString(fallbackResourceIndex, fallbackResourceCount, index, fallbackResource);
+            return BinarySearchString(fallbackResourceIndex, fallbackResourceCount, index,
+                fallbackResource, fallbackResourceCount);
         }
         default: {
-            return BinarySearchString(defaultResourceIndex, defaultResourceCount, index, defaultResource);
+            return BinarySearchString(defaultResourceIndex, defaultResourceCount, index,
+                defaultResource, defaultResourceCount);
         }
     }
 }
 
-string DataResource::BinarySearchString(uint32_t *indexArray, uint32_t length, uint32_t target,
-    string *stringArray) const
+char *DataResource::BinarySearchString(uint32_t *indexArray, uint32_t length, uint32_t target,
+    char **stringArray, uint32_t stringLength) const
 {
-    if ((indexArray == nullptr) || (stringArray == nullptr)) {
-        return "";
+    if ((indexArray == nullptr) || (stringArray == nullptr) || (stringLength == 0)) {
+        return nullptr;
     }
     uint32_t low = 0;
     uint32_t high = length - 1;
@@ -184,7 +143,7 @@ string DataResource::BinarySearchString(uint32_t *indexArray, uint32_t length, u
             high = mid - 1;
         }
     }
-    return "";
+    return nullptr;
 }
 
 bool DataResource::Init(void)
@@ -227,14 +186,13 @@ bool DataResource::ReadHeader(int32_t infile)
 bool DataResource::PrepareData(int32_t infile)
 {
     uint32_t localeSize = localesCount * GLOBAL_LOCALE_MASK_ITEM_SIZE;
-    char *locales = new(nothrow) char[localeSize];
+    char *locales = reinterpret_cast<char *>(I18nMalloc(localeSize));
     if (locales == nullptr) {
         return false;
     }
     int32_t readSize = read(infile, locales, localeSize);
     if (readSize < 0 || localeSize != static_cast<uint32_t>(readSize)) {
-        delete[] locales;
-        locales = nullptr;
+        I18nFree(locales);
         return false;
     }
     int32_t localeIndex = BinarySearchLocale(localeMask, reinterpret_cast<unsigned char*>(locales));
@@ -252,8 +210,7 @@ bool DataResource::PrepareData(int32_t infile)
     uint32_t defaultConfigOffset = 0;
     GetFallbackAndDefaultInfo(fallbackLocaleIndex, defaultLocaleIndex, fallbackConfigOffset, defaultConfigOffset,
         locales);
-    delete[] locales;
-    locales = nullptr;
+    I18nFree(locales);
     bool ret = true;
     if ((localeIndex >= 0) && (resourceCount > 0) &&
         (resourceCount <= DataResourceType::GREGORIAN_STANDALONE_WIDE_MONTH + 1)) {
@@ -302,27 +259,26 @@ void DataResource::GetFallbackAndDefaultInfo(const int32_t &fallbackLocaleIndex,
 bool DataResource::PrepareLocaleData(int32_t infile, uint32_t configOffset, uint32_t count, LocaleDataType type)
 {
     currentType = type;
-    if (count < 1 || count > DataResourceType::GREGORIAN_STANDALONE_WIDE_MONTH + 1) {
+    if (count < 1 || count > DataResourceType::RESOURCE_TYPE_END) {
         return false;
     }
     uint32_t resourceSize = count * GLOBAL_RESOURCE_CONFIG_SIZE;
-    char *configs = new(nothrow) char[resourceSize];
+    char *configs = reinterpret_cast<char *>(I18nMalloc(resourceSize));
     if (configs == nullptr) {
         return false;
     }
     int32_t seekSize = lseek(infile, configOffset, SEEK_SET);
     if (configOffset != static_cast<uint32_t>(seekSize)) {
-        delete[] configs;
-        configs = nullptr;
+        I18nFree(configs);
         return false;
     }
     int32_t readSize = read(infile, configs, resourceSize);
     if (readSize != resourceSize) {
-        delete[] configs;
+        I18nFree(configs);
         return false;
     }
     bool ret = GetStringFromStringPool(configs, resourceSize, infile, type);
-    delete[] configs;
+    I18nFree(configs);
     return ret;
 }
 
@@ -345,11 +301,13 @@ uint32_t DataResource::GetFinalCount(char *configs, uint32_t configSize, LocaleD
     uint32_t finalCount = 0;
     for (uint32_t i = 0; i < count; ++i) {
         uint32_t index = ConvertUChar(reinterpret_cast<unsigned char*>(configs + i * GLOBAL_RESOURCE_CONFIG_SIZE));
-        if (index >= RESOURCE_COUNT) {
+        if (index >= DataResourceType::RESOURCE_TYPE_END) {
             return 0;
         }
-        if (loaded[index] != RESOURCE_COUNT) {
+        if (loaded[index] != DataResourceType::RESOURCE_TYPE_END) {
             continue;
+        } else {
+            loaded[index] = type;
         }
         ++finalCount;
     }
@@ -368,24 +326,26 @@ bool DataResource::GetStringFromStringPool(char *configs, const uint32_t configs
         case LocaleDataType::RESOURCE: {
             originalCount = resourceCount;
             resourceCount = finalCount;
-            resourceIndex = new(nothrow) uint32_t[finalCount];
+            resourceIndex = reinterpret_cast<uint32_t *>(I18nMalloc(sizeof(uint32_t) * finalCount));
             if (resourceIndex == nullptr) {
                 return false;
             }
-            resource = new(nothrow) string[finalCount];
+            resource = reinterpret_cast<char **>(I18nMalloc(sizeof(char *) * finalCount));
             if (resource == nullptr) {
                 return false;
+
+                
             }
             break;
         }
         case LocaleDataType::FALLBACK_RESOURCE: {
             originalCount = fallbackResourceCount;
             fallbackResourceCount = finalCount;
-            fallbackResourceIndex = new(nothrow) uint32_t[finalCount];
+            fallbackResourceIndex = reinterpret_cast<uint32_t *>(I18nMalloc(sizeof(uint32_t) * finalCount));
             if (fallbackResourceIndex == nullptr) {
                 return false;
             }
-            fallbackResource = new(nothrow) string[finalCount];
+            fallbackResource = reinterpret_cast<char **>(I18nMalloc(sizeof(char *) * finalCount));
             if (fallbackResource == nullptr) {
                 return false;
             }
@@ -394,11 +354,11 @@ bool DataResource::GetStringFromStringPool(char *configs, const uint32_t configs
         default: {
             originalCount = defaultResourceCount;
             defaultResourceCount = finalCount;
-            defaultResourceIndex = new(nothrow) uint32_t[finalCount];
+            defaultResourceIndex = reinterpret_cast<uint32_t *>(I18nMalloc(sizeof(uint32_t) * finalCount));
             if (defaultResourceIndex == nullptr) {
                 return false;
             }
-            defaultResource = new(nothrow) string[finalCount];
+            defaultResource = reinterpret_cast<char **>(I18nMalloc(sizeof(char *) * finalCount));
             if (defaultResource == nullptr) {
                 return false;
             }
@@ -408,7 +368,7 @@ bool DataResource::GetStringFromStringPool(char *configs, const uint32_t configs
     return Retrieve(configs, configsSize, infile, originalCount, type);
 }
 
-void DataResource::GetType(string* &adjustResource, uint32_t* &adjustResourceIndex, uint32_t &count,
+void DataResource::GetType(char** &adjustResource, uint32_t* &adjustResourceIndex, uint32_t &count,
     LocaleDataType type)
 {
     switch (type) {
@@ -437,49 +397,36 @@ bool DataResource::Retrieve(char *configs, uint32_t configsSize, int32_t infile,
     LocaleDataType type)
 {
     uint32_t count = 0;
-    string *adjustResource = nullptr;
+    char **adjustResource = nullptr;
     uint32_t *adjustResourceIndex = nullptr;
     GetType(adjustResource, adjustResourceIndex, count, type);
     uint32_t currentIndex = 0;
     for (uint32_t i = 0; i < orginalCount; ++i) {
         uint32_t index = ConvertUChar(reinterpret_cast<unsigned char*>(configs + i * GLOBAL_RESOURCE_CONFIG_SIZE));
-        if (loaded[index] != RESOURCE_COUNT) {
+        if (loaded[index] != type) {
             continue;
         }
-
         uint32_t offset = ConvertUChar(reinterpret_cast<unsigned char*>(configs + i *
             GLOBAL_RESOURCE_CONFIG_SIZE + GLOBAL_RESOURCE_INDEX_OFFSET));
         uint32_t length = ConvertUChar(reinterpret_cast<unsigned char*>(configs + i *
             GLOBAL_RESOURCE_CONFIG_SIZE + GLOBAL_RESOURCE_MASK_OFFSET));
         int32_t seekSize = lseek(infile, stringPoolOffset + offset, SEEK_SET);
         if ((length == 0) || (seekSize != stringPoolOffset + offset)) {
-            continue;
-        }
-        char *temp = new(nothrow) char[length];
-        if (temp == nullptr) {
-            return false;
-        }
-        int32_t readSize = read(infile, temp, length);
-        if ((readSize< 0) || (static_cast<uint32_t>(readSize) != length)) {
-            delete[] temp;
-            return false;
-        }
-
-        adjustResource[currentIndex] = string(temp, length);
-        adjustResourceIndex[currentIndex] = index;
-        delete[] temp;
-        switch (currentType) {
-            case LocaleDataType::RESOURCE: {
-                loaded[index] = RESOURCE_INDEX;
-                break;
+            adjustResource[currentIndex] = nullptr;
+            adjustResourceIndex[currentIndex] = index;
+        } else {
+            char *temp = reinterpret_cast<char *>(I18nMalloc(length + 1));
+            if (temp == nullptr) {
+                return false;
             }
-            case LocaleDataType::FALLBACK_RESOURCE: {
-                loaded[index] = FALLBACK_RESOURCE_INDEX;
-                break;
+            int32_t readSize = read(infile, temp, length);
+            temp[length] = 0;
+            if ((readSize < 0) || (static_cast<uint32_t>(readSize) != length)) {
+                I18nFree(temp);
+                return false;
             }
-            default: {
-                loaded[index] = DEFAULT_RESOURCE_INDEX;
-            }
+            adjustResource[currentIndex] = temp;
+            adjustResourceIndex[currentIndex] = index;
         }
         ++currentIndex;
     }
@@ -533,8 +480,8 @@ uint32_t DataResource::ConvertUChar(unsigned char *src)
 
 bool DataResource::FullLoaded()
 {
-    for (uint32_t i = 0; i < RESOURCE_COUNT; ++i) {
-        if (loaded[i] == RESOURCE_COUNT) {
+    for (uint32_t i = 0; i < DataResourceType::RESOURCE_TYPE_END; ++i) {
+        if (loaded[i] == DataResourceType::RESOURCE_TYPE_END) {
             return false;
         }
     }
@@ -546,7 +493,7 @@ uint32_t DataResource::GetFallbackMask(const LocaleInfo &src)
     const char *language = src.GetLanguage();
     const char *script = src.GetScript();
     const char *region = src.GetRegion();
-    if ((language == "en") && (script == nullptr)) {
+    if ((language != nullptr) && (strcmp("en", language) == 0) && (script == nullptr)) {
         return LocaleInfo("en", "", "US").GetMask();
     }
     if (region == nullptr) {

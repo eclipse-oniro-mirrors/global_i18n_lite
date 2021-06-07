@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-
 #ifndef DATE_TIME_FORMAT_IMPL_H
 #define DATE_TIME_FORMAT_IMPL_H
 
@@ -27,20 +26,6 @@
 #include "date_time_data.h"
 #include "str_util.h"
 
-#define HOUR12_MINUTE_SECOND_INDEX  0
-#define HOUR24_MINUTE_SECOND_INDEX 1
-#define HOUR12_MINUTE_INDEX 0
-#define HOUR24_MINUTE_INDEX 1
-#define ABBR_MONTH_WEEKDAY_DAY_INDEX 2
-#define ABBR_MONTH_DAY_INDEX 3
-#define YEAR_ABBR_MONTH_ABBR_WEEKDAY_DAY_INDEX 4
-#define YEAR_WIDE_MONTH_ABBR_WEEKDAY_DAY_INDEX 5
-#define YEAR_SHORT_MONTH_WIDE_WEEKDAY_DAY_INDEX 6
-#define YEAR_SHORT_MONTH_ABBR_WEEKDAY_DAY_INDEX 7
-#define YEAR_ABBR_MONTH_WIDE_WEEKDAY_DAY_INDEX 8
-#define YEAR_WIDE_MONTH_DAY_INDEX 9
-#define WEEK_DAY_INDEX 10
-#define NUMBER_MONTH_ABBR_WEEK_DAY_INDEX 11
 #define YEAR_START 1900
 #define LENGTH_HOUR 12
 #define MAX_COUNT 10
@@ -55,6 +40,11 @@
 
 namespace OHOS {
 namespace I18N {
+struct ElapsedTime {
+    int32_t minutes;
+    int32_t seconds;
+    int32_t milliseconds;
+};
 class DateTimeFormatImpl {
 public:
     DateTimeFormatImpl(AvailableDateTimeFormatPattern requestpattern, const LocaleInfo &locale);
@@ -76,6 +66,7 @@ public:
     }
 private:
     void FreeResource();
+    void Format(const struct tm &time, const std::string &pattern, std::string &appendTo, I18nStatus &status) const;
     void ZeroPadding(std::string &appendTo, uint32_t minValue, uint32_t maxValue, int32_t value) const;
     void Process(const tm &time, std::string &append, char pre, uint32_t count,  I18nStatus &status) const;
     void ProcessTime(const tm &time, std::string &append, char pre, uint32_t count, I18nStatus &status) const;
@@ -87,9 +78,6 @@ private:
     std::string FormatYear(int32_t value) const;
     std::string GetZero() const;
     uint32_t GetLength(int32_t value) const;
-    std::string GetStringFromPattern(const AvailableDateTimeFormatPattern &requestpattern) const;
-    std::string GetStringFromPattern2(const AvailableDateTimeFormatPattern &requestPattern) const;
-    std::string GetStringFromPattern3(const AvailableDateTimeFormatPattern &requestPattern) const;
     std::string AddSeconds(const std::string &hmPattern) const;
     AvailableDateTimeFormatPattern requestPattern;
     DateTimeData *data = nullptr;

@@ -96,6 +96,7 @@ void DateTimeFormat::Format(const time_t &cal, const string &zoneInfo, string &a
     if (impl == nullptr) {
         bool isSuccess = Init();
         if (!isSuccess) {
+            status = IERROR;
             return;
         }
     }
