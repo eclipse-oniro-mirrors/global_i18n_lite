@@ -98,45 +98,19 @@ char DateTimeData::GetDefaultHour(void) const
 }
 
 DateTimeData::~DateTimeData() {
-    if (formatAbbreviatedMonthNames != nullptr) {
-        I18nFree(formatAbbreviatedMonthNames);
-    }
-    if (formatWideMonthNames != nullptr) {
-        I18nFree(formatWideMonthNames);
-    }
-    if (standaloneAbbreviatedMonthNames != nullptr) {
-        I18nFree(standaloneAbbreviatedMonthNames);
-    }
-    if (standaloneWideMonthNames != nullptr) {
-        I18nFree(standaloneWideMonthNames);
-    }
-    if (formatAbbreviatedDayNames != nullptr) {
-        I18nFree(formatAbbreviatedDayNames);
-    }
-    if (formatWideDayNames != nullptr) {
-        I18nFree(formatWideDayNames);
-    }
-    if (standaloneAbbreviatedDayNames != nullptr) {
-        I18nFree(standaloneAbbreviatedDayNames);
-    }
-    if (standaloneWideDayNames != nullptr) {
-        I18nFree(standaloneWideDayNames);
-    }
-    if (timePatterns != nullptr) {
-        I18nFree(timePatterns);
-    }
-    if (datePatterns != nullptr) {
-        I18nFree(datePatterns);
-    }
-    if (amPmMarkers != nullptr) {
-        I18nFree(amPmMarkers);
-    }
-    if (hourMinuteSecondPatterns != nullptr) {
-        I18nFree(hourMinuteSecondPatterns);
-    }
-    if (fullMediumShortPatterns != nullptr) {
-        I18nFree(fullMediumShortPatterns);
-    }
+    I18nFree(formatAbbreviatedMonthNames);
+    I18nFree(formatWideMonthNames);
+    I18nFree(standaloneAbbreviatedMonthNames);
+    I18nFree(standaloneWideMonthNames);
+    I18nFree(formatAbbreviatedDayNames);
+    I18nFree(formatWideDayNames);
+    I18nFree(standaloneAbbreviatedDayNames);
+    I18nFree(standaloneWideDayNames);
+    I18nFree(timePatterns);
+    I18nFree(datePatterns);
+    I18nFree(amPmMarkers);
+    I18nFree(hourMinuteSecondPatterns);
+    I18nFree(fullMediumShortPatterns);
 }
 
 void DateTimeData::SetMonthNamesData(const char *formatAbbreviatedMonthNames, const char *formatWideMonthNames,

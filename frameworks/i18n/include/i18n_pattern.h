@@ -20,6 +20,7 @@
 #include "date_time_data.h"
 #include "str_util.h"
 
+// this file should only be included by date_time_format_impl.cpp
 #define HOUR12_MINUTE_INDEX                     0x00000000
 #define HOUR24_MINUTE_INDEX                     0x00000001
 #define HOUR_MINUTE_INDEX                       0x00000002
