@@ -14,6 +14,7 @@
  */
 
 #include "str_util.h"
+#include "i18n_memory_adapter.h"
 #include "securec.h"
 #include "types.h"
 
@@ -50,17 +51,16 @@ void ArrayCopy(std::string *target, const int targetSize, const std::string *sou
 
 char *NewArrayAndCopy(const char *source, const int len)
 {
-    if ((source == nullptr) || (len < 0)) {
+    if ((source == nullptr) || (len <= 0)) {
         return nullptr;
     }
-    char *out = new(std::nothrow) char[len + 1];
+    char *out = reinterpret_cast<char *>(I18nMalloc(len + 1));
     if (out == nullptr) {
         return nullptr;
     }
     errno_t rc = strcpy_s(out, len + 1, source);
     if (rc != EOK) {
-        delete[] out;
-        out = nullptr;
+        I18nFree(out);
         return nullptr;
     }
     out[len] = '\0';
@@ -123,6 +123,44 @@ bool CompareLocaleItem(const char *item, const char* other)
         }
     }
     return true;
+}
+
+/**
+ * split str with "_"
+ */
+std::string Parse(const char *str, int32_t count)
+{
+    if (str == nullptr || count < 0) {
+        return "";
+    }
+    size_t length = strlen(str);
+    if (length == 0) {
+        return "";
+    }
+    int tempCount = 0;
+    int ind = 0;
+    while ((ind < length) && (tempCount < count)) {
+        if (str[ind] == '_') {
+            ++tempCount;
+        }
+        ++ind;
+    }
+    if (tempCount < count) {
+        return "";
+    }
+    int last = ind;
+    --ind;
+    while (last < length) {
+        if (str[last] == '_') {
+            break;
+        }
+        ++last;
+    }
+    if (last - ind - 1 <= 0) {
+        return "";
+    }
+    std::string temp(str);
+    return temp.substr(ind + 1, last - ind - 1);
 }
 } // I18N
 } // OHOS

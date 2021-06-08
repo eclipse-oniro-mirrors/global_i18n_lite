@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-
 #ifndef NUMBER_DATA_H
 #define NUMBER_DATA_H
 

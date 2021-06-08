@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-
 #ifndef DATA_RESOURCE_IMPL_H
 #define DATA_RESOURCE_IMPL_H
 
@@ -31,25 +30,6 @@
 #define GLOBAL_RESOURCE_MASK_OFFSET 4
 #define GLOBAL_LOCALE_MASK_ITEM_SIZE 8
 #define GLOBAL_RESOURCE_CONFIG_SIZE 6
-#define GregorianFormatAbbMonthNamesIndex 0
-#define GregorianFormatAbbDayNamesIndex 1
-#define GregorianTimePatternsIndex 2
-#define GregorianDatePatternsIndex 3
-#define GregorianAmPmsIndex 4
-#define PluralIndex 5
-#define NumberFormatIndex 6
-#define NumberDigitIndex 7
-#define TimeSeparatorIndex 8
-#define DefaultHourIndex 9
-#define GregorianStandaloneAbbMonthNamesIndex 10
-#define GregorianStandaloneAbbDayNamesIndex 11
-#define GregorianFormatWideMonthNamesIndex 12
-#define GregorianHourMinuteSecondPatternsIndex 13
-#define GregorianFullMediumShortPatternsIndex 14
-#define GregorianFormatWideDayNamesIndex 15
-#define GregorianStandaloneWideDayNamesIndex 16
-#define GregorianStandaloneWideMonthNamesIndex 17
-#define RESOURCE_COUNT 18
 #define MONTH_SEP '_'
 #define DAY_SEP '_'
 #define PATTERN_SEP '_'
@@ -81,13 +61,14 @@ static const char *gDataResourcePath = "system/i18n/i18n.dat";
 static const char *gDataResourcePath = "/storage/data/i18n.dat";
 #endif
 enum LocaleDataType {
-    RESOURCE,
+    RESOURCE = 0,
     FALLBACK_RESOURCE,
     DEFAULT_RESOURCE
 };
 
 enum DataResourceType {
-    GREGORIAN_FORMAT_ABBR_MONTH, // 0
+    RESOURCE_TYPE_BEGIN = 0,
+    GREGORIAN_FORMAT_ABBR_MONTH = RESOURCE_TYPE_BEGIN, // 0
     GREGORIAN_FORMAT_ABBR_DAY, // 1
     GREGORIAN_TIME_PATTERNS, // 2
     GREGORIAN_DATE_PATTERNS, // 3
@@ -104,14 +85,15 @@ enum DataResourceType {
     GREGORIAN_FULL_MEDIUM_SHORT_PATTERN, // 14
     GREGORIAN_FORMAT_WIDE_DAY, // 15
     GREGORIAN_STANDALONE_WIDE_DAY, // 16
-    GREGORIAN_STANDALONE_WIDE_MONTH // 17
+    GREGORIAN_STANDALONE_WIDE_MONTH, // 17
+    RESOURCE_TYPE_END // 18
 };
 
 class DataResource {
 public:
     explicit DataResource(const LocaleInfo *localeInfo);
     bool Init();
-    std::string GetString(DataResourceType type) const;
+    char *GetString(DataResourceType type) const;
     virtual ~DataResource();
 
 private:
@@ -122,10 +104,10 @@ private:
     bool GetStringFromStringPool(char *configs, const uint32_t configsSize, int32_t infile, LocaleDataType type);
     uint32_t ConvertUint(unsigned char *src);
     uint32_t ConvertUChar(unsigned char *src);
-    std::string GetString2(DataResourceType type) const;
-    std::string GetString(uint32_t index) const;
-    std::string BinarySearchString(uint32_t *indexArray, uint32_t length,
-        uint32_t target, std::string *stringArray) const;
+    char *GetString2(DataResourceType type) const;
+    char *GetString(uint32_t index) const;
+    char *BinarySearchString(uint32_t *indexArray, uint32_t length,
+        uint32_t target, char **stringArray, uint32_t stringLength) const;
     LocaleInfo *GetFallbackLocaleInfo(const LocaleInfo &src);
     void GetFallbackAndDefaultLocaleIndex(int32_t &fallbackLocaleIndex, int32_t &defaultLocaleIndex,
         char *locales);
@@ -135,8 +117,9 @@ private:
         LocaleDataType type);
     bool PrepareLocaleData(int32_t infile, uint32_t configOffset, uint32_t count, LocaleDataType type);
     bool FullLoaded();
-    void GetType(std::string* &adjustResource, uint32_t* &adjustResourceIndex, uint32_t &count, LocaleDataType type);
+    void GetType(char** &adjustResource, uint32_t* &adjustResourceIndex, uint32_t &count, LocaleDataType type);
     uint32_t GetFinalCount(char *configs, uint32_t configSize, LocaleDataType type);
+    void FreeResource();
     uint32_t localeMask = 0;
     uint32_t fallbackMask = 0;
     uint32_t defaultMask = 0;
@@ -144,15 +127,15 @@ private:
     uint32_t stringPoolOffset = 0;
     uint32_t *resourceIndex = nullptr;
     uint32_t *defaultResourceIndex = nullptr;
-    std::string *resource = nullptr;
+    char **resource = nullptr;
     uint32_t resourceCount = 0;
     uint32_t fallbackResourceCount = 0;
     uint32_t defaultResourceCount = 0;
     LocaleDataType currentType = LocaleDataType::DEFAULT_RESOURCE;
     uint32_t *fallbackResourceIndex = nullptr;
-    std::string *fallbackResource = nullptr;
-    std::string *defaultResource = nullptr;
-    uint32_t loaded[RESOURCE_COUNT] = { 0 };
+    char **fallbackResource = nullptr;
+    char **defaultResource = nullptr;
+    uint32_t loaded[DataResourceType::RESOURCE_TYPE_END] = { 0 };
 };
 } // I18N
 } // OHOS

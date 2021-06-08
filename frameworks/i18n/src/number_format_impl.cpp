@@ -14,6 +14,7 @@
  */
 
 #include "number_format_impl.h"
+#include "i18n_memory_adapter.h"
 #include "number_data.h"
 #include "str_util.h"
 
@@ -64,7 +65,7 @@ NumberFormatImpl::NumberFormatImpl(LocaleInfo &locale, int &status)
 
 bool NumberFormatImpl::Init(const DataResource &resource)
 {
-    std::string unprocessedNumberFormat = resource.GetString(DataResourceType::NUMBER_FORMAT);
+    std::string unprocessedNumberFormat(resource.GetString(DataResourceType::NUMBER_FORMAT));
     std::string split[NUM_PATTERN_SIZE];
     Split(unprocessedNumberFormat, split, NUM_PATTERN_SIZE, NUM_PATTERN_SEP);
     std::string decSign = split[NUM_DEC_SIGN_INDEX];
@@ -120,7 +121,7 @@ std::string NumberFormatImpl::InnerFormat(double num, StyleData &style, bool has
     char *decimalNum = strchr(content, NumberData::NUMBER_DECIMAL);
     int decLen = (decimalNum == nullptr) ? 0 : LenCharArray(decimalNum);
     int lastLen = isShowGroup ? (len + CountGroupNum(len, decLen, style.isTwoGroup)) : len;
-    char *result = new(std::nothrow) char[lastLen + 1];
+    char *result = reinterpret_cast<char *>(I18nMalloc(lastLen + 1));
     if (result == nullptr) {
         status = IERROR;
         return "";
@@ -138,14 +139,13 @@ std::string NumberFormatImpl::InnerFormat(double num, StyleData &style, bool has
     lastLen = DelMoreZero(style, decLen, result, lastLen);
     // if percent
     if (!DealWithPercent(buff, result, status, style, lastLen)) {
-        delete[] result;
+        I18nFree(result);
         return "";
     }
 
     // if have native number to convert
     std::string outStr = ConvertSignAndNum(result, lastLen, defaultData, style);
-    delete[] result;
-    result = nullptr;
+    I18nFree(result);
     return outStr;
 }
 
@@ -159,20 +159,19 @@ bool NumberFormatImpl::DealWithPercent(char *buff, char *&result, int &status, S
         int len = static_cast<int>(sprintf_s(buff, NUMBER_MAX, style.entireFormat, result));
         if (len < 0) {
             status = IERROR;
-            delete[] result;
-            result = nullptr;
+            I18nFree(result);
             return false;
         }
-        char *perResult = new char[len + 1];
+        char *perResult = reinterpret_cast<char *>(I18nMalloc(len + 1));
         errno_t rc = strcpy_s(perResult, len + 1, buff);
         CheckStatus(rc, status);
         if (status == IERROR) {
-            delete[] perResult;
+            I18nFree(perResult);
             return false;
         }
         perResult[len] = '\0';
         lastLen = len;
-        delete[] result;
+        I18nFree(result);
         result = perResult;
         perResult = nullptr;
     }
@@ -390,8 +389,7 @@ char *NumberFormatImpl::FillMinDecimal(char *target, int len, int addSize, bool 
         content[len + i] = '0';
     }
     if (target != nullptr) {
-        delete [] target;
-        target = nullptr;
+        I18nFree(target);
     }
     return content;
 }
