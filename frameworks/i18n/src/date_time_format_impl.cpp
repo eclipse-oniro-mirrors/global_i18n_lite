@@ -13,8 +13,10 @@
  * limitations under the License.
  */
 
+#include <string.h>
 #include "date_time_format_impl.h"
 #include "date_time_data.h"
+#include "i18n_pattern.h"
 
 using namespace OHOS::I18N;
 using namespace std;
@@ -43,121 +45,6 @@ std::string DateTimeFormatImpl::GetMonthName(const int32_t &index, DateTimeDataT
 std::string DateTimeFormatImpl::GetAmPmMarker(const int32_t &index, DateTimeDataType type) const
 {
     return (data == nullptr) ? "" : data->GetAmPmMarker(index, type);
-}
-
-string DateTimeFormatImpl::GetStringFromPattern(const AvailableDateTimeFormatPattern &requestPattern) const
-{
-    if (!data) {
-        return "";
-    }
-    switch (requestPattern) {
-        case HOUR12_MINUTE_SECOND: {
-            string hourMinuteSecond = data->GetPattern(0, PatternType::HOUR_MINUTE_SECOND_PATTERN);
-            if (hourMinuteSecond != "") {
-                return hourMinuteSecond;
-            }
-            string hmPattern = data->GetPattern(HOUR12_MINUTE_INDEX, PatternType::REGULAR_PATTERN);
-            return AddSeconds(hmPattern);
-        }
-        case HOUR24_MINUTE_SECOND: {
-            string hourMinuteSecond = data->GetPattern(1, PatternType::HOUR_MINUTE_SECOND_PATTERN);
-            if (hourMinuteSecond != "") {
-                return hourMinuteSecond;
-            }
-            string hmPattern = data->GetPattern(HOUR24_MINUTE_INDEX, PatternType::REGULAR_PATTERN);
-            return AddSeconds(hmPattern);
-        }
-        case HOUR_MINUTE_SECOND: {
-            char defaultHour = data->GetDefaultHour();
-            if (defaultHour == 'h') {
-                string hourMinuteSecond = data->GetPattern(0, PatternType::HOUR_MINUTE_SECOND_PATTERN);
-                if (hourMinuteSecond != "") {
-                    return hourMinuteSecond;
-                }
-                string hmPattern = data->GetPattern(HOUR12_MINUTE_SECOND_INDEX, PatternType::REGULAR_PATTERN);
-                return AddSeconds(hmPattern);
-            }
-            string hourMinuteSecond = data->GetPattern(1, PatternType::HOUR_MINUTE_SECOND_PATTERN);
-            if (hourMinuteSecond != "") {
-                return hourMinuteSecond;
-            }
-            string hmPattern = data->GetPattern(HOUR24_MINUTE_SECOND_INDEX, PatternType::REGULAR_PATTERN);
-            return AddSeconds(hmPattern);
-        }
-        case ABBR_MONTH_DAY: {
-            return data->GetPattern(ABBR_MONTH_DAY_INDEX, PatternType::REGULAR_PATTERN);
-        }
-        case HOUR12_MINUTE: {
-            return data->GetPattern(HOUR12_MINUTE_INDEX, PatternType::REGULAR_PATTERN);
-        }
-        default: {
-            return GetStringFromPattern2(requestPattern);
-        }
-    }
-}
-
-string DateTimeFormatImpl::GetStringFromPattern2(const AvailableDateTimeFormatPattern &requestPattern) const
-{
-    switch (requestPattern) {
-        case HOUR24_MINUTE: {
-            return data->GetPattern(HOUR24_MINUTE_INDEX, PatternType::REGULAR_PATTERN);
-        }
-        case HOUR_MINUTE: {
-            char defaultHour = data->GetDefaultHour();
-            if (defaultHour == 'h') {
-                return data->GetPattern(HOUR12_MINUTE_INDEX, PatternType::REGULAR_PATTERN);
-            }
-            return data->GetPattern(HOUR24_MINUTE_INDEX, PatternType::REGULAR_PATTERN);
-        }
-        case ABBR_MONTH_WEEKDAY_DAY: {
-            return data->GetPattern(ABBR_MONTH_WEEKDAY_DAY_INDEX, PatternType::REGULAR_PATTERN);
-        }
-        case FULL: {
-            return data->GetPattern(FULL_DATE_INDEX, PatternType::FULL_MEDIUM_SHORT_PATTERN);
-        }
-        case MEDIUM: {
-            return data->GetPattern(MEDIUM_DATE_INDEX, PatternType::FULL_MEDIUM_SHORT_PATTERN);
-        }
-        case SHORT: {
-            return data->GetPattern(SHORT_DATE_INDEX, PatternType::FULL_MEDIUM_SHORT_PATTERN);
-        }
-        case YEAR_ABBR_MONTH_ABBR_WEEKDAY_DAY: {
-            return data->GetPattern(YEAR_ABBR_MONTH_ABBR_WEEKDAY_DAY_INDEX, PatternType::REGULAR_PATTERN);
-        }
-        case YEAR_WIDE_MONTH_ABBR_WEEKDAY_DAY: {
-            return data->GetPattern(YEAR_WIDE_MONTH_ABBR_WEEKDAY_DAY_INDEX, PatternType::REGULAR_PATTERN);
-        }
-        case YEAR_SHORT_MONTH_WIDE_WEEKDAY_DAY: {
-            return data->GetPattern(YEAR_SHORT_MONTH_WIDE_WEEKDAY_DAY_INDEX, PatternType::REGULAR_PATTERN);
-        }
-        case YEAR_SHORT_MONTH_ABBR_WEEKDAY_DAY: {
-            return data->GetPattern(YEAR_SHORT_MONTH_ABBR_WEEKDAY_DAY_INDEX, PatternType::REGULAR_PATTERN);
-        }
-        case YEAR_ABBR_MONTH_WIDE_WEEKDAY_DAY: {
-            return data->GetPattern(YEAR_ABBR_MONTH_WIDE_WEEKDAY_DAY_INDEX, PatternType::REGULAR_PATTERN);
-        }
-        case YEAR_WIDE_MONTH_DAY: {
-            return data->GetPattern(YEAR_WIDE_MONTH_DAY_INDEX, PatternType::REGULAR_PATTERN);
-        }
-        default: {
-            return GetStringFromPattern3(requestPattern);
-        }
-    }
-}
-
-string DateTimeFormatImpl::GetStringFromPattern3(const AvailableDateTimeFormatPattern &requestPattern) const
-{
-    switch (requestPattern) {
-        case WEEK_DAY: {
-            return data->GetPattern(WEEK_DAY_INDEX, PatternType::REGULAR_PATTERN);
-        }
-        case NUMBER_MONTH_ABBR_WEEK_DAY: {
-            return data->GetPattern(NUMBER_MONTH_ABBR_WEEK_DAY_INDEX, PatternType::REGULAR_PATTERN);
-        }
-        default: {
-            return "";
-        }
-    }
 }
 
 string DateTimeFormatImpl::AddSeconds(const string &hmPattern) const
@@ -189,24 +76,25 @@ DateTimeFormatImpl::~DateTimeFormatImpl()
 
 bool DateTimeFormatImpl::Init(const DataResource &resource)
 {
-    std::string formatAbbreviatedMonthNames = resource.GetString(DataResourceType::GREGORIAN_FORMAT_ABBR_MONTH);
-    std::string formatWideMonthNames = resource.GetString(DataResourceType::GREGORIAN_FORMAT_WIDE_MONTH);
-    std::string standaloneAbbreviatedMonthNames =
+    char *formatAbbreviatedMonthNames = resource.GetString(DataResourceType::GREGORIAN_FORMAT_ABBR_MONTH);
+    char *formatWideMonthNames = resource.GetString(DataResourceType::GREGORIAN_FORMAT_WIDE_MONTH);
+    char *standaloneAbbreviatedMonthNames =
         resource.GetString(DataResourceType::GREGORIAN_STANDALONE_ABBR_MONTH);
-    std::string standaloneWideMonthNames = resource.GetString(DataResourceType::GREGORIAN_STANDALONE_WIDE_MONTH);
-    std::string formatAbbreviatedDayNames = resource.GetString(DataResourceType::GREGORIAN_FORMAT_ABBR_DAY);
-    std::string formatWideDayNames = resource.GetString(DataResourceType::GREGORIAN_FORMAT_WIDE_DAY);
-    std::string standaloneAbbreviatedDayNames = resource.GetString(DataResourceType::GREGORIAN_STANDALONE_ABBR_DAY);
-    std::string standaloneWideDayNames = resource.GetString(DataResourceType::GREGORIAN_STANDALONE_WIDE_DAY);
-    std::string amPmMarkers = resource.GetString(DataResourceType::GREGORIAN_AM_PMS);
-    std::string patterns = resource.GetString(DataResourceType::GREGORIAN_TIME_PATTERNS) + "_" +
-        resource.GetString(DataResourceType::GREGORIAN_DATE_PATTERNS);
-    std::string timeSeparator = resource.GetString(DataResourceType::TIME_SEPARATOR);
-    std::string defaultHour = resource.GetString(DataResourceType::DEFAULT_HOUR);
-    std::string hourMinuteSecondPatterns = resource.GetString(DataResourceType::GREGORIAN_HOUR_MINUTE_SECOND_PATTERN);
-    std::string fullMediumShortPatterns = resource.GetString(DataResourceType::GREGORIAN_FULL_MEDIUM_SHORT_PATTERN);
+    char *standaloneWideMonthNames = resource.GetString(DataResourceType::GREGORIAN_STANDALONE_WIDE_MONTH);
+    char *formatAbbreviatedDayNames = resource.GetString(DataResourceType::GREGORIAN_FORMAT_ABBR_DAY);
+    char *formatWideDayNames = resource.GetString(DataResourceType::GREGORIAN_FORMAT_WIDE_DAY);
+    char *standaloneAbbreviatedDayNames = resource.GetString(DataResourceType::GREGORIAN_STANDALONE_ABBR_DAY);
+    char *standaloneWideDayNames = resource.GetString(DataResourceType::GREGORIAN_STANDALONE_WIDE_DAY);
+    char *amPmMarkers = resource.GetString(DataResourceType::GREGORIAN_AM_PMS);
+    char *timePatterns = resource.GetString(DataResourceType::GREGORIAN_TIME_PATTERNS);
+    char *datePatterns = resource.GetString(DataResourceType::GREGORIAN_DATE_PATTERNS);
+    char *timeSeparator = resource.GetString(DataResourceType::TIME_SEPARATOR);
+    char *defaultHour = resource.GetString(DataResourceType::DEFAULT_HOUR);
+    char *hourMinuteSecondPatterns = resource.GetString(DataResourceType::GREGORIAN_HOUR_MINUTE_SECOND_PATTERN);
+    char *fullMediumShortPatterns = resource.GetString(DataResourceType::GREGORIAN_FULL_MEDIUM_SHORT_PATTERN);
     char sepAndHour[SEP_HOUR_SIZE];
-    if ((timeSeparator.size() < 1) || (defaultHour.size() < 1)) {
+    if ((timeSeparator == nullptr) || (defaultHour == nullptr) ||
+        (strlen(timeSeparator) < 1) || (strlen(defaultHour) < 1)) {
         return false;
     }
     sepAndHour[0] = timeSeparator[0];
@@ -219,8 +107,8 @@ bool DateTimeFormatImpl::Init(const DataResource &resource)
         standaloneAbbreviatedMonthNames, standaloneWideMonthNames);
     data->SetDayNamesData(formatAbbreviatedDayNames, formatWideDayNames,
         standaloneAbbreviatedDayNames, standaloneWideDayNames);
-    data->SetPatternsData(patterns, hourMinuteSecondPatterns, fullMediumShortPatterns);
-    fPattern = GetStringFromPattern(requestPattern);
+    data->SetPatternsData(datePatterns, timePatterns, hourMinuteSecondPatterns, fullMediumShortPatterns);
+    fPattern = GetStringFromPattern(requestPattern, data);
     return true;
 }
 
@@ -238,7 +126,7 @@ void DateTimeFormatImpl::FreeResource()
 
 void DateTimeFormatImpl::ApplyPattern(const AvailableDateTimeFormatPattern &requestPattern)
 {
-    fPattern = GetStringFromPattern(requestPattern);
+    fPattern = GetStringFromPattern(requestPattern, data);
 }
 
 LocaleInfo DateTimeFormatImpl::GetLocale()
@@ -252,25 +140,31 @@ LocaleInfo DateTimeFormatImpl::GetLocale()
  * zoneInfoOffest, string representation of offsett such as "+01:45"
  * appendTo, output of this method.
  */
-void DateTimeFormatImpl::Format(const time_t &cal, const string &zoneInfo, string &appendTo, I18nStatus &status) const
+void DateTimeFormatImpl::Format(const time_t &cal, const string &zoneInfo, string &appendTo,
+    I18nStatus &status) const
 {
-    bool inQuote = false;
-    char pre = '\0';
-    uint32_t count = 0;
     const time_t adjust = cal + ParseZoneInfo(zoneInfo);
     struct tm tmStruct = {0};
     tm *tmPtr = &tmStruct;
     gmtime_r(&adjust, tmPtr);
-
     const tm time = *tmPtr;
-    for (size_t i = 0; i < fPattern.size(); ++i) {
-        char current = fPattern.at(i);
+    Format(time, this->fPattern, appendTo, status);
+}
+
+void DateTimeFormatImpl::Format(const struct tm &time, const string &pattern, string &appendTo,
+    I18nStatus &status) const
+{
+    bool inQuote = false;
+    char pre = '\0';
+    uint32_t count = 0;
+    for (size_t i = 0; i < pattern.size(); ++i) {
+        char current = pattern.at(i);
         if ((current != pre) && (count != 0)) {
             Process(time, appendTo, pre, count, status);
             count = 0;
         }
         if (current == QUOTE) {
-            if ((i + 1 < fPattern.size()) && fPattern[i + 1] == QUOTE) {
+            if ((i + 1 < pattern.size()) && pattern[i + 1] == QUOTE) {
                 appendTo.append(1, QUOTE);
                 ++i;
             } else {
@@ -531,6 +425,7 @@ uint32_t DateTimeFormatImpl::GetLength(int32_t value) const
     }
     return count;
 }
+
 string DateTimeFormatImpl::FormatYear(int32_t value) const
 {
     int status = 0;

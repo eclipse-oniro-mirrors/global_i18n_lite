@@ -14,51 +14,27 @@
  */
 
 #include "date_time_data.h"
+#include <string.h>
+#include "str_util.h"
 
 using namespace OHOS::I18N;
 
 using namespace std;
 
-DateTimeData::DateTimeData(const string &amPmMarkers, const char *sepAndHour, const int size)
+DateTimeData::DateTimeData(const char *amPmMarkers, const char *sepAndHour, const int size)
 {
-    this->amPmMarkers = amPmMarkers;
+    if (amPmMarkers != nullptr) {
+        size_t len = strlen(const_cast<char*>(amPmMarkers));
+        if (len > 0) {
+            this->amPmMarkers = NewArrayAndCopy(amPmMarkers, len);
+        }
+    }
     // size must >= 2, The first 2 element of sepAndHour need to be extracted, the first element
     // is the time separator and the second is the default hour.
     if (sepAndHour && size >= 2) {
         timeSeparator = sepAndHour[0];
         defaultHour = sepAndHour[1];
     }
-}
-
-/**
- * split str with "_"
- */
-string DateTimeData::Parse(const string &str, int32_t count)
-{
-    if (str.empty()) {
-        return "";
-    }
-    int length = str.size();
-    int tempCount = 0;
-    int ind = 0;
-    while ((ind < length) && (tempCount < count)) {
-        if (str.at(ind) == '_') {
-            ++tempCount;
-        }
-        ++ind;
-    }
-    int last = ind;
-    --ind;
-    while (last < length) {
-        if (str.at(last) == '_') {
-            break;
-        }
-        ++last;
-    }
-    if (last - ind - 1 <= 0) {
-        return "";
-    }
-    return str.substr(ind + 1, last - ind - 1);
 }
 
 string DateTimeData::GetMonthName(int32_t index, DateTimeDataType type)
@@ -121,26 +97,98 @@ char DateTimeData::GetDefaultHour(void) const
     return defaultHour;
 }
 
-std::string DateTimeData::GetPattern(int32_t index, PatternType type)
-{
-    switch (type) {
-        case PatternType::HOUR_MINUTE_SECOND_PATTERN: {
-            if ((index < 0) || (index >= HOUR_MINUTE_SECOND_PATTERN_SIZE)) {
-                return "";
-            }
-            return Parse(hourMinuteSecondPatterns, index);
-        }
-        case PatternType::REGULAR_PATTERN: {
-            if ((index < 0) || (index >= REGULAR_PATTERN_SIZE)) {
-                return "";
-            }
-            return Parse(patterns, index);
-        }
-        default: {
-            if ((index < 0) || (index >= FULL_MEDIUM_SHORT_PATTERN_SIZE)) {
-                return "";
-            }
-            return Parse(fullMediumShortPatterns, index);
-        }
+DateTimeData::~DateTimeData() {
+    if (formatAbbreviatedMonthNames != nullptr) {
+        I18nFree(formatAbbreviatedMonthNames);
     }
+    if (formatWideMonthNames != nullptr) {
+        I18nFree(formatWideMonthNames);
+    }
+    if (standaloneAbbreviatedMonthNames != nullptr) {
+        I18nFree(standaloneAbbreviatedMonthNames);
+    }
+    if (standaloneWideMonthNames != nullptr) {
+        I18nFree(standaloneWideMonthNames);
+    }
+    if (formatAbbreviatedDayNames != nullptr) {
+        I18nFree(formatAbbreviatedDayNames);
+    }
+    if (formatWideDayNames != nullptr) {
+        I18nFree(formatWideDayNames);
+    }
+    if (standaloneAbbreviatedDayNames != nullptr) {
+        I18nFree(standaloneAbbreviatedDayNames);
+    }
+    if (standaloneWideDayNames != nullptr) {
+        I18nFree(standaloneWideDayNames);
+    }
+    if (timePatterns != nullptr) {
+        I18nFree(timePatterns);
+    }
+    if (datePatterns != nullptr) {
+        I18nFree(datePatterns);
+    }
+    if (amPmMarkers != nullptr) {
+        I18nFree(amPmMarkers);
+    }
+    if (hourMinuteSecondPatterns != nullptr) {
+        I18nFree(hourMinuteSecondPatterns);
+    }
+    if (fullMediumShortPatterns != nullptr) {
+        I18nFree(fullMediumShortPatterns);
+    }
+}
+
+void DateTimeData::SetMonthNamesData(const char *formatAbbreviatedMonthNames, const char *formatWideMonthNames,
+    const char *standaloneAbbreviatedMonthNames, const char *standaloneWideMonthNames)
+{
+    if ((formatAbbreviatedMonthNames == nullptr) || (formatWideMonthNames == nullptr) ||
+        (standaloneAbbreviatedMonthNames == nullptr) || (standaloneWideMonthNames == nullptr)) {
+        return;
+    }
+    this->formatAbbreviatedMonthNames = NewArrayAndCopy(formatAbbreviatedMonthNames,
+        strlen(formatAbbreviatedMonthNames));
+    this->formatWideMonthNames = NewArrayAndCopy(formatWideMonthNames, strlen(formatWideMonthNames));
+    this->standaloneAbbreviatedMonthNames = NewArrayAndCopy(standaloneAbbreviatedMonthNames,
+        strlen(standaloneAbbreviatedMonthNames));
+    this->standaloneWideMonthNames = NewArrayAndCopy(standaloneWideMonthNames, strlen(standaloneWideMonthNames));
+}
+
+void DateTimeData::SetDayNamesData(const char *formatAbbreviatedDayNames, const char *formatWideDayNames,
+    const char *standaloneAbbreviatedDayNames, const char *standaloneWideDayNames)
+{
+    if ((formatAbbreviatedDayNames == nullptr) || (formatWideDayNames == nullptr) ||
+        (standaloneAbbreviatedDayNames == nullptr) || (standaloneWideDayNames == nullptr)) {
+        return;
+    }
+    this->formatAbbreviatedDayNames = NewArrayAndCopy(formatAbbreviatedDayNames,
+        strlen(formatAbbreviatedDayNames));
+    this->formatWideDayNames = NewArrayAndCopy(formatWideDayNames, strlen(formatWideDayNames));
+    this->standaloneAbbreviatedDayNames = NewArrayAndCopy(standaloneAbbreviatedDayNames,
+        strlen(standaloneAbbreviatedDayNames));
+    this->standaloneWideDayNames = NewArrayAndCopy(standaloneWideDayNames, strlen(standaloneWideDayNames));
+}
+
+void DateTimeData::SetPatternsData(const char *datePatterns, const char *timePatterns,
+    const char *hourMinuteSecondPatterns, const char *fullMediumShortPatterns)
+{
+    if ((datePatterns == nullptr) || (timePatterns == nullptr) ||
+        (hourMinuteSecondPatterns == nullptr) || (fullMediumShortPatterns == nullptr)) {
+        return;
+    }
+    size_t timeLength = strlen(timePatterns);
+    size_t dateLength = strlen(datePatterns);
+    size_t hourLength = strlen(hourMinuteSecondPatterns);
+    size_t fullLength = strlen(fullMediumShortPatterns);
+    if ((timeLength == 0) || (dateLength == 0) || (hourLength == 0) || (fullLength == 0)) {
+        return;
+    }
+    I18nFree(this->timePatterns);
+    this->timePatterns = NewArrayAndCopy(timePatterns, timeLength);
+    I18nFree(this->datePatterns);
+    this->datePatterns = NewArrayAndCopy(datePatterns, dateLength);
+    I18nFree(this->hourMinuteSecondPatterns);
+    this->hourMinuteSecondPatterns = NewArrayAndCopy(hourMinuteSecondPatterns, hourLength);
+    I18nFree(this->fullMediumShortPatterns);
+    this->fullMediumShortPatterns = NewArrayAndCopy(fullMediumShortPatterns, fullLength);
 }

@@ -13,81 +13,53 @@
  * limitations under the License.
  */
 
-
 #ifndef DATE_TIME_DATA_H
 #define DATE_TIME_DATA_H
 
 #include <string>
 #include "locale_info.h"
 #include "types.h"
+#include "str_util.h"
+#include "i18n_memory_adapter.h"
+#include "securec.h"
+#include "types.h"
 
 #define MONTH_SIZE 12
 #define DAY_SIZE 7
 #define AM_SIZE 2
-#define TIME_PATTERN_SIZE 2
-#define REGULAR_PATTERN_SIZE 12
 #define SEP_HOUR_SIZE 2
-#define HOUR_MINUTE_SECOND_PATTERN_SIZE 2
-#define FULL_MEDIUM_SHORT_PATTERN_SIZE 3
-#define FULL_DATE_INDEX 0
-#define MEDIUM_DATE_INDEX 1
-#define SHORT_DATE_INDEX 2
 
 namespace OHOS {
 namespace I18N {
-enum PatternType {
-    REGULAR_PATTERN,
-    HOUR_MINUTE_SECOND_PATTERN,
-    FULL_MEDIUM_SHORT_PATTERN
-};
-
 class DateTimeData {
 public:
-    DateTimeData(const std::string &amPmMarkers, const char *sepAndHour, const int size);
-    ~DateTimeData() = default;
+    DateTimeData(const char *amPmMarkers, const char *sepAndHour, const int size);
+    ~DateTimeData();
     std::string GetMonthName(int32_t index, DateTimeDataType type = DateTimeDataType::FORMAT_ABBR);
     std::string GetDayName(int32_t index, DateTimeDataType type = DateTimeDataType::FORMAT_ABBR);
     std::string GetAmPmMarker(int32_t index, DateTimeDataType type);
-    std::string GetPattern(int32_t index, PatternType type = PatternType::REGULAR_PATTERN);
+    char *timePatterns = nullptr;
+    char *datePatterns = nullptr;
+    char *hourMinuteSecondPatterns = nullptr;
+    char *fullMediumShortPatterns = nullptr;
     char GetTimeSeparator(void) const;
     char GetDefaultHour(void) const;
-    void SetMonthNamesData(const std::string &formatAbbreviatedMonthNames, const std::string &formatWideMonthNames,
-        const std::string &standaloneAbbreviatedMonthNames, const std::string &standaloneWideMonthNames)
-    {
-        this->formatAbbreviatedMonthNames = formatAbbreviatedMonthNames;
-        this->formatWideMonthNames = formatWideMonthNames;
-        this->standaloneAbbreviatedMonthNames = standaloneAbbreviatedMonthNames;
-        this->standaloneWideMonthNames = standaloneWideMonthNames;
-    }
-    void SetDayNamesData(const std::string &formatAbbreviatedDayNames, const std::string &formatWideDayNames,
-        const std::string &standaloneAbbreviatedDayNames, const std::string &standaloneWideDayNames)
-    {
-        this->formatAbbreviatedDayNames = formatAbbreviatedDayNames;
-        this->formatWideDayNames = formatWideDayNames;
-        this->standaloneAbbreviatedDayNames = standaloneAbbreviatedDayNames;
-        this->standaloneWideDayNames = standaloneWideDayNames;
-    }
-    void SetPatternsData(const std::string &patterns, const std::string &hourMinuteSecondPatterns,
-        const std::string &fullMediumShortPatterns)
-    {
-        this->patterns = patterns;
-        this->hourMinuteSecondPatterns = hourMinuteSecondPatterns;
-        this->fullMediumShortPatterns = fullMediumShortPatterns;
-    }
+    void SetMonthNamesData(const char *formatAbbreviatedMonthNames, const char *formatWideMonthNames,
+        const char *standaloneAbbreviatedMonthNames, const char *standaloneWideMonthNames);
+    void SetDayNamesData(const char *formatAbbreviatedDayNames, const char *formatWideDayNames,
+        const char *standaloneAbbreviatedDayNames, const char *standaloneWideDayNames);
+    void SetPatternsData(const char *datePatterns, const char *timePatterns, const char *hourMinuteSecondPatterns,
+        const char *fullMediumShortPatterns);
 private:
-    std::string Parse(const std::string &str, int32_t count);
-    std::string formatAbbreviatedMonthNames;
-    std::string formatWideMonthNames;
-    std::string standaloneAbbreviatedMonthNames;
-    std::string standaloneWideMonthNames;
-    std::string formatAbbreviatedDayNames;
-    std::string formatWideDayNames;
-    std::string standaloneAbbreviatedDayNames;
-    std::string standaloneWideDayNames;
-    std::string patterns;
-    std::string amPmMarkers;
-    std::string hourMinuteSecondPatterns;
-    std::string fullMediumShortPatterns;
+    char *formatAbbreviatedMonthNames = nullptr;
+    char *formatWideMonthNames = nullptr;
+    char *standaloneAbbreviatedMonthNames = nullptr;
+    char *standaloneWideMonthNames = nullptr;
+    char *formatAbbreviatedDayNames = nullptr;
+    char *formatWideDayNames = nullptr;
+    char *standaloneAbbreviatedDayNames = nullptr;
+    char *standaloneWideDayNames = nullptr;
+    char *amPmMarkers = nullptr;
     char timeSeparator = ':';
     char defaultHour = 'H';
 };
