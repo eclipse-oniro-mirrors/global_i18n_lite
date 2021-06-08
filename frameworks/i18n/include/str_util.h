@@ -18,6 +18,8 @@
 #include <string>
 #include "types.h"
 
+#define I18N_STRING_LENGTH_MAX 512
+
 namespace OHOS {
 namespace I18N {
 std::string Replace(std::string &content, const int index, const char *str);

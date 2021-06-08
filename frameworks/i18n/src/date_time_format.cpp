@@ -144,3 +144,16 @@ std::string DateTimeFormat::GetAmPmMarker(const int32_t &index, DateTimeDataType
     }
     return impl->GetAmPmMarker(index, type);
 }
+
+int8_t DateTimeFormat::Get12HourTimeWithoutAmpm(const time_t &cal, const std::string &zoneInfo,
+    std::string &appendTo, I18nStatus &status)
+{
+    if (impl == nullptr) {
+        bool isSuccess = Init();
+        if (!isSuccess) {
+            status = IERROR;
+            return 0;
+        }
+    }
+    return impl->Get12HourTimeWithoutAmpm(cal, zoneInfo, appendTo, status);
+}
