@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-
 #ifndef NUMBERFORMAT_IMPL_H
 #define NUMBERFORMAT_IMPL_H
 

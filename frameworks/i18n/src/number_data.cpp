@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+#include "i18n_memory_adapter.h"
 #include "number_data.h"
 #include "securec.h"
 #include "str_util.h"
@@ -39,12 +40,10 @@ StyleData::StyleData(const StyleData &data)
 StyleData::~StyleData()
 {
     if (numFormat != nullptr) {
-        delete[] numFormat;
-        numFormat = nullptr;
+        I18nFree(numFormat);
     }
     if (entireFormat != nullptr) {
-        delete[] entireFormat;
-        entireFormat = nullptr;
+        I18nFree(entireFormat);
     }
 }
 
@@ -145,15 +144,14 @@ void NumberData::ParsePattern(const char *pattern, const int len, StyleData &sty
     styleData.decZeroLen = decZeroLen;
     int intEndPos = len - decLen; // cal how many must zero before decimal
     CalculateIntLength(intEndPos, pattern, len, styleData, isDec);
-    char *format = new(std::nothrow) char[NUMBER_FORMAT_LENGTH];
+    char *format = reinterpret_cast<char *>(I18nMalloc(NUMBER_FORMAT_LENGTH));
     if (format == nullptr) {
         SetFail();
         return;
     }
     if (snprintf_s(format, NUMBER_FORMAT_LENGTH, NUMBER_FORMAT_LENGTH - 1, NUMBER_FORMAT, decLen) == -1) {
         SetFail();
-        delete[] format;
-        format = nullptr;
+        I18nFree(format);
         return;
     }
     styleData.numFormat = format;
@@ -270,7 +268,7 @@ bool NumberData::SetMinDecimalLength(int length)
     style.decLen = length;
 
     // calculate number format
-    char *format = new(std::nothrow) char[NUMBER_FORMAT_LENGTH];
+    char *format = reinterpret_cast<char *>(I18nMalloc(NUMBER_FORMAT_LENGTH));
     if (format == nullptr) {
         SetFail();
         return false;
@@ -278,12 +276,11 @@ bool NumberData::SetMinDecimalLength(int length)
     int re = sprintf_s(format, NUMBER_FORMAT_LENGTH, NUMBER_FORMAT, length);
     if (re == -1) {
         SetFail();
-        delete[] format;
-        format = nullptr;
+        I18nFree(format);
         return false;
     }
     if (style.numFormat != nullptr) {
-        delete[] style.numFormat;
+        I18nFree(style.numFormat);
     }
     style.numFormat = format;
     return true;
@@ -316,40 +313,31 @@ NumberData::NumberData()
 NumberData::~NumberData()
 {
     if (pattern != nullptr) {
-        delete[] pattern;
-        pattern = nullptr;
+        I18nFree(pattern);
     }
     if (percentPattern != nullptr) {
-        delete[] percentPattern;
-        percentPattern = nullptr;
+        I18nFree(percentPattern);
     }
     if (style.numFormat != nullptr) {
-        delete[] style.numFormat;
-        style.numFormat = nullptr;
+        I18nFree(style.numFormat);
     }
     if (percentStyle.numFormat != nullptr) {
-        delete[] percentStyle.numFormat;
-        percentStyle.numFormat = nullptr;
+        I18nFree(percentStyle.numFormat);
     }
     if (style.entireFormat != nullptr) {
-        delete[] style.entireFormat;
-        style.entireFormat = nullptr;
+        I18nFree(style.entireFormat);
     }
     if (percentStyle.entireFormat != nullptr) {
-        delete[] percentStyle.entireFormat;
-        percentStyle.entireFormat = nullptr;
+        I18nFree(percentStyle.entireFormat);
     }
     if (group != nullptr) {
-        delete[] group;
-        group = nullptr;
+        I18nFree(group);
     }
     if (percent != nullptr) {
-        delete[] percent;
-        percent = nullptr;
+        I18nFree(percent);
     }
     if (decimal != nullptr) {
-        delete[] decimal;
-        decimal = nullptr;
+        I18nFree(decimal);
     }
 }
 
