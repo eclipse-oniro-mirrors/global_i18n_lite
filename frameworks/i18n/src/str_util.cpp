@@ -134,7 +134,7 @@ std::string Parse(const char *str, int32_t count)
         return "";
     }
     size_t length = strlen(str);
-    if (length == 0) {
+    if (length == 0 || length > I18N_STRING_LENGTH_MAX) {
         return "";
     }
     int tempCount = 0;

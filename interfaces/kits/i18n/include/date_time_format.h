@@ -151,6 +151,23 @@ public:
     */
     std::string GetAmPmMarker(const int32_t &index,
         DateTimeDataType type = DateTimeDataType::STANDALONE_ABBR);
+
+    /**
+    * @brief Formats a time value, number of seconds elapsed since the Unix epoch (00:00:00 UTC on 1 January 1970),
+    *   into a string based on 12-hour:minute:second or 12-hour:minute, without am/pm.
+    *
+    * @param cal Indicates the time value to format.
+    * @param zoneInfo Indicates the time zone information in the <b>+/-ab:cd</b> pattern. <b>+</b> indicates
+    *   that the time zone offset is a positive value, <b>-</b> indicates that the time zone offset is a negative value,
+    *   and <b>ab:cd</b> indicates <b>hour:minute</b>.
+    * @param appendTo Used to save the formatting result.
+    * @param status Indicates the formatting status.
+    * @return Returns 1 or -1 if am/pm markers should be put at the begining or end of the returned string when we call
+    *   format with HOUR12_MINUTE_SECOND, returns 0 if no am/pm markers should be added.
+    *
+    */
+    int8_t Get12HourTimeWithoutAmpm(const time_t &cal, const std::string &zoneInfo,
+        std::string &appendTo, I18nStatus &status);
 private:
     DateTimeFormatImpl *impl = nullptr;
     LocaleInfo locale;
