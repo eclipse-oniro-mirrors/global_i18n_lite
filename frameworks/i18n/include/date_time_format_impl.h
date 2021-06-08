@@ -64,6 +64,8 @@ public:
     {
         this->numberFormat = numberFormat;
     }
+    int8_t Get12HourTimeWithoutAmpm(const time_t &cal, const std::string &zoneInfo,
+        std::string &appendTo, I18nStatus &status) const;
 private:
     void FreeResource();
     void Format(const struct tm &time, const std::string &pattern, std::string &appendTo, I18nStatus &status) const;
@@ -74,6 +76,8 @@ private:
         uint32_t count,  I18nStatus &status) const;
     bool IsTimeChar(char ch) const;
     int32_t ParseZoneInfo(const std::string &zoneInfo) const;
+    char* GetNoAmPmPattern(const std::string &patternString, int8_t &ret) const;
+    void FormatTime(const struct ElapasedTime &time, uint32_t count, std::string &appendTo, I18nStatus &status) const;
     std::string FormatNumber(int32_t value) const;
     std::string FormatYear(int32_t value) const;
     std::string GetZero() const;

@@ -431,3 +431,65 @@ string DateTimeFormatImpl::FormatYear(int32_t value) const
     int status = 0;
     return numberFormat ? numberFormat->FormatNoGroup(value, status) : to_string(value);
 }
+
+int8_t DateTimeFormatImpl::Get12HourTimeWithoutAmpm(const time_t &cal, const std::string &zoneInfo,
+    std::string &appendTo, I18nStatus &status) const
+{
+    if (requestPattern != HOUR12_MINUTE && requestPattern != HOUR12_MINUTE_SECOND) {
+        status = IERROR;
+        return 0;
+    }
+    int8_t ret = 0;
+    char *pattern = GetNoAmPmPattern(fPattern, ret);
+    const time_t adjust = cal + ParseZoneInfo(zoneInfo);
+    struct tm tmStruct = { 0 };
+    tm *tmPtr = &tmStruct;
+    gmtime_r(&adjust, tmPtr);
+    const tm time = *tmPtr;
+    if (pattern != nullptr) {
+        string tempPattern(pattern);
+        I18nFree(pattern);
+        Format(time, tempPattern, appendTo, status);
+    } else {
+        Format(time, this->fPattern, appendTo, status);
+    }
+    return ret;
+}
+
+char* DateTimeFormatImpl::GetNoAmPmPattern(const string &patternString, int8_t &ret) const
+{
+    size_t len = patternString.size();
+    char *pattern = nullptr;
+    if ((len > 1) && (patternString[0] == 'a')) {
+        ret = 1;
+        if (patternString[1] == ' ') {
+            pattern = static_cast<char*>(I18nMalloc(len - 1));
+            for (size_t i = 0; i < len - 2; ++i) {
+                pattern[i] = patternString[i + 2];
+            }
+            pattern[len - 2] = '\0';
+        } else {
+            pattern = static_cast<char*>(I18nMalloc(len));
+            for (size_t i = 0; i < len - 1; ++i) {
+                pattern[i] = patternString[i + 1];
+            }
+            pattern[len - 1] = '\0';
+        }
+    } else if ((len > 1) && (patternString[len - 1] == 'a')) {
+        ret = -1;
+        if (patternString[len - 2] == ' ') {
+            pattern = static_cast<char*>(I18nMalloc(len - 1));
+            for (size_t i = 0; i < len - 2; ++i) {
+                pattern[i] = patternString[i];
+            }
+            pattern[len - 2] = '\0';
+        } else {
+            pattern = static_cast<char*>(I18nMalloc(len));
+            for (size_t i = 0; i < len - 1; ++i) {
+                pattern[i] = patternString[i];
+            }
+            pattern[len - 1] = '\0';
+        }
+    }
+    return pattern;
+}
