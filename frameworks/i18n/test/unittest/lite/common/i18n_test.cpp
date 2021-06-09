@@ -963,7 +963,7 @@ HWTEST_F(I18NTest, I18nFuncTest045, TestSize.Level1)
 HWTEST_F(I18NTest, I18nFuncTest046, TestSize.Level1)
 {
     LocaleInfo locale("de", "DE");
-    I18nStatus status = I18nStatus::ISUCCESS;
+    int status = I18nStatus::ISUCCESS;
     NumberFormat format(locale, status);
     std::string out = format.Format(0.12, NumberFormatType::PERCENT, status);
     std::string expect = "12 %";
