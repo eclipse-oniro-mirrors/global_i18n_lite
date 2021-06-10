@@ -92,6 +92,7 @@ bool DateTimeFormatImpl::Init(const DataResource &resource)
     char *defaultHour = resource.GetString(DataResourceType::DEFAULT_HOUR);
     char *hourMinuteSecondPatterns = resource.GetString(DataResourceType::GREGORIAN_HOUR_MINUTE_SECOND_PATTERN);
     char *fullMediumShortPatterns = resource.GetString(DataResourceType::GREGORIAN_FULL_MEDIUM_SHORT_PATTERN);
+    char *elapsedPatterns = resource.GetString(DataResourceType::ELAPSED_PATERNS);
     char sepAndHour[SEP_HOUR_SIZE];
     if ((timeSeparator == nullptr) || (defaultHour == nullptr) ||
         (strlen(timeSeparator) < 1) || (strlen(defaultHour) < 1)) {
@@ -107,7 +108,8 @@ bool DateTimeFormatImpl::Init(const DataResource &resource)
         standaloneAbbreviatedMonthNames, standaloneWideMonthNames);
     data->SetDayNamesData(formatAbbreviatedDayNames, formatWideDayNames,
         standaloneAbbreviatedDayNames, standaloneWideDayNames);
-    data->SetPatternsData(datePatterns, timePatterns, hourMinuteSecondPatterns, fullMediumShortPatterns);
+    data->SetPatternsData(datePatterns, timePatterns, hourMinuteSecondPatterns,
+        fullMediumShortPatterns, elapsedPatterns);
     fPattern = GetStringFromPattern(requestPattern, data);
     return true;
 }
@@ -492,4 +494,69 @@ char* DateTimeFormatImpl::GetNoAmPmPattern(const string &patternString, int8_t &
         }
     }
     return pattern;
+}
+
+std::string DateTimeFormatImpl::FormatElapsedDuration(int32_t milliseconds, ElapsedPatternType type,
+    I18nStatus &status) const
+{
+    if (milliseconds < 0) {
+        status = IERROR;
+        return "";
+    }
+    string pattern = GetStringFromElapsedPattern(type, data);
+    int32_t mil = milliseconds % SECOND_IN_MILLIS / CONSTANT_TIME_NUMBER;
+    int32_t sec = milliseconds % MINUTE_IN_MILLIS / SECOND_IN_MILLIS;
+    int32_t min = milliseconds % HOUR_IN_MILLIS / MINUTE_IN_MILLIS;
+    const struct ElapsedTime time = { min, sec, mil };
+    bool inQuote = false;
+    char pre = '\0';
+    uint32_t count = 0;
+    string ret;
+    for (size_t i = 0; i < pattern.size(); ++i) {
+        char current = pattern.at(i);
+        if ((current != pre) && (count != 0)) {
+            FormatElapsed(time, pre, count, ret, status);
+            count = 0;
+        }
+        if (current == QUOTE) {
+            if ((i + 1 < pattern.size()) && pattern[i + 1] == QUOTE) {
+                ret.append(1, QUOTE);
+                ++i;
+            } else {
+                inQuote = !inQuote;
+            }
+        } else if (!inQuote && (((current >= 'a') && (current <= 'z')) || ((current >= 'A') && (current <= 'Z')))) {
+            pre = current;
+            ++count;
+        } else {
+            ret.append(1, current);
+        }
+    }
+    if (count != 0) {
+        FormatElapsed(time, pre, count, ret, status);
+    }
+    return ret;
+}
+
+void DateTimeFormatImpl::FormatElapsed(const struct ElapsedTime &time, char pre, uint32_t count,
+    string &appendTo, I18nStatus &status) const
+{
+    switch (pre) {
+        case 'm': {
+            ZeroPadding(appendTo, count, MAX_COUNT, time.minutes);
+            return;
+        }
+        case 's': {
+            ZeroPadding(appendTo, count, MAX_COUNT, time.seconds);
+            return;
+        }
+        case 'S': {
+            ZeroPadding(appendTo, count, MAX_COUNT, time.milliseconds);
+            return;
+        }
+        default: {
+            status = IERROR;
+            return;
+        }
+    }
 }

@@ -111,6 +111,7 @@ DateTimeData::~DateTimeData() {
     I18nFree(amPmMarkers);
     I18nFree(hourMinuteSecondPatterns);
     I18nFree(fullMediumShortPatterns);
+    I18nFree(elapsedPatterns);
 }
 
 void DateTimeData::SetMonthNamesData(const char *formatAbbreviatedMonthNames, const char *formatWideMonthNames,
@@ -144,16 +145,18 @@ void DateTimeData::SetDayNamesData(const char *formatAbbreviatedDayNames, const 
 }
 
 void DateTimeData::SetPatternsData(const char *datePatterns, const char *timePatterns,
-    const char *hourMinuteSecondPatterns, const char *fullMediumShortPatterns)
+    const char *hourMinuteSecondPatterns, const char *fullMediumShortPatterns, const char* elapsedPatterns)
 {
     if ((datePatterns == nullptr) || (timePatterns == nullptr) ||
-        (hourMinuteSecondPatterns == nullptr) || (fullMediumShortPatterns == nullptr)) {
+        (hourMinuteSecondPatterns == nullptr) || (fullMediumShortPatterns == nullptr) ||
+        (elapsedPatterns == nullptr)) {
         return;
     }
     size_t timeLength = strlen(timePatterns);
     size_t dateLength = strlen(datePatterns);
     size_t hourLength = strlen(hourMinuteSecondPatterns);
     size_t fullLength = strlen(fullMediumShortPatterns);
+    size_t elapsedLength = strlen(elapsedPatterns);
     if ((timeLength == 0) || (dateLength == 0) || (hourLength == 0) || (fullLength == 0)) {
         return;
     }
@@ -165,4 +168,6 @@ void DateTimeData::SetPatternsData(const char *datePatterns, const char *timePat
     this->hourMinuteSecondPatterns = NewArrayAndCopy(hourMinuteSecondPatterns, hourLength);
     I18nFree(this->fullMediumShortPatterns);
     this->fullMediumShortPatterns = NewArrayAndCopy(fullMediumShortPatterns, fullLength);
+    I18nFree(this->elapsedPatterns);
+    this->elapsedPatterns = NewArrayAndCopy(elapsedPatterns, elapsedLength);
 }
