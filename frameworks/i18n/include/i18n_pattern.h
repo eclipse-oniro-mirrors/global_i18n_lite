@@ -40,6 +40,8 @@
 #define FULL_INDEX                              0x00030000
 #define MEDIUM_INDEX                            0x00030001
 #define SHORT_INDEX                             0x00030002
+#define ELAPSED_MINUTE_SECOND_INDEX             0x00040000
+#define ELAPSED_MINUTE_SECOND_MILLISECOND_INDEX 0x00040001
 
 #define PATTERN_TYPE_SHIFT 16
 #define PATTERN_INDEX_MASK 0x0000ffff
@@ -52,6 +54,7 @@ enum PatternType {
     DATE_PATTERN,
     HOUR_MINUTE_SECOND_PATTERN,
     FULL_MEDIUM_SHORT_PATTERN,
+    ELAPSED_PATTERN,
     PATTERN_TYPE_END,
 };
 
@@ -73,8 +76,11 @@ std::string GetPatternFromIndex(uint32_t index, const DateTimeData * const data)
         case HOUR_MINUTE_SECOND_PATTERN: {
             return Parse(data->hourMinuteSecondPatterns, ind);
         }
-        default: {
+        case FULL_MEDIUM_SHORT_PATTERN: {
             return Parse(data->fullMediumShortPatterns, ind);
+        }
+        default: {
+            return Parse(data->elapsedPatterns, ind);
         }
     }
 }
@@ -153,6 +159,24 @@ std::string GetStringFromPattern(const AvailableDateTimeFormatPattern &requestPa
         }
         default: {
             return GetStringFromPattern2(requestPattern, data);
+        }
+    }
+}
+
+std::string GetStringFromElapsedPattern(const ElapsedPatternType &type, const DateTimeData * const data)
+{
+    if (data == nullptr) {
+        return "";
+    }
+    switch (type) {
+        case ELAPSED_MINUTE_SECOND: {
+            return GetPatternFromIndex(ELAPSED_MINUTE_SECOND_INDEX, data);
+        }
+        case ELAPSED_MINUTE_SECOND_MILLISECOND: {
+            return GetPatternFromIndex(ELAPSED_MINUTE_SECOND_MILLISECOND_INDEX, data);
+        }
+        default: {
+            return "";
         }
     }
 }

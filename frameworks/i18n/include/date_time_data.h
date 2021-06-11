@@ -42,6 +42,7 @@ public:
     char *datePatterns = nullptr;
     char *hourMinuteSecondPatterns = nullptr;
     char *fullMediumShortPatterns = nullptr;
+    char *elapsedPatterns = nullptr;
     char GetTimeSeparator(void) const;
     char GetDefaultHour(void) const;
     void SetMonthNamesData(const char *formatAbbreviatedMonthNames, const char *formatWideMonthNames,
@@ -49,7 +50,7 @@ public:
     void SetDayNamesData(const char *formatAbbreviatedDayNames, const char *formatWideDayNames,
         const char *standaloneAbbreviatedDayNames, const char *standaloneWideDayNames);
     void SetPatternsData(const char *datePatterns, const char *timePatterns, const char *hourMinuteSecondPatterns,
-        const char *fullMediumShortPatterns);
+        const char *fullMediumShortPatterns, const char *elapsedPatterns);
 private:
     char *formatAbbreviatedMonthNames = nullptr;
     char *formatWideMonthNames = nullptr;
