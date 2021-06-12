@@ -135,6 +135,14 @@ enum AvailableDateTimeFormatPattern {
     NUMBER_MONTH_ABBR_WEEK_DAY
 };
 
+enum ElapsedPatternType {
+    /* Minute:Second */
+    ELAPSED_MINUTE_SECOND,
+
+    /* Minute:Second:Millisecond */
+    ELAPSED_MINUTE_SECOND_MILLISECOND
+};
+
 enum DateTimeDataType {
     /* Abbreviated (format style) */
     FORMAT_ABBR,

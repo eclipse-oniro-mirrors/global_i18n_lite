@@ -37,6 +37,10 @@
 #define SHORT_YEAR_FORMAT_COUNT 2
 #define ONE_HUNDRED_YEAR 100
 #define QUOTE '\''
+#define CONSTANT_TIME_NUMBER 10
+#define SECOND_IN_MILLIS 1000
+#define MINUTE_IN_MILLIS 60000
+#define HOUR_IN_MILLIS 3600000
 
 namespace OHOS {
 namespace I18N {
@@ -66,6 +70,7 @@ public:
     }
     int8_t Get12HourTimeWithoutAmpm(const time_t &cal, const std::string &zoneInfo,
         std::string &appendTo, I18nStatus &status) const;
+    std::string FormatElapsedDuration(int32_t milliseconds, ElapsedPatternType type, I18nStatus &status) const;
 private:
     void FreeResource();
     void Format(const struct tm &time, const std::string &pattern, std::string &appendTo, I18nStatus &status) const;
@@ -77,7 +82,8 @@ private:
     bool IsTimeChar(char ch) const;
     int32_t ParseZoneInfo(const std::string &zoneInfo) const;
     char* GetNoAmPmPattern(const std::string &patternString, int8_t &ret) const;
-    void FormatTime(const struct ElapasedTime &time, uint32_t count, std::string &appendTo, I18nStatus &status) const;
+    void FormatElapsed(const struct ElapsedTime &time, char pre, uint32_t count, std::string &appendTo,
+        I18nStatus &status) const;
     std::string FormatNumber(int32_t value) const;
     std::string FormatYear(int32_t value) const;
     std::string GetZero() const;

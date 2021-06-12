@@ -157,3 +157,16 @@ int8_t DateTimeFormat::Get12HourTimeWithoutAmpm(const time_t &cal, const std::st
     }
     return impl->Get12HourTimeWithoutAmpm(cal, zoneInfo, appendTo, status);
 }
+
+std::string DateTimeFormat::FormatElapsedDuration(int32_t milliseconds, ElapsedPatternType type,
+    I18nStatus &status)
+{
+    if (impl == nullptr) {
+        bool isSuccess = Init();
+        if (!isSuccess) {
+            status = IERROR;
+            return "";
+        }
+    }
+    return impl->FormatElapsedDuration(milliseconds, type, status);
+}
