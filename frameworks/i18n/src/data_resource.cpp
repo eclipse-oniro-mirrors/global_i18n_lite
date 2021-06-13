@@ -213,16 +213,16 @@ bool DataResource::PrepareData(int32_t infile)
     I18nFree(locales);
     bool ret = true;
     if ((localeIndex >= 0) && (resourceCount > 0) &&
-        (resourceCount <= DataResourceType::GREGORIAN_STANDALONE_WIDE_MONTH + 1)) {
+        (resourceCount <= DataResourceType::RESOURCE_TYPE_END)) {
         ret = PrepareLocaleData(infile, configOffset, resourceCount, LocaleDataType::RESOURCE);
     }
     if ((fallbackLocaleIndex >= 0) && !FullLoaded() && ret && (fallbackResourceCount > 0) &&
-        (fallbackResourceCount <= DataResourceType::GREGORIAN_STANDALONE_WIDE_MONTH + 1)) {
+        (fallbackResourceCount <= DataResourceType::RESOURCE_TYPE_END)) {
         ret = PrepareLocaleData(infile, fallbackConfigOffset, fallbackResourceCount,
             LocaleDataType::FALLBACK_RESOURCE);
     }
     if ((defaultLocaleIndex >= 0) && !FullLoaded() && ret && (defaultResourceCount > 0) &&
-        (defaultResourceCount <= DataResourceType::GREGORIAN_STANDALONE_WIDE_MONTH + 1)) {
+        (defaultResourceCount <= DataResourceType::RESOURCE_TYPE_END)) {
         ret = PrepareLocaleData(infile, defaultConfigOffset, defaultResourceCount, LocaleDataType::DEFAULT_RESOURCE);
     }
     return ret;

@@ -164,10 +164,19 @@ public:
     * @param status Indicates the formatting status.
     * @return Returns 1 or -1 if am/pm markers should be put at the begining or end of the returned string when we call
     *   format with HOUR12_MINUTE_SECOND, returns 0 if no am/pm markers should be added.
-    *
     */
     int8_t Get12HourTimeWithoutAmpm(const time_t &cal, const std::string &zoneInfo,
         std::string &appendTo, I18nStatus &status);
+    
+    /**
+    * @brief format a elapsed duration in the pattern indicated by the type. 
+    *
+    * @param milliseconds indicates the time to be formatted.
+    * @param type pattern used to format string.
+    * @param status Indicates the formatting status.
+    * @return the formatted string.
+    */
+    std::string FormatElapsedDuration(int32_t milliseconds, ElapsedPatternType type, I18nStatus &status);
 private:
     DateTimeFormatImpl *impl = nullptr;
     LocaleInfo locale;
