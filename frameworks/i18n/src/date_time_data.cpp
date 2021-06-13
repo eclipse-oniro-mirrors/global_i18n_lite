@@ -14,7 +14,7 @@
  */
 
 #include "date_time_data.h"
-#include <string.h>
+#include <cstring>
 #include "str_util.h"
 
 using namespace OHOS::I18N;
@@ -97,7 +97,8 @@ char DateTimeData::GetDefaultHour(void) const
     return defaultHour;
 }
 
-DateTimeData::~DateTimeData() {
+DateTimeData::~DateTimeData()
+{
     I18nFree(formatAbbreviatedMonthNames);
     I18nFree(formatWideMonthNames);
     I18nFree(standaloneAbbreviatedMonthNames);
@@ -145,7 +146,7 @@ void DateTimeData::SetDayNamesData(const char *formatAbbreviatedDayNames, const 
 }
 
 void DateTimeData::SetPatternsData(const char *datePatterns, const char *timePatterns,
-    const char *hourMinuteSecondPatterns, const char *fullMediumShortPatterns, const char* elapsedPatterns)
+    const char *hourMinuteSecondPatterns, const char *fullMediumShortPatterns, const char *elapsedPatterns)
 {
     if ((datePatterns == nullptr) || (timePatterns == nullptr) ||
         (hourMinuteSecondPatterns == nullptr) || (fullMediumShortPatterns == nullptr) ||

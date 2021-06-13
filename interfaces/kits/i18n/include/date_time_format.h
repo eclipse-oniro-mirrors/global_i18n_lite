@@ -167,7 +167,7 @@ public:
     */
     int8_t Get12HourTimeWithoutAmpm(const time_t &cal, const std::string &zoneInfo,
         std::string &appendTo, I18nStatus &status);
-    
+
     /**
     * @brief format a elapsed duration in the pattern indicated by the type. 
     *
