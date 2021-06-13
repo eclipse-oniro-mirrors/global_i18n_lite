@@ -333,8 +333,6 @@ bool DataResource::GetStringFromStringPool(char *configs, const uint32_t configs
             resource = reinterpret_cast<char **>(I18nMalloc(sizeof(char *) * finalCount));
             if (resource == nullptr) {
                 return false;
-
-                
             }
             break;
         }
