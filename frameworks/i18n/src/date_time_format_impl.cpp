@@ -13,8 +13,8 @@
  * limitations under the License.
  */
 
-#include <string.h>
 #include "date_time_format_impl.h"
+#include <cstring>
 #include "date_time_data.h"
 #include "i18n_pattern.h"
 
@@ -443,6 +443,10 @@ int8_t DateTimeFormatImpl::Get12HourTimeWithoutAmpm(const time_t &cal, const std
     }
     int8_t ret = 0;
     char *pattern = GetNoAmPmPattern(fPattern, ret);
+    if (pattern == nullptr) {
+        status = IERROR;
+        return 0;
+    }
     const time_t adjust = cal + ParseZoneInfo(zoneInfo);
     struct tm tmStruct = { 0 };
     tm *tmPtr = &tmStruct;
@@ -466,12 +470,18 @@ char* DateTimeFormatImpl::GetNoAmPmPattern(const string &patternString, int8_t &
         ret = 1;
         if (patternString[1] == ' ') {
             pattern = static_cast<char*>(I18nMalloc(len - 1));
-            for (size_t i = 0; i < len - 2; ++i) {
-                pattern[i] = patternString[i + 2];
+            if (pattern == nullptr) {
+                return nullptr;
             }
-            pattern[len - 2] = '\0';
+            for (size_t i = 0; i < len - AM_PM_MAX_LENGTH; ++i) {
+                pattern[i] = patternString[i + AM_PM_MAX_LENGTH];
+            }
+            pattern[len - AM_PM_MAX_LENGTH] = '\0';
         } else {
             pattern = static_cast<char*>(I18nMalloc(len));
+            if (pattern == nullptr) {
+                return nullptr;
+            }
             for (size_t i = 0; i < len - 1; ++i) {
                 pattern[i] = patternString[i + 1];
             }
@@ -479,14 +489,20 @@ char* DateTimeFormatImpl::GetNoAmPmPattern(const string &patternString, int8_t &
         }
     } else if ((len > 1) && (patternString[len - 1] == 'a')) {
         ret = -1;
-        if (patternString[len - 2] == ' ') {
+        if (patternString[len - AM_PM_MAX_LENGTH] == ' ') {
             pattern = static_cast<char*>(I18nMalloc(len - 1));
-            for (size_t i = 0; i < len - 2; ++i) {
+            if (pattern == nullptr) {
+                return nullptr;
+            }
+            for (size_t i = 0; i < len - AM_PM_MAX_LENGTH; ++i) {
                 pattern[i] = patternString[i];
             }
-            pattern[len - 2] = '\0';
+            pattern[len - AM_PM_MAX_LENGTH] = '\0';
         } else {
             pattern = static_cast<char*>(I18nMalloc(len));
+            if (pattern == nullptr) {
+                return nullptr;
+            }
             for (size_t i = 0; i < len - 1; ++i) {
                 pattern[i] = patternString[i];
             }

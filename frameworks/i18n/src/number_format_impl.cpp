@@ -195,15 +195,30 @@ int NumberFormatImpl::DelMoreZero(const StyleData &style, int decLen, char *&res
     if ((minDecimalLength != NO_SET) && (minDecimalLength > decLen - 1 - num)) {
         if (decLen - 1 - num < 0) {
             int add = minDecimalLength + 1;
-            result = FillMinDecimal(result, lastLen - num, add, false);
+            char *tempResult = FillMinDecimal(result, lastLen - num, add, false);
+            if (result != nullptr) {
+#ifdef I18N_PRODUCT
+                (void) OhosFree((void *) result);
+#else
+                (void) free((void *) result);
+#endif
+            }
+            result = tempResult;
             num = num - add;
         } else {
             int add = minDecimalLength - decLen + num + 1;
-            result = FillMinDecimal(result, lastLen - num, add, true);
+            char *tempResult = FillMinDecimal(result, lastLen - num, add, true);
+            if (result != nullptr) {
+#ifdef I18N_PRODUCT
+                (void) OhosFree((void *) result);
+#else
+                (void) free((void *) result);
+#endif
+            }
+            result = tempResult;
             num = num - add;
         }
     }
-
     return lastLen - num;
 }
 
@@ -387,9 +402,6 @@ char *NumberFormatImpl::FillMinDecimal(char *target, int len, int addSize, bool 
             continue;
         }
         content[len + i] = '0';
-    }
-    if (target != nullptr) {
-        I18nFree(target);
     }
     return content;
 }
