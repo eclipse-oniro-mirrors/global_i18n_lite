@@ -12,19 +12,19 @@
         "method": "getPatterns",
         "elements": [
             {   
-                "AvailableFormat" : "HOUR12_MINUTE",
+                "availableFormat" : "HOUR12_MINUTE",
                 "enumIndex" : 3,
                 "index" : 0,
                 "skeleton" : "hm"
             },
             {   
-                "AvailableFormat" : "HOUR24_MINUTE",
+                "availableFormat" : "HOUR24_MINUTE",
                 "enumIndex" : 4,
                 "index" : 1,
                 "skeleton" : "Hm"
             },
             {   
-                "AvailableFormat" : "HOUR_MINUTE",
+                "availableFormat" : "HOUR_MINUTE",
                 "enumIndex" : 5,
                 "index" : 2,
                 "skeleton" : "jm"
@@ -39,61 +39,61 @@
         "method": "getPatterns",
         "elements": [
             {   
-                "AvailableFormat" : "ABBR_MONTH_WEEKDAY_DAY",
+                "availableFormat" : "ABBR_MONTH_WEEKDAY_DAY",
                 "enumIndex" : 5,
                 "index" : 0,
                 "skeleton" : "MMMEd"
             },
             {   
-                "AvailableFormat" : "ABBR_MONTH_DAY",
+                "availableFormat" : "ABBR_MONTH_DAY",
                 "enumIndex" : 6,
                 "index" : 1,
                 "skeleton" : "MMMd"
             },
             {   
-                "AvailableFormat" : "YEAR_ABBR_MONTH_ABBR_WEEKDAY_DAY",
+                "availableFormat" : "YEAR_ABBR_MONTH_ABBR_WEEKDAY_DAY",
                 "enumIndex" : 10,
                 "index" : 2,
                 "skeleton" : "yMMMEEEd"
             },
             {   
-                "AvailableFormat" : "YEAR_WIDE_MONTH_ABBR_WEEKDAY_DAY",
+                "availableFormat" : "YEAR_WIDE_MONTH_ABBR_WEEKDAY_DAY",
                 "enumIndex" : 11,
                 "index" : 3,
                 "skeleton" : "yMMMMEEEd"
             },
             {   
-                "AvailableFormat" : "YEAR_SHORT_MONTH_WIDE_WEEKDAY_DAY",
+                "availableFormat" : "YEAR_SHORT_MONTH_WIDE_WEEKDAY_DAY",
                 "enumIndex" : 12,
                 "index" : 4,
                 "skeleton" : "EEEEyMd"
             },
             {   
-                "AvailableFormat" : "YEAR_SHORT_MONTH_ABBR_WEEKDAY_DAY",
+                "availableFormat" : "YEAR_SHORT_MONTH_ABBR_WEEKDAY_DAY",
                 "enumIndex" : 13,
                 "index" : 5,
                 "skeleton" : "EEEyMd"
             },
             {   
-                "AvailableFormat" : "YEAR_ABBR_MONTH_WIDE_WEEKDAY_DAY",
+                "availableFormat" : "YEAR_ABBR_MONTH_WIDE_WEEKDAY_DAY",
                 "enumIndex" : 14,
                 "index" : 6,
                 "skeleton" : "yMMMEEEEd"
             },
             {   
-                "AvailableFormat" : "YEAR_WIDE_MONTH_DAY",
+                "availableFormat" : "YEAR_WIDE_MONTH_DAY",
                 "enumIndex" : 15,
                 "index" : 7,
                 "skeleton" : "yMMMMd"
             },
             {   
-                "AvailableFormat" : "WEEK_DAY",
+                "availableFormat" : "WEEK_DAY",
                 "enumIndex" : 16,
                 "index" : 8,
                 "skeleton" : "Ed"
             },
             {   
-                "AvailableFormat" : "NUMBER_MONTH_ABBR_WEEK_DAY",
+                "availableFormat" : "NUMBER_MONTH_ABBR_WEEK_DAY",
                 "enumIndex" : 17,
                 "index" : 9,
                 "skeleton" : "MEd"
@@ -144,19 +144,19 @@
         "method": "getPatterns",
         "elements": [
             {   
-                "AvailableFormat" : "HOUR12_MINUTE_SECOND",
+                "availableFormat" : "HOUR12_MINUTE_SECOND",
                 "enumIndex" : 0,
                 "index" : 0,
                 "skeleton" : "hms"
             },
             {   
-                "AvailableFormat" : "HOUR24_MINUTE_SECOND",
+                "availableFormat" : "HOUR24_MINUTE_SECOND",
                 "enumIndex" : 1,
                 "index" : 1,
                 "skeleton" : "Hms"
             },
             {   
-                "AvailableFormat" : "HOUR_MINUTE_SECOND",
+                "availableFormat" : "HOUR_MINUTE_SECOND",
                 "enumIndex" : 2,
                 "index" : 2,
                 "skeleton" : "jms"
@@ -171,19 +171,19 @@
         "method": "getPatterns",
         "elements": [
             {   
-                "AvailableFormat" : "FULL",
+                "availableFormat" : "FULL",
                 "enumIndex" : 8,
                 "index" : 0,
                 "skeleton" : "FULL"
             },
             {   
-                "AvailableFormat" : "MEDIUM",
+                "availableFormat" : "MEDIUM",
                 "enumIndex" : 9,
                 "index" : 1,
                 "skeleton" : "MEDIUM"
             },
             {   
-                "AvailableFormat" : "SHORT",
+                "availableFormat" : "SHORT",
                 "enumIndex" : 10,
                 "index" : 2,
                 "skeleton" : "SHORT"
@@ -210,13 +210,13 @@
         "method": "getPatterns",
         "elements": [
             {   
-                "AvailableFormat" : "MINUTE_SECOND",
+                "availableFormat" : "MINUTE_SECOND",
                 "enumIndex" : -1,
                 "index" : 0,
                 "skeleton" : "ms"
             },
             {   
-                "AvailableFormat" : "MINUTE_SECOND_MILLISECOND",
+                "availableFormat" : "MINUTE_SECOND_MILLISECOND",
                 "enumIndex" : -1,
                 "index" : 1,
                 "skeleton" : "msSS"

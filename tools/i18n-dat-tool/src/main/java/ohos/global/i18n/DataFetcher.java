@@ -49,7 +49,8 @@ public class DataFetcher {
     private static final Logger LOG = Logger.getLogger("DataFetcher");
     private static int validLocales = 0;
     private static int sStatus = 0;
-    private static Pattern re_language = Pattern.compile("^([a-z]{2,3})-\\*$");
+    private static final Pattern RE_LANGUAGE = Pattern.compile("^([a-z]{2,3})-\\*$");
+    private static final int MAX_TIME_TO_WAIT = 10;
 
     static {
         addFetchers();
@@ -70,20 +71,7 @@ public class DataFetcher {
                 if (LOCALES.containsKey(tag)) {
                     continue;
                 }
-                // special treatment to wildcard xx-*
-                if (line.equals("*")) {
-                    for (ULocale loc : availableLocales) {
-                        String finalLanguageTag = loc.toLanguageTag();
-                        // now we assume en-001 as invalid locale,
-                        if (!LOCALES.containsKey(finalLanguageTag) && Utils.isValidLanguageTag(finalLanguageTag)) {
-                            FETCHERS.add(new Fetcher(finalLanguageTag, LOCK, ID_MAP));
-                            LOCALES.put(tag, count);
-                            ++count;
-                        }
-                    }
-                    return;
-                }
-                // special treatment to wildcard language-*
+                // special treatment to wildcard
                 int tempCount = processWildcard(line, availableLocales, count);
                 if (tempCount > count) {
                     count = tempCount;
@@ -109,20 +97,33 @@ public class DataFetcher {
 
     private static int processWildcard(String line, ULocale[] availableLocales, int count) {
         String tag = line.trim();
-        Matcher matcher = re_language.matcher(line);
-        if (matcher.matches()) {
+        int tempCount = count;
+        Matcher matcher = RE_LANGUAGE.matcher(line);
+        if ("*".equals(line)) { // special treatment to wildcard xx-*
+            for (ULocale loc : availableLocales) {
+                String finalLanguageTag = loc.toLanguageTag();
+                // now we assume en-001 as invalid locale,
+                if (!LOCALES.containsKey(finalLanguageTag) && Utils.isValidLanguageTag(finalLanguageTag)) {
+                    FETCHERS.add(new Fetcher(finalLanguageTag, LOCK, ID_MAP));
+                    LOCALES.put(tag, tempCount);
+                    ++tempCount;
+                }
+            }
+            return tempCount;
+        }
+        if (matcher.matches()) { // special treatment to wildcard language-*
             String baseName = matcher.group(1);
             for (ULocale loc : availableLocales) {
                 String finalLanguageTag = loc.toLanguageTag();
                 if (loc.getLanguage().equals(baseName) && !LOCALES.containsKey(finalLanguageTag) &&
                     Utils.isValidLanguageTag(finalLanguageTag)) {
                     FETCHERS.add(new Fetcher(finalLanguageTag, LOCK, ID_MAP));
-                    LOCALES.put(tag, count);
-                    ++count;
+                    LOCALES.put(tag, tempCount);
+                    ++tempCount;
                 }
             }
         }
-        return count;
+        return tempCount;
     }
 
     private static boolean checkStatus() {
@@ -194,7 +195,7 @@ public class DataFetcher {
         }
         exec.shutdown();
         try {
-            exec.awaitTermination(10, TimeUnit.SECONDS);
+            exec.awaitTermination(MAX_TIME_TO_WAIT, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             LOG.log(Level.SEVERE, "main class in DataFetcher interrupted");
         }

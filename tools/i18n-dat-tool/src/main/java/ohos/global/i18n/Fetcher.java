@@ -35,7 +35,6 @@ import java.util.Comparator;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.io.File;
 
 import ohos.global.i18n.ResourceConfiguration.ConfigItem;
 import ohos.global.i18n.ResourceConfiguration.Element;
@@ -49,6 +48,10 @@ public class Fetcher implements Runnable {
     private static HashMap<Integer, String> int2Str = new HashMap<>();
     private static HashMap<String, Integer> str2Int = new HashMap<>();
     private static boolean sStatusOk = true;
+
+    /** configuration extracted from resourec_items.json */
+    public static ArrayList<ConfigItem> configItems = null;
+
     private String lan; // language
     private ReentrantLock lock; // Lock used to synchronize dump operation
     private ULocale locale;
@@ -56,9 +59,6 @@ public class Fetcher implements Runnable {
     private DateTimePatternGenerator patternGenerator;
     private int status = 0;
     private String defaultHourString;
-
-    /** configuration extracted from resourec_items.json */
-    public static ArrayList<ConfigItem> configItems = null;
 
     /** Used to store data related to a locale */
     public ArrayList<String> datas = new ArrayList<>();
@@ -74,18 +74,7 @@ public class Fetcher implements Runnable {
 
     static {
         configItems = ResourceConfiguration.parse();
-        configItems.sort(new Comparator<ConfigItem>() {
-            @Override
-            public int compare(ConfigItem first, ConfigItem second) {
-                if (first.getIndex() < second.getIndex()) {
-                    return -1;
-                } else if (first.getIndex() < second.getIndex()) {
-                    return 0;
-                } else {
-                    return 1;
-                }
-            }
-        });
+        configItems.sort((ConfigItem first, ConfigItem second) -> first.getIndex() - second.getIndex());
         resourceCount = configItems.size();
     }
 
@@ -270,7 +259,7 @@ public class Fetcher implements Runnable {
 
     private void getPatterns(ConfigItem config) {
         if (config.elements == null) {
-            throw new NullPointerException("no patterns defined in resource_items.json for index: " + config.index);
+            throw new IllegalArgumentException("no patterns defined in resource_items.json for index: " + config.index);
         }
         Element[] elements = config.elements;
         int current = 0;
@@ -331,6 +320,8 @@ public class Fetcher implements Runnable {
             }
         }
     }
+
+    private String specialRules(String languageTag, String skeleton)
 
     // Get FULL-MEDIUM_SHORT pattern
     private String getFMSPattern(String skeleton) { 

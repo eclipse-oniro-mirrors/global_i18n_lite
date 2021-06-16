@@ -73,7 +73,7 @@ public class Utils {
 
     /**
      * Determines whether a languageTag is valid.
-     * 
+     *
      * @param languageTag tag to be checked
      * @return returns true if languageTag is valid, otherwise false.
      */
@@ -164,7 +164,7 @@ public class Utils {
 
     /**
      * Write i18n.dat's Header to DataOutputStream
-     * 
+     *
      * @param out data will be writen into the stream
      * @param hashCode reserved for future use
      * @param localesCount valid locales in total
@@ -232,6 +232,7 @@ public class Utils {
 
     /**
      * Generate the types.h in interfaces
+     *
      * @param src the original types.h file
      * @param dst the generated types.h file
      * @param configItems ConfigItems extracted from resource_items.json
@@ -286,10 +287,10 @@ public class Utils {
         });
         for (int i = 0; i < adjust.size(); ++i) {
             sb.append("\t");
-            sb.append(adjust.get(i).AvailableFormat);
+            sb.append(adjust.get(i).getAvailableFormat());
             if (i != adjust.size() - 1) {
                 sb.append(",");
-            };
+            }
             sb.append(System.lineSeparator());
         }
         return sb.toString();
@@ -323,7 +324,7 @@ public class Utils {
                 if (innerIndex++ != ele.index) {
                     throw new IllegalStateException("not consecutive index in resourceItem " + item.index);
                 }
-                sb.append("#define " + ele.AvailableFormat + "_INDEX " + getHexIndexString(type, ele.index) +
+                sb.append("#define " + ele.getAvailableFormat() + "_INDEX " + getHexIndexString(type, ele.index) +
                     System.lineSeparator());
             }
         }
@@ -334,6 +335,7 @@ public class Utils {
 
     /**
      * Generate the i18n_pattern.h in frameworks
+     *
      * @param src the original i18n_pattern.h file path
      * @param dst the generated i18n_pattern.h file path
      * @param items ConfigItems extracted from resource_items.json
@@ -387,7 +389,7 @@ public class Utils {
         // every GetStringFromPattern function can only have 14 cases;
         int functionSize = 1;
         if (size >= (MAX_CASE_NUMBER + 1)) {
-            if (size % MAX_CASE_NUMBER == 1) {
+            if (1 == size % MAX_CASE_NUMBER) {
                 functionSize = size / MAX_CASE_NUMBER;
             } else {
                 functionSize = size / MAX_CASE_NUMBER + 1;
@@ -397,10 +399,10 @@ public class Utils {
         String[] temp = new String[functionSize];
         StringBuilder sb = new StringBuilder();
         while(currentFunction <= functionSize) {
-            temp[currentFunction-1] = getGetStringFromPattern(currentFunction, eles);
+            temp[currentFunction - 1] = getGetStringFromPattern(currentFunction, eles);
             ++currentFunction;
         }
-        for (int i = functionSize -1; i >= 0; --i) {
+        for (int i = functionSize - 1; i >= 0; --i) {
             sb.append(temp[i]);
             if (i != 0) {
                 sb.append(System.lineSeparator());
@@ -429,14 +431,14 @@ public class Utils {
             totalLength = MAX_CASE_NUMBER;
         }
         Iterator<Element> iter = left.iterator();
-        while(iter.hasNext() && (totalLength-- > 0)) {
+        while (iter.hasNext() && (totalLength-- > 0)) {
             Element ele = iter.next();
             if (totalLength == 0 && !hasRemainingFunction) {
                 sb.append("        default: {" + System.lineSeparator());
             } else {
-                sb.append("        case " + ele.AvailableFormat + ": {" + System.lineSeparator());
+                sb.append("        case " + ele.getAvailableFormat() + ": {" + System.lineSeparator());
             }
-            sb.append("            return GetPatternFromIndex(" + ele.AvailableFormat + "_INDEX, data);" +
+            sb.append("            return GetPatternFromIndex(" + ele.getAvailableFormat() + "_INDEX, data);" +
                 System.lineSeparator());
             sb.append("        }" + System.lineSeparator());
             iter.remove();
@@ -471,7 +473,7 @@ public class Utils {
             }
         }
         for (int i = 0; i < adjust.size(); ++i) {
-            if ( i != adjust.size() -1) {
+            if ( i != adjust.size() - 1) {
                 sb.append("        case " + adjust.get(i).type + ": {" + System.lineSeparator());
             } else {
                 sb.append("        default: {" + System.lineSeparator());
