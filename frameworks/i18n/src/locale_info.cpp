@@ -34,12 +34,12 @@ void LocaleInfo::Init(const char *newLang, const char *newScript, const char *ne
     }
     int idLength = langLength;
     language = NewArrayAndCopy(newLang, langLength);
-    int scriptLength = 0;
     std::string idStr(newLang);
 
     // script consists of four letters
     if (newScript != nullptr) {
-        if ((scriptLength = LenCharArray(newScript)) == SCRIPT_LENGTH) {
+        int scriptLength = LenCharArray(newScript);
+        if (scriptLength == SCRIPT_LENGTH) {
             script = NewArrayAndCopy(newScript, scriptLength);
             idLength = idLength + scriptLength + 1;
         }
@@ -47,9 +47,9 @@ void LocaleInfo::Init(const char *newLang, const char *newScript, const char *ne
             idStr = idStr + "-" + newScript;
         }
     }
-    int regionLength = 0;
     if (newRegion != nullptr) {
-        if ((regionLength = LenCharArray(newRegion)) == REGION_LENGTH) {
+        int regionLength = LenCharArray(newRegion);
+        if (regionLength == REGION_LENGTH) {
             region = NewArrayAndCopy(newRegion, regionLength);
             idLength = idLength + regionLength + 1;
         }
