@@ -61,37 +61,25 @@ void DataResource::FreeResource()
 {
     if (resource != nullptr) {
         while (resourceCount > 0) {
-            if (resource[resourceCount - 1] != nullptr) {
-                I18nFree(resource[resourceCount - 1]);
-            }
+            I18nFree(resource[resourceCount - 1]);
             --resourceCount;
         }
     }
-    if (resource != nullptr) {
-        I18nFree(resource);
-    }
+    I18nFree(resource);
     if (fallbackResource != nullptr) {
         while (fallbackResourceCount > 0) {
-            if (fallbackResource[fallbackResourceCount - 1] != nullptr) {
-                I18nFree(fallbackResource[fallbackResourceCount - 1]);
-            }
+            I18nFree(fallbackResource[fallbackResourceCount - 1]);
             --fallbackResourceCount;
         }
     }
-    if (fallbackResource != nullptr) {
-        I18nFree(fallbackResource);
-    }
+    I18nFree(fallbackResource);
     if (defaultResource != nullptr) {
         while (defaultResourceCount > 0) {
-            if (defaultResource[defaultResourceCount - 1] != nullptr) {
-                I18nFree(defaultResource[defaultResourceCount - 1]);
-            }
+            I18nFree(defaultResource[defaultResourceCount - 1]);
             --defaultResourceCount;
         }
     }
-    if (defaultResource != nullptr) {
-        I18nFree(defaultResource);
-    }
+    I18nFree(defaultResource);
 }
 
 char *DataResource::GetString(DataResourceType type) const
