@@ -67,6 +67,24 @@ char *NewArrayAndCopy(const char *source, const int len)
     return out;
 }
 
+char *I18nNewCharString(const char *source, const int len)
+{
+    if ((source == nullptr) || (len <= 0)) {
+        return nullptr;
+    }
+    char *out = reinterpret_cast<char *>(I18nMalloc(len + 1));
+    if (out == nullptr) {
+        return nullptr;
+    }
+    errno_t rc = memcpy_s(out, len + 1, source, len);
+    if (rc != EOK) {
+        I18nFree(out);
+        return nullptr;
+    }
+    out[len] = '\0';
+    return out;
+}
+
 bool CleanCharArray(char *target, const int len)
 {
     errno_t ret = memset_s(target, len, 0, len);
