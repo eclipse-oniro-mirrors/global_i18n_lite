@@ -30,6 +30,8 @@ void ArrayCopy(std::string *target, const int targetSize, const std::string *sou
 
 char *NewArrayAndCopy(const char *source, const int len);
 
+char *I18nNewCharString(const char *source, const int len);
+
 bool CleanCharArray(char *target, const int len);
 
 int LenCharArray(const char *target);

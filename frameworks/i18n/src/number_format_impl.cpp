@@ -86,7 +86,13 @@ bool NumberFormatImpl::Init(const DataResource &resource)
     if (defaultData == nullptr) {
         return false;
     }
-    std::string unprocessedNumberDigit = resource.GetString(DataResourceType::NUMBER_DIGIT);
+    const char *numberDigits = mLocale.GetExtension("nu");
+    std::string unprocessedNumberDigit;
+    if (numberDigits != nullptr) {
+        NumberData::GetNumberingSystem(numberDigits, unprocessedNumberDigit);
+    } else {
+        unprocessedNumberDigit = resource.GetString(DataResourceType::NUMBER_DIGIT);
+    }
     if (unprocessedNumberDigit != "") {
         std::string splitDigit[NUM_DIGIT_SIZE];
         Split(unprocessedNumberDigit, splitDigit, NUM_DIGIT_SIZE, NUM_DIGIT_SEP);
