@@ -23,6 +23,7 @@ import com.ibm.icu.text.NumberingSystem;
 import com.ibm.icu.util.ULocale;
 import com.ibm.icu.text.DateFormat;
 import com.ibm.icu.text.SimpleDateFormat;
+import com.ibm.icu.util.Calendar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +32,6 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Comparator;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -80,7 +80,7 @@ public class Fetcher implements Runnable {
 
     /**
      * show whether resouce_items is loaded successfully
-     * 
+     *
      * @return true if status is right, otherwise false
      */
     public static boolean isFetcherStatusOk() {
@@ -89,7 +89,7 @@ public class Fetcher implements Runnable {
 
     /**
      * return the total resource number
-     * 
+     *
      * @return resourceCount
      */
     public static int getResourceCount() {
@@ -134,7 +134,7 @@ public class Fetcher implements Runnable {
     /**
      * Check the status of the fetcher, normally a wrong language tag
      * can make the status wrong.
-     * 
+     *
      * @return the status
      */
     public boolean checkStatus() {
@@ -294,37 +294,38 @@ public class Fetcher implements Runnable {
                     break;
                 }
                 default: {
-                    // special process for en-US's pattern Ed
-                    if ("en-US".equals(languageTag) && ("Ed".equals(skeletons.get(i)))) {
-                        outPatterns[i] = "EEE d";
-                        continue;
-                    }
-                    if ("jm".equals(skeletons.get(i))) {
-                        if ("h".equals(defaultHourString)) {
-                            outPatterns[i] = patternGenerator.getBestPattern("hm");
-                        } else {
-                            outPatterns[i] = patternGenerator.getBestPattern("Hm");
-                        }
-                        continue;
-                    }
-                    if ("jms".equals(skeletons.get(i))) {
-                        if ("h".equals(defaultHourString)) {
-                            outPatterns[i] = patternGenerator.getBestPattern("hms");
-                        } else {
-                            outPatterns[i] = patternGenerator.getBestPattern("Hms");
-                        }
-                        continue;
-                    }
-                    outPatterns[i] = patternGenerator.getBestPattern(skeletons.get(i));
+                    processSpecialPattern(outPatterns, skeletons, i);
                 }
             }
         }
     }
 
-    private String specialRules(String languageTag, String skeleton)
+    private void processSpecialPattern(String[] outPatterns, ArrayList<String> skeletons, int i) {
+        if ("en-US".equals(languageTag) && ("Ed".equals(skeletons.get(i)))) {
+            outPatterns[i] = "EEE d";
+            return;
+        }
+        if ("jm".equals(skeletons.get(i))) {
+            if ("h".equals(defaultHourString)) {
+                outPatterns[i] = patternGenerator.getBestPattern("hm");
+            } else {
+                outPatterns[i] = patternGenerator.getBestPattern("Hm");
+            }
+            return;
+        }
+        if ("jms".equals(skeletons.get(i))) {
+            if ("h".equals(defaultHourString)) {
+                outPatterns[i] = patternGenerator.getBestPattern("hms");
+            } else {
+                outPatterns[i] = patternGenerator.getBestPattern("Hms");
+            }
+            return;
+        }
+        outPatterns[i] = patternGenerator.getBestPattern(skeletons.get(i));
+    }
 
     // Get FULL-MEDIUM_SHORT pattern
-    private String getFMSPattern(String skeleton) { 
+    private String getFMSPattern(String skeleton) {
         DateFormat formatter = null;
         try {
             Field patternField = DateFormat.class.getField(skeleton);
@@ -367,6 +368,14 @@ public class Fetcher implements Runnable {
     // 5. get plural data
     private void getPluralRules(ConfigItem config) {
         String str = PluralFetcher.getInstance().get(this.lan);
+        if (str == null) {
+            str = "";
+        }
+        this.datas.add(str);
+    }
+
+    private void getDecimalPluralRules(ConfigItem config) {
+        String str = PluralFetcher.getInstance().getDecimal(this.lan);
         if (str == null) {
             str = "";
         }
@@ -463,5 +472,19 @@ public class Fetcher implements Runnable {
         } else {
             return "h";
         }
+    }
+
+    private void getWeekdata(ConfigItem config) {
+        Calendar cal = Calendar.getInstance(ULocale.forLanguageTag(languageTag));
+        Calendar.WeekData weekdata = cal.getWeekData();
+        StringBuilder sb = new StringBuilder();
+        sb.append(weekdata.firstDayOfWeek);
+        sb.append(FileConfig.NUMBER_SEP);
+        sb.append(weekdata.minimalDaysInFirstWeek);
+        sb.append(FileConfig.NUMBER_SEP);
+        sb.append(weekdata.weekendOnset);
+        sb.append(FileConfig.NUMBER_SEP);
+        sb.append(weekdata.weekendCease);
+        datas.add(sb.toString());
     }
 }
