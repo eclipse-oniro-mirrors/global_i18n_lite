@@ -31,12 +31,13 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.net.URISyntaxException;
-import java.io.File;
-import java.io.IOException;
+import java.util.Comparator;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import ohos.global.i18n.ResourceConfiguration.ConfigItem;
+import ohos.global.i18n.ResourceConfiguration.Element;
 
 /**
  * Fetcher is used to fetche a locale's specified data
@@ -46,11 +47,18 @@ public class Fetcher implements Runnable {
     private static int resourceCount = 0;
     private static HashMap<Integer, String> int2Str = new HashMap<>();
     private static HashMap<String, Integer> str2Int = new HashMap<>();
-    private static String[] regularDatePatterns = { "MMMEd", "MMMd", "yMMMEEEd",
-        "yMMMMEEEd", "EEEEyMd", "EEEyMd", "yMMMEEEEd", "yMMMMd", "Ed", "MEd" };
-    private static String[] regularTimePatterns = { "hm", "Hm" };
-
     private static boolean sStatusOk = true;
+
+    /** configuration extracted from resourec_items.json */
+    public static ArrayList<ConfigItem> configItems = null;
+
+    private String lan; // language
+    private ReentrantLock lock; // Lock used to synchronize dump operation
+    private ULocale locale;
+    private DateFormatSymbols formatSymbols;
+    private DateTimePatternGenerator patternGenerator;
+    private int status = 0;
+    private String defaultHourString;
 
     /** Used to store data related to a locale */
     public ArrayList<String> datas = new ArrayList<>();
@@ -63,56 +71,27 @@ public class Fetcher implements Runnable {
 
     /** LanguageTag related to the locale */
     public String languageTag;
-    private String lan; // language
-    private ReentrantLock lock; // Lock used to synchronize dump operation
-    private ULocale locale;
-    private DateFormatSymbols formatSymbols;
-    private DateTimePatternGenerator patternGenerator;
-    private int status = 0;
 
     static {
-        resourceCount = loadResourceItems();
-    }
-
-    /**
-     * Add all data items
-     */
-    private static int loadResourceItems() {
-        int count = 0;
-        try (BufferedReader fItems = new BufferedReader(new
-            FileReader(new File(DataFetcher.class.getResource("/resource/resource_items.txt").toURI())))) {
-            String line = "";
-            while ((line = fItems.readLine()) != null) {
-                String tag = line.trim();
-                String[] items = tag.split(",");
-                if (items == null || items.length != 2) {
-                    LOG.log(Level.SEVERE, "line format is wrong in line " + (count + 1));
-                    sStatusOk = false;
-                    return count;
-                }
-                int index = Integer.valueOf(items[1].strip());
-                str2Int.put(items[0], index);
-                int2Str.put(index, items[1]);
-                ++count;
-            }
-        } catch (URISyntaxException e) {
-            sStatusOk = false;
-            LOG.log(Level.SEVERE, "URISyntaxException");
-        } catch (IOException e) {
-            sStatusOk = false;
-            LOG.log(Level.SEVERE, "add Fetcher IOEcxception");
-        }
-        return count;
+        configItems = ResourceConfiguration.parse();
+        configItems.sort((ConfigItem first, ConfigItem second) -> first.getIndex() - second.getIndex());
+        resourceCount = configItems.size();
     }
 
     /**
      * show whether resouce_items is loaded successfully
+     * 
      * @return true if status is right, otherwise false
      */
     public static boolean isFetcherStatusOk() {
         return sStatusOk;
     }
 
+    /**
+     * return the total resource number
+     * 
+     * @return resourceCount
+     */
     public static int getResourceCount() {
         return resourceCount;
     }
@@ -149,34 +128,40 @@ public class Fetcher implements Runnable {
         locale = ULocale.forLanguageTag(this.languageTag);
         formatSymbols = DateFormatSymbols.getInstance(locale);
         patternGenerator = DateTimePatternGenerator.getInstance(locale);
+        defaultHourString = defaultHour();
     }
 
+    /**
+     * Check the status of the fetcher, normally a wrong language tag
+     * can make the status wrong.
+     * 
+     * @return the status
+     */
     public boolean checkStatus() {
         return status == 0;
     }
 
     /**
-     * Get all meta data defined in str2Int
+     * Get all meta data defined in resource_items.json
      */
     public void getData() {
-        getFormatAbbrMonthNames();
-        getFormatAbbrDayNames();
-        getTimePatterns();
-        getDatePatterns();
-        getAmPmMarkers();
-        getPluralRules();
-        getNumberFormat();
-        getNumberDigits();
-        getTimeSeparator();
-        getDefaultHour();
-        getStandAloneAbbrMonthNames();
-        getStandAloneAbbrWeekDayNames();
-        getFormatWideMonthNames();
-        getHourMinuteSeconds();
-        getFMSPattern();
-        getFormatWideWeekDayNames();
-        getStandAloneWideWeekDayNames();
-        getStandAloneWideMonthNames();
+        int current = 0;
+        Method method = null;
+        for (ConfigItem item : configItems) {
+            int index = item.getIndex();
+            if (current != index) {
+                throw new IllegalStateException();
+            }
+            String methodString = item.getMethod();
+            try {
+                method = Fetcher.class.getDeclaredMethod(methodString, ConfigItem.class);
+                method.setAccessible(true);
+                method.invoke(this, item);
+            } catch(IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                LOG.severe("get data failed for index " + current);
+            }
+            ++current;
+        }
     }
 
     /**
@@ -272,34 +257,25 @@ public class Fetcher implements Runnable {
         this.datas.add(sb.toString());
     }
 
-    private void getHourMinuteSeconds() {
-        datas.add(patternGenerator.getBestPattern("hms") + "_" + patternGenerator.getBestPattern("Hms"));
-    }
-
-
-    // use to get patterns from skeletons
-    private void getPatterns(String[] skeletons) {
-        StringBuilder sb = new StringBuilder();
-        String[] outPatterns = new String[skeletons.length];
-        for (int i = 0; i < skeletons.length; ++i) {
-            switch (skeletons[i]) {
-                case "FULL":
-                case "MEDIUM":
-                case "SHORT": {
-                    outPatterns[i] = getFMSPattern(skeletons[i]);
-                    break;
-                }
-                default: {
-                    // special process for en-US's pattern Ed
-                    if ("en-US".equals(languageTag) && ("Ed".equals(skeletons[i]))) {
-                        outPatterns[i] = "EEE d";
-                        continue;
-                    }
-                    outPatterns[i] = patternGenerator.getBestPattern(skeletons[i]);
-                }
-            }
+    private void getPatterns(ConfigItem config) {
+        if (config.elements == null) {
+            throw new IllegalArgumentException("no patterns defined in resource_items.json for index: " + config.index);
         }
-        for (int i = 0; i < skeletons.length; i++) {
+        Element[] elements = config.elements;
+        int current = 0;
+        ArrayList<String> skeletons = new ArrayList<String>(16);
+        for (Element ele : elements) {
+            int index = ele.index;
+            if (current != index) {
+                throw new IllegalStateException("wrong index order in patterns for index: " + config.index);
+            }
+            ++current;
+            skeletons.add(ele.skeleton);
+        }
+        StringBuilder sb = new StringBuilder();
+        String[] outPatterns = new String[skeletons.size()];
+        processPatterns(outPatterns, skeletons);
+        for (int i = 0; i < skeletons.size(); i++) {
             sb.append(outPatterns[i]);
             if (i != outPatterns.length - 1) {
                 sb.append(FileConfig.SEP);
@@ -307,6 +283,45 @@ public class Fetcher implements Runnable {
         }
         datas.add(sb.toString());
     }
+
+    private void processPatterns(String[] outPatterns, ArrayList<String> skeletons) {
+        for (int i = 0; i < skeletons.size(); ++i) {
+            switch (skeletons.get(i)) {
+                case "FULL":
+                case "MEDIUM":
+                case "SHORT": {
+                    outPatterns[i] = getFMSPattern(skeletons.get(i));
+                    break;
+                }
+                default: {
+                    // special process for en-US's pattern Ed
+                    if ("en-US".equals(languageTag) && ("Ed".equals(skeletons.get(i)))) {
+                        outPatterns[i] = "EEE d";
+                        continue;
+                    }
+                    if ("jm".equals(skeletons.get(i))) {
+                        if ("h".equals(defaultHourString)) {
+                            outPatterns[i] = patternGenerator.getBestPattern("hm");
+                        } else {
+                            outPatterns[i] = patternGenerator.getBestPattern("Hm");
+                        }
+                        continue;
+                    }
+                    if ("jms".equals(skeletons.get(i))) {
+                        if ("h".equals(defaultHourString)) {
+                            outPatterns[i] = patternGenerator.getBestPattern("hms");
+                        } else {
+                            outPatterns[i] = patternGenerator.getBestPattern("Hms");
+                        }
+                        continue;
+                    }
+                    outPatterns[i] = patternGenerator.getBestPattern(skeletons.get(i));
+                }
+            }
+        }
+    }
+
+    private String specialRules(String languageTag, String skeleton)
 
     // Get FULL-MEDIUM_SHORT pattern
     private String getFMSPattern(String skeleton) { 
@@ -326,47 +341,18 @@ public class Fetcher implements Runnable {
         }
     }
 
-    private void getFMSPattern() {
-        StringBuilder sb = new StringBuilder();
-        DateFormat dfull = DateFormat.getDateInstance(DateFormat.FULL, locale);
-        if (dfull instanceof com.ibm.icu.text.SimpleDateFormat) {
-            sb.append(((com.ibm.icu.text.SimpleDateFormat)dfull).toPattern());
-            sb.append(FileConfig.SEP);
-        }
-        DateFormat dmedium = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
-        if (dmedium instanceof com.ibm.icu.text.SimpleDateFormat) {
-            sb.append(((com.ibm.icu.text.SimpleDateFormat)dmedium).toPattern());
-            sb.append(FileConfig.SEP);
-        }
-        DateFormat dshort = DateFormat.getDateInstance(DateFormat.SHORT, locale);
-        if (dshort instanceof com.ibm.icu.text.SimpleDateFormat) {
-            sb.append(((com.ibm.icu.text.SimpleDateFormat)dshort).toPattern());
-        }
-        datas.add(sb.toString());
-    }
-
     // 0. get format abbreviated month names
-    private void getFormatAbbrMonthNames() {
+    private void getFormatAbbrMonthNames(ConfigItem config) {
         getMonthNames(DateFormatSymbols.FORMAT, DateFormatSymbols.ABBREVIATED);
     }
 
     // 1. get format abbreviated day names
-    private void getFormatAbbrDayNames() {
+    private void getFormatAbbrDayNames(ConfigItem config) {
         getWeekDayNames(DateFormatSymbols.FORMAT, DateFormatSymbols.ABBREVIATED);
     }
 
-    // 2. get time pattern
-    private void getTimePatterns() {
-        getPatterns(regularTimePatterns);
-    }
-
-    // 3. get date patterns() 
-    private void getDatePatterns() {
-        getPatterns(regularDatePatterns);
-    }
-
     // 4. get am pm markser
-    private void getAmPmMarkers() {
+    private void getAmPmMarkers(ConfigItem config) {
         StringBuilder sb = new StringBuilder();
         String[] amPmStrings = formatSymbols.getAmPmStrings();
         for (int i = 0; i < amPmStrings.length; ++i) {
@@ -379,7 +365,7 @@ public class Fetcher implements Runnable {
     }
 
     // 5. get plural data
-    private void getPluralRules() {
+    private void getPluralRules(ConfigItem config) {
         String str = PluralFetcher.getInstance().get(this.lan);
         if (str == null) {
             str = "";
@@ -389,10 +375,9 @@ public class Fetcher implements Runnable {
 
     // 6. get number format data
     @SuppressWarnings("Deprecation")
-    private void getNumberFormat() {
+    private void getNumberFormat(ConfigItem config) {
         String pattern = NumberFormat.getPatternForStyle(locale, NumberFormat.NUMBERSTYLE);
         String percentPattern = NumberFormat.getPatternForStyle(locale, NumberFormat.PERCENTSTYLE);
-        // NumberingSystem numberSystem = NumberingSystem.getInstance(locale);
         DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(locale);
         String percent = decimalFormatSymbols.getPercentString();
         String  groupingSeparator = decimalFormatSymbols.getGroupingSeparatorString();
@@ -411,7 +396,7 @@ public class Fetcher implements Runnable {
     }
 
     // 7. get number digits
-    private void getNumberDigits() {
+    private void getNumberDigits(ConfigItem config) {
         NumberingSystem numberSystem = NumberingSystem.getInstance(locale);
         String description = numberSystem.getDescription();
         StringBuilder sb = new StringBuilder();
@@ -426,12 +411,46 @@ public class Fetcher implements Runnable {
 
     // 8. get time separtor
     @SuppressWarnings("Deprecation")
-    private void getTimeSeparator() {
+    private void getTimeSeparator(ConfigItem config) {
         datas.add(formatSymbols.getTimeSeparatorString());
     }
 
     // 9. get default hour
-    private void getDefaultHour() {
+    private void getDefaultHour(ConfigItem config) {
+        datas.add(defaultHourString);
+    }
+
+    // 10.get standalone abbreviated month
+    private void getStandAloneAbbrMonthNames(ConfigItem config) {
+        getMonthNames(DateFormatSymbols.STANDALONE, DateFormatSymbols.ABBREVIATED);
+    }
+
+    // 11. get standalone abbreviated weekday
+    private void getStandAloneAbbrWeekDayNames(ConfigItem config) {
+        getWeekDayNames(DateFormatSymbols.STANDALONE, DateFormatSymbols.ABBREVIATED);
+    }
+
+    // 12. get format wide month
+    private void getFormatWideMonthNames(ConfigItem config) {
+        getMonthNames(DateFormatSymbols.FORMAT, DateFormatSymbols.WIDE);
+    }
+
+    // 13. get format wide days
+    private void getFormatWideWeekDayNames(ConfigItem config) {
+        getWeekDayNames(DateFormatSymbols.FORMAT, DateFormatSymbols.WIDE);
+    }
+
+    // 14. get standalone wide days
+    private void getStandAloneWideWeekDayNames(ConfigItem config) {
+        getWeekDayNames(DateFormatSymbols.STANDALONE, DateFormatSymbols.WIDE);
+    }
+
+    // 15. get standalone wide month
+    private void getStandAloneWideMonthNames(ConfigItem config) {
+        getMonthNames(DateFormatSymbols.STANDALONE, DateFormatSymbols.WIDE);
+    }
+
+    private String defaultHour() {
         DateFormat tempFormat = DateFormat
             .getTimeInstance(DateFormat.SHORT, ULocale.forLanguageTag(languageTag));
         SimpleDateFormat timeInstance = null;
@@ -440,39 +459,9 @@ public class Fetcher implements Runnable {
         }
         String shortDateTimePattern = (timeInstance == null) ? "" : timeInstance.toPattern();
         if (shortDateTimePattern.contains("H")) {
-            datas.add("H");
+            return "H";
         } else {
-            datas.add("h");
+            return "h";
         }
-    }
-
-    // 10.get standalone abbreviated month
-    private void getStandAloneAbbrMonthNames() {
-        getMonthNames(DateFormatSymbols.STANDALONE, DateFormatSymbols.ABBREVIATED);
-    }
-
-    // 11. get standalone abbreviated weekday
-    private void getStandAloneAbbrWeekDayNames() {
-        getWeekDayNames(DateFormatSymbols.STANDALONE, DateFormatSymbols.ABBREVIATED);
-    }
-
-    // 12. get format wide month
-    private void getFormatWideMonthNames() {
-        getMonthNames(DateFormatSymbols.FORMAT, DateFormatSymbols.WIDE);
-    }
-
-    // 13. get format wide days
-    private void getFormatWideWeekDayNames() {
-        getWeekDayNames(DateFormatSymbols.FORMAT, DateFormatSymbols.WIDE);
-    }
-
-    // 14. get standalone wide days
-    private void getStandAloneWideWeekDayNames() {
-        getWeekDayNames(DateFormatSymbols.STANDALONE, DateFormatSymbols.WIDE);
-    }
-
-    // 15. get standalone wide month
-    private void getStandAloneWideMonthNames() {
-        getMonthNames(DateFormatSymbols.STANDALONE, DateFormatSymbols.WIDE);
     }
 }
