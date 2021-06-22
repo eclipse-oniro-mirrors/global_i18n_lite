@@ -225,5 +225,13 @@
         "pointer": "elapsedPatterns",
         "type": "ELAPSED_PATTERN",
         "pub": "false"
+    },
+    "week_data": {
+        "index": 19,
+        "method": "getWeekdata"
+    },
+    "decimal_plural" : {
+        "index": 20,
+        "method": "getDecimalPluralRules"
     }
 }

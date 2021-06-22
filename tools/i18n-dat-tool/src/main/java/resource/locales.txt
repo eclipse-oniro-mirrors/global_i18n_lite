@@ -412,6 +412,8 @@ te
 te-IN
 th
 th-TH
+tl
+tl-PH
 tr
 tr-CY
 tr-TR

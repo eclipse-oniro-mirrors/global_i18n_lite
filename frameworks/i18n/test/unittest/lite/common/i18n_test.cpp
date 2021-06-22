@@ -970,5 +970,53 @@ HWTEST_F(I18NTest, I18nFuncTest046, TestSize.Level1)
     cout << "out is " << out << endl;
     EXPECT_TRUE(expect == out);
 }
+
+/**
+ * @tc.name: I18nFuncTest047
+ * @tc.desc: Test PluralFormat GetPluralRuleIndex function
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest047, TestSize.Level1)
+{
+    LocaleInfo locale("lv", "", "");
+    I18nStatus status = I18nStatus::ISUCCESS;
+    PluralFormat formatter(locale, status);
+    double number = 2.1;
+    int out = formatter.GetPluralRuleIndex(number, status);
+    int expect = PluralRuleType::ONE;
+    EXPECT_TRUE(expect == out);
+    number = 10.0;
+    out = formatter.GetPluralRuleIndex(number, status);
+    expect = PluralRuleType::ZERO;
+    EXPECT_TRUE(expect == out);
+    number = 100.2;
+    out = formatter.GetPluralRuleIndex(number, status);
+    expect = PluralRuleType::OTHER;
+    EXPECT_TRUE(expect == out);
+}
+
+/**
+ * @tc.name: I18nFuncTest048
+ * @tc.desc: Test PluralFormat GetPluralRuleIndex function
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest048, TestSize.Level1)
+{
+    LocaleInfo locale("hr", "", "");
+    I18nStatus status = I18nStatus::ISUCCESS;
+    PluralFormat formatter(locale, status);
+    double number = 2.3;
+    int out = formatter.GetPluralRuleIndex(number, status);
+    int expect = PluralRuleType::FEW;
+    EXPECT_TRUE(expect == out);
+    number = 10.1;
+    out = formatter.GetPluralRuleIndex(number, status);
+    expect = PluralRuleType::ONE;
+    EXPECT_TRUE(expect == out);
+    number = 1.5;
+    out = formatter.GetPluralRuleIndex(number, status);
+    expect = PluralRuleType::OTHER;
+    EXPECT_TRUE(expect == out);
+}
 } // anonymous namespace
 

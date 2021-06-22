@@ -31,6 +31,7 @@ public class PluralFetcher {
     private static PluralFetcher PLURAL = new PluralFetcher();
     private static final Logger logger = Logger.getLogger("PluralFetcher");
     private HashMap<String, String> map;
+    private HashMap<String, String> decimalMap;
 
     static {
         PLURAL.init();
@@ -61,6 +62,19 @@ public class PluralFetcher {
         } catch (URISyntaxException e) {
             logger.log(Level.SEVERE, "Init error");
         }
+        try (BufferedReader fin = new BufferedReader(new FileReader(
+                new File(PluralFetcher.class.getResource("/resource/decimalPlurals.txt").toURI())))) {
+                    decimalMap = new HashMap<>();
+            String line = "";
+            while ((line = fin.readLine()) != null) {
+                String[] temp = getPluralItems(line);
+                decimalMap.put(temp[0], temp[1]);
+            }
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Init error");
+        } catch (URISyntaxException e) {
+            logger.log(Level.SEVERE, "Init error");
+        }
     }
 
     /**
@@ -71,6 +85,20 @@ public class PluralFetcher {
      */
     public String get(String lan) {
         String out = map.get(lan);
+        if (out == null) {
+            out = "";
+        }
+        return out;
+    }
+
+    /**
+     * Get plural data related to lan
+     *
+     * @param lan Indicates which language's data to be retrieved
+     * @return Language related to this PluralFetcher instance
+     */
+    public String getDecimal(String lan) {
+        String out = decimalMap.get(lan);
         if (out == null) {
             out = "";
         }
