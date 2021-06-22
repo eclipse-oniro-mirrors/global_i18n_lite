@@ -13,14 +13,14 @@
  * limitations under the License.
  */
 
-#ifndef OHOS_I18N_WEEK_DATA_H
-#define OHOS_I18N_WEEK_DATA_H
+#ifndef OHOS_I18N_WEEK_INFO_H
+#define OHOS_I18N_WEEK_INFO_H
 
 #include "locale_info.h"
 
 namespace OHOS {
 namespace I18N {
-class WeekData {
+class WeekInfo {
 public:
     /**
     * @brief A constructor used to create a <b>Calendar</b> instance with specified locale.
@@ -28,12 +28,12 @@ public:
     * @param locale Indicates the specified locale.
     * @param status Indicates the whether the <b>Calendar</b> instances is created correctly.
     */
-    WeekData(const LocaleInfo &localeInfo, I18nStatus &status);
+    WeekInfo(const LocaleInfo &localeInfo, I18nStatus &status);
 
     /**
     * @brief Get the index of the begining day of a week.
     *
-    * @return Returns the index of the begining day of a week, 1 stands for Sunday and 7 stands for Sunday
+    * @return Returns the index of the begining day of a week, 1 stands for Sunday and 7 stands for Saturday
     */
     uint8_t GetFirstDayOfWeek();
 
@@ -47,24 +47,24 @@ public:
     /**
     * @brief Get the index of the begining day of weekend.
     *
-    * @return Returns the index of the begining day of weekend, 1 stands for Sunday and 7 stands for Sunday
+    * @return Returns the index of the begining day of weekend, 1 stands for Sunday and 7 stands for Saturday
     */
-    uint8_t GetWeekendOnset();
+    uint8_t GetFirstDayOfWeekend();
 
     /**
     * @brief Get the index of the end day of weekend.
     *
-    * @return Returns the index of the end day of weekend, 1 stands for Sunday and 7 stands for Sunday
+    * @return Returns the index of the end day of weekend, 1 stands for Sunday and 7 stands for Saturday
     */
-    uint8_t GetWeekendCease();
+    uint8_t GetLastDayOfWeekend();
 private:
     void Init(I18nStatus &status);
     void ProcessWeekData(char *data, I18nStatus &status);
     LocaleInfo locale;
     uint8_t firstDayOfWeek;
     uint8_t minimalDaysInFirstWeek;
-    uint8_t weekendOnset;
-    uint8_t weekendCease;
+    uint8_t firstDayOfWeekend;
+    uint8_t lastDayOfWeekend;
 };
 } // I18N
 } // OHOS

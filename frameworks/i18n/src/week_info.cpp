@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-#include "week_data.h"
+#include "week_info.h"
 #include <cstring>
 #include "data_resource.h"
 
@@ -26,13 +26,13 @@ static constexpr uint8_t WEEKEND_CEASE_INDEX = 3;
 static constexpr uint8_t WEEK_DATA_LAST_INDEX = 4;
 static constexpr uint8_t SINGLE_DATA_LENGTH = 2;
 
-WeekData::WeekData(const LocaleInfo &localeInfo, I18nStatus &status)
+WeekInfo::WeekInfo(const LocaleInfo &localeInfo, I18nStatus &status)
 {
     locale = localeInfo;
     Init(status);
 }
 
-void WeekData::Init(I18nStatus &status)
+void WeekInfo::Init(I18nStatus &status)
 {
     DataResource resource(&locale);
     bool isSuccess = resource.Init();
@@ -48,7 +48,7 @@ void WeekData::Init(I18nStatus &status)
     ProcessWeekData(weekData, status);
 }
 
-void WeekData::ProcessWeekData(char *data, I18nStatus &status)
+void WeekInfo::ProcessWeekData(char *data, I18nStatus &status)
 {
     if (data == nullptr) {
         status = IERROR;
@@ -61,26 +61,26 @@ void WeekData::ProcessWeekData(char *data, I18nStatus &status)
     }
     firstDayOfWeek = static_cast<uint8_t>(data[FIRST_DAY_OF_WEEK_INDEX * SINGLE_DATA_LENGTH]) - '0';
     minimalDaysInFirstWeek = static_cast<uint8_t>(data[MINIMAL_DAYS_INFIRST_WEEK_INDEX * SINGLE_DATA_LENGTH]) - '0';
-    weekendOnset = static_cast<uint8_t>(data[WEEKEND_ONSET_INDEX * SINGLE_DATA_LENGTH]) - '0';
-    weekendCease = static_cast<uint8_t>(data[WEEKEND_CEASE_INDEX * SINGLE_DATA_LENGTH]) - '0';
+    firstDayOfWeekend = static_cast<uint8_t>(data[WEEKEND_ONSET_INDEX * SINGLE_DATA_LENGTH]) - '0';
+    lastDayOfWeekend = static_cast<uint8_t>(data[WEEKEND_CEASE_INDEX * SINGLE_DATA_LENGTH]) - '0';
 }
 
-uint8_t WeekData::GetFirstDayOfWeek()
+uint8_t WeekInfo::GetFirstDayOfWeek()
 {
     return firstDayOfWeek;
 }
 
-uint8_t WeekData::GetMinimalDaysInFirstWeek()
+uint8_t WeekInfo::GetMinimalDaysInFirstWeek()
 {
     return minimalDaysInFirstWeek;
 }
 
-uint8_t WeekData::GetWeekendOnset()
+uint8_t WeekInfo::GetFirstDayOfWeekend()
 {
-    return weekendOnset;
+    return firstDayOfWeekend;
 }
 
-uint8_t WeekData::GetWeekendCease()
+uint8_t WeekInfo::GetLastDayOfWeekend()
 {
-    return weekendCease;
+    return lastDayOfWeekend;
 }
