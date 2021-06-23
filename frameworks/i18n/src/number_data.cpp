@@ -301,7 +301,6 @@ NumberData::NumberData(const char *pat, const char *percentPat, std::string decS
 NumberData::NumberData()
 {
     isNative = false;
-    std::string ns[NUM_SIZE] = NUMBER_SIGN;
     std::string signs[3] = { ".", ",", "%" }; // use string array contain number data
     const char *enNumberPattern = "#,##0.###";
     const char *percentPattern = "#,##0%";

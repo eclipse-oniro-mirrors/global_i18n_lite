@@ -20,14 +20,6 @@
 
 namespace OHOS {
 namespace I18N {
-std::string Replace(std::string &content, const int index, const char *str)
-{
-    if ((index < 0) || (static_cast<unsigned int>(index) > strlen(content.data()))) {
-        return content;
-    }
-    return content.replace(index, 1, str);
-}
-
 int ReplaceAndCountOff(std::string &content, const int index, const char *sign, const int off)
 {
     int signLen = strlen(sign);
