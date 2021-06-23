@@ -22,8 +22,6 @@
 
 namespace OHOS {
 namespace I18N {
-std::string Replace(std::string &content, const int index, const char *str);
-
 int ReplaceAndCountOff(std::string &content, const int index, const char *sign, const int off);
 
 void ArrayCopy(std::string *target, const int targetSize, const std::string *source, const int sourceSize);
