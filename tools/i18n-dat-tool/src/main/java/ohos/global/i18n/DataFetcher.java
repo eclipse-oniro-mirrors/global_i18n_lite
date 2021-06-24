@@ -32,19 +32,25 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+import com.ibm.icu.util.ULocale;
 
 /**
  * This class is used to generate i18n.dat file
  */
 public class DataFetcher {
     private static final ReentrantLock LOCK = new ReentrantLock();
-    private static final ArrayList<Fetcher> sFetchers = new ArrayList<>();
-    private static final HashMap<String, Integer> sIdMap = new HashMap<>(64);
-    private static final HashMap<String, Integer> sLocales = new HashMap<>();
-    private static final HashMap<Integer, ArrayList<LocaleConfig>> sLocalesConfigs = new HashMap<>(64);
+    private static final ArrayList<Fetcher> FETCHERS = new ArrayList<>();
+    private static final HashMap<String, Integer> ID_MAP = new HashMap<>(64);
+    private static final HashMap<String, Integer> LOCALES = new HashMap<>();
+    private static final HashMap<Integer, ArrayList<LocaleConfig>> LOCALE_CONFIGS = new HashMap<>(64);
     private static final Logger LOG = Logger.getLogger("DataFetcher");
     private static int validLocales = 0;
     private static int sStatus = 0;
+    private static final Pattern RE_LANGUAGE = Pattern.compile("^([a-z]{2,3})-\\*$");
+    private static final int MAX_TIME_TO_WAIT = 10;
 
     static {
         addFetchers();
@@ -59,19 +65,65 @@ public class DataFetcher {
             FileReader(new File(DataFetcher.class.getResource("/resource/locales.txt").toURI())))) {
             String line = "";
             int count = 0;
+            ULocale[] availableLocales = ULocale.getAvailableLocales();
             while ((line = fLocales.readLine()) != null) {
                 String tag = line.trim();
-                sFetchers.add(new Fetcher(tag, LOCK, sIdMap));
-                sLocales.put(tag, count);
+                if (LOCALES.containsKey(tag)) {
+                    continue;
+                }
+                // special treatment to wildcard
+                int tempCount = processWildcard(line, availableLocales, count);
+                if (tempCount > count) {
+                    count = tempCount;
+                    continue;
+                }
+                if (!Utils.isValidLanguageTag(tag)) {
+                    LOG.log(Level.SEVERE, "wrong languageTag " + tag);
+                    sStatus = 1;
+                    return;
+                }
+                FETCHERS.add(new Fetcher(tag, LOCK, ID_MAP));
+                LOCALES.put(tag, count);
                 ++count;
             }
         } catch (URISyntaxException e) {
-            LOG.log(Level.SEVERE, "Add fetchers failed: Url syntax execption");
+            LOG.log(Level.SEVERE, "Add fetchers failed: Url syntax exception");
             sStatus = 1;
         } catch (IOException e) {
-            LOG.log(Level.SEVERE, "Add fetchers failed: Io execption");
+            LOG.log(Level.SEVERE, "Add fetchers failed: Io exception");
             sStatus = 1;
         }
+    }
+
+    private static int processWildcard(String line, ULocale[] availableLocales, int count) {
+        String tag = line.trim();
+        int tempCount = count;
+        Matcher matcher = RE_LANGUAGE.matcher(line);
+        if ("*".equals(line)) { // special treatment to wildcard xx-*
+            for (ULocale loc : availableLocales) {
+                String finalLanguageTag = loc.toLanguageTag();
+                // now we assume en-001 as invalid locale,
+                if (!LOCALES.containsKey(finalLanguageTag) && Utils.isValidLanguageTag(finalLanguageTag)) {
+                    FETCHERS.add(new Fetcher(finalLanguageTag, LOCK, ID_MAP));
+                    LOCALES.put(tag, tempCount);
+                    ++tempCount;
+                }
+            }
+            return tempCount;
+        }
+        if (matcher.matches()) { // special treatment to wildcard language-*
+            String baseName = matcher.group(1);
+            for (ULocale loc : availableLocales) {
+                String finalLanguageTag = loc.toLanguageTag();
+                if (loc.getLanguage().equals(baseName) && !LOCALES.containsKey(finalLanguageTag) &&
+                    Utils.isValidLanguageTag(finalLanguageTag)) {
+                    FETCHERS.add(new Fetcher(finalLanguageTag, LOCK, ID_MAP));
+                    LOCALES.put(tag, tempCount);
+                    ++tempCount;
+                }
+            }
+        }
+        return tempCount;
     }
 
     private static boolean checkStatus() {
@@ -92,19 +144,19 @@ public class DataFetcher {
         Fetcher fallbackFetcher = null;
         String fallbackData = null;
         int count = 0;
-        for (Map.Entry<String, Integer> entry : sLocales.entrySet()) {
+        for (Map.Entry<String, Integer> entry : LOCALES.entrySet()) {
             String languageTag = entry.getKey();
             int index = entry.getValue();
-            Fetcher currentFetcher = sFetchers.get(index);
+            Fetcher currentFetcher = FETCHERS.get(index);
             ArrayList<LocaleConfig> temp = new ArrayList<>();
-            sLocalesConfigs.put(index, temp);
+            LOCALE_CONFIGS.put(index, temp);
             String fallbackLanguageTag = Utils.getFallback(languageTag);
             // now we need to confirm whether current fetcher's data should be write to i18n.dat
             // if current fetcher's fallback contains equivalent data, then we don't need current fetcher's data.
-            if (!sLocales.containsKey(fallbackLanguageTag) || fallbackLanguageTag.equals(languageTag)) {
+            if (!LOCALES.containsKey(fallbackLanguageTag) || fallbackLanguageTag.equals(languageTag)) {
                 fallbackFetcher = null;
             } else {
-                fallbackFetcher = sFetchers.get(sLocales.get(fallbackLanguageTag));
+                fallbackFetcher = FETCHERS.get(LOCALES.get(fallbackLanguageTag));
             }
             if (currentFetcher.equals(fallbackFetcher)) {
                 currentFetcher.included = false;
@@ -119,7 +171,7 @@ public class DataFetcher {
                         fallbackData = null;
                     }
                     if (!myData.equals(fallbackData)) {
-                        temp.add(new LocaleConfig(targetMetaData, i, sIdMap.get(myData)));
+                        temp.add(new LocaleConfig(targetMetaData, i, ID_MAP.get(myData)));
                         ++count;
                     }
                 }
@@ -134,35 +186,32 @@ public class DataFetcher {
      * @param args Main function's argument
      */
     public static void main(String args[]) {
-        if (!Fetcher.isFetcherStatusOk()) {
-            return;
-        }
-        if (!checkStatus()) {
+        if (!Fetcher.isFetcherStatusOk() || !checkStatus()) {
             return;
         }
         ExecutorService exec = Executors.newCachedThreadPool();
-        for (Fetcher fe : sFetchers) {
+        for (Fetcher fe : FETCHERS) {
             exec.execute(fe);
         }
         exec.shutdown();
         try {
-            exec.awaitTermination(10, TimeUnit.SECONDS);
+            exec.awaitTermination(MAX_TIME_TO_WAIT, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             LOG.log(Level.SEVERE, "main class in DataFetcher interrupted");
         }
         int metaDataCount = buildLocaleConfigs(); // every metaData needs 6 bytes
         int localesCount = validLocales; // every locale need 8 bytes
-        for (Fetcher fetcher : sFetchers) {
+        for (Fetcher fetcher : FETCHERS) {
             if (!fetcher.included) {
-                sLocales.remove(fetcher.languageTag);
+                LOCALES.remove(fetcher.languageTag);
             }
         }
         try (DataOutputStream out = new DataOutputStream(new BufferedOutputStream(
                 new FileOutputStream(new File("./i18n.dat"))))) {
             Utils.writeHeader(out, 0, localesCount, metaDataCount);
-            StringPool pool = new StringPool(sIdMap, FileConfig.HEADER_SIZE + localesCount *
+            StringPool pool = new StringPool(ID_MAP, FileConfig.HEADER_SIZE + localesCount *
                 FileConfig.LOCALE_MASK_ITEM_SIZE + metaDataCount * FileConfig.CONFIG_SIZE);
-            LocaleList list = new LocaleList(FileConfig.HEADER_SIZE, sLocales, sLocalesConfigs, pool);
+            LocaleList list = new LocaleList(FileConfig.HEADER_SIZE, LOCALES, LOCALE_CONFIGS, pool);
             list.write(out);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, "exception in writing i18n.dat file");

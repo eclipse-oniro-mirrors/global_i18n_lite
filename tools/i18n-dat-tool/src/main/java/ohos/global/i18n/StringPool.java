@@ -32,20 +32,14 @@ import com.ibm.icu.util.ULocale;
 public class StringPool {
     private static final String ARABIC_PERCENT = new DecimalFormatSymbols(new ULocale("ar")).getPercentString();
     private static final Logger logger = Logger.getLogger("StringPool");
-    private int byteSize;
-    private int itemSize;
     private HashMap<Integer, Integer> lengthMap = new HashMap<>();
     private int size;
-    private int startOffset;
-    private HashMap<String, Integer> str2IntMap;
     private HashMap<Integer, StringItem> offsetMap;
     private HashMap<Integer, String> int2StrMap = new HashMap<>();
 
     public StringPool(HashMap<String, Integer> hashMap, int offset) {
         int current = 0;
-        str2IntMap = hashMap;
         size = hashMap.size();
-        startOffset = offset;
         for (Map.Entry<String, Integer> next : hashMap.entrySet()) {
             this.int2StrMap.put(next.getValue(), next.getKey());
             try {
