@@ -42,10 +42,10 @@ private:
     bool CompareNotEqualResult(const std::string &rule, const int ruleSize, int &index, const int number) const;
     int ParseNumber(const std::string &rule, const int ruleSize, int &index) const;
     bool ParseDecimalRule(const std::string &rule, const int ruleSize, const int *numberInfo,
-        const int &numberInfoSize) const;
+        const int numberInfoSize) const;
     bool ParseDecimalFormula(const std::string &rule, const int ruleSize, int &index, const int *numberInfo,
-        const int &numberInfoSize) const;
-    void ComputeDecimalInfo(double number, int integerNumber, int *numberInfo, const int &numberInfoSize) const;
+        const int numberInfoSize) const;
+    void ComputeDecimalInfo(double number, int integerNumber, int *numberInfo, const int numberInfoSize) const;
     PluralRules *InitPluralRules(std::string unprocessedPluralData);
     bool CheckContainsIntegerRule() const;
     const int SYMBOL_LENGTH = 1;
@@ -63,7 +63,7 @@ private:
     const int INTEGER_NUMBER_INDEX = 0;
     const int FRACTION_NUMBER_INDEX = 1;
     const int NUM_OF_FRACTION_INDEX = 2;
-    const int NUMBER_INFO_SIZE = 3;
+    static constexpr int NUMBER_INFO_SIZE = 3;
     const double EPS = 1e-6;
     const int MAX_FRACTION_NUMBERS = 6;
 };
