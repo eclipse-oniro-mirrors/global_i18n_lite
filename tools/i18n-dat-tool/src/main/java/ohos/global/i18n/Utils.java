@@ -17,12 +17,36 @@ package ohos.global.i18n;
 
 import com.ibm.icu.util.ULocale;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
+import ohos.global.i18n.ResourceConfiguration.ConfigItem;
+import ohos.global.i18n.ResourceConfiguration.Element;
+
+/**
+ * utils class.
+ */
 public class Utils {
     private Utils() {}
+
+    private static final String AVAILABLE_LINE = "enum AvailableDateTimeFormatPattern {";
+    private static final String AVAILABLE_END_LINE = "};";
+    private static final int TYPE_SHIFT = 16;
+    private static final String PATTERN_INDEX_MASK = "#define PATTERN_INDEX_MASK = 0x0000ffff";
+    private static final String I18N_MACROS_BEGIN = "// this file should only be included by date_time_format_impl.cpp";
+    private static final int MAX_CASE_NUMBER = 14;
 
     /**
      * Get a locale's fallback, locale is specified with languageTag
@@ -47,7 +71,12 @@ public class Utils {
         return "en-US";
     }
 
-    // check whether a languageTag is valid.
+    /**
+     * Determines whether a languageTag is valid.
+     *
+     * @param languageTag tag to be checked
+     * @return returns true if languageTag is valid, otherwise false.
+     */
     public static boolean isValidLanguageTag(String languageTag) {
         if (null == languageTag) {
             return false;
@@ -135,8 +164,8 @@ public class Utils {
 
     /**
      * Write i18n.dat's Header to DataOutputStream
-     * 
-     * @param out
+     *
+     * @param out data will be writen into the stream
      * @param hashCode reserved for future use
      * @param localesCount valid locales in total
      * @param metaCount all metaData in total
@@ -199,5 +228,287 @@ public class Utils {
         maskOut[0] = mask;
         String ret = "0x" + Long.toHexString(mask);
         return ret;
+    }
+
+    /**
+     * Generate the types.h in interfaces
+     *
+     * @param src the original types.h file
+     * @param dst the generated types.h file
+     * @param configItems ConfigItems extracted from resource_items.json
+     */
+    public static void generateTypesFile(File src, File dst, ArrayList<ConfigItem> configItems) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(src)));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dst)))) {
+            String line = null;
+            boolean found = false;
+            while ((line = reader.readLine()) != null) {
+                if (!found) {
+                    writer.write(line + System.lineSeparator());
+                }
+                if (AVAILABLE_LINE.equals(line)) {
+                    found = true;
+                    writer.write(generateAvailableDateTimeFormatPattern(configItems));
+                    continue;
+                }
+                if (found && AVAILABLE_END_LINE.equals(line)) {
+                    writer.write(line + System.lineSeparator());
+                    found = false;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String generateAvailableDateTimeFormatPattern(ArrayList<ConfigItem> configItems) {
+        StringBuilder sb = new StringBuilder();
+        ArrayList<Element> adjust = new ArrayList<>();
+        for (ConfigItem item : configItems) {
+            if ("true".equals(item.pub) && item.elements != null) {
+                for (Element ele : item.elements) {
+                    adjust.add(ele);
+                }
+            }
+        }
+        adjust.sort(new Comparator<Element>() {
+            @Override
+            public int compare(Element first, Element second) {
+                if (first.enumIndex < second.enumIndex) {
+                    return -1;
+                } else if (first.enumIndex > second.enumIndex) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        for (int i = 0; i < adjust.size(); ++i) {
+            sb.append("\t");
+            sb.append(adjust.get(i).getAvailableFormat());
+            if (i != adjust.size() - 1) {
+                sb.append(",");
+            }
+            sb.append(System.lineSeparator());
+        }
+        return sb.toString();
+    }
+
+    private static String generateI18nPatternMacros(ArrayList<ConfigItem> configItems) {
+        StringBuilder sb = new StringBuilder();
+        ArrayList<ConfigItem> adjust = new ArrayList<>();
+        for (ConfigItem item : configItems) {
+            if (item.elements != null) {
+                adjust.add(item);
+            }
+        }
+        adjust.sort(new Comparator<ConfigItem>() {
+            @Override
+            public int compare(ConfigItem first, ConfigItem second) {
+                if (first.index < second.index) {
+                    return -1;
+                } else if (first.index > second.index) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        int current = 0;
+        for (ConfigItem item : adjust) {
+            int type = current++;
+            int innerIndex = 0;
+            for (Element ele : item.elements) {
+                if (innerIndex++ != ele.index) {
+                    throw new IllegalStateException("not consecutive index in resourceItem " + item.index);
+                }
+                sb.append("#define " + ele.getAvailableFormat() + "_INDEX " + getHexIndexString(type, ele.index) +
+                    System.lineSeparator());
+            }
+        }
+        sb.append(PATTERN_INDEX_MASK + System.lineSeparator());
+        sb.append("#define TYPE_SHIFT " + TYPE_SHIFT + System.lineSeparator());
+        return sb.toString();
+    }
+
+    /**
+     * Generate the i18n_pattern.h in frameworks
+     *
+     * @param src the original i18n_pattern.h file path
+     * @param dst the generated i18n_pattern.h file path
+     * @param items ConfigItems extracted from resource_items.json
+     */
+    public static void generateI18nPatternFile(File src, File dst, ArrayList<ConfigItem> items) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(src)));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dst)))) {
+            String line = null;
+            boolean found = false;
+            while ((line = reader.readLine()) != null) {
+                if (found && ("} // I18N".equals(line))) {
+                    found = false;
+                }
+                if (!found) {
+                    writer.write(line + System.lineSeparator());
+                }
+                if (I18N_MACROS_BEGIN.equals(line)) {
+                    found = true;
+                    writer.write(generateI18nPatternMacros(items));
+                    writer.write(System.lineSeparator());
+                    writer.write("namespace OHOS{" + System.lineSeparator());
+                    writer.write("namespace I18N{" + System.lineSeparator());
+                    writer.write(getPatternTypeEnum(items));
+                    writer.write(System.lineSeparator());
+                    writer.write(getGetPatternFromIndexCode(items));
+                    writer.write(System.lineSeparator());
+                    writer.write(getGetStringFromPattern(items));
+                    continue;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String getGetStringFromPattern(ArrayList<ConfigItem> configItems) {
+        ArrayList<Element> eles = new ArrayList<>();
+        for (ConfigItem item : configItems) {
+            if (item.elements == null) {
+                continue;
+            }
+            for (Element ele : item.elements) {
+                if (ele.enumIndex >= 0) {
+                    eles.add(ele);
+                }
+            }
+        }
+        int size = eles.size();
+        // every GetStringFromPattern function can only have 14 cases;
+        int functionSize = 1;
+        if (size >= (MAX_CASE_NUMBER + 1)) {
+            if (1 == size % MAX_CASE_NUMBER) {
+                functionSize = size / MAX_CASE_NUMBER;
+            } else {
+                functionSize = size / MAX_CASE_NUMBER + 1;
+            }
+        }
+        int currentFunction = 1;
+        String[] temp = new String[functionSize];
+        StringBuilder sb = new StringBuilder();
+        while(currentFunction <= functionSize) {
+            temp[currentFunction - 1] = getGetStringFromPattern(currentFunction, eles);
+            ++currentFunction;
+        }
+        for (int i = functionSize - 1; i >= 0; --i) {
+            sb.append(temp[i]);
+            if (i != 0) {
+                sb.append(System.lineSeparator());
+            }
+        }
+        return sb.toString();
+    }
+
+    private static String getGetStringFromPattern(int functionIndex, ArrayList<Element> left) {
+        StringBuilder sb = new StringBuilder();
+        if (functionIndex == 1) {
+            sb.append("std::string GetStringFromPattern(const AvailableDateTimeFormatPattern &requestPattern," +
+                "const DateTimeData* const data)");
+        } else {
+            sb.append("std::string GetStringFromPattern" + functionIndex + "(const AvailableDateTimeFormatPattern" +
+                "&requestPattern, const DateTimeData* const data)");
+        }
+        sb.append(System.lineSeparator() + "{" + System.lineSeparator());
+        sb.append("    switch (requestPattern) {" + System.lineSeparator());
+        int totalLength = 0;
+        boolean hasRemainingFunction = true;
+        if (left.size() <= (MAX_CASE_NUMBER + 1)) {
+            totalLength = left.size();
+            hasRemainingFunction = false;
+        } else {
+            totalLength = MAX_CASE_NUMBER;
+        }
+        Iterator<Element> iter = left.iterator();
+        while (iter.hasNext() && (totalLength-- > 0)) {
+            Element ele = iter.next();
+            if (totalLength == 0 && !hasRemainingFunction) {
+                sb.append("        default: {" + System.lineSeparator());
+            } else {
+                sb.append("        case " + ele.getAvailableFormat() + ": {" + System.lineSeparator());
+            }
+            sb.append("            return GetPatternFromIndex(" + ele.getAvailableFormat() + "_INDEX, data);" +
+                System.lineSeparator());
+            sb.append("        }" + System.lineSeparator());
+            iter.remove();
+        }
+        if (hasRemainingFunction) {
+            sb.append("        default: {" + System.lineSeparator());
+            sb.append("            return GetPatternFromIndex" + (functionIndex + 1) + "(requestPattern, data);" +
+                System.lineSeparator());
+            sb.append("        }" + System.lineSeparator());
+        }
+        sb.append("    }" + System.lineSeparator());
+        sb.append("}" + System.lineSeparator());
+        return sb.toString();
+    }
+
+    private static String getGetPatternFromIndexCode(ArrayList<ConfigItem> configItems) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("std::string GetPatternFromIndex(uint32_t index, const DateTimeData * const data)" +
+            System.lineSeparator());
+        sb.append("{" + System.lineSeparator());
+        sb.append("    uint32_t type = index >> PATTERN_TYPE_SHIFT;" + System.lineSeparator());
+        sb.append("    if (type > PatternType::PATTERN_TYPE_END) {" + System.lineSeparator());
+        sb.append("         return \"\";" + System.lineSeparator());
+        sb.append("    }" + System.lineSeparator());
+        sb.append("    uint32_t ind = index & PATTERN_INDEX_MASK;" + System.lineSeparator());
+        sb.append("    PatternType patternType = static_cast<PatternType>(type);" + System.lineSeparator());
+        sb.append("    switch (patternType) {" + System.lineSeparator());
+        ArrayList<ConfigItem> adjust = new ArrayList<>();
+        for (ConfigItem item : configItems) {
+            if (item.type != null) {
+                adjust.add(item);
+            }
+        }
+        for (int i = 0; i < adjust.size(); ++i) {
+            if ( i != adjust.size() - 1) {
+                sb.append("        case " + adjust.get(i).type + ": {" + System.lineSeparator());
+            } else {
+                sb.append("        default: {" + System.lineSeparator());
+            }
+            sb.append("            return Parse(data->" + adjust.get(i).pointer + " , ind);" + System.lineSeparator());
+            sb.append("        }" + System.lineSeparator());
+        }
+        sb.append("    }" + System.lineSeparator());
+        sb.append("}" + System.lineSeparator());
+        return sb.toString();
+    }
+
+    private static String getPatternTypeEnum(ArrayList<ConfigItem> configItems) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("enum PatternType {" + System.lineSeparator());
+        sb.append("    PATTERN_TYPE_BEGIN = 0," + System.lineSeparator());
+        for (int i = 0; i < configItems.size(); ++i) {
+            if (configItems.get(i).type == null) {
+                continue;
+            }
+            if ( i == 0) {
+                sb.append("    " + configItems.get(i).type + " = PATTERN_TYPE_BEGIN," + System.lineSeparator());
+            } else {
+                sb.append("    " + configItems.get(i).type + "," + System.lineSeparator());
+            }
+        }
+        sb.append("    PATTERN_TYPE_END" + System.lineSeparator());
+        sb.append("};" + System.lineSeparator());
+        return sb.toString();
+    }
+
+    private static String getHexIndexString(int type, int index) {
+        if (type < 0 || index < 0) {
+            return "";
+        }
+        return "0x" + Integer.toHexString((type << TYPE_SHIFT) + index);
     }
 }
