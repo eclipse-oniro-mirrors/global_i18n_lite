@@ -131,7 +131,7 @@ bool PluralFormatImpl::CheckContainsIntegerRule() const
 }
 
 void PluralFormatImpl::ComputeDecimalInfo(double number, int integerNumber, int *numberInfo,
-    const int &numberInfoSize) const
+    const int numberInfoSize) const
 {
     int fractionNumber = 0;
     int numOfFraction = 0;
@@ -152,7 +152,7 @@ void PluralFormatImpl::ComputeDecimalInfo(double number, int integerNumber, int 
 }
 
 bool PluralFormatImpl::ParseDecimalRule(const std::string &rule, const int ruleSize, const int *numberInfo,
-    const int &numberInfoSize) const
+    const int numberInfoSize) const
 {
     bool tempResult = true;
     for (int i = 0; i < ruleSize; i++) {
@@ -197,7 +197,7 @@ bool PluralFormatImpl::ParseDecimalRule(const std::string &rule, const int ruleS
 }
 
 bool PluralFormatImpl::ParseDecimalFormula(const std::string &rule, const int ruleSize, int &index,
-    const int *numberInfo, const int &numberInfoSize) const
+    const int *numberInfo, const int numberInfoSize) const
 {
     int currentNumber = 0;
     if ((index < ruleSize) && (rule[index] == NUM_OF_FRACTION)) {
