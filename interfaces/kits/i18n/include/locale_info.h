@@ -172,43 +172,20 @@ public:
     * @version 1.0
     */
     bool IsDefaultLocale() const;
-
-    /**
-    * @brief Parse a language tag, and returns an associated <b>LocaleInfo</b> instance.
-    *
-    * @param languageTag Indicates the language tag, which is to be parsed.
-    * @param status Indicates the status of the creating process.
-    * @return Returns the associated LocaleInfo instances.
-    */
-    static LocaleInfo ForLanguageTag(const char *languageTag, I18nStatus &status);
-
-    /**
-    * @brief Get extension subtag assciated with the key.
-    *
-    * @param key Get the extension subtag using the key.
-    * @return Returns the subtag
-    */
-    const char *GetExtension(const char *key);
 private:
-    bool ChangeLanguageCode(char *lang, const int32_t dstSize, const char *src, const int32_t srcSize) const;
-    static void ProcessExtension(LocaleInfo &locale, const char *key, const char *value);
-    static void ConfirmTagType(const char *start, size_t length, uint8_t &type, const char* &key, const char* &value);
-    static void ParseLanguageTag(LocaleInfo &locale, const char *languageTag, I18nStatus &status);
-    static bool ParseNormalSubTag(LocaleInfo &locale, const char *start, size_t tagLength, uint16_t &options,
-        uint8_t &type);
-    static bool IsLanguage(const char *start, uint8_t length);
-    static bool IsScript(const char *start, uint8_t length);
-    static bool IsRegion(const char *start, uint8_t length);
-    void InitIdstr();
+    bool ChangeLanguageCode(char *lang, const int32_t dstSize, const char* src, const int32_t srcSize) const;
     char *language = nullptr;
     char *script = nullptr;
     char *region = nullptr;
     char *id = nullptr;
-    char *numberDigits = nullptr;
     bool isSucc = true;
     bool IsSuccess();
     void SetFail();
     void Init(const char *lang, const char *script, const char *region, int &status);
+    const int SCRIPT_LENGTH = 4;
+    const int REGION_LENGTH = 2;
+    static constexpr int LANG_MAX_LENGTH = 3;
+    const int LANG_MIN_LENGTH = 2;
     const int CHAR_OFF = 48;
 };
 

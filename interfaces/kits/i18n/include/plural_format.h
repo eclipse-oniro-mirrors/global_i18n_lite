@@ -81,16 +81,6 @@ public:
     * @version 1.0
     */
     int GetPluralRuleIndex(int number, I18nStatus status);
-
-    /**
-    * @brief Obtains the index value of the plural rule for the specified decimal number.
-    *
-    * @param num Indicates the decimal number for which the plural rule is obtained.
-    * @param status Indicates the status of the process for obtaining the plural rule.
-    * @return Returns the index value of the plural rule; returns <b>-1</b> otherwise.
-    * @version 1.0
-    */
-    int GetPluralRuleIndex(double number, I18nStatus status);
 private:
     bool Init();
     PluralFormatImpl *impl = nullptr;

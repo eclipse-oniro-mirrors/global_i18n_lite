@@ -66,14 +66,3 @@ int PluralFormat::GetPluralRuleIndex(int number, I18nStatus status)
     }
     return impl->GetPluralRuleIndex(number, status);
 }
-
-int PluralFormat::GetPluralRuleIndex(double number, I18nStatus status)
-{
-    if (impl == nullptr) {
-        bool isSuccess = Init();
-        if (!isSuccess) {
-            return -1;
-        }
-    }
-    return impl->GetPluralRuleIndex(number, status);
-}

@@ -87,9 +87,7 @@ enum DataResourceType {
     GREGORIAN_STANDALONE_WIDE_DAY, // 16
     GREGORIAN_STANDALONE_WIDE_MONTH, // 17
     ELAPSED_PATERNS, // 18
-    WEEK_DATA, // 19
-    DECIMAL_PLURAL, // 20
-    RESOURCE_TYPE_END // 21
+    RESOURCE_TYPE_END // 19
 };
 
 class DataResource {

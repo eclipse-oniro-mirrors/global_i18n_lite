@@ -20,6 +20,14 @@
 
 namespace OHOS {
 namespace I18N {
+std::string Replace(std::string &content, const int index, const char *str)
+{
+    if ((index < 0) || (static_cast<unsigned int>(index) > strlen(content.data()))) {
+        return content;
+    }
+    return content.replace(index, 1, str);
+}
+
 int ReplaceAndCountOff(std::string &content, const int index, const char *sign, const int off)
 {
     int signLen = strlen(sign);
@@ -51,24 +59,6 @@ char *NewArrayAndCopy(const char *source, const int len)
         return nullptr;
     }
     errno_t rc = strcpy_s(out, len + 1, source);
-    if (rc != EOK) {
-        I18nFree(out);
-        return nullptr;
-    }
-    out[len] = '\0';
-    return out;
-}
-
-char *I18nNewCharString(const char *source, const int len)
-{
-    if ((source == nullptr) || (len <= 0)) {
-        return nullptr;
-    }
-    char *out = reinterpret_cast<char *>(I18nMalloc(len + 1));
-    if (out == nullptr) {
-        return nullptr;
-    }
-    errno_t rc = memcpy_s(out, len + 1, source, len);
     if (rc != EOK) {
         I18nFree(out);
         return nullptr;

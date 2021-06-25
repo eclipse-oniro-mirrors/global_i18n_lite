@@ -62,13 +62,4 @@ int I18NFuncTest043();
 int I18NFuncTest044();
 int I18NFuncTest045();
 int I18NFuncTest046();
-int I18NFuncTest047();
-int I18NFuncTest048();
-int I18NFuncTest049();
-int I18NFuncTest050();
-int I18NFuncTest051();
-int I18NFuncTest052();
-int I18NFuncTest053();
-int I18NFuncTest054();
-int I18NFuncTest055();
 #endif

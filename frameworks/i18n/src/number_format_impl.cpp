@@ -86,13 +86,7 @@ bool NumberFormatImpl::Init(const DataResource &resource)
     if (defaultData == nullptr) {
         return false;
     }
-    const char *numberDigits = mLocale.GetExtension("nu");
-    std::string unprocessedNumberDigit;
-    if (numberDigits != nullptr) {
-        NumberData::GetNumberingSystem(numberDigits, unprocessedNumberDigit);
-    } else {
-        unprocessedNumberDigit = resource.GetString(DataResourceType::NUMBER_DIGIT);
-    }
+    std::string unprocessedNumberDigit = resource.GetString(DataResourceType::NUMBER_DIGIT);
     if (unprocessedNumberDigit != "") {
         std::string splitDigit[NUM_DIGIT_SIZE];
         Split(unprocessedNumberDigit, splitDigit, NUM_DIGIT_SIZE, NUM_DIGIT_SEP);
@@ -113,6 +107,7 @@ NumberFormatImpl::~NumberFormatImpl()
 std::string NumberFormatImpl::InnerFormat(double num, StyleData &style, bool hasDec, bool isShowGroup,
     int &status) const
 {
+    errno_t rc = EOK;
     char buff[NUMBER_MAX] = { 0 };
 
     // convert decimal to char and format
@@ -137,7 +132,7 @@ std::string NumberFormatImpl::InnerFormat(double num, StyleData &style, bool has
         int lengths[] = { lastLen, len, style.isTwoGroup};
         AddGroup(resultAndContent, lengths, decimalNum, hasDec, decLen);
     } else {
-        errno_t rc = strcpy_s(result, lastLen + 1, content);
+        rc = strcpy_s(result, lastLen + 1, content);
         CheckStatus(rc, status);
     }
     // del more zero
@@ -168,9 +163,6 @@ bool NumberFormatImpl::DealWithPercent(char *buff, char *&result, int &status, S
             return false;
         }
         char *perResult = reinterpret_cast<char *>(I18nMalloc(len + 1));
-        if (perResult == nullptr) {
-            return false;
-        }
         errno_t rc = strcpy_s(perResult, len + 1, buff);
         CheckStatus(rc, status);
         if (status == IERROR) {
@@ -398,7 +390,7 @@ bool NumberFormatImpl::SetMinDecimalLength(int length)
     return false;
 }
 
-char *NumberFormatImpl::FillMinDecimal(const char *target, int len, int addSize, bool isDec) const
+char *NumberFormatImpl::FillMinDecimal(char *target, int len, int addSize, bool isDec) const
 {
     char *content = NewArrayAndCopy(target, len + addSize);
     if (content == nullptr) {
