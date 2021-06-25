@@ -64,7 +64,7 @@ public:
     bool isNative = false;
     StyleData style;
     StyleData percentStyle;
-    friend class NumberFormatImpl;
+    friend class NumberFormat;
     NumberData();
     NumberData(const char *pat, const char *percentPat, std::string decSign, std::string groupSign,
         std::string perSign);
@@ -74,7 +74,6 @@ public:
     bool SetMaxDecimalLength(int length);
 
 private:
-    static void GetNumberingSystem(const char *numberingSystem, std::string &ret);
     void Init(const char *pat, int patLen, const char *percentPat, int perPatLen);
     void InitSign(const std::string *signs, const int signLength);
     void ParsePattern(const char *pattern, const int len, StyleData &styleData);

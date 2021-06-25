@@ -30,7 +30,6 @@ locale_sources = [
   "src/plural_format_impl.cpp",
   "src/plural_rules.cpp",
   "src/str_util.cpp",
-  "src/week_info.cpp"
 ]
 
 config("locale_config") {

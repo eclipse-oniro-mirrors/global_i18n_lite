@@ -301,6 +301,7 @@ NumberData::NumberData(const char *pat, const char *percentPat, std::string decS
 NumberData::NumberData()
 {
     isNative = false;
+    std::string ns[NUM_SIZE] = NUMBER_SIGN;
     std::string signs[3] = { ".", ",", "%" }; // use string array contain number data
     const char *enNumberPattern = "#,##0.###";
     const char *percentPattern = "#,##0%";
@@ -364,38 +365,4 @@ bool NumberData::SetMaxDecimalLength(int length)
         ParsePattern(pattern, strlen(pattern), style);
     }
     return true;
-}
-
-void NumberData::GetNumberingSystem(const char *numberingSystem, std::string &ret)
-{
-    if (numberingSystem == nullptr || (strcmp(numberingSystem, "latn") == 0)) {
-        ret = "0;1;2;3;4;5;6;7;8;9";
-        return;
-    }
-    if (strcmp(numberingSystem, "arab") == 0) {
-        signed char digits[] = { -39, -96, 59, -39, -95, 59, -39, -94, 59, -39, -93, 59, -39, -92, 59, -39, -91, 59,
-                                 -39, -90, 59, -39, -89, 59, -39, -88, 59, -39, -87, 0 };
-        ret = reinterpret_cast<char *>(digits);
-    } else if (strcmp(numberingSystem, "arabext") == 0) {
-        signed char digits[] = { -37, -80, 59, -37, -79, 59, -37, -78, 59, -37, -77, 59, -37, -76, 59, -37, -75, 59,
-                                 -37, -74, 59, -37, -73, 59, -37, -72, 59, -37, -71, 0 };
-        ret = reinterpret_cast<char *>(digits);
-    } else if (strcmp(numberingSystem, "beng") == 0) {
-        signed char digits[] = { -32, -89, -90, 59, -32, -89, -89, 59, -32, -89, -88, 59, -32, -89, -87, 59, -32, -89,
-                                 -86, 59, -32, -89, -85, 59, -32, -89, -84, 59, -32, -89, -83, 59, -32, -89, -82, 59,
-                                 -32, -89, -81, 0 };
-        ret = reinterpret_cast<char *>(digits);
-    } else if (strcmp(numberingSystem, "deva") == 0) {
-        signed char digits[] = { -32, -91, -90, 59, -32, -91, -89, 59, -32, -91, -88, 59, -32, -91, -87, 59, -32, -91,
-                                 -86, 59, -32, -91, -85, 59, -32, -91, -84, 59, -32, -91, -83, 59, -32, -91, -82, 59,
-                                 -32, -91, -81, 0 };
-        ret = reinterpret_cast<char *>(digits);
-    } else if (strcmp(numberingSystem, "mymr") == 0) {
-        signed char digits[] = { -31, -127, -128, 59, -31, -127, -127, 59, -31, -127, -126, 59, -31, -127, -125, 59,
-                                 -31, -127, -124, 59, -31, -127, -123, 59, -31, -127, -122, 59, -31, -127, -121, 59,
-                                 -31, -127, -120, 59, -31, -127, -119, 0 };
-        ret = reinterpret_cast<char *>(digits);
-    } else {
-        ret = "0;1;2;3;4;5;6;7;8;9";
-    }
 }
