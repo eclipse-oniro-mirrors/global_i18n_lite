@@ -48,7 +48,7 @@ void WeekInfo::Init(I18nStatus &status)
     ProcessWeekData(weekData, status);
 }
 
-void WeekInfo::ProcessWeekData(char *data, I18nStatus &status)
+void WeekInfo::ProcessWeekData(const char *data, I18nStatus &status)
 {
     if (data == nullptr) {
         status = IERROR;
