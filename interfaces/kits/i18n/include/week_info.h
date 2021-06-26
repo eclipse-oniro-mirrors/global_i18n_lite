@@ -31,6 +31,11 @@ public:
     WeekInfo(const LocaleInfo &localeInfo, I18nStatus &status);
 
     /**
+    * @brief A destructor used to delete the <b>WeekInfo</b> object.
+    */
+    virtual ~WeekInfo() = default;
+
+    /**
     * @brief Get the index of the begining day of a week.
     *
     * @return Returns the index of the begining day of a week, 1 stands for Sunday and 7 stands for Saturday
@@ -59,7 +64,7 @@ public:
     uint8_t GetLastDayOfWeekend();
 private:
     void Init(I18nStatus &status);
-    void ProcessWeekData(char *data, I18nStatus &status);
+    void ProcessWeekData(const char *data, I18nStatus &status);
     LocaleInfo locale;
     uint8_t firstDayOfWeek;
     uint8_t minimalDaysInFirstWeek;
