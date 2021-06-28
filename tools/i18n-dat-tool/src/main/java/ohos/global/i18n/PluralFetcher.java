@@ -57,9 +57,7 @@ public class PluralFetcher {
                 String[] temp = getPluralItems(line);
                 map.put(temp[0], temp[1]);
             }
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Init error");
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             logger.log(Level.SEVERE, "Init error");
         }
         try (BufferedReader fin = new BufferedReader(new FileReader(
@@ -70,9 +68,7 @@ public class PluralFetcher {
                 String[] temp = getPluralItems(line);
                 decimalMap.put(temp[0], temp[1]);
             }
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Init error");
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             logger.log(Level.SEVERE, "Init error");
         }
     }
@@ -107,8 +103,8 @@ public class PluralFetcher {
 
     private static String[] getPluralItems(String line) {
         String[] ret = new String[2];
-        line = line.trim();
-        String[] splits = line.split(" ", 2); // Split into 2 parts
+        String trimedLine = line.trim();
+        String[] splits = trimedLine.split(" ", 2); // Split into 2 parts
         if (splits.length != 2) {
             logger.log(Level.SEVERE, "Init error");
             return null;
