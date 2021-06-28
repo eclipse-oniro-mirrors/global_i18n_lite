@@ -56,7 +56,7 @@ public class DataFetcher {
         addFetchers();
     }
 
-    /** 
+    /**
      *
      * Add all required locales from locale.txt and fetch its related data.
      */
