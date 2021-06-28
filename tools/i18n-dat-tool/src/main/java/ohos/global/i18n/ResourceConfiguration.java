@@ -53,9 +53,7 @@ public class ResourceConfiguration {
                 ++count;
                 ret.add(item);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
         return ret;
