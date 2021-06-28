@@ -43,22 +43,13 @@ import ohos.global.i18n.ResourceConfiguration.Element;
  * Fetcher is used to fetche a locale's specified data
  */
 public class Fetcher implements Runnable {
+    /** configuration extracted from resourec_items.json */
+    private static ArrayList<ConfigItem> configItems = null;
     private static final Logger LOG = Logger.getLogger("Fetcher");
     private static int resourceCount = 0;
     private static HashMap<Integer, String> int2Str = new HashMap<>();
     private static HashMap<String, Integer> str2Int = new HashMap<>();
     private static boolean sStatusOk = true;
-
-    /** configuration extracted from resourec_items.json */
-    public static ArrayList<ConfigItem> configItems = null;
-
-    private String lan; // language
-    private ReentrantLock lock; // Lock used to synchronize dump operation
-    private ULocale locale;
-    private DateFormatSymbols formatSymbols;
-    private DateTimePatternGenerator patternGenerator;
-    private int status = 0;
-    private String defaultHourString;
 
     /** Used to store data related to a locale */
     public ArrayList<String> datas = new ArrayList<>();
@@ -71,6 +62,14 @@ public class Fetcher implements Runnable {
 
     /** LanguageTag related to the locale */
     public String languageTag;
+
+    private String lan; // language
+    private ReentrantLock lock; // Lock used to synchronize dump operation
+    private ULocale locale;
+    private DateFormatSymbols formatSymbols;
+    private DateTimePatternGenerator patternGenerator;
+    private int status = 0;
+    private String defaultHourString;
 
     static {
         configItems = ResourceConfiguration.parse();

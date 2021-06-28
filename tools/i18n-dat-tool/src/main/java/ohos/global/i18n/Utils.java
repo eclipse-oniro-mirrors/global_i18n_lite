@@ -78,7 +78,7 @@ public class Utils {
      * @return returns true if languageTag is valid, otherwise false.
      */
     public static boolean isValidLanguageTag(String languageTag) {
-        if (null == languageTag) {
+        if (languageTag == null) {
             return false;
         }
         String[] items = languageTag.split("-");
@@ -95,10 +95,12 @@ public class Utils {
                     if (checkScript(items[1])) {
                         return true;
                     }
-                } else if(items[1].length() == 2) {
+                } else if (items[1].length() == 2) {
                     if (checkRegion(items[1])) {
                         return true;
                     }
+                } else {
+                    return false;
                 }
                 return false;
             }
@@ -112,7 +114,7 @@ public class Utils {
     }
 
     private static boolean checkLanguage(String lan) {
-        if (null == lan) {
+        if (lan == null) {
             return false;
         }
         int length = lan.length();
@@ -256,9 +258,7 @@ public class Utils {
                     found = false;
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (FileNotFoundException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -366,9 +366,7 @@ public class Utils {
                     continue;
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (FileNotFoundException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -398,7 +396,7 @@ public class Utils {
         int currentFunction = 1;
         String[] temp = new String[functionSize];
         StringBuilder sb = new StringBuilder();
-        while(currentFunction <= functionSize) {
+        while (currentFunction <= functionSize) {
             temp[currentFunction - 1] = getGetStringFromPattern(currentFunction, eles);
             ++currentFunction;
         }
