@@ -86,8 +86,16 @@ HWTEST_F(I18NTest, I18NFuncTest004, TestSize.Level1)
 {
     LocaleInfo locale("zh", "CN");
     LocaleInfo locale2(locale);
-    EXPECT_TRUE(strcmp(locale2.GetLanguage(), "zh") == 0);
-    EXPECT_TRUE(strcmp(locale2.GetRegion(), "CN") == 0);
+    const char *language = locale2.GetLanguage();
+    const char *region = locale2.GetRegion();
+    EXPECT_TRUE(language != nullptr);
+    EXPECT_TRUE(region != nullptr);
+    if (language != nullptr) {
+        EXPECT_TRUE(strcmp(language, "zh") == 0);
+    }
+    if (region != nullptr) {
+        EXPECT_TRUE(strcmp(region, "CN") == 0);
+    }
 }
 
 /**
@@ -110,7 +118,11 @@ HWTEST_F(I18NTest, I18NFuncTest005, TestSize.Level1)
 HWTEST_F(I18NTest, I18NFuncTest006, TestSize.Level1)
 {
     LocaleInfo locale("ar", "AE");
-    EXPECT_TRUE(strcmp(locale.GetLanguage(), "ar") == 0);
+    const char *language = locale.GetLanguage();
+    EXPECT_TRUE(language != nullptr);
+    if (language != nullptr) {
+        EXPECT_TRUE(strcmp(language, "ar") == 0);
+    }
 }
 
 /**
@@ -121,7 +133,11 @@ HWTEST_F(I18NTest, I18NFuncTest006, TestSize.Level1)
 HWTEST_F(I18NTest, I18NFuncTest007, TestSize.Level1)
 {
     LocaleInfo locale("ar", "AE");
-    EXPECT_TRUE(strcmp(locale.GetRegion(), "AE") == 0);
+    const char *region = locale.GetRegion();
+    EXPECT_TRUE(region != nullptr);
+    if (region != nullptr) {
+        EXPECT_TRUE(strcmp(region, "AE") == 0);
+    }
 }
 
 /**
@@ -132,7 +148,11 @@ HWTEST_F(I18NTest, I18NFuncTest007, TestSize.Level1)
 HWTEST_F(I18NTest, I18NFuncTest008, TestSize.Level1)
 {
     LocaleInfo locale("zh", "Hans", "CN");
-    EXPECT_TRUE(strcmp(locale.GetScript(), "Hans") == 0);
+    const char *script = locale.GetScript();
+    EXPECT_TRUE(script != nullptr);
+    if (script != nullptr) {
+        EXPECT_TRUE(strcmp(script, "Hans") == 0);
+    }
 }
 
 /**
@@ -143,7 +163,11 @@ HWTEST_F(I18NTest, I18NFuncTest008, TestSize.Level1)
 HWTEST_F(I18NTest, I18NFuncTest009, TestSize.Level1)
 {
     LocaleInfo locale("zh", "Hans", "CN");
-    EXPECT_TRUE(strcmp(locale.GetId(), "zh-Hans-CN") == 0);
+    const char *id = locale.GetId();
+    EXPECT_TRUE(id != nullptr);
+    if (id != nullptr) {
+        EXPECT_TRUE(strcmp(id, "zh-Hans-CN") == 0);
+    }
 }
 
 /**
