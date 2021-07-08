@@ -21,23 +21,23 @@
 #include "number_format.h"
 #include "plural_format.h"
 #include "types.h"
+#include "week_info.h"
 
 using namespace std;
 using namespace testing::ext;
 using namespace OHOS::I18N;
 
-namespace {
 class I18NTest : public testing::Test {
 public:
-    void SetUp() const;
-    void TearDown() const;
+    void SetUp();
+    void TearDown();
 };
 
-void I18NTest::SetUp(void) const
+void I18NTest::SetUp()
 {
 }
 
-void I18NTest::TearDown(void) const
+void I18NTest::TearDown()
 {
 }
 
@@ -86,8 +86,16 @@ HWTEST_F(I18NTest, I18NFuncTest004, TestSize.Level1)
 {
     LocaleInfo locale("zh", "CN");
     LocaleInfo locale2(locale);
-    EXPECT_TRUE(strcmp(locale2.GetLanguage(), "zh") == 0);
-    EXPECT_TRUE(strcmp(locale2.GetRegion(), "CN") == 0);
+    const char *language = locale2.GetLanguage();
+    const char *region = locale2.GetRegion();
+    EXPECT_TRUE(language != nullptr);
+    EXPECT_TRUE(region != nullptr);
+    if (language != nullptr) {
+        EXPECT_TRUE(strcmp(language, "zh") == 0);
+    }
+    if (region != nullptr) {
+        EXPECT_TRUE(strcmp(region, "CN") == 0);
+    }
 }
 
 /**
@@ -110,7 +118,11 @@ HWTEST_F(I18NTest, I18NFuncTest005, TestSize.Level1)
 HWTEST_F(I18NTest, I18NFuncTest006, TestSize.Level1)
 {
     LocaleInfo locale("ar", "AE");
-    EXPECT_TRUE(strcmp(locale.GetLanguage(), "ar") == 0);
+    const char *language = locale.GetLanguage();
+    EXPECT_TRUE(language != nullptr);
+    if (language != nullptr) {
+        EXPECT_TRUE(strcmp(language, "ar") == 0);
+    }
 }
 
 /**
@@ -121,7 +133,11 @@ HWTEST_F(I18NTest, I18NFuncTest006, TestSize.Level1)
 HWTEST_F(I18NTest, I18NFuncTest007, TestSize.Level1)
 {
     LocaleInfo locale("ar", "AE");
-    EXPECT_TRUE(strcmp(locale.GetRegion(), "AE") == 0);
+    const char *region = locale.GetRegion();
+    EXPECT_TRUE(region != nullptr);
+    if (region != nullptr) {
+        EXPECT_TRUE(strcmp(region, "AE") == 0);
+    }
 }
 
 /**
@@ -132,7 +148,11 @@ HWTEST_F(I18NTest, I18NFuncTest007, TestSize.Level1)
 HWTEST_F(I18NTest, I18NFuncTest008, TestSize.Level1)
 {
     LocaleInfo locale("zh", "Hans", "CN");
-    EXPECT_TRUE(strcmp(locale.GetScript(), "Hans") == 0);
+    const char *script = locale.GetScript();
+    EXPECT_TRUE(script != nullptr);
+    if (script != nullptr) {
+        EXPECT_TRUE(strcmp(script, "Hans") == 0);
+    }
 }
 
 /**
@@ -143,7 +163,11 @@ HWTEST_F(I18NTest, I18NFuncTest008, TestSize.Level1)
 HWTEST_F(I18NTest, I18NFuncTest009, TestSize.Level1)
 {
     LocaleInfo locale("zh", "Hans", "CN");
-    EXPECT_TRUE(strcmp(locale.GetId(), "zh-Hans-CN") == 0);
+    const char *id = locale.GetId();
+    EXPECT_TRUE(id != nullptr);
+    if (id != nullptr) {
+        EXPECT_TRUE(strcmp(id, "zh-Hans-CN") == 0);
+    }
 }
 
 /**
@@ -970,5 +994,147 @@ HWTEST_F(I18NTest, I18nFuncTest046, TestSize.Level1)
     cout << "out is " << out << endl;
     EXPECT_TRUE(expect == out);
 }
-} // anonymous namespace
 
+/**
+ * @tc.name: I18nFuncTest047
+ * @tc.desc: Test PluralFormat GetPluralRuleIndex function
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest047, TestSize.Level1)
+{
+    LocaleInfo locale("lv", "", "");
+    I18nStatus status = I18nStatus::ISUCCESS;
+    PluralFormat formatter(locale, status);
+    double number = 2.1;
+    int out = formatter.GetPluralRuleIndex(number, status);
+    int expect = PluralRuleType::ONE;
+    EXPECT_TRUE(expect == out);
+    number = 10.0;
+    out = formatter.GetPluralRuleIndex(number, status);
+    expect = PluralRuleType::ZERO;
+    EXPECT_TRUE(expect == out);
+    number = 100.2;
+    out = formatter.GetPluralRuleIndex(number, status);
+    expect = PluralRuleType::OTHER;
+    EXPECT_TRUE(expect == out);
+}
+
+/**
+ * @tc.name: I18nFuncTest048
+ * @tc.desc: Test PluralFormat GetPluralRuleIndex function
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest048, TestSize.Level1)
+{
+    LocaleInfo locale("hr", "", "");
+    I18nStatus status = I18nStatus::ISUCCESS;
+    PluralFormat formatter(locale, status);
+    double number = 2.3;
+    int out = formatter.GetPluralRuleIndex(number, status);
+    int expect = PluralRuleType::FEW;
+    EXPECT_TRUE(expect == out);
+    number = 10.1;
+    out = formatter.GetPluralRuleIndex(number, status);
+    expect = PluralRuleType::ONE;
+    EXPECT_TRUE(expect == out);
+    number = 1.5;
+    out = formatter.GetPluralRuleIndex(number, status);
+    expect = PluralRuleType::OTHER;
+    EXPECT_TRUE(expect == out);
+}
+
+/**
+ * @tc.name: I18nFuncTest049
+ * @tc.desc: Test LocaleInfo ForLanguageTag
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest049, TestSize.Level1)
+{
+    I18nStatus status = I18nStatus::ISUCCESS;
+    LocaleInfo locale = LocaleInfo::ForLanguageTag("zh-Hant-CN-u-nu-arab", status);
+    EXPECT_TRUE(status == I18nStatus::ISUCCESS);
+}
+
+/**
+ * @tc.name: I18nFuncTest050
+ * @tc.desc: Test LocaleInfo GetExtension
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest050, TestSize.Level1)
+{
+    I18nStatus status = I18nStatus::ISUCCESS;
+    LocaleInfo locale = LocaleInfo::ForLanguageTag("zh-Hant-CN-u-nu-arab", status);
+    EXPECT_TRUE(status == I18nStatus::ISUCCESS);
+    const char *numberDigits = locale.GetExtension("nu");
+    EXPECT_TRUE(numberDigits != nullptr);
+    EXPECT_TRUE(strcmp("arab", numberDigits) == 0);
+}
+
+/**
+ * @tc.name: I18nFuncTest051
+ * @tc.desc: Test WeekInfo constructor;
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest051, TestSize.Level1)
+{
+    I18nStatus status = I18nStatus::ISUCCESS;
+    LocaleInfo locale("zh", "CN");
+    WeekInfo weekInfo(locale, status);
+    EXPECT_TRUE(status == I18nStatus::ISUCCESS);
+}
+
+/**
+ * @tc.name: I18nFuncTest052
+ * @tc.desc: Test WeekInfo GetFirstDayOfWeek()
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest052, TestSize.Level1)
+{
+    I18nStatus status = I18nStatus::ISUCCESS;
+    LocaleInfo locale("zh", "CN");
+    WeekInfo weekInfo(locale, status);
+    uint8_t ret = weekInfo.GetFirstDayOfWeek();
+    EXPECT_TRUE(ret == 1);
+}
+
+/**
+ * @tc.name: I18nFuncTest053
+ * @tc.desc: Test WeekInfo GetMinimalDaysInFirstWeek()
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest053, TestSize.Level1)
+{
+    I18nStatus status = I18nStatus::ISUCCESS;
+    LocaleInfo locale("zh", "CN");
+    WeekInfo weekInfo(locale, status);
+    uint8_t ret = weekInfo.GetMinimalDaysInFirstWeek();
+    EXPECT_TRUE(ret == 1);
+}
+
+/**
+ * @tc.name: I18nFuncTest054
+ * @tc.desc: Test WeekInfo GetFirstDayOfWeekend()
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest054, TestSize.Level1)
+{
+    I18nStatus status = I18nStatus::ISUCCESS;
+    LocaleInfo locale("zh", "CN");
+    WeekInfo weekInfo(locale, status);
+    uint8_t ret = weekInfo.GetFirstDayOfWeekend();
+    EXPECT_TRUE(ret == 7);
+}
+
+/**
+ * @tc.name: I18nFuncTest055
+ * @tc.desc: Test WeekInfo GetLastDayOfWeekend()
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest055, TestSize.Level1)
+{
+    I18nStatus status = I18nStatus::ISUCCESS;
+    LocaleInfo locale("zh", "CN");
+    WeekInfo weekInfo(locale, status);
+    uint8_t ret = weekInfo.GetLastDayOfWeekend();
+    EXPECT_TRUE(ret == 1);
+}
