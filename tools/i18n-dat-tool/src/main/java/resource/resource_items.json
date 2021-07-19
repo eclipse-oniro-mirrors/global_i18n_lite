@@ -97,6 +97,12 @@
                 "enumIndex" : 17,
                 "index" : 9,
                 "skeleton" : "MEd"
+            },
+            {   
+                "availableFormat" : "NUMBER_MONTH_ABBR_WEEK_DAY",
+                "enumIndex" : 18,
+                "index" : 10,
+                "skeleton" : "Md"
             }
         ],
         "pointer": "datePatterns",
