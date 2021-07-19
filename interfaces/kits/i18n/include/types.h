@@ -132,7 +132,10 @@ enum AvailableDateTimeFormatPattern {
     WEEK_DAY,
 
     /* Display numberic month-day, and week day */
-    NUMBER_MONTH_ABBR_WEEK_DAY
+    NUMBER_MONTH_ABBR_WEEK_DAY,
+
+    /* Display numberic month-day */
+    NUMBER_MONTH_DAY
 };
 
 enum ElapsedPatternType {
