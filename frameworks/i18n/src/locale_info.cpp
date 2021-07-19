@@ -125,18 +125,16 @@ LocaleInfo::LocaleInfo(const LocaleInfo &o)
 
 LocaleInfo::~LocaleInfo()
 {
-    if (language != nullptr) {
-        I18nFree(language);
-    }
-    if (script != nullptr) {
-        I18nFree(script);
-    }
-    if (region != nullptr) {
-        I18nFree(region);
-    }
-    if (id != nullptr) {
-        I18nFree(id);
-    }
+    FreeResource();
+}
+
+void LocaleInfo::FreeResource()
+{
+    I18nFree(language);
+    I18nFree(script);
+    I18nFree(region);
+    I18nFree(id);
+    I18nFree(numberDigits);
 }
 
 bool LocaleInfo::operator == (const LocaleInfo &other) const
@@ -158,11 +156,7 @@ LocaleInfo &LocaleInfo::operator = (const LocaleInfo &o)
     if (&o == this) {
         return *this;
     }
-    I18nFree(language);
-    I18nFree(script);
-    I18nFree(region);
-    I18nFree(id);
-    I18nFree(numberDigits);
+    FreeResource();
     if (o.language != nullptr) {
         language = NewArrayAndCopy(o.language, strlen(o.language));
     }

@@ -34,6 +34,7 @@
 #define YEAR_WIDE_MONTH_DAY_INDEX               0x00010007
 #define WEEK_DAY_INDEX                          0x00010008
 #define NUMBER_MONTH_ABBR_WEEK_DAY_INDEX        0x00010009
+#define NUMBER_MONTH_DAY_INDEX                  0x0001000A
 #define HOUR12_MINUTE_SECOND_INDEX              0x00020000
 #define HOUR24_MINUTE_SECOND_INDEX              0x00020001
 #define HOUR_MINUTE_SECOND_INDEX                0x00020002
@@ -123,6 +124,9 @@ std::string GetStringFromPattern2(const AvailableDateTimeFormatPattern &requestP
         }
         case NUMBER_MONTH_ABBR_WEEK_DAY: {
             return GetPatternFromIndex(NUMBER_MONTH_ABBR_WEEK_DAY_INDEX, data);
+        }
+        case NUMBER_MONTH_DAY: {
+            return GetPatternFromIndex(NUMBER_MONTH_DAY_INDEX, data);
         }
         default: {
             return "";
