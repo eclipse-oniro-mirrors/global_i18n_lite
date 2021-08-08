@@ -31,19 +31,18 @@
 namespace OHOS {
 namespace I18N {
 struct StyleData {
-    NumberFormatType type = DECIMAL;
     int decLen = 0;
-    int decZeroLen = 0;
-    bool suffixZero = false;
     int intLen = 0;
-    bool preZero = false;
+    int percentIntLen = 0;
+    int maxDecimalLength = -1;
+    int minDecimalLength = -1;
     char *numFormat = nullptr; // number format style
     char *entireFormat = nullptr;
     bool isTwoGroup = false;
     StyleData() = default;
     ~StyleData();
     StyleData(const StyleData &data);
-    StyleData &operator = (const StyleData &data);
+    StyleData& operator=(const StyleData &data);
 };
 
 class NumberData {
@@ -55,42 +54,44 @@ public:
     static const int TWO_GROUP = 2;
     static constexpr int NUM_SIZE = 10;
     static constexpr int INFO_SIZE = 3;
-    char *pattern = nullptr;
-    char *percentPattern = nullptr;
     std::string nativeNums[NUM_SIZE] = {}; // used to store 0-9 letters in current language
     char *decimal = nullptr;
     char *group = nullptr;
     char *percent = nullptr;
     bool isNative = false;
     StyleData style;
-    StyleData percentStyle;
     friend class NumberFormatImpl;
     NumberData();
     NumberData(const char *pat, const char *percentPat, std::string decSign, std::string groupSign,
         std::string perSign);
     virtual ~NumberData();
     void SetNumSystem(std::string *numSym, const int numSize);
-    bool SetMinDecimalLength(int length);
-    bool SetMaxDecimalLength(int length);
+    void SetMinDecimalLength(int length);
+    void SetMaxDecimalLength(int length);
 
 private:
     static void GetNumberingSystem(const char *numberingSystem, std::string &ret);
+    static bool IsNoBreakSpace(const char *pattern, const int len, bool order);
     void Init(const char *pat, int patLen, const char *percentPat, int perPatLen);
     void InitSign(const std::string *signs, const int signLength);
-    void ParsePattern(const char *pattern, const int len, StyleData &styleData);
-    void ParseStartPerPattern(const char *pattern, const int len, StyleData &styleData) const;
-    void ParseOtherPerPattern(const char *pattern, const int len, StyleData &styleData,
-        const int info[], const int infoSize) const;
-    void CalculateIntLength(int &intEndPos, const char *pattern, const int len, StyleData &styleData, bool isDec);
+    void ParsePattern(const char *pattern, const int len);
+    void ParsePercentPattern(const char *pattern, const int len);
+    void ParseOtherPerPattern(const char *pattern, const int len, const int perSignPos,
+        const int space, const int hasSpace);
+    void CalculateIntLength(int intEndPos, const char *pattern, const int len, bool isDec);
+    bool CalculateDecLength(const char *pattern, const int len);
     bool IsSuccess();
-    void SetFail();
+    void UpdateNumberFormat();
+    int GetNumberFormatLength();
+    char *numberFormatPattern = nullptr;
+    char *percentFormatPattern = nullptr;
     bool isSucc = true;
     bool isPercent = false;
     int maxDecimalLength = -1;
     const char *NUMBER_FORMAT = "%%.%df";
     const int NUMBER_FORMAT_LENGTH = 5;
-    const int ARABIC_NOBREAK_ONE = -96;
-    const int ARABIC_NOBREAK_TWO = -62;
+    static const int ARABIC_NOBREAK_ONE = -96;
+    static const int ARABIC_NOBREAK_TWO = -62;
 };
 
 enum EPercentLocation {
