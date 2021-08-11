@@ -110,13 +110,21 @@ NumberFormatImpl::~NumberFormatImpl()
     }
 }
 
-std::string NumberFormatImpl::InnerFormat(double num, StyleData &style, bool hasDec, bool isShowGroup,
+std::string NumberFormatImpl::InnerFormat(double num, bool hasDec, bool isShowGroup, bool isPercent,
     int &status) const
 {
+    if (defaultData == nullptr) {
+        return "";
+    }
     char buff[NUMBER_MAX] = { 0 };
-
+    bool isPercentDefault = isPercent && (defaultData->style.minDecimalLength < 0);
+    int len;
+    if (isPercentDefault) {
+        len = static_cast<int>(sprintf_s(buff, NUMBER_MAX, "%.f", num));
+    } else {
+        len = static_cast<int>(sprintf_s(buff, NUMBER_MAX, defaultData->style.numFormat, num));
+    }
     // convert decimal to char and format
-    int len = static_cast<int>(sprintf_s(buff, NUMBER_MAX, style.numFormat, num));
     if (len < 0) {
         status = IERROR;
         return "";
@@ -124,32 +132,36 @@ std::string NumberFormatImpl::InnerFormat(double num, StyleData &style, bool has
 
     char *content = buff;
     char *decimalNum = strchr(content, NumberData::NUMBER_DECIMAL);
-    int decLen = (decimalNum == nullptr) ? 0 : LenCharArray(decimalNum);
-    int lastLen = isShowGroup ? (len + CountGroupNum(len, decLen, style.isTwoGroup)) : len;
+    int decLen = (decimalNum == nullptr) ? 0 : strlen(decimalNum);
+    int lastLen = isShowGroup ? (len + CountGroupNum(len, decLen, defaultData->style.isTwoGroup)) : len;
     char *result = reinterpret_cast<char *>(I18nMalloc(lastLen + 1));
     if (result == nullptr) {
         status = IERROR;
         return "";
     }
     result[lastLen] = '\0';
+    bool adjustHasDec = isPercentDefault ? false : hasDec;
     if (isShowGroup) {
         char *resultAndContent[] = { result, content };
-        int lengths[] = { lastLen, len, style.isTwoGroup};
-        AddGroup(resultAndContent, lengths, decimalNum, hasDec, decLen);
+        int lengths[] = { lastLen, len, defaultData->style.isTwoGroup };
+        AddGroup(resultAndContent, lengths, decimalNum, adjustHasDec, decLen);
     } else {
         errno_t rc = strcpy_s(result, lastLen + 1, content);
-        CheckStatus(rc, status);
+        if (rc != EOK) {
+            I18nFree(result);
+            return "";
+        }
     }
     // del more zero
-    lastLen = DelMoreZero(style, decLen, result, lastLen);
+    lastLen = DelMoreZero(defaultData->style, decLen, result, lastLen);
     // if percent
-    if (!DealWithPercent(buff, result, status, style, lastLen)) {
+    if (isPercent && !DealWithPercent(buff, result, status, defaultData->style, lastLen)) {
         I18nFree(result);
         return "";
     }
 
     // if have native number to convert
-    std::string outStr = ConvertSignAndNum(result, lastLen, defaultData, style);
+    std::string outStr = ConvertSignAndNum(result, lastLen, defaultData, defaultData->style);
     I18nFree(result);
     return outStr;
 }
@@ -172,8 +184,7 @@ bool NumberFormatImpl::DealWithPercent(char *buff, char *&result, int &status, S
             return false;
         }
         errno_t rc = strcpy_s(perResult, len + 1, buff);
-        CheckStatus(rc, status);
-        if (status == IERROR) {
+        if (rc != EOK) {
             I18nFree(perResult);
             return false;
         }
@@ -190,8 +201,8 @@ bool NumberFormatImpl::DealWithPercent(char *buff, char *&result, int &status, S
 int NumberFormatImpl::DelMoreZero(const StyleData &style, int decLen, char *&result, int lastLen) const
 {
     int num = 0;
-    if (style.decZeroLen < decLen - 1) {
-        int delNum = decLen - 1 - style.decZeroLen;
+    if (decLen > 1) {
+        int delNum = decLen - 1;
         num = DelZero(result, lastLen, delNum, true);
     }
     // delete more char
@@ -275,7 +286,7 @@ void NumberFormatImpl::AddGroup(char *targetAndSource[], const int len[], const 
     int targetLen = len[0]; // use array to store target length and source length, first is target legnth
     char *source = targetAndSource[1]; // use array to store target and source string, second is source string
     int sourceLen = len[1]; // use array to store target length and source length, second is source legnth
-    int isTwoGroup = len[2];
+    int isTwoGroup = len[2]; // 2 is the index of group info
     int intLen = sourceLen - decLen;
     int addIndex = 0;
     for (int i = 0; (i < intLen) && (addIndex < targetLen); i++, addIndex++) {
@@ -335,9 +346,9 @@ std::string NumberFormatImpl::Format(double num, NumberFormatType type, int &sta
         return "";
     }
     if (type == PERCENT) { // percent,the decimal needs to be multiplied by 100.
-        return InnerFormat(num * 100, defaultData->percentStyle, true, true, status);
+        return InnerFormat(num * 100, true, true, true, status);
     } else {
-        return InnerFormat(num, defaultData->style, true, true, status);
+        return InnerFormat(num, true, true, false, status);
     }
 }
 
@@ -347,7 +358,7 @@ std::string NumberFormatImpl::Format(int num, int &status) const
         status = IERROR;
         return "";
     }
-    return InnerFormat(num, defaultData->style, false, true, status);
+    return InnerFormat(num, false, true, false, status);
 }
 
 std::string NumberFormatImpl::FormatNoGroup(double num, NumberFormatType type, int &status) const
@@ -357,9 +368,9 @@ std::string NumberFormatImpl::FormatNoGroup(double num, NumberFormatType type, i
         return "";
     }
     if (type == PERCENT) { // percent,the decimal needs to be multiplied by 100.
-        return InnerFormat(num * 100, defaultData->percentStyle, true, false, status);
+        return InnerFormat(num * 100, true, false, true, status);
     } else {
-        return InnerFormat(num, defaultData->style, true, false, status);
+        return InnerFormat(num, true, false, false, status);
     }
 }
 
@@ -369,38 +380,44 @@ std::string NumberFormatImpl::FormatNoGroup(int num, int &status) const
         status = IERROR;
         return "";
     }
-    return InnerFormat(num, defaultData->style, false, false, status);
+    return InnerFormat(num, false, false, false, status);
 }
 
 bool NumberFormatImpl::SetMaxDecimalLength(int length)
 {
-    if (length < 0) {
-        maxDecimalLength = -1;
-        return true;
+    if (defaultData == nullptr) {
+        return false;
     }
-    maxDecimalLength = length;
-    if (defaultData != nullptr) {
-        defaultData->SetMaxDecimalLength(length);
+    int adjustValue = (length < 0) ? -1 : length;
+    if ((minDecimalLength >= 0) && (minDecimalLength > adjustValue)) {
+        minDecimalLength = adjustValue;
+        defaultData->SetMinDecimalLength(adjustValue);
     }
+    maxDecimalLength = adjustValue;
+    defaultData->SetMaxDecimalLength(length);
+    defaultData->UpdateNumberFormat();
     return true;
 }
 
 bool NumberFormatImpl::SetMinDecimalLength(int length)
 {
-    if (length < 0) {
-        minDecimalLength = -1;
-    } else {
-        minDecimalLength = length;
+    if (defaultData == nullptr) {
+        return false;
     }
-    if (defaultData != nullptr) {
-        return defaultData->SetMinDecimalLength(length);
+    int adjustValue = (length < 0) ? -1 : length;
+    if ((maxDecimalLength >= 0) && (maxDecimalLength < adjustValue)) {
+        maxDecimalLength = adjustValue;
+        defaultData->SetMaxDecimalLength(maxDecimalLength);
     }
-    return false;
+    minDecimalLength = adjustValue;
+    defaultData->SetMinDecimalLength(adjustValue);
+    defaultData->UpdateNumberFormat();
+    return true;
 }
 
 char *NumberFormatImpl::FillMinDecimal(const char *target, int len, int addSize, bool isDec) const
 {
-    char *content = NewArrayAndCopy(target, len + addSize);
+    char *content = I18nNewCharString(target, len + addSize);
     if (content == nullptr) {
         return nullptr;
     }
