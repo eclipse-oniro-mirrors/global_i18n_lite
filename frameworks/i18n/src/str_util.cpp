@@ -20,6 +20,8 @@
 
 namespace OHOS {
 namespace I18N {
+static int i18nMaxMallc = 4096;
+
 int ReplaceAndCountOff(std::string &content, const int index, const char *sign, const int off)
 {
     int signLen = strlen(sign);
@@ -27,8 +29,7 @@ int ReplaceAndCountOff(std::string &content, const int index, const char *sign, 
         return off;
     }
     content = content.replace(index, 1, sign);
-    int newOff = off + signLen - 1;
-    return newOff;
+    return off + signLen - 1;
 }
 
 void ArrayCopy(std::string *target, const int targetSize, const std::string *source, const int sourceSize)
@@ -43,7 +44,7 @@ void ArrayCopy(std::string *target, const int targetSize, const std::string *sou
 
 char *NewArrayAndCopy(const char *source, const int len)
 {
-    if ((source == nullptr) || (len <= 0)) {
+    if ((source == nullptr) || (len <= 0) || (len > i18nMaxMallc)) { // 4096 is the max size that we could use
         return nullptr;
     }
     char *out = reinterpret_cast<char *>(I18nMalloc(len + 1));
@@ -61,7 +62,7 @@ char *NewArrayAndCopy(const char *source, const int len)
 
 char *I18nNewCharString(const char *source, const int len)
 {
-    if ((source == nullptr) || (len <= 0)) {
+    if ((source == nullptr) || (len <= 0) || len > i18nMaxMallc) { // 4096 is the max size of allocation
         return nullptr;
     }
     char *out = reinterpret_cast<char *>(I18nMalloc(len + 1));
@@ -103,36 +104,32 @@ void Split(const std::string &src, std::string *dst, const int32_t size, const c
 
     std::string::size_type begin = 0;
     std::string::size_type end = 0;
-    while (end < src.size()) {
-        if (src[end] != sep) {
+    std::string::size_type srcSize = src.size();
+    while (current < size) {
+        while ((end < srcSize) && (src[end] != sep)) {
             ++end;
-        } else {
-            dst[current] = std::string(src, begin, end - begin);
-            ++end;
-            begin = end;
-            ++current;
-            if (current >= size) {
-                return;
-            }
         }
+        if (end >= srcSize) {
+            break;
+        }
+        dst[current++] = std::string(src, begin, end - begin);
+        ++end; // pass the sep
+        begin = end;
     }
-    if ((begin != end) && (current < size)) {
-        dst[current] = std::string(src, begin, end - begin);
+    if (current < size && end > begin) {
+        dst[current++] = std::string(src, begin, end - begin);
     }
 }
 
-bool CompareLocaleItem(const char *item, const char* other)
+bool CompareLocaleItem(const char *item, const char *other)
 {
-    if (item == nullptr) {
-        if (other != nullptr) {
-            return false;
-        }
-    } else {
-        if (other == nullptr || strcmp(item, other) != 0) {
-            return false;
-        }
+    if ((item == nullptr) && (other == nullptr)) {
+        return true;
     }
-    return true;
+    if ((item != nullptr) && (other != nullptr) && (strcmp(item, other) == 0)) {
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -159,18 +156,16 @@ std::string Parse(const char *str, int32_t count)
         return "";
     }
     int last = ind;
-    --ind;
     while (last < length) {
         if (str[last] == '_') {
             break;
         }
         ++last;
     }
-    if (last - ind - 1 <= 0) {
+    if (last - ind <= 0) {
         return "";
     }
-    std::string temp(str);
-    return temp.substr(ind + 1, last - ind - 1);
+    return std::string(str + ind, last - ind);
 }
 } // I18N
 } // OHOS

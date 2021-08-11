@@ -23,44 +23,38 @@ using namespace OHOS::I18N;
 StyleData::StyleData(const StyleData &data)
 {
     decLen = data.decLen;
-    decZeroLen = data.decZeroLen;
-    suffixZero = data.suffixZero;
     intLen = data.intLen;
-    preZero = data.preZero;
+    percentIntLen = data.percentIntLen;
+    isTwoGroup = data.isTwoGroup;
     if (data.numFormat != nullptr) {
-        int len = LenCharArray(data.numFormat);
+        int len = strlen(data.numFormat);
         numFormat = NewArrayAndCopy(data.numFormat, len);
     }
     if (data.entireFormat != nullptr) {
-        int len = LenCharArray(data.entireFormat);
-        entireFormat = NewArrayAndCopy(data.entireFormat, len);
+        int len = strlen(data.entireFormat);
+        entireFormat = I18nNewCharString(data.entireFormat, len);
     }
 }
 
 StyleData::~StyleData()
 {
-    if (numFormat != nullptr) {
-        I18nFree(numFormat);
-    }
-    if (entireFormat != nullptr) {
-        I18nFree(entireFormat);
-    }
+    I18nFree(numFormat);
+    I18nFree(entireFormat);
 }
 
 StyleData &StyleData::operator=(const StyleData &data)
 {
     decLen = data.decLen;
-    decZeroLen = data.decZeroLen;
-    suffixZero = data.suffixZero;
     intLen = data.intLen;
-    preZero = data.preZero;
+    percentIntLen = data.percentIntLen;
+    isTwoGroup = data.isTwoGroup;
     if (data.numFormat != nullptr) {
-        int len = LenCharArray(data.numFormat);
-        numFormat = NewArrayAndCopy(data.numFormat, len);
+        int len = strlen(data.numFormat);
+        numFormat = I18nNewCharString(data.numFormat, len);
     }
     if (data.entireFormat != nullptr) {
-        int len = LenCharArray(data.entireFormat);
-        entireFormat = NewArrayAndCopy(data.entireFormat, len);
+        int len = strlen(data.entireFormat);
+        entireFormat = I18nNewCharString(data.entireFormat, len);
     }
     return *this;
 }
@@ -78,18 +72,10 @@ void NumberData::SetNumSystem(std::string *numSym, const int numSize)
 
 void NumberData::Init(const char *pat, int patLen, const char *percentPat, int perPatLen)
 {
-    if (pat == nullptr || patLen <= 0 || percentPat == nullptr || perPatLen <= 0) {
-        return;
-    }
-    pattern = NewArrayAndCopy(pat, patLen);
-    percentPattern = NewArrayAndCopy(percentPat, perPatLen);
-    percentStyle.type = PERCENT;
-    if (pattern != nullptr) {
-        ParsePattern(pattern, patLen, style);
-    }
-    if (percentPattern != nullptr) {
-        ParsePattern(percentPattern, perPatLen, percentStyle);
-    }
+    numberFormatPattern = I18nNewCharString(pat, patLen);
+    percentFormatPattern = I18nNewCharString(percentPat, perPatLen);
+    ParsePattern(pat, patLen);
+    ParsePercentPattern(percentPat, perPatLen);
 }
 
 void NumberData::InitSign(const std::string *signs, int size)
@@ -101,139 +87,112 @@ void NumberData::InitSign(const std::string *signs, int size)
     std::string groupSign = signs[1]; // use array to store num data, second is group sign
     std::string perSign = signs[PERCENT_SIGN_INDEX]; // use array to store num data, third is percent sign
     const char *td = decSign.c_str();
-    decimal = NewArrayAndCopy(td, LenCharArray(td));
+    decimal = I18nNewCharString(td, strlen(td));
     const char *tdg = groupSign.c_str();
-    group = NewArrayAndCopy(tdg, LenCharArray(tdg));
+    group = I18nNewCharString(tdg, strlen(tdg));
     const char *tdp = perSign.c_str();
-    percent = NewArrayAndCopy(tdp, LenCharArray(tdp));
+    percent = I18nNewCharString(tdp, strlen(tdp));
 }
 
-void NumberData::ParsePattern(const char *pattern, const int len, StyleData &styleData)
+void NumberData::ParsePattern(const char *pattern, const int len)
+{
+    bool isDec = CalculateDecLength(pattern, len);
+    CalculateIntLength(len - style.decLen, pattern, len, isDec);
+    if ((pattern != nullptr) && (strcmp(pattern, "#,##,##0.###")) == 0) {
+        style.isTwoGroup = true;
+    }
+    UpdateNumberFormat();
+}
+
+bool NumberData::CalculateDecLength(const char *pattern, const int len)
 {
     if (pattern == nullptr || len <= 0) {
-        return;
+        return false;
     }
     bool isDec = false;
     int decLen = 0;
-    int decZeroLen = 0;
-    if (strcmp(pattern, "#,##,##0.###") == 0) {
-        styleData.isTwoGroup = true;
-    }
     for (int i = 0; i < len; i++) { // calculate the format after decimal sign
         char temp = pattern[i];
         if (temp == '.') {
             isDec = true;
             continue;
         }
-        if (isDec) {
-            if (temp == '#') {
-                decLen++;
-            } else if (temp == '0') {
-                decLen++;
-                decZeroLen++;
-                styleData.suffixZero = true;
-            }
+        if (isDec && ((temp == '#') || (temp == '0'))) {
+            decLen++;
         }
     }
-    if (!isPercent && (maxDecimalLength != -1)) {
-        styleData.decLen = maxDecimalLength;
-        decLen = maxDecimalLength;
-    } else {
-        styleData.decLen = decLen;
-    }
-    styleData.decZeroLen = decZeroLen;
-    int intEndPos = len - decLen; // cal how many must zero before decimal
-    CalculateIntLength(intEndPos, pattern, len, styleData, isDec);
-    char *format = reinterpret_cast<char *>(I18nMalloc(NUMBER_FORMAT_LENGTH));
-    if (format == nullptr) {
-        SetFail();
-        return;
-    }
-    if (snprintf_s(format, NUMBER_FORMAT_LENGTH, NUMBER_FORMAT_LENGTH - 1, NUMBER_FORMAT, decLen) == -1) {
-        SetFail();
-        I18nFree(format);
-        return;
-    }
-    styleData.numFormat = format;
-    if (styleData.type == PERCENT) { // parse percent
-        ParseStartPerPattern(pattern, len, styleData);
-    }
+    style.decLen = decLen;
+    return isDec;
 }
 
-void NumberData::CalculateIntLength(int &intEndPos, const char *pattern, const int len,
-    StyleData &styleData, bool isDec)
+void NumberData::CalculateIntLength(int intEndPos, const char *pattern, const int len, bool isDec)
 {
     if (pattern == nullptr || len <= 0) {
         return;
     }
-    (void) len;
     if (isDec) {
-        intEndPos--;
+        --intEndPos;
     }
     int intLen = 0;
-    for (; intEndPos > 0; intEndPos--) {
-        char temp = pattern[intEndPos - 1];
-        if (temp == '0') {
-            styleData.preZero = true;
-            intLen++;
+    for (; intEndPos > 0; --intEndPos) {
+        if (pattern[intEndPos - 1] != '0') {
+            break;
         }
+        ++intLen;
     }
-    styleData.intLen = intLen;
+    style.intLen = intLen;
 }
 
-void NumberData::ParseStartPerPattern(const char *pattern, const int len, StyleData &styleData) const
+void NumberData::ParsePercentPattern(const char *pattern, const int len)
 {
     if (pattern == nullptr || len <= 0) {
         return;
     }
-
-    // parse the percent sign and position
-    int perSignPos = UNKOWN; // 0 : no percent 1:left 2:right;
+    int perSignPos = 0; // 0 : no percent 1:left 2:right;
+    int space = 0; // 0 = 0020, 1 = c2a0
     int hasSpace = 0;
-    int space = 0; // 0 = 0020 1 = c2a0
     if (pattern[0] == '%') {
         perSignPos = LEFT;
         if ((len >= 2) && pattern[1] == ' ') { // length >= 2 guarantees that we can safely get second byte
             hasSpace = 1;
-        }
-
-        // length >= 3 guarantees that we can safely get third byte
-        if ((len >= 3) && (static_cast<int>(pattern[2]) == ARABIC_NOBREAK_ONE) &&
-            (static_cast<int>(pattern[1]) == ARABIC_NOBREAK_TWO)) {
-            // the last two char is no break space (c2a0)
+        } else if (IsNoBreakSpace(pattern, len, true)) {
             hasSpace = 1;
             space = 1;
         }
     } else if (pattern[len - 1] == '%') {
-        perSignPos = RIGHT; // percent in right
-        if ((len >= 2) && (pattern[len - 2] == ' ')) { // the last but one is space
+        perSignPos = RIGHT;
+        if ((len >= 2) && (pattern[len - 2] == ' ')) { // len - 2 position has a spacce
             hasSpace = 1;
-        }
-
-        // length >= 3 guarantees that we can safely get third byte
-        if ((len >= 3) &&
-            (static_cast<signed char>(pattern[len - 2]) == ARABIC_NOBREAK_ONE) && // the reciprocal second
-            (static_cast<signed char>(pattern[len - 3]) == ARABIC_NOBREAK_TWO)) { // the reciprocal third
-            // the last two chars is no break space (c2a0)
+        } else if (IsNoBreakSpace(pattern, len, false)) {
             hasSpace = 1;
             space = 1;
         }
     }
-    int info[INFO_SIZE] = { perSignPos, hasSpace, space };
-    ParseOtherPerPattern(pattern, len, styleData, info, PERCENT_INFO_SIZE);
+    ParseOtherPerPattern(pattern, len, perSignPos, space, hasSpace);
 }
 
-void NumberData::ParseOtherPerPattern(const char *pattern, const int len,
-    StyleData &styleData, const int *info, const int infoSize) const
+bool NumberData::IsNoBreakSpace(const char *pattern, const int len, bool order)
 {
-    if (pattern == nullptr || len < 2 || infoSize < 3) {
+    if (len < 3) { // pattern should at least have 3 bytes
+        return false;
+    }
+    int firstPosition = order ? 2 : (len - 2); // 2 is the offset to find ARABIC_NOBREAK_ONE
+    int secondPosition = order ? 1 : (len - 3); // 3 is the offset to find ARABIC_NOBREAK_TWO
+    if ((static_cast<signed char>(pattern[firstPosition]) == ARABIC_NOBREAK_ONE) &&
+        (static_cast<signed char>(pattern[secondPosition]) == ARABIC_NOBREAK_TWO)) {
+        return true;
+    }
+    return false;
+}
+
+void NumberData::ParseOtherPerPattern(const char *pattern, const int len, const int perSignPos,
+    const int space, const int hasSpace)
+{
+    if (pattern == nullptr || len < 2) {
         return;
     }
-    int perSignPos = info[0]; // use array to store percent sign and space data, first is percent sign postion
-    int hasSpace = info[1]; // use array to store percent sign and space data, second is hash space or not
-    int space = info[2]; // use array to store percent sign and space data, second is space type
+    std::string type;
     if (perSignPos > 0) {
-        std::string type;
         if (perSignPos == 1) {
             type = "%%%s";
             if ((hasSpace > 0) && (space == 0)) {
@@ -255,35 +214,17 @@ void NumberData::ParseOtherPerPattern(const char *pattern, const int len,
                 // do nothing
             }
         }
-        int typeLen = LenCharArray(type.data());
-        styleData.entireFormat = NewArrayAndCopy(type.data(), typeLen);
+    } else {
+        type = "%s%%";
     }
+    I18nFree(style.entireFormat);
+    int typeLen = type.size();
+    style.entireFormat = I18nNewCharString(type.data(), typeLen);
 }
 
-bool NumberData::SetMinDecimalLength(int length)
+void NumberData::SetMinDecimalLength(int length)
 {
-    if (length < style.decLen) {
-        return true;
-    }
-    style.decLen = length;
-
-    // calculate number format
-    char *format = reinterpret_cast<char *>(I18nMalloc(NUMBER_FORMAT_LENGTH));
-    if (format == nullptr) {
-        SetFail();
-        return false;
-    }
-    int re = sprintf_s(format, NUMBER_FORMAT_LENGTH, NUMBER_FORMAT, length);
-    if (re == -1) {
-        SetFail();
-        I18nFree(format);
-        return false;
-    }
-    if (style.numFormat != nullptr) {
-        I18nFree(style.numFormat);
-    }
-    style.numFormat = format;
-    return true;
+    style.minDecimalLength = length;
 }
 
 NumberData::NumberData(const char *pat, const char *percentPat, std::string decSign,
@@ -293,7 +234,15 @@ NumberData::NumberData(const char *pat, const char *percentPat, std::string decS
         std::string nums[NUM_SIZE] = NUMBER_SIGN;
         SetNumSystem(nums, NUM_SIZE);
         std::string signs[3] = { decSign, groupSign, perSign }; // use string array contain number data
-        Init(pat, LenCharArray(pat), percentPat, LenCharArray(percentPat));
+        int len = -1;
+        int patLen = -1;
+        if (pat != nullptr) {
+            len = strlen(pat);
+        }
+        if (percentPat != nullptr) {
+            patLen = strlen(percentPat);
+        }
+        Init(pat, len, percentPat, patLen);
         InitSign(signs, SIGNS_SIZE);
     }
 }
@@ -304,40 +253,17 @@ NumberData::NumberData()
     std::string signs[3] = { ".", ",", "%" }; // use string array contain number data
     const char *enNumberPattern = "#,##0.###";
     const char *percentPattern = "#,##0%";
-    Init(const_cast<char *>(enNumberPattern), LenCharArray(enNumberPattern), const_cast<char *>(percentPattern),
-        LenCharArray(percentPattern));
+    Init(enNumberPattern, strlen(enNumberPattern), percentPattern, strlen(percentPattern));
     InitSign(signs, SIGNS_SIZE);
 }
 
 NumberData::~NumberData()
 {
-    if (pattern != nullptr) {
-        I18nFree(pattern);
-    }
-    if (percentPattern != nullptr) {
-        I18nFree(percentPattern);
-    }
-    if (style.numFormat != nullptr) {
-        I18nFree(style.numFormat);
-    }
-    if (percentStyle.numFormat != nullptr) {
-        I18nFree(percentStyle.numFormat);
-    }
-    if (style.entireFormat != nullptr) {
-        I18nFree(style.entireFormat);
-    }
-    if (percentStyle.entireFormat != nullptr) {
-        I18nFree(percentStyle.entireFormat);
-    }
-    if (group != nullptr) {
-        I18nFree(group);
-    }
-    if (percent != nullptr) {
-        I18nFree(percent);
-    }
-    if (decimal != nullptr) {
-        I18nFree(decimal);
-    }
+    I18nFree(group);
+    I18nFree(percent);
+    I18nFree(decimal);
+    I18nFree(numberFormatPattern);
+    I18nFree(percentFormatPattern);
 }
 
 bool NumberData::IsSuccess()
@@ -347,23 +273,9 @@ bool NumberData::IsSuccess()
     return r;
 }
 
-void NumberData::SetFail()
+void NumberData::SetMaxDecimalLength(int length)
 {
-    isSucc = false;
-}
-
-bool NumberData::SetMaxDecimalLength(int length)
-{
-    if (length < 0) {
-        maxDecimalLength = -1;
-        return true;
-    }
-    maxDecimalLength = length;
-    if (pattern != nullptr) {
-        isPercent = false;
-        ParsePattern(pattern, strlen(pattern), style);
-    }
-    return true;
+    style.maxDecimalLength = length;
 }
 
 void NumberData::GetNumberingSystem(const char *numberingSystem, std::string &ret)
@@ -373,29 +285,70 @@ void NumberData::GetNumberingSystem(const char *numberingSystem, std::string &re
         return;
     }
     if (strcmp(numberingSystem, "arab") == 0) {
-        signed char digits[] = { -39, -96, 59, -39, -95, 59, -39, -94, 59, -39, -93, 59, -39, -92, 59, -39, -91, 59,
-                                 -39, -90, 59, -39, -89, 59, -39, -88, 59, -39, -87, 0 };
-        ret = reinterpret_cast<char *>(digits);
+        signed char localeDigitsArab[] = {
+            -39, -96, 59, -39, -95, 59, -39, -94, 59, -39, -93, 59, -39, -92, 59, -39, -91, 59, -39, -90, 59, -39, -89,
+            59, -39, -88, 59, -39, -87, 0
+        };
+        ret = reinterpret_cast<char *>(localeDigitsArab);
     } else if (strcmp(numberingSystem, "arabext") == 0) {
-        signed char digits[] = { -37, -80, 59, -37, -79, 59, -37, -78, 59, -37, -77, 59, -37, -76, 59, -37, -75, 59,
-                                 -37, -74, 59, -37, -73, 59, -37, -72, 59, -37, -71, 0 };
-        ret = reinterpret_cast<char *>(digits);
+        signed char localeDigitsArabext[] = {
+            -37, -80, 59, -37, -79, 59, -37, -78, 59, -37, -77, 59, -37, -76, 59, -37, -75, 59, -37, -74, 59, -37, -73,
+            59, -37, -72, 59, -37, -71, 0
+        };
+        ret = reinterpret_cast<char *>(localeDigitsArabext);
     } else if (strcmp(numberingSystem, "beng") == 0) {
-        signed char digits[] = { -32, -89, -90, 59, -32, -89, -89, 59, -32, -89, -88, 59, -32, -89, -87, 59, -32, -89,
-                                 -86, 59, -32, -89, -85, 59, -32, -89, -84, 59, -32, -89, -83, 59, -32, -89, -82, 59,
-                                 -32, -89, -81, 0 };
-        ret = reinterpret_cast<char *>(digits);
+        signed char localeDigitsBeng[] = {
+            -32, -89, -90, 59, -32, -89, -89, 59, -32, -89, -88, 59, -32, -89, -87, 59, -32, -89, -86, 59, -32, -89,
+            -85, 59, -32, -89, -84, 59, -32, -89, -83, 59, -32, -89, -82, 59, -32, -89, -81, 0
+        };
+        ret = reinterpret_cast<char *>(localeDigitsBeng);
     } else if (strcmp(numberingSystem, "deva") == 0) {
-        signed char digits[] = { -32, -91, -90, 59, -32, -91, -89, 59, -32, -91, -88, 59, -32, -91, -87, 59, -32, -91,
-                                 -86, 59, -32, -91, -85, 59, -32, -91, -84, 59, -32, -91, -83, 59, -32, -91, -82, 59,
-                                 -32, -91, -81, 0 };
-        ret = reinterpret_cast<char *>(digits);
+        signed char localeDigitsDeva[] = {
+            -32, -91, -90, 59, -32, -91, -89, 59, -32, -91, -88, 59, -32, -91, -87, 59, -32, -91, -86, 59, -32, -91,
+            -85, 59, -32, -91, -84, 59, -32, -91, -83, 59, -32, -91, -82, 59, -32, -91, -81, 0
+        };
+        ret = reinterpret_cast<char *>(localeDigitsDeva);
     } else if (strcmp(numberingSystem, "mymr") == 0) {
-        signed char digits[] = { -31, -127, -128, 59, -31, -127, -127, 59, -31, -127, -126, 59, -31, -127, -125, 59,
-                                 -31, -127, -124, 59, -31, -127, -123, 59, -31, -127, -122, 59, -31, -127, -121, 59,
-                                 -31, -127, -120, 59, -31, -127, -119, 0 };
-        ret = reinterpret_cast<char *>(digits);
+        signed char localeDigitsMymr[] = {
+            -31, -127, -128, 59, -31, -127, -127, 59, -31, -127, -126, 59, -31, -127, -125, 59, -31, -127, -124, 59,
+            -31, -127, -123, 59, -31, -127, -122, 59, -31, -127, -121, 59, -31, -127, -120, 59, -31, -127, -119, 0
+        };
+        ret = reinterpret_cast<char *>(localeDigitsMymr);
     } else {
         ret = "0;1;2;3;4;5;6;7;8;9";
+    }
+}
+
+void NumberData::UpdateNumberFormat()
+{
+    // reset the style's number pattern which is used to format a decimal number
+    char *format = reinterpret_cast<char *>(I18nMalloc(NUMBER_FORMAT_LENGTH));
+    if (format == nullptr) {
+        isSucc = false;
+        return;
+    }
+    int finalDecLength = GetNumberFormatLength();
+    if (snprintf_s(format, NUMBER_FORMAT_LENGTH, NUMBER_FORMAT_LENGTH - 1, NUMBER_FORMAT, finalDecLength) == -1) {
+        isSucc = false;
+        I18nFree(format);
+        return;
+    }
+    I18nFree(style.numFormat);
+    style.numFormat = format;
+}
+
+int NumberData::GetNumberFormatLength()
+{
+    if (style.minDecimalLength < 0) {
+        if (style.maxDecimalLength < 0) {
+            return style.decLen;
+        }
+        return style.maxDecimalLength;
+    } else {
+        if (style.maxDecimalLength < 0) {
+            return (style.minDecimalLength > style.decLen) ? style.minDecimalLength : style.decLen;
+        } else {
+            return style.maxDecimalLength;
+        }
     }
 }
