@@ -139,7 +139,14 @@ void PluralFormatImpl::ComputeDecimalInfo(double number, int integerNumber, int 
         // Calculate number of fraction digits in the decimal number by judging whether
         // multiplying by 10 is an integer.
         double temp = number * pow(10, i);
+        if (i == MAX_FRACTION_NUMBERS && temp - ((int)temp) >= EPS) {
+            temp = round(temp);
+        }
         if (temp - ((int)temp) < EPS) {
+            while (i > 1 && (int) temp % 10 == 0) {
+                i--;
+                temp /= 10;
+            }
             int tempInteger = integerNumber * pow(10, i);
             fractionNumber = temp - tempInteger;
             numOfFraction = i;
