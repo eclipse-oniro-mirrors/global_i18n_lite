@@ -70,7 +70,8 @@ public:
     void SetMaxDecimalLength(int length);
 
 private:
-    static void GetNumberingSystem(const char *numberingSystem, std::string &ret);
+    static void GetNumberingSystem(const char *numberingSystem, std::string &numberFormatString,
+        std::string &digitsRet);
     static bool IsNoBreakSpace(const char *pattern, const int len, bool order);
     void Init(const char *pat, int patLen, const char *percentPat, int perPatLen);
     void InitSign(const std::string *signs, const int signLength);
