@@ -20,7 +20,7 @@
 
 namespace OHOS {
 namespace I18N {
-static int i18nMaxMallc = 4096;
+static int g_i18nMaxMalloc = 4096;
 
 int ReplaceAndCountOff(std::string &content, const int index, const char *sign, const int off)
 {
@@ -44,7 +44,7 @@ void ArrayCopy(std::string *target, const int targetSize, const std::string *sou
 
 char *NewArrayAndCopy(const char *source, const int len)
 {
-    if ((source == nullptr) || (len <= 0) || (len > i18nMaxMallc)) { // 4096 is the max size that we could use
+    if ((source == nullptr) || (len <= 0) || (len > g_i18nMaxMalloc)) { // 4096 is the max size that we could use
         return nullptr;
     }
     char *out = reinterpret_cast<char *>(I18nMalloc(len + 1));
@@ -62,7 +62,7 @@ char *NewArrayAndCopy(const char *source, const int len)
 
 char *I18nNewCharString(const char *source, const int len)
 {
-    if ((source == nullptr) || (len <= 0) || len > i18nMaxMallc) { // 4096 is the max size of allocation
+    if ((source == nullptr) || (len <= 0) || len > g_i18nMaxMalloc) { // 4096 is the max size of allocation
         return nullptr;
     }
     char *out = reinterpret_cast<char *>(I18nMalloc(len + 1));
