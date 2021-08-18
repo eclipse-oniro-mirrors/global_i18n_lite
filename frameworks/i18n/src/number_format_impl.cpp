@@ -65,33 +65,38 @@ NumberFormatImpl::NumberFormatImpl(LocaleInfo &locale, int &status)
 
 bool NumberFormatImpl::Init(const DataResource &resource)
 {
-    std::string unprocessedNumberFormat(resource.GetString(DataResourceType::NUMBER_FORMAT));
+    std::string numebrSystemFormat;
+    std::string unprocessedNumberFormat = resource.GetString(DataResourceType::NUMBER_FORMAT);
+    std::string unprocessedNumberDigit = resource.GetString(DataResourceType::NUMBER_DIGIT);
     std::string split[NUM_PATTERN_SIZE];
     Split(unprocessedNumberFormat, split, NUM_PATTERN_SIZE, NUM_PATTERN_SEP);
     std::string decSign = split[NUM_DEC_SIGN_INDEX];
     std::string groupSign = split[NUM_GROUP_SIGN_INDEX];
     std::string perSign = split[NUM_PERCENT_SIGN_INDEX];
+    const char *numberDigits = mLocale.GetExtension("nu");
+    if (numberDigits != nullptr) {
+        NumberData::GetNumberingSystem(numberDigits, numebrSystemFormat, unprocessedNumberDigit);
+        std::string temp[NUM_PATTERN_SIZE];
+        Split(numebrSystemFormat, temp, NUM_PATTERN_SIZE, NUM_PATTERN_SEP);
+        decSign = temp[NUM_DEC_SIGN_INDEX];
+        groupSign = temp[NUM_GROUP_SIGN_INDEX];
+        perSign = temp[NUM_PERCENT_SIGN_INDEX];
+    }
     std::string origin = split[NUM_PERCENT_PAT_INDEX];
     const char *pat = split[NUM_PAT_INDEX].c_str();
     int size = origin.size();
     std::string adjust = origin;
     // strip "0x80 0xe2 0x8f" these three bytes in pat
-    if (size >= 3 && (static_cast<unsigned char>(origin.at(size - 1)) == 0x8f) &&
-        (static_cast<unsigned char>(origin.at(size - 2)) == 0x80) &&
-        (static_cast<unsigned char>(origin.at(size - 3)) == 0xe2)) {
-        adjust = std::string(origin, 0, size - 3);
+    if (size >= 3 && // check the last 3 character
+        (static_cast<unsigned char>(origin.at(size - 1)) == 0x8f) && // check whether the last one is 0x8f
+        (static_cast<unsigned char>(origin.at(size - 2)) == 0x80) && // check whether the index of size - 2 is 0x80
+        (static_cast<unsigned char>(origin.at(size - 3)) == 0xe2)) { // check whether the index of size - 3 is 0xe2 
+        adjust = std::string(origin, 0, size - 3); // strip the last 3 chars
     }
     const char *percentPat = adjust.c_str();
     defaultData = new(std::nothrow) NumberData(pat, percentPat, decSign, groupSign, perSign);
     if (defaultData == nullptr) {
         return false;
-    }
-    const char *numberDigits = mLocale.GetExtension("nu");
-    std::string unprocessedNumberDigit;
-    if (numberDigits != nullptr) {
-        NumberData::GetNumberingSystem(numberDigits, unprocessedNumberDigit);
-    } else {
-        unprocessedNumberDigit = resource.GetString(DataResourceType::NUMBER_DIGIT);
     }
     if (unprocessedNumberDigit != "") {
         std::string splitDigit[NUM_DIGIT_SIZE];
