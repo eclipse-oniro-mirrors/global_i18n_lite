@@ -417,6 +417,8 @@ tl-PH
 tr
 tr-CY
 tr-TR
+ug
+ug-CN
 uk
 uk-UA
 ur

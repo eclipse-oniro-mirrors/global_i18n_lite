@@ -258,7 +258,7 @@ public class Utils {
                     found = false;
                 }
             }
-        } catch (FileNotFoundException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -366,7 +366,7 @@ public class Utils {
                     continue;
                 }
             }
-        } catch (FileNotFoundException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
