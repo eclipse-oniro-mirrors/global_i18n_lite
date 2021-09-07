@@ -78,7 +78,7 @@ public class DataFetcher {
                     continue;
                 }
                 if (!Utils.isValidLanguageTag(tag)) {
-                    LOG.log(Level.SEVERE, "wrong languageTag " + tag);
+                    LOG.log(Level.SEVERE, String.format("wrong languageTag %s", tag));
                     sStatus = 1;
                     return;
                 }
@@ -206,6 +206,7 @@ public class DataFetcher {
                 LOCALES.remove(fetcher.languageTag);
             }
         }
+        FETCHERS.sort(null);
         try (DataOutputStream out = new DataOutputStream(new BufferedOutputStream(
                 new FileOutputStream(new File("./i18n.dat"))))) {
             Utils.writeHeader(out, 0, localesCount, metaDataCount);

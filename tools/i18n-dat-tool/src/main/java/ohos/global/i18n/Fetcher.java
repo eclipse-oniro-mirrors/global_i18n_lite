@@ -42,7 +42,7 @@ import ohos.global.i18n.ResourceConfiguration.Element;
 /**
  * Fetcher is used to fetche a locale's specified data
  */
-public class Fetcher implements Runnable {
+public class Fetcher implements Runnable, Comparable<Fetcher> {
     /** configuration extracted from resourec_items.json */
     private static ArrayList<ConfigItem> configItems = null;
     private static final Logger LOG = Logger.getLogger("Fetcher");
@@ -115,7 +115,7 @@ public class Fetcher implements Runnable {
 
     public Fetcher(String tag, ReentrantLock lock, Map<String, Integer> idMap) {
         if (!Utils.isValidLanguageTag(tag)) {
-            LOG.log(Level.SEVERE, "wrong languageTag " + tag);
+            LOG.log(Level.SEVERE, String.format("wrong languageTag %s", tag));
             status = 1;
         }
         this.languageTag = tag;
@@ -262,7 +262,7 @@ public class Fetcher implements Runnable {
         }
         Element[] elements = config.elements;
         int current = 0;
-        ArrayList<String> skeletons = new ArrayList<String>(16);
+        ArrayList<String> skeletons = new ArrayList<String>();
         for (Element ele : elements) {
             int index = ele.index;
             if (current != index) {
@@ -485,5 +485,18 @@ public class Fetcher implements Runnable {
         sb.append(FileConfig.NUMBER_SEP);
         sb.append(weekdata.weekendCease);
         datas.add(sb.toString());
+    }
+
+    public @Override int compareTo(Fetcher other) {
+        if (languageTag == null && other.languageTag == null) {
+            return 0;
+        }
+        if (languageTag == null) {
+            return -1;
+        } else if (other.languageTag == null) {
+            return 1;
+        } else {
+            return languageTag.compareTo(other.languageTag);
+        }
     }
 }
