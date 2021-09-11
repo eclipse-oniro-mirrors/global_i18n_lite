@@ -1067,7 +1067,9 @@ HWTEST_F(I18NTest, I18nFuncTest050, TestSize.Level1)
     EXPECT_TRUE(status == I18nStatus::ISUCCESS);
     const char *numberDigits = locale.GetExtension("nu");
     EXPECT_TRUE(numberDigits != nullptr);
-    EXPECT_TRUE(strcmp("arab", numberDigits) == 0);
+    if (numberDigits != nullptr) {
+        EXPECT_TRUE(strcmp("arab", numberDigits) == 0);
+    }
 }
 
 /**
