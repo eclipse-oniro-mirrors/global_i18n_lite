@@ -24,11 +24,11 @@ static int i18nMaxMallc = 4096;
 
 int ReplaceAndCountOff(std::string &content, const int index, const char *sign, const int off)
 {
-    int signLen = strlen(sign);
-    if ((index < 0) || (static_cast<unsigned int>(index) > strlen(content.data()))) {
+    if ((sign == nullptr) || (index < 0) || (static_cast<unsigned int>(index) > strlen(content.data()))) {
         return off;
     }
     content = content.replace(index, 1, sign);
+    int signLen = strlen(sign);
     return off + signLen - 1;
 }
 
