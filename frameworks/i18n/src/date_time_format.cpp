@@ -109,7 +109,11 @@ void DateTimeFormat::ApplyPattern(const AvailableDateTimeFormatPattern &requestP
         return;
     }
     this->requestPattern = requestPattern;
-    Init();
+    if (this->impl != nullptr) {
+        this->impl->ApplyPattern(requestPattern);
+    } else {
+        Init();
+    }
 }
 
 std::string DateTimeFormat::GetWeekName(const int32_t &index, DateTimeDataType type)
