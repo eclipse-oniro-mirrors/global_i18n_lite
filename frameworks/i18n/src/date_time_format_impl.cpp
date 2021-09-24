@@ -128,6 +128,7 @@ void DateTimeFormatImpl::FreeResource()
 
 void DateTimeFormatImpl::ApplyPattern(const AvailableDateTimeFormatPattern &requestPattern)
 {
+    this->requestPattern = requestPattern;
     fPattern = GetStringFromPattern(requestPattern, data);
 }
 
