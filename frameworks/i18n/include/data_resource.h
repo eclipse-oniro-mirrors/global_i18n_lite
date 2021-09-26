@@ -123,6 +123,8 @@ private:
     void GetType(char** &adjustResource, uint32_t* &adjustResourceIndex, uint32_t &count, LocaleDataType type);
     uint32_t GetFinalCount(char *configs, uint32_t configSize, LocaleDataType type);
     void FreeResource();
+    bool IsTypeNeeded(int32_t index, uint32_t count);
+    bool ApplyForResource(uint32_t **index, char ***wanted, uint32_t totalCount);
     uint32_t localeMask = 0;
     uint32_t fallbackMask = 0;
     uint32_t defaultMask = 0;

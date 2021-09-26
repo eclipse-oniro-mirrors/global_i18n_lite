@@ -149,9 +149,9 @@ bool DataResource::Init(void)
         close(infile);
         return false;
     }
-    PrepareData(infile);
+    ret = PrepareData(infile);
     close(infile);
-    return true;
+    return ret;
 }
 
 bool DataResource::ReadHeader(int32_t infile)
@@ -200,20 +200,25 @@ bool DataResource::PrepareData(int32_t infile)
         locales);
     I18nFree(locales);
     bool ret = true;
-    if ((localeIndex >= 0) && (resourceCount > 0) &&
-        (resourceCount <= DataResourceType::RESOURCE_TYPE_END)) {
+    if (IsTypeNeeded(localeIndex, resourceCount)) {
         ret = PrepareLocaleData(infile, configOffset, resourceCount, LocaleDataType::RESOURCE);
     }
-    if ((fallbackLocaleIndex >= 0) && !FullLoaded() && ret && (fallbackResourceCount > 0) &&
-        (fallbackResourceCount <= DataResourceType::RESOURCE_TYPE_END)) {
+    if (IsTypeNeeded(fallbackLocaleIndex, fallbackResourceCount)) {
         ret = PrepareLocaleData(infile, fallbackConfigOffset, fallbackResourceCount,
             LocaleDataType::FALLBACK_RESOURCE);
     }
-    if ((defaultLocaleIndex >= 0) && !FullLoaded() && ret && (defaultResourceCount > 0) &&
-        (defaultResourceCount <= DataResourceType::RESOURCE_TYPE_END)) {
+    if (IsTypeNeeded(defaultLocaleIndex, defaultResourceCount)) {
         ret = PrepareLocaleData(infile, defaultConfigOffset, defaultResourceCount, LocaleDataType::DEFAULT_RESOURCE);
     }
     return ret;
+}
+
+bool DataResource::IsTypeNeeded(int32_t index, uint32_t count)
+{
+    if ((index < 0) || FullLoaded()) {
+        return false;
+    }
+    return (count > 0) && (count <= DataResourceType::RESOURCE_TYPE_END);
 }
 
 void DataResource::GetFallbackAndDefaultLocaleIndex(int32_t &fallbackLocaleIndex, int32_t &defaultLocaleIndex,
@@ -309,47 +314,34 @@ bool DataResource::GetStringFromStringPool(char *configs, const uint32_t configs
     if (finalCount == 0) {
         return true;
     }
+    uint32_t **index = nullptr;
+    char ***wanted = nullptr;
     uint32_t originalCount = 0;
     switch (type) {
         case LocaleDataType::RESOURCE: {
             originalCount = resourceCount;
             resourceCount = finalCount;
-            resourceIndex = reinterpret_cast<uint32_t *>(I18nMalloc(sizeof(uint32_t) * finalCount));
-            if (resourceIndex == nullptr) {
-                return false;
-            }
-            resource = reinterpret_cast<char **>(I18nMalloc(sizeof(char *) * finalCount));
-            if (resource == nullptr) {
-                return false;
-            }
+            index = &resourceIndex;
+            wanted = &resource;
             break;
         }
         case LocaleDataType::FALLBACK_RESOURCE: {
             originalCount = fallbackResourceCount;
             fallbackResourceCount = finalCount;
-            fallbackResourceIndex = reinterpret_cast<uint32_t *>(I18nMalloc(sizeof(uint32_t) * finalCount));
-            if (fallbackResourceIndex == nullptr) {
-                return false;
-            }
-            fallbackResource = reinterpret_cast<char **>(I18nMalloc(sizeof(char *) * finalCount));
-            if (fallbackResource == nullptr) {
-                return false;
-            }
+            index = &fallbackResourceIndex;
+            wanted = &fallbackResource;
             break;
         }
         default: {
             originalCount = defaultResourceCount;
             defaultResourceCount = finalCount;
-            defaultResourceIndex = reinterpret_cast<uint32_t *>(I18nMalloc(sizeof(uint32_t) * finalCount));
-            if (defaultResourceIndex == nullptr) {
-                return false;
-            }
-            defaultResource = reinterpret_cast<char **>(I18nMalloc(sizeof(char *) * finalCount));
-            if (defaultResource == nullptr) {
-                return false;
-            }
+            index = &defaultResourceIndex;
+            wanted = &defaultResource;
             break;
         }
+    }
+    if (!ApplyForResource(index, wanted, finalCount)) {
+        return false;
     }
     return Retrieve(configs, configsSize, infile, originalCount, type);
 }
@@ -403,6 +395,7 @@ bool DataResource::Retrieve(char *configs, uint32_t configsSize, int32_t infile,
         } else {
             char *temp = reinterpret_cast<char *>(I18nMalloc(length + 1));
             if (temp == nullptr) {
+                loaded[index] = DataResourceType::RESOURCE_TYPE_END;
                 return false;
             }
             int32_t readSize = read(infile, temp, length);
@@ -415,6 +408,25 @@ bool DataResource::Retrieve(char *configs, uint32_t configsSize, int32_t infile,
             adjustResourceIndex[currentIndex] = index;
         }
         ++currentIndex;
+    }
+    return true;
+}
+
+bool DataResource::ApplyForResource(uint32_t **index, char ***wanted, uint32_t totalCount)
+{
+    if ((index == nullptr) || (wanted == nullptr) || (totalCount == 0)) {
+        return false;
+    }
+    *index = reinterpret_cast<uint32_t *>(I18nMalloc(sizeof(uint32_t) * totalCount));
+    if (*index == nullptr) {
+        return false;
+    }
+    *wanted = reinterpret_cast<char **>(I18nMalloc(sizeof(char *) * totalCount));
+    if (*wanted == nullptr) {
+        return false; // free *index in FreeResource
+    }
+    for (uint32_t i = 0; i < totalCount; ++i) {
+        (*wanted)[i] = nullptr;
     }
     return true;
 }
