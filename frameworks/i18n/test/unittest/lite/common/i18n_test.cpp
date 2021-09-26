@@ -16,7 +16,6 @@
 #include "i18n_test.h"
 #include <gtest/gtest.h>
 #include "date_time_format.h"
-#include "iostream"
 #include "locale_info.h"
 #include "number_format.h"
 #include "plural_format.h"
@@ -991,7 +990,6 @@ HWTEST_F(I18NTest, I18nFuncTest046, TestSize.Level1)
     NumberFormat format(locale, status);
     std::string out = format.Format(0.12, NumberFormatType::PERCENT, status);
     std::string expect = "12 %";
-    cout << "out is " << out << endl;
     EXPECT_TRUE(expect == out);
 }
 
@@ -1139,4 +1137,81 @@ HWTEST_F(I18NTest, I18nFuncTest055, TestSize.Level1)
     WeekInfo weekInfo(locale, status);
     uint8_t ret = weekInfo.GetLastDayOfWeekend();
     EXPECT_TRUE(ret == 1);
+}
+
+/**
+ * @tc.name: I18nFuncTest056
+ * @tc.desc: Test DateTimeFormat be
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest056, TestSize.Level1)
+{
+    I18nStatus status = I18nStatus::ISUCCESS;
+    LocaleInfo locale("be", "", "");
+    AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::ABBR_MONTH_WEEKDAY_DAY;
+    DateTimeFormat formatter(pattern, locale);
+    string out;
+    formatter.Format(0, "", out, status);
+    EXPECT_TRUE(out == "чц, 1 сту");
+}
+
+/**
+ * @tc.name: I18nFuncTest057
+ * @tc.desc: Test numberFormat be
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest057, TestSize.Level1)
+{
+    LocaleInfo locale("be", "", "");
+    int status =  0;
+    NumberFormat formatter(locale, status);
+    EXPECT_TRUE(status == 0);
+    int intNum1 = 1234567;
+    int intNum2 = 123456789;
+    int intNum3 = 1234;
+    std::string out = formatter.Format(intNum1, status);
+    signed char array1[] = { 49, -62, -96, 50, 51, 52, -62, -96, 53, 54, 55, 0 };
+    string expect1(reinterpret_cast<char *>(array1));
+    std::string out2 = formatter.Format(intNum2, status);
+    signed char array2[] = { 49, 50, 51, -62, -96, 52, 53, 54, -62, -96, 55, 56, 57, 0 };
+    string expect2(reinterpret_cast<char *>(array2));
+    std::string out3 = formatter.Format(intNum3, status);
+    signed char array3[] = { 49, -62, -96, 50, 51, 52, 0 };
+    string expect3(reinterpret_cast<char *>(array3));
+    EXPECT_TRUE(out == expect1);
+    EXPECT_TRUE(out2 == expect2);
+    EXPECT_TRUE(out3 == expect3);
+}
+
+/**
+ * @tc.name: I18nFuncTest030
+ * @tc.desc: Test PluralFormat GetPluralRuleIndex function
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest058, TestSize.Level1)
+{
+    LocaleInfo locale("be", "", "");
+    I18nStatus status = I18nStatus::ISUCCESS;
+    PluralFormat formatter(locale, status);
+    int out = formatter.GetPluralRuleIndex(3, status);
+    int expect = PluralRuleType::FEW;
+    EXPECT_TRUE(expect == out);
+    out = formatter.GetPluralRuleIndex(10, status);
+    expect = PluralRuleType::MANY;
+    EXPECT_TRUE(expect == out);
+    out = formatter.GetPluralRuleIndex(11, status);
+    expect = PluralRuleType::MANY;
+    EXPECT_TRUE(expect == out);
+    out = formatter.GetPluralRuleIndex(26, status);
+    expect = PluralRuleType::MANY;
+    EXPECT_TRUE(expect == out);
+    out = formatter.GetPluralRuleIndex(1, status);
+    expect = PluralRuleType::ONE;
+    EXPECT_TRUE(expect == out);
+    out = formatter.GetPluralRuleIndex(2, status);
+    expect = PluralRuleType::FEW;
+    EXPECT_TRUE(expect == out);
+    out = formatter.GetPluralRuleIndex(0, status);
+    expect = PluralRuleType::MANY;
+    EXPECT_TRUE(expect == out);
 }
