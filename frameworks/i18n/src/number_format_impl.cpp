@@ -103,6 +103,9 @@ bool NumberFormatImpl::Init(const DataResource &resource)
         Split(unprocessedNumberDigit, splitDigit, NUM_DIGIT_SIZE, NUM_DIGIT_SEP);
         defaultData->SetNumSystem(splitDigit, NUM_DIGIT_SIZE);
     }
+    // set minus sign
+    std::string minus = resource.GetString(DataResourceType::MINUS_SIGN);
+    defaultData->SetMinusSign(minus);
     return true;
 }
 
@@ -124,21 +127,21 @@ std::string NumberFormatImpl::InnerFormat(double num, bool hasDec, bool isShowGr
     char buff[NUMBER_MAX] = { 0 };
     bool isPercentDefault = isPercent && (defaultData->style.minDecimalLength < 0);
     int len;
+    double adjustNum = (num < 0) ? (-1 * num) : num;
     if (isPercentDefault) {
-        len = static_cast<int>(sprintf_s(buff, NUMBER_MAX, "%.f", num));
+        len = static_cast<int>(sprintf_s(buff, NUMBER_MAX, "%.f", adjustNum));
     } else {
-        len = static_cast<int>(sprintf_s(buff, NUMBER_MAX, defaultData->style.numFormat, num));
+        len = static_cast<int>(sprintf_s(buff, NUMBER_MAX, defaultData->style.numFormat, adjustNum));
     }
     // convert decimal to char and format
     if (len < 0) {
         status = IERROR;
         return "";
     }
-
-    char *content = buff;
-    char *decimalNum = strchr(content, NumberData::NUMBER_DECIMAL);
+    char *decimalNum = strchr(buff, NumberData::NUMBER_DECIMAL);
     int decLen = (decimalNum == nullptr) ? 0 : strlen(decimalNum);
-    int lastLen = isShowGroup ? (len + CountGroupNum(len, decLen, defaultData->style.isTwoGroup)) : len;
+    int adjustIntLength = len - decLen;
+    int lastLen = isShowGroup ? (len + CountGroupNum(adjustIntLength, defaultData->style.isTwoGroup)) : len;
     char *result = reinterpret_cast<char *>(I18nMalloc(lastLen + 1));
     if (result == nullptr) {
         status = IERROR;
@@ -147,11 +150,11 @@ std::string NumberFormatImpl::InnerFormat(double num, bool hasDec, bool isShowGr
     result[lastLen] = '\0';
     bool adjustHasDec = isPercentDefault ? false : hasDec;
     if (isShowGroup) {
-        char *resultAndContent[] = { result, content };
+        char *resultAndContent[] = { result, buff };
         int lengths[] = { lastLen, len, defaultData->style.isTwoGroup };
         AddGroup(resultAndContent, lengths, decimalNum, adjustHasDec, decLen);
     } else {
-        errno_t rc = strcpy_s(result, lastLen + 1, content);
+        errno_t rc = strcpy_s(result, lastLen + 1, buff);
         if (rc != EOK) {
             I18nFree(result);
             return "";
@@ -164,10 +167,12 @@ std::string NumberFormatImpl::InnerFormat(double num, bool hasDec, bool isShowGr
         I18nFree(result);
         return "";
     }
-
     // if have native number to convert
     std::string outStr = ConvertSignAndNum(result, lastLen, defaultData, defaultData->style);
     I18nFree(result);
+    if (num < 0) {
+        outStr.insert(0, defaultData->GetMinusSign());
+    }
     return outStr;
 }
 
@@ -253,30 +258,25 @@ void NumberFormatImpl::CheckStatus(const errno_t rc, int &status) const
     }
 }
 
-int NumberFormatImpl::CountGroupNum(int len, int decLen, bool isTwoGrouped) const
+int NumberFormatImpl::CountGroupNum(int intLength, bool isTwoGrouped) const
 {
-    int intLen = len - decLen;
-    int groupNum = 0;
+    int groupNum;
     if (!isTwoGrouped) {
-        groupNum = static_cast<int>(intLen / NumberData::NUMBER_GROUP);
-        int mod = intLen % NumberData::NUMBER_GROUP;
-        if (mod == 0) {
+        groupNum = static_cast<int>(intLength / NumberData::NUMBER_GROUP);
+        if ((intLength % NumberData::NUMBER_GROUP) == 0) {
             --groupNum;
         }
-        return groupNum;
     } else {
-        if (intLen <= NumberData::NUMBER_GROUP) {
+        if (intLength <= NumberData::NUMBER_GROUP) {
             return 0;
         }
-        groupNum = 1;
-        intLen -= NumberData::NUMBER_GROUP;
-        groupNum += static_cast<int>(intLen / NumberData::TWO_GROUP);
-        int mod = intLen % NumberData::TWO_GROUP;
-        if (mod == 0) {
+        intLength -= NumberData::NUMBER_GROUP;
+        groupNum = 1 + static_cast<int>(intLength / NumberData::TWO_GROUP);
+        if ((intLength % NumberData::TWO_GROUP) == 0) {
             --groupNum;
         }
-        return groupNum;
     }
+    return groupNum;
 }
 
 void NumberFormatImpl::AddGroup(char *targetAndSource[], const int len[], const char *decimal,

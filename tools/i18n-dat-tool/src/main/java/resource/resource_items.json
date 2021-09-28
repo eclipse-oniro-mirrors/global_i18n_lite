@@ -239,5 +239,9 @@
     "decimal_plural" : {
         "index": 20,
         "method": "getDecimalPluralRules"
+    },
+    "minus-sign" : {
+        "index": 21,
+        "method": "getMinusSign"
     }
 }

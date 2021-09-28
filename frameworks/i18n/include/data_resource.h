@@ -89,7 +89,8 @@ enum DataResourceType {
     ELAPSED_PATERNS, // 18
     WEEK_DATA, // 19
     DECIMAL_PLURAL, // 20
-    RESOURCE_TYPE_END // 21
+    MINUS_SIGN, // 21
+    RESOURCE_TYPE_END // 22
 };
 
 class DataResource {
