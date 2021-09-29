@@ -47,7 +47,7 @@ private:
     int ConvertNum(std::string &strContent, char currentChar, const NumberData *data, int index, int off) const;
     int DelZero(char *target, int len, int delNum, bool onlyZero) const;
     void AddGroup(char *targetAndSource[], const int len[], const char *decimal, bool hasDec, int decLen) const;
-    int CountGroupNum(int len, int decLen, bool isTwoGrouped) const;
+    int CountGroupNum(int intLength, bool isTwoGrouped) const;
     char *FillMinDecimal(const char *target, int len, int addSize, bool isDec) const;
     bool DealWithPercent(char *buff, char *&result, int &status, StyleData &style, int &lastLen) const;
     static constexpr int NUMBER_MAX = 50;
