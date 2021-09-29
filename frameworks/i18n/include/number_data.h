@@ -58,6 +58,7 @@ public:
     char *decimal = nullptr;
     char *group = nullptr;
     char *percent = nullptr;
+    std::string minusSign;
     bool isNative = false;
     StyleData style;
     friend class NumberFormatImpl;
@@ -68,6 +69,8 @@ public:
     void SetNumSystem(std::string *numSym, const int numSize);
     void SetMinDecimalLength(int length);
     void SetMaxDecimalLength(int length);
+    void SetMinusSign(const std::string &minus);
+    std::string GetMinusSign();
 
 private:
     static void GetNumberingSystem(const char *numberingSystem, std::string &numberFormatString,

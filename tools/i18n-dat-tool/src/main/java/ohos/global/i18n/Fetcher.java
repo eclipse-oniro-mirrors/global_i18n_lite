@@ -124,7 +124,11 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
         Objects.requireNonNull(idMap);
         this.idMap = idMap;
         this.lan = this.languageTag.split("-")[0];
-        locale = ULocale.forLanguageTag(this.languageTag);
+        if (tag.startsWith("my")) {
+            this.locale = ULocale.forLanguageTag(tag + "-u-nu-Latn");
+        } else {
+            this.locale = ULocale.forLanguageTag(this.languageTag);
+        }
         formatSymbols = DateFormatSymbols.getInstance(locale);
         patternGenerator = DateTimePatternGenerator.getInstance(locale);
         defaultHourString = defaultHour();
@@ -485,6 +489,15 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
         sb.append(FileConfig.NUMBER_SEP);
         sb.append(weekdata.weekendCease);
         datas.add(sb.toString());
+    }
+
+    private void getMinusSign(ConfigItem config) {
+        NumberFormat formatter = NumberFormat.getNumberInstance(locale);
+        String formatValue = formatter.format(-1);
+        NumberingSystem numberSystem = NumberingSystem.getInstance(locale);
+        String description = numberSystem.getDescription();
+        String temp = formatValue.substring(0, formatValue.indexOf(description.charAt(1)));
+        datas.add(temp);
     }
 
     public @Override int compareTo(Fetcher other) {

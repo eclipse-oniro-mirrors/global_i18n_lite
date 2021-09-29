@@ -365,3 +365,14 @@ int NumberData::GetNumberFormatLength()
         }
     }
 }
+
+void NumberData::SetMinusSign(const std::string &minus)
+{
+    this->minusSign = minus;
+}
+
+std::string NumberData::GetMinusSign()
+{
+    return this->minusSign;
+}
+
