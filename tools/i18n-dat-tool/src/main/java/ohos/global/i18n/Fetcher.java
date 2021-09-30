@@ -124,11 +124,7 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
         Objects.requireNonNull(idMap);
         this.idMap = idMap;
         this.lan = this.languageTag.split("-")[0];
-        if (tag.startsWith("my")) {
-            this.locale = ULocale.forLanguageTag(tag + "-u-nu-Latn");
-        } else {
-            this.locale = ULocale.forLanguageTag(this.languageTag);
-        }
+        this.locale = ULocale.forLanguageTag(this.languageTag);
         formatSymbols = DateFormatSymbols.getInstance(locale);
         patternGenerator = DateTimePatternGenerator.getInstance(locale);
         defaultHourString = defaultHour();
