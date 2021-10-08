@@ -82,7 +82,7 @@ private:
         uint32_t count,  I18nStatus &status) const;
     bool IsTimeChar(char ch) const;
     int32_t ParseZoneInfo(const std::string &zoneInfo) const;
-    char* GetNoAmPmPattern(const std::string &patternString, int8_t &ret) const;
+    char *GetNoAmPmPattern(const std::string &patternString, int8_t &ret) const;
     void FormatElapsed(const struct ElapsedTime &time, char pre, uint32_t count, std::string &appendTo,
         I18nStatus &status) const;
     std::string FormatNumber(int32_t value) const;

@@ -36,7 +36,7 @@ int LenCharArray(const char *target);
 
 void Split(const std::string &src, std::string *dst, const int32_t size, const char &sep);
 
-bool CompareLocaleItem(const char *src, const char* dst);
+bool CompareLocaleItem(const char *src, const char *dst);
 
 std::string Parse(const char *str, int32_t count);
 }

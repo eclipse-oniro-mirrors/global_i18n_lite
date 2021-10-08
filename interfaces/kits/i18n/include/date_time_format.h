@@ -169,7 +169,7 @@ public:
         std::string &appendTo, I18nStatus &status);
 
     /**
-    * @brief format a elapsed duration in the pattern indicated by the type. 
+    * @brief format a elapsed duration in the pattern indicated by the type.
     *
     * @param milliseconds indicates the time to be formatted.
     * @param type pattern used to format string.

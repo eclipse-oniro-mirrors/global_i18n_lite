@@ -1184,7 +1184,7 @@ HWTEST_F(I18NTest, I18nFuncTest057, TestSize.Level1)
 }
 
 /**
- * @tc.name: I18nFuncTest030
+ * @tc.name: I18nFuncTest058
  * @tc.desc: Test PluralFormat GetPluralRuleIndex function
  * @tc.type: FUNC
  */
