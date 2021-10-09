@@ -463,7 +463,7 @@ int8_t DateTimeFormatImpl::Get12HourTimeWithoutAmpm(const time_t &cal, const std
     return ret;
 }
 
-char* DateTimeFormatImpl::GetNoAmPmPattern(const string &patternString, int8_t &ret) const
+char *DateTimeFormatImpl::GetNoAmPmPattern(const string &patternString, int8_t &ret) const
 {
     size_t len = patternString.size();
     char *pattern = nullptr;

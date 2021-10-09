@@ -222,7 +222,7 @@ bool DataResource::IsTypeNeeded(int32_t index, uint32_t count)
 }
 
 void DataResource::GetFallbackAndDefaultLocaleIndex(int32_t &fallbackLocaleIndex, int32_t &defaultLocaleIndex,
-    char* locales)
+    char *locales)
 {
     if (fallbackMask != 0) {
         fallbackLocaleIndex = BinarySearchLocale(fallbackMask, reinterpret_cast<unsigned char*>(locales));

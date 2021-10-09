@@ -90,7 +90,7 @@ bool NumberFormatImpl::Init(const DataResource &resource)
     if (size >= 3 && // check the last 3 character
         (static_cast<unsigned char>(origin.at(size - 1)) == 0x8f) && // check whether the last one is 0x8f
         (static_cast<unsigned char>(origin.at(size - 2)) == 0x80) && // check whether the index of size - 2 is 0x80
-        (static_cast<unsigned char>(origin.at(size - 3)) == 0xe2)) { // check whether the index of size - 3 is 0xe2 
+        (static_cast<unsigned char>(origin.at(size - 3)) == 0xe2)) { // check whether the index of size - 3 is 0xe2
         adjust = std::string(origin, 0, size - 3); // strip the last 3 chars
     }
     const char *percentPat = adjust.c_str();
@@ -227,9 +227,9 @@ int NumberFormatImpl::DelMoreZero(const StyleData &style, int decLen, char *&res
             char *tempResult = FillMinDecimal(result, lastLen - num, add, false);
             if (result != nullptr) {
 #ifdef I18N_PRODUCT
-                (void) OhosFree((void *) result);
+                (void)OhosFree((void *) result);
 #else
-                (void) free(result);
+                (void)free(result);
 #endif
             }
             result = tempResult;
@@ -239,9 +239,9 @@ int NumberFormatImpl::DelMoreZero(const StyleData &style, int decLen, char *&res
             char *tempResult = FillMinDecimal(result, lastLen - num, add, true);
             if (result != nullptr) {
 #ifdef I18N_PRODUCT
-                (void) OhosFree((void *) result);
+                (void)OhosFree((void *) result);
 #else
-                (void) free(result);
+                (void)free(result);
 #endif
             }
             result = tempResult;
@@ -320,8 +320,8 @@ void NumberFormatImpl::AddGroup(char *targetAndSource[], const int len[], const 
     }
     if (decLen > 0) {
         target[addIndex] = hasDec ? '.' : '\0';
-        for (int i = 1; (i < decLen) && (addIndex < targetLen); i++) {
-            target[addIndex + i] = hasDec ? decimal[i] : '\0';
+        for (int j = 1; (j < decLen) && (addIndex < targetLen); j++) {
+            target[addIndex + j] = hasDec ? decimal[j] : '\0';
         }
     }
 }
