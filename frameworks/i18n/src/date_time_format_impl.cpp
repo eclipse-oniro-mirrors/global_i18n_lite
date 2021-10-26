@@ -523,7 +523,8 @@ std::string DateTimeFormatImpl::FormatElapsedDuration(int32_t milliseconds, Elap
     int32_t mil = milliseconds % SECOND_IN_MILLIS / CONSTANT_TIME_NUMBER;
     int32_t sec = milliseconds % MINUTE_IN_MILLIS / SECOND_IN_MILLIS;
     int32_t min = milliseconds % HOUR_IN_MILLIS / MINUTE_IN_MILLIS;
-    const struct ElapsedTime time = { min, sec, mil };
+    int32_t hour = milliseconds / HOUR_IN_MILLIS;
+    const struct ElapsedTime time = { hour, min, sec, mil };
     bool inQuote = false;
     char pre = '\0';
     uint32_t count = 0;
@@ -558,6 +559,10 @@ void DateTimeFormatImpl::FormatElapsed(const struct ElapsedTime &time, char pre,
     string &appendTo, I18nStatus &status) const
 {
     switch (pre) {
+        case 'H': {
+            ZeroPadding(appendTo, count, MAX_COUNT, time.hours);
+            return;
+        }
         case 'm': {
             ZeroPadding(appendTo, count, MAX_COUNT, time.minutes);
             return;
