@@ -179,6 +179,12 @@ std::string GetStringFromElapsedPattern(const ElapsedPatternType &type, const Da
         case ELAPSED_MINUTE_SECOND_MILLISECOND: {
             return GetPatternFromIndex(ELAPSED_MINUTE_SECOND_MILLISECOND_INDEX, data);
         }
+        case ELAPSED_HOUR_MINUTE: {
+            return GetPatternFromIndex(HOUR24_MINUTE_INDEX, data);
+        }
+        case ELAPSED_HOUR_MINUTE_SECOND: {
+            return GetPatternFromIndex(HOUR24_MINUTE_SECOND_INDEX, data);
+        }
         default: {
             return "";
         }

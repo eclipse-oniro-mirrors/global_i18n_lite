@@ -46,6 +46,7 @@
 namespace OHOS {
 namespace I18N {
 struct ElapsedTime {
+    int32_t hours;
     int32_t minutes;
     int32_t seconds;
     int32_t milliseconds;
