@@ -11,23 +11,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import("//build/lite/config/component/lite_component.gni")
-import("//build/lite/config/test.gni")
+if (ohos_kernel_type != "liteos_m") {
+  import("//build/lite/config/component/lite_component.gni")
+  import("//build/lite/config/test.gni")
 
-unittest("I18nTest") {
-  output_extension = "bin"
+  unittest("I18nTest") {
+    output_extension = "bin"
 
-  sources = [ "unittest/lite/common/i18n_test.cpp" ]
+    sources = [ "unittest/lite/common/i18n_test.cpp" ]
 
-  include_dirs = [
-    "//base/global/i18n_lite/interfaces/kits/i18n/include",
-    "//base/global/i18n_lite/frameworks/i18n/test/unittest/lite/common",
-  ]
+    include_dirs = [
+      "//base/global/i18n_lite/interfaces/kits/i18n/include",
+      "//base/global/i18n_lite/frameworks/i18n/test/unittest/lite/common",
+    ]
 
-  deps = [ "//base/global/i18n_lite/frameworks/i18n:global_i18n" ]
-  output_dir = "$root_out_dir/test/unittest/global"
-}
+    deps = [ "//base/global/i18n_lite/frameworks/i18n:global_i18n" ]
+    output_dir = "$root_out_dir/test/unittest/global"
+  }
 
-group("unittest") {
-  deps = [ ":I18nTest" ]
+  group("unittest") {
+    deps = [ ":I18nTest" ]
+  }
+} else {
+  group("I18nTest") {
+  }
 }
