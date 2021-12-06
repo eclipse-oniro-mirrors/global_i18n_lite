@@ -143,7 +143,13 @@ enum ElapsedPatternType {
     ELAPSED_MINUTE_SECOND,
 
     /* Minute:Second:Millisecond */
-    ELAPSED_MINUTE_SECOND_MILLISECOND
+    ELAPSED_MINUTE_SECOND_MILLISECOND,
+
+    /* HOUR:MINUTE:SECOND */
+    ELAPSED_HOUR_MINUTE_SECOND,
+
+    /* HOUR:MINUTE */
+    ELAPSED_HOUR_MINUTE
 };
 
 enum DateTimeDataType {
