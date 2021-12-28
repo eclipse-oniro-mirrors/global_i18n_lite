@@ -47,7 +47,6 @@ void LocaleInfo::Init(const char *newLang, const char *newScript, const char *ne
         return;
     }
     I18nFree(language);
-    int idLength = langLength;
     language = NewArrayAndCopy(newLang, langLength);
     if (newScript != nullptr) {
         int scriptLength = LenCharArray(newScript);
@@ -137,7 +136,7 @@ void LocaleInfo::FreeResource()
     I18nFree(numberDigits);
 }
 
-bool LocaleInfo::operator == (const LocaleInfo &other) const
+bool LocaleInfo::operator ==(const LocaleInfo &other) const
 {
     bool ret = CompareLocaleItem(language, other.language);
     if (!ret) {
@@ -151,7 +150,7 @@ bool LocaleInfo::operator == (const LocaleInfo &other) const
     return ret;
 }
 
-LocaleInfo &LocaleInfo::operator = (const LocaleInfo &o)
+LocaleInfo &LocaleInfo::operator =(const LocaleInfo &o)
 {
     if (&o == this) {
         return *this;
@@ -210,28 +209,35 @@ void LocaleInfo::SetFail()
 
 bool LocaleInfo::ChangeLanguageCode(char *lang, const int32_t dstSize, const char *src, const int32_t srcSize) const
 {
-    if (srcSize > LANGUAGE_MIN_LENGTH) { // three letter language only support fil and mai
-        if ((language[0] == 'f') && (language[1] == 'i') && (language[LANGUAGE_MIN_LENGTH] == 'l')) {
+    if (lang == nullptr || src == nullptr) {
+        return false;
+    }
+    if (srcSize == (LANGUAGE_MIN_LENGTH + 1)) { // three letter language only support fil and mai
+        if (memcmp(src, "fil", srcSize) == 0) {
             lang[0] = 't';
             lang[1] = 'l';
-        } else if ((language[0] == 'm') && (language[1] == 'a') && (language[LANGUAGE_MIN_LENGTH] == 'i')) {
+        } else if (memcmp(src, "mai", srcSize) == 0) {
             lang[0] = 'm';
             lang[1] = 'd';
-        }
-    } else {
-        errno_t rc = strcpy_s(lang, dstSize, language);
-        if (rc != EOK) {
+        } else {
             return false;
         }
+        return true;
+    } else if (srcSize == LANGUAGE_MIN_LENGTH) {
+        if (memcmp(src, "he", srcSize) == 0) {
+            lang[0] = 'i';
+            lang[1] = 'w';
+        } else if (memcmp(src, "id", srcSize) == 0) {
+            lang[0] = 'i';
+            lang[1] = 'n';
+        } else {
+            if (strcpy_s(lang, dstSize, src) != EOK) {
+                return false;
+            }
+        }
+        return true;
     }
-    if ((srcSize == LANGUAGE_MIN_LENGTH) && (language[0] == 'h') && (language[1] == 'e')) {
-        lang[0] = 'i';
-        lang[1] = 'w';
-    } else if ((srcSize == LANGUAGE_MIN_LENGTH) && (language[0] == 'i') && (language[1] == 'd')) {
-        lang[0] = 'i';
-        lang[1] = 'n';
-    }
-    return true;
+    return false;
 }
 
 uint32_t LocaleInfo::GetMask() const
@@ -295,7 +301,7 @@ void LocaleInfo::ParseLanguageTag(LocaleInfo &locale, const char *languageTag, I
     uint8_t type = 0;
     while (tag) {
         const char *start = tag;
-        const char *end = tag; 
+        const char *end = tag;
         while (*end) {
             if (*end == '-') {
                 break;
@@ -312,7 +318,7 @@ void LocaleInfo::ParseLanguageTag(LocaleInfo &locale, const char *languageTag, I
             if ((options & OPT_EXTENSION) && (type == TAG_VALUE)) {
                 ProcessExtension(locale, key, value);
                 type = TAG_COMMON;
-            } 
+            }
         }
     }
     I18nFree(key);
@@ -412,26 +418,22 @@ bool LocaleInfo::IsScript(const char *start, uint8_t length)
 {
     // all scripts's length is 4,
     // now we support Latn, Hans, Hant, Qaag, Cyrl, Deva, Guru
-    if (length != SCRIPT_LENGTH) {
+    if (length != SCRIPT_LENGTH || start == nullptr) {
         return false;
     }
-    if (*start == 'H' && *(start + 1) == 'a' && *(start + 2) == 'n') { // check the first and second script characters
-        if (*(start + 3) == 't') { // check the last script character
-            return true;
-        } else if (*(start + 3) == 's') { // check the last script character
-            return true;
-        } else {
-            return false;
-        }
-    } else if (*start == 'Q' && *(start + 1) == 'a' &&  *(start + 2) == 'a' && *(start + 3) == 'g') { // check all
+    if (memcmp(start, "Hans", length) == 0) {
         return true;
-    } else if (*start == 'L' && *(start + 1) == 'a' &&  *(start + 2) == 't' && *(start + 3) == 'n') { // check all
+    } else if (memcmp(start, "Latn", length) == 0) {
         return true;
-    } else if (*start == 'C' && *(start + 1) == 'y' &&  *(start + 2) == 'r' && *(start + 3) == 'l') { // check all
+    } else if (memcmp(start, "Hant", length) == 0) {
         return true;
-    } else if (*start == 'D' && *(start + 1) == 'e' &&  *(start + 2) == 'v' && *(start + 3) == 'a') { // check all
+    } else if (memcmp(start, "Qaag", length) == 0) {
         return true;
-    } else if (*start == 'G' && *(start + 1) == 'u' &&  *(start + 2) == 'r' && *(start + 3) == 'u') { // check all
+    } else if (memcmp(start, "Cryl", length) == 0) {
+        return true;
+    } else if (memcmp(start, "Deva", length) == 0) {
+        return true;
+    } else if (memcmp(start, "Guru", length) == 0) {
         return true;
     } else {
         return false;
@@ -448,11 +450,11 @@ bool LocaleInfo::IsRegion(const char *start, uint8_t length)
         if (ch < 'A' || ch > 'Z') { // region characters should all be upper case.
             return false;
         }
-        return true;
     }
+    return true;
 }
 
-const char* LocaleInfo::GetExtension(const char *key)
+const char *LocaleInfo::GetExtension(const char *key)
 {
     if (strcmp(key, "nu") == 0) {
         return numberDigits;

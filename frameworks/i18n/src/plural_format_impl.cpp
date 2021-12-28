@@ -147,8 +147,8 @@ void PluralFormatImpl::ComputeDecimalInfo(double number, int integerNumber, int 
                 i--;
                 temp /= 10;
             }
-            int tempInteger = integerNumber * pow(10, i);
-            fractionNumber = temp - tempInteger;
+            int tempInteger = integerNumber * static_cast<int>(pow(10, i));
+            fractionNumber = static_cast<int>(temp - tempInteger);
             numOfFraction = i;
             break;
         }
