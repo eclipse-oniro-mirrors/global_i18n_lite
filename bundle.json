@@ -1,7 +1,7 @@
 {
     "name": "@ohos/i18n_lite",
     "version": "",
-    "description": "提供日期时间格式，时区，语言等国际化能力类库",
+    "description": "The internationalization module, namely, i18n, provides i18n capabilities such as formatting the date and time, obtaining the month and week names, and formatting numbers.",
     "homePage": "https://gitee.com/openharmony",
     "license": "Apache V2",
     "repository": "https://gitee.com/openharmony/global_i18n_lite",
