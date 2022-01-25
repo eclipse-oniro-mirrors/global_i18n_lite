@@ -523,7 +523,12 @@ std::string DateTimeFormatImpl::FormatElapsedDuration(int32_t milliseconds, Elap
     string pattern = GetStringFromElapsedPattern(type, data);
     int32_t mil = milliseconds % SECOND_IN_MILLIS / CONSTANT_TIME_NUMBER;
     int32_t sec = milliseconds % MINUTE_IN_MILLIS / SECOND_IN_MILLIS;
-    int32_t min = milliseconds % HOUR_IN_MILLIS / MINUTE_IN_MILLIS;
+    int32_t min;
+    if ((type == ELAPSED_MINUTE_SECOND) || (type == ELAPSED_MINUTE_SECOND_MILLISECOND)) {
+        min = milliseconds / MINUTE_IN_MILLIS;
+    } else {
+        min = milliseconds % HOUR_IN_MILLIS / MINUTE_IN_MILLIS;
+    }
     int32_t hour = milliseconds / HOUR_IN_MILLIS;
     const struct ElapsedTime time = { hour, min, sec, mil };
     bool inQuote = false;
