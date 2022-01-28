@@ -429,7 +429,7 @@ bool LocaleInfo::IsScript(const char *start, uint8_t length)
         return true;
     } else if (memcmp(start, "Qaag", length) == 0) {
         return true;
-    } else if (memcmp(start, "Cryl", length) == 0) {
+    } else if (memcmp(start, "Cyrl", length) == 0) {
         return true;
     } else if (memcmp(start, "Deva", length) == 0) {
         return true;
