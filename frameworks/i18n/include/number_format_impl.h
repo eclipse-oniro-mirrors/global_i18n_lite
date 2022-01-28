@@ -41,7 +41,7 @@ private:
     int maxDecimalLength = -1;
     int minDecimalLength = -1;
     void CheckStatus(const errno_t rc, int &status) const;
-    int DelMoreZero(const StyleData &style, int decLen, char *&result, int lastLen) const;
+    int DelMoreZero(const StyleData &style, int decLen, int lastLen, bool hasDec, char *&result) const;
     std::string InnerFormat(double num, bool hasDec, bool isShowGroup, bool isPercent, int &status) const;
     std::string ConvertSignAndNum(const char *content, int len, NumberData *data, StyleData &style) const;
     int ConvertNum(std::string &strContent, char currentChar, const NumberData *data, int index, int off) const;

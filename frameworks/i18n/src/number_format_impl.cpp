@@ -161,7 +161,7 @@ std::string NumberFormatImpl::InnerFormat(double num, bool hasDec, bool isShowGr
         }
     }
     // del more zero
-    lastLen = DelMoreZero(defaultData->style, decLen, result, lastLen);
+    lastLen = DelMoreZero(defaultData->style, decLen, lastLen, adjustHasDec, result);
     // if percent
     if (isPercent && !DealWithPercent(buff, result, status, defaultData->style, lastLen)) {
         I18nFree(result);
@@ -208,7 +208,7 @@ bool NumberFormatImpl::DealWithPercent(char *buff, char *&result, int &status, S
 }
 
 
-int NumberFormatImpl::DelMoreZero(const StyleData &style, int decLen, char *&result, int lastLen) const
+int NumberFormatImpl::DelMoreZero(const StyleData &style, int decLen, int lastLen, bool hasDec, char *&result) const
 {
     int num = 0;
     if (decLen > 1) {
@@ -221,7 +221,7 @@ int NumberFormatImpl::DelMoreZero(const StyleData &style, int decLen, char *&res
         num = num + DelZero(result, lastLen - num, delNum, false);
     }
     // fill zero to min
-    if ((minDecimalLength != NO_SET) && (minDecimalLength > decLen - 1 - num)) {
+    if (hasDec && (minDecimalLength != NO_SET) && (minDecimalLength > decLen - 1 - num)) {
         if (decLen - 1 - num < 0) {
             int add = minDecimalLength + 1;
             char *tempResult = FillMinDecimal(result, lastLen - num, add, false);
