@@ -59,7 +59,7 @@ if (defined(ohos_lite)) {
   } else {
     shared_library("global_i18n") {
       sources = locale_sources
-      configs += [ ":locale_config" ]
+      public_configs = [ ":locale_config" ]
       deps = [
         ":global_dat",
         "//third_party/bounds_checking_function:libsec_shared",
