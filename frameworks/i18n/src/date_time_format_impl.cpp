@@ -587,3 +587,13 @@ void DateTimeFormatImpl::FormatElapsed(const struct ElapsedTime &time, char pre,
         }
     }
 }
+
+std::string DateTimeFormatImpl::GetTimeSeparator()
+{
+    std::string ret = "";
+    if (data == nullptr) {
+        return ret;
+    }
+    ret.append(1, data->GetTimeSeparator());
+    return ret;
+}

@@ -174,3 +174,14 @@ std::string DateTimeFormat::FormatElapsedDuration(int32_t milliseconds, ElapsedP
     }
     return impl->FormatElapsedDuration(milliseconds, type, status);
 }
+
+std::string DateTimeFormat::GetTimeSeparator()
+{
+    if (impl == nullptr) {
+        bool isSuccess = Init();
+        if (!isSuccess) {
+            return "";
+        }
+    }
+    return impl->GetTimeSeparator();
+}
