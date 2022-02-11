@@ -177,6 +177,15 @@ public:
     * @return the formatted string.
     */
     std::string FormatElapsedDuration(int32_t milliseconds, ElapsedPatternType type, I18nStatus &status);
+
+    /**
+    * @brief Obtains the time separator.
+    *
+    * @return Returns the time separator.
+    * @since 2.2
+    * @version 1.0
+    */
+    std::string GetTimeSeparator();
 private:
     DateTimeFormatImpl *impl = nullptr;
     LocaleInfo locale;

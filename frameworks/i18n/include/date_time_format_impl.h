@@ -73,6 +73,7 @@ public:
     int8_t Get12HourTimeWithoutAmpm(const time_t &cal, const std::string &zoneInfo,
         std::string &appendTo, I18nStatus &status) const;
     std::string FormatElapsedDuration(int32_t milliseconds, ElapsedPatternType type, I18nStatus &status) const;
+    std::string GetTimeSeparator();
 private:
     void FreeResource();
     void Format(const struct tm &time, const std::string &pattern, std::string &appendTo, I18nStatus &status) const;
