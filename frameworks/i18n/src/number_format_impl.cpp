@@ -49,7 +49,7 @@ int NumberFormatImpl::ConvertNum(std::string &strContent, char currentChar,
     const NumberData *data, int index, int off) const
 {
     std::string numStr = "0123456789";
-    int charPos = numStr.find(currentChar);
+    size_t charPos = numStr.find(currentChar);
     return (charPos != std::string::npos) ?
         ReplaceAndCountOff(strContent, index + off, data->nativeNums[charPos].c_str(), off) : off;
 }
