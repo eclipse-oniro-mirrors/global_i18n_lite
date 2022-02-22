@@ -56,12 +56,12 @@ PluralRules *PluralFormatImpl::InitPluralRules(std::string unprocessedPluralData
 {
     std::string rules[RULES_NUM];
     Split(unprocessedPluralData, rules, RULES_NUM, PLURAL_SEP);
-    int zeroRuleSize = rules[PluralRuleType::ZERO].size();
-    int oneRuleSize = rules[PluralRuleType::ONE].size();
-    int twoRuleSize = rules[PluralRuleType::TWO].size();
-    int fewRuleSize = rules[PluralRuleType::FEW].size();
-    int manyRuleSize = rules[PluralRuleType::MANY].size();
-    int otherRuleSize = rules[PluralRuleType::OTHER].size();
+    int zeroRuleSize = static_cast<int>(rules[PluralRuleType::ZERO].size());
+    int oneRuleSize = static_cast<int>(rules[PluralRuleType::ONE].size());
+    int twoRuleSize = static_cast<int>(rules[PluralRuleType::TWO].size());
+    int fewRuleSize = static_cast<int>(rules[PluralRuleType::FEW].size());
+    int manyRuleSize = static_cast<int>(rules[PluralRuleType::MANY].size());
+    int otherRuleSize = static_cast<int>(rules[PluralRuleType::OTHER].size());
     int ruleSizes[RULES_NUM] = { zeroRuleSize, oneRuleSize, twoRuleSize, fewRuleSize, manyRuleSize, otherRuleSize };
     return new PluralRules(rules, RULES_NUM, ruleSizes, RULES_NUM);
 }
