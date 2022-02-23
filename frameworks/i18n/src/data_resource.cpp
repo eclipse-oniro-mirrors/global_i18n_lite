@@ -115,13 +115,13 @@ char *DataResource::GetString(uint32_t index) const
 char *DataResource::BinarySearchString(uint32_t *indexArray, uint32_t length, uint32_t target,
     char **stringArray, uint32_t stringLength) const
 {
-    if ((indexArray == nullptr) || (stringArray == nullptr) || (stringLength == 0)) {
+    if ((indexArray == nullptr) || (stringArray == nullptr) || (stringLength == 0) || (length == 0)) {
         return nullptr;
     }
-    uint32_t low = 0;
-    uint32_t high = length - 1;
+    int32_t low = 0;
+    int32_t high = length - 1;
     while (low <= high) {
-        uint32_t mid = low + ((high - low) >> 1);
+        int32_t mid = low + ((high - low) >> 1);
         uint32_t temp = indexArray[mid];
         if (temp == target) {
             return stringArray[mid];
@@ -397,7 +397,7 @@ bool DataResource::Retrieve(char *configs, uint32_t configsSize, int32_t infile,
         uint32_t length = ConvertUChar(reinterpret_cast<unsigned char*>(configs + i *
             GLOBAL_RESOURCE_CONFIG_SIZE + GLOBAL_RESOURCE_MASK_OFFSET));
         int32_t seekSize = lseek(infile, stringPoolOffset + offset, SEEK_SET);
-        if ((length == 0) || (seekSize != stringPoolOffset + offset)) {
+        if ((length == 0) || (seekSize != static_cast<uint32_t>(stringPoolOffset + offset))) {
             adjustResource[currentIndex] = nullptr;
             adjustResourceIndex[currentIndex] = index;
         } else {
@@ -421,16 +421,16 @@ bool DataResource::Retrieve(char *configs, uint32_t configsSize, int32_t infile,
 
 int32_t DataResource::BinarySearchLocale(const uint32_t mask, unsigned char *locales)
 {
-    if (locales == nullptr) {
+    if ((locales == nullptr) || (localesCount == 0)) {
         return -1;
     }
-    uint32_t low = 0;
-    uint32_t high = localesCount - 1;
+    int32_t low = 0;
+    int32_t high = static_cast<int32_t>(localesCount - 1);
     while (low <= high) {
-        uint32_t mid = low + ((high - low) >> 1);
+        int32_t mid = low + ((high - low) >> 1);
         uint32_t midMask = ConvertUint(locales + mid * GLOBAL_LOCALE_MASK_ITEM_SIZE);
         if (midMask == mask) {
-            return static_cast<int32_t>(mid);
+            return mid;
         } else if (midMask < mask) {
             low = mid + 1;
         } else {
