@@ -119,9 +119,12 @@ char *DataResource::BinarySearchString(uint32_t *indexArray, uint32_t length, ui
         return nullptr;
     }
     int32_t low = 0;
-    int32_t high = length - 1;
+    int32_t high = static_cast<int32_t>(length - 1);
     while (low <= high) {
-        int32_t mid = low + ((high - low) >> 1);
+        int32_t mid = low + (high - low) / 2;
+        if (mid > static_cast<int32_t>(stringLength)) {
+            return nullptr;
+        }
         uint32_t temp = indexArray[mid];
         if (temp == target) {
             return stringArray[mid];
@@ -427,7 +430,10 @@ int32_t DataResource::BinarySearchLocale(const uint32_t mask, unsigned char *loc
     int32_t low = 0;
     int32_t high = static_cast<int32_t>(localesCount - 1);
     while (low <= high) {
-        int32_t mid = low + ((high - low) >> 1);
+        int32_t mid = low + (high - low) / 2;
+        if (mid > 1024) { // locales count < 1024
+            return -1;
+        }
         uint32_t midMask = ConvertUint(locales + mid * GLOBAL_LOCALE_MASK_ITEM_SIZE);
         if (midMask == mask) {
             return mid;
