@@ -43,8 +43,8 @@
 * @version 1.0
 */
 
-#include "types.h"
 #include <cstdint>
+#include "types.h"
 
 namespace OHOS {
 namespace I18N {

@@ -38,11 +38,10 @@
 
 #include "types.h"
 #include "locale_info.h"
+#include "plural_format_impl.h"
 
 namespace OHOS {
 namespace I18N {
-class PluralFormatImpl;
-
 /**
 * Obtains plural rules.
 *
