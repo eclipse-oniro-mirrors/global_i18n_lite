@@ -51,12 +51,11 @@
 
 #include "types.h"
 #include "securec.h"
+#include "number_format_impl.h"
 #include "locale_info.h"
 
 namespace OHOS {
 namespace I18N {
-class NumberFormatImpl;
-
 class NumberFormat {
 public:
     /**

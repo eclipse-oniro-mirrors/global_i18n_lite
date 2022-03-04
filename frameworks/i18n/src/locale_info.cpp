@@ -14,10 +14,10 @@
  */
 
 #include "i18n_memory_adapter.h"
-#include "locale_info.h"
 #include "securec.h"
 #include "str_util.h"
 #include "types.h"
+#include "locale_info.h"
 
 static constexpr uint16_t OPT_LANG = 0x0001;
 static constexpr uint16_t OPT_SCRIPT = 0x0002;
@@ -46,7 +46,7 @@ void LocaleInfo::Init(const char *newLang, const char *newScript, const char *ne
     if ((langLength > LANGUAGE_MAX_LENGTH) || (langLength < LANGUAGE_MIN_LENGTH)) {
         return;
     }
-    I18nFree(language);
+    I18nFree((void *)language);
     language = NewArrayAndCopy(newLang, langLength);
     if (newScript != nullptr) {
         int scriptLength = LenCharArray(newScript);
@@ -77,7 +77,7 @@ void LocaleInfo::InitIdstr()
     if ((region != nullptr) && (LenCharArray(region) > 0)) {
         idStr = idStr + "-" + region;
     }
-    I18nFree(id);
+    I18nFree((void *)id);
     id = NewArrayAndCopy(idStr.data(), idStr.size());
 }
 
@@ -129,11 +129,11 @@ LocaleInfo::~LocaleInfo()
 
 void LocaleInfo::FreeResource()
 {
-    I18nFree(language);
-    I18nFree(script);
-    I18nFree(region);
-    I18nFree(id);
-    I18nFree(numberDigits);
+    I18nFree((void *)language);
+    I18nFree((void *)script);
+    I18nFree((void *)region);
+    I18nFree((void *)id);
+    I18nFree((void *)numberDigits);
 }
 
 bool LocaleInfo::operator ==(const LocaleInfo &other) const
@@ -321,8 +321,8 @@ void LocaleInfo::ParseLanguageTag(LocaleInfo &locale, const char *languageTag, I
             }
         }
     }
-    I18nFree(key);
-    I18nFree(value);
+    I18nFree((void *)key);
+    I18nFree((void *)value);
 }
 
 bool LocaleInfo::ParseNormalSubTag(LocaleInfo &locale, const char *start, size_t tagLength, uint16_t &options,
@@ -371,13 +371,13 @@ void LocaleInfo::ConfirmTagType(const char *start, size_t length, uint8_t &type,
         }
         case TAG_U: {
             type = TAG_KEY;
-            I18nFree(key);
+            I18nFree((void *)key);
             key = I18nNewCharString(start, length);
             return;
         }
         case TAG_KEY: {
             type = TAG_VALUE;
-            I18nFree(value);
+            I18nFree((void *)value);
             value = I18nNewCharString(start, length);
             return;
         }
