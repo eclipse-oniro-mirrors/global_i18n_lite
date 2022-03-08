@@ -52,16 +52,15 @@
 * @version 1.0
 */
 
-#include "types.h"
 #include <string>
+#include "date_time_format_impl.h"
+#include "types.h"
 #include "locale_info.h"
 #include "number_format.h"
 #include "time.h"
 
 namespace OHOS {
 namespace I18N {
-class DateTimeFormatImpl;
-
 class DateTimeFormat {
 public:
     /**

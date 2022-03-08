@@ -26,27 +26,35 @@
 // memory operator define
 #include <stdlib.h>
 
-#define I18nMalloc(a) malloc(a)
-#define I18nFree(a) \
-    do { \
-        if (a != nullptr) { \
-            (void) free((void *) a); \
-            a = nullptr; \
-        } \
-    } while (0)
+inline void *I18nMalloc(size_t size)
+{
+    return malloc(size);
+}
+
+inline void I18nFree(void *a)
+{
+    if (a != nullptr) {
+        (void) free((void *) a);
+        a = nullptr;
+    }
+}
 
 #else // I18N_PRODUCT
 #include "stdint.h"
 #include "ohos_mem_pool.h"
 
-#define I18nMalloc(a) OhosMalloc(MEM_TYPE_I18N_LSRAM, a)
-#define I18nFree(a) \
-    do { \
-        if (a != nullptr) { \
-            (void) OhosFree((void *) a); \
-            a = nullptr; \
-        } \
-    } while (0)
+inline void *I18nMalloc(size_t size)
+{
+    retrun OhosMalloc(MEM_TYPE_I18N_LSRAM, size);
+}
+
+inline void I18nFree(void *a)
+{
+    if (a != nullptr) {
+        (void) OhosFree((void *) a);
+        a = nullptr;
+    }
+}
 
 #endif // I18N_PRODUCT
 #endif // I18N_MEMORY_ADAPTER_H

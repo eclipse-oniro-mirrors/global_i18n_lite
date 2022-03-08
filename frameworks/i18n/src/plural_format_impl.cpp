@@ -191,10 +191,9 @@ bool PluralFormatImpl::ParseDecimalRule(const std::string &rule, const int ruleS
             } else if ((nextSymbolIndex < ruleSize) && (rule[nextSymbolIndex] == AND)) {
                 i += SKIP_SYMBOL_LENGTH;
                 tempResult = false;
-            } else if (nextSymbolIndex >= ruleSize) {
-                if (!ParseDecimalFormula(rule, ruleSize, i, numberInfo, numberInfoSize)) {
-                    tempResult = false;
-                }
+            } else if ((nextSymbolIndex >= ruleSize) &&
+                        !ParseDecimalFormula(rule, ruleSize, i, numberInfo, numberInfoSize)) {
+                tempResult = false;
             } else {
                 // do nothing
             }
@@ -278,10 +277,8 @@ bool PluralFormatImpl::ParseRule(const std::string &rule, const int ruleSize, co
             } else if ((nextSymbolIndex < ruleSize) && (rule[nextSymbolIndex] == AND)) {
                 i += SKIP_SYMBOL_LENGTH;
                 tempResult = false;
-            } else if (nextSymbolIndex >= ruleSize) {
-                if (!ParseFormula(rule, ruleSize, i, number)) {
-                    tempResult = false;
-                }
+            } else if ((nextSymbolIndex >= ruleSize) && !ParseFormula(rule, ruleSize, i, number)) {
+                tempResult = false;
             } else {
                 // do nothing
             }
