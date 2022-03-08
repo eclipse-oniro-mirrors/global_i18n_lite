@@ -46,7 +46,7 @@ void LocaleInfo::Init(const char *newLang, const char *newScript, const char *ne
     if ((langLength > LANGUAGE_MAX_LENGTH) || (langLength < LANGUAGE_MIN_LENGTH)) {
         return;
     }
-    I18nFree(language);
+    I18nFree((void *)language);
     language = NewArrayAndCopy(newLang, langLength);
     if (newScript != nullptr) {
         int scriptLength = LenCharArray(newScript);
@@ -77,7 +77,7 @@ void LocaleInfo::InitIdstr()
     if ((region != nullptr) && (LenCharArray(region) > 0)) {
         idStr = idStr + "-" + region;
     }
-    I18nFree(id);
+    I18nFree((void *)id);
     id = NewArrayAndCopy(idStr.data(), idStr.size());
 }
 
@@ -124,11 +124,16 @@ LocaleInfo::LocaleInfo(const LocaleInfo &o)
 
 LocaleInfo::~LocaleInfo()
 {
-    I18nFree(language);
-    I18nFree(script);
-    I18nFree(region);
-    I18nFree(id);
-    I18nFree(numberDigits);
+    FreeResource();
+}
+
+void LocaleInfo::FreeResource()
+{
+    I18nFree((void *)language);
+    I18nFree((void *)script);
+    I18nFree((void *)region);
+    I18nFree((void *)id);
+    I18nFree((void *)numberDigits);
 }
 
 bool LocaleInfo::operator == (const LocaleInfo &other) const
@@ -150,11 +155,7 @@ LocaleInfo &LocaleInfo::operator = (const LocaleInfo &o)
     if (&o == this) {
         return *this;
     }
-    I18nFree(language);
-    I18nFree(script);
-    I18nFree(region);
-    I18nFree(id);
-    I18nFree(numberDigits);
+    FreeResource();
     if (o.language != nullptr) {
         language = NewArrayAndCopy(o.language, strlen(o.language));
     }
@@ -293,7 +294,7 @@ void LocaleInfo::ParseLanguageTag(LocaleInfo &locale, const char *languageTag, I
     uint8_t type = 0;
     while (tag) {
         const char *start = tag;
-        const char *end = tag; 
+        const char *end = tag;
         while (*end) {
             if (*end == '-') {
                 break;
@@ -310,11 +311,11 @@ void LocaleInfo::ParseLanguageTag(LocaleInfo &locale, const char *languageTag, I
             if ((options & OPT_EXTENSION) && (type == TAG_VALUE)) {
                 ProcessExtension(locale, key, value);
                 type = TAG_COMMON;
-            } 
+            }
         }
     }
-    I18nFree(key);
-    I18nFree(value);
+    I18nFree((void *)key);
+    I18nFree((void *)value);
 }
 
 bool LocaleInfo::ParseNormalSubTag(LocaleInfo &locale, const char *start, size_t tagLength, uint16_t &options,
@@ -363,13 +364,13 @@ void LocaleInfo::ConfirmTagType(const char *start, size_t length, uint8_t &type,
         }
         case TAG_U: {
             type = TAG_KEY;
-            I18nFree(key);
+            I18nFree((void *)key);
             key = I18nNewCharString(start, length);
             return;
         }
         case TAG_KEY: {
             type = TAG_VALUE;
-            I18nFree(value);
+            I18nFree((void *)value);
             value = I18nNewCharString(start, length);
             return;
         }
@@ -442,8 +443,8 @@ bool LocaleInfo::IsRegion(const char *start, uint8_t length)
         if (ch < 'A' || ch > 'Z') { // region characters should all be upper case.
             return false;
         }
-        return true;
     }
+    return true;
 }
 
 const char* LocaleInfo::GetExtension(const char *key)

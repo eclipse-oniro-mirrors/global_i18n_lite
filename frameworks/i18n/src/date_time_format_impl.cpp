@@ -454,7 +454,7 @@ int8_t DateTimeFormatImpl::Get12HourTimeWithoutAmpm(const time_t &cal, const std
     const tm time = *tmPtr;
     if (pattern != nullptr) {
         string tempPattern(pattern);
-        I18nFree(pattern);
+        I18nFree((void *)pattern);
         Format(time, tempPattern, appendTo, status);
     } else {
         Format(time, this->fPattern, appendTo, status);

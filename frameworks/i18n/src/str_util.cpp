@@ -52,7 +52,7 @@ char *NewArrayAndCopy(const char *source, const int len)
     }
     errno_t rc = strcpy_s(out, len + 1, source);
     if (rc != EOK) {
-        I18nFree(out);
+        I18nFree((void *)out);
         return nullptr;
     }
     out[len] = '\0';
@@ -70,7 +70,7 @@ char *I18nNewCharString(const char *source, const int len)
     }
     errno_t rc = memcpy_s(out, len + 1, source, len);
     if (rc != EOK) {
-        I18nFree(out);
+        I18nFree((void *)out);
         return nullptr;
     }
     out[len] = '\0';

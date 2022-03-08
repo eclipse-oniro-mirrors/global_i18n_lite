@@ -191,6 +191,7 @@ public:
     const char *GetExtension(const char *key);
 private:
     bool ChangeLanguageCode(char *lang, const int32_t dstSize, const char *src, const int32_t srcSize) const;
+    void FreeResource();
     static void ProcessExtension(LocaleInfo &locale, const char *key, const char *value);
     static void ConfirmTagType(const char *start, size_t length, uint8_t &type, const char* &key, const char* &value);
     static void ParseLanguageTag(LocaleInfo &locale, const char *languageTag, I18nStatus &status);
