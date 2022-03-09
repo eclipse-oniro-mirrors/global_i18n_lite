@@ -14,10 +14,10 @@
  */
 
 #include "i18n_memory_adapter.h"
-#include "locale_info.h"
 #include "securec.h"
 #include "str_util.h"
 #include "types.h"
+#include "locale_info.h"
 
 static constexpr uint16_t OPT_LANG = 0x0001;
 static constexpr uint16_t OPT_SCRIPT = 0x0002;
@@ -47,7 +47,6 @@ void LocaleInfo::Init(const char *newLang, const char *newScript, const char *ne
         return;
     }
     I18nFree(language);
-    int idLength = langLength;
     language = NewArrayAndCopy(newLang, langLength);
     if (newScript != nullptr) {
         int scriptLength = LenCharArray(newScript);
@@ -411,26 +410,22 @@ bool LocaleInfo::IsScript(const char *start, uint8_t length)
 {
     // all scripts's length is 4,
     // now we support Latn, Hans, Hant, Qaag, Cyrl, Deva, Guru
-    if (length != SCRIPT_LENGTH) {
+    if (length != SCRIPT_LENGTH || start == nullptr) {
         return false;
     }
-    if (*start == 'H' && *(start + 1) == 'a' && *(start + 2) == 'n') { // check the first and second script characters
-        if (*(start + 3) == 't') { // check the last script character
-            return true;
-        } else if (*(start + 3) == 's') { // check the last script character
-            return true;
-        } else {
-            return false;
-        }
-    } else if (*start == 'Q' && *(start + 1) == 'a' &&  *(start + 2) == 'a' && *(start + 3) == 'g') { // check all
+    if (memcmp(start, "Hans", length) == 0) {
         return true;
-    } else if (*start == 'L' && *(start + 1) == 'a' &&  *(start + 2) == 't' && *(start + 3) == 'n') { // check all
+    } else if (memcmp(start, "Latn", length) == 0) {
         return true;
-    } else if (*start == 'C' && *(start + 1) == 'y' &&  *(start + 2) == 'r' && *(start + 3) == 'l') { // check all
+    } else if (memcmp(start, "Hant", length) == 0) {
         return true;
-    } else if (*start == 'D' && *(start + 1) == 'e' &&  *(start + 2) == 'v' && *(start + 3) == 'a') { // check all
+    } else if (memcmp(start, "Qaag", length) == 0) {
         return true;
-    } else if (*start == 'G' && *(start + 1) == 'u' &&  *(start + 2) == 'r' && *(start + 3) == 'u') { // check all
+    } else if (memcmp(start, "Cyrl", length) == 0) {
+        return true;
+    } else if (memcmp(start, "Deva", length) == 0) {
+        return true;
+    } else if (memcmp(start, "Guru", length) == 0) {
         return true;
     } else {
         return false;

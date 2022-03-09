@@ -56,12 +56,12 @@ PluralRules *PluralFormatImpl::InitPluralRules(std::string unprocessedPluralData
 {
     std::string rules[RULES_NUM];
     Split(unprocessedPluralData, rules, RULES_NUM, PLURAL_SEP);
-    int zeroRuleSize = rules[PluralRuleType::ZERO].size();
-    int oneRuleSize = rules[PluralRuleType::ONE].size();
-    int twoRuleSize = rules[PluralRuleType::TWO].size();
-    int fewRuleSize = rules[PluralRuleType::FEW].size();
-    int manyRuleSize = rules[PluralRuleType::MANY].size();
-    int otherRuleSize = rules[PluralRuleType::OTHER].size();
+    int zeroRuleSize = static_cast<int>(rules[PluralRuleType::ZERO].size());
+    int oneRuleSize = static_cast<int>(rules[PluralRuleType::ONE].size());
+    int twoRuleSize = static_cast<int>(rules[PluralRuleType::TWO].size());
+    int fewRuleSize = static_cast<int>(rules[PluralRuleType::FEW].size());
+    int manyRuleSize = static_cast<int>(rules[PluralRuleType::MANY].size());
+    int otherRuleSize = static_cast<int>(rules[PluralRuleType::OTHER].size());
     int ruleSizes[RULES_NUM] = { zeroRuleSize, oneRuleSize, twoRuleSize, fewRuleSize, manyRuleSize, otherRuleSize };
     return new PluralRules(rules, RULES_NUM, ruleSizes, RULES_NUM);
 }
@@ -139,7 +139,14 @@ void PluralFormatImpl::ComputeDecimalInfo(double number, int integerNumber, int 
         // Calculate number of fraction digits in the decimal number by judging whether
         // multiplying by 10 is an integer.
         double temp = number * pow(10, i);
+        if (i == MAX_FRACTION_NUMBERS && temp - ((int)temp) >= EPS) {
+            temp = round(temp);
+        }
         if (temp - ((int)temp) < EPS) {
+            while (i > 1 && (int) temp % 10 == 0) {
+                i--;
+                temp /= 10;
+            }
             int tempInteger = integerNumber * pow(10, i);
             fractionNumber = temp - tempInteger;
             numOfFraction = i;
@@ -184,10 +191,9 @@ bool PluralFormatImpl::ParseDecimalRule(const std::string &rule, const int ruleS
             } else if ((nextSymbolIndex < ruleSize) && (rule[nextSymbolIndex] == AND)) {
                 i += SKIP_SYMBOL_LENGTH;
                 tempResult = false;
-            } else if (nextSymbolIndex >= ruleSize) {
-                if (!ParseDecimalFormula(rule, ruleSize, i, numberInfo, numberInfoSize)) {
-                    tempResult = false;
-                }
+            } else if ((nextSymbolIndex >= ruleSize) &&
+                !ParseDecimalFormula(rule, ruleSize, i, numberInfo, numberInfoSize)) {
+                tempResult = false;
             } else {
                 // do nothing
             }
@@ -271,10 +277,8 @@ bool PluralFormatImpl::ParseRule(const std::string &rule, const int ruleSize, co
             } else if ((nextSymbolIndex < ruleSize) && (rule[nextSymbolIndex] == AND)) {
                 i += SKIP_SYMBOL_LENGTH;
                 tempResult = false;
-            } else if (nextSymbolIndex >= ruleSize) {
-                if (!ParseFormula(rule, ruleSize, i, number)) {
-                    tempResult = false;
-                }
+            } else if ((nextSymbolIndex >= ruleSize) && !ParseFormula(rule, ruleSize, i, number)) {
+                tempResult = false;
             } else {
                 // do nothing
             }
