@@ -102,9 +102,7 @@ output: 1 // 获取单复数六条规则中的第二条规则
 
 [global\_resmgr\_lite](https://gitee.com/openharmony/global_resmgr_lite/blob/master/README_zh.md)
 
-global\_i18n\_lite
-
-[global\_cust\_lite](https://gitee.com/openharmony/global_cust_lite/blob/master/README_zh.md)
+**global\_i18n\_lite**
 
 ## 附录<a name="section56601824115"></a>
 

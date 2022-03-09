@@ -104,9 +104,7 @@ output: 1 // Value 1 indicates plural rule type 1.
 
 [global\_resmgr\_lite](https://gitee.com/openharmony/global_resmgr_lite/blob/master/README.md)
 
-global\_i18n\_lite
-
-[global\_cust\_lite](https://gitee.com/openharmony/global_cust_lite/blob/master/README.md)
+**global\_i18n\_lite**
 
 ## Appendix<a name="section56601824115"></a>
 
