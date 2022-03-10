@@ -14,9 +14,9 @@
  */
 
 #include "i18n_memory_adapter.h"
-#include "number_data.h"
 #include "securec.h"
 #include "str_util.h"
+#include "number_data.h"
 
 using namespace OHOS::I18N;
 
@@ -188,32 +188,23 @@ void NumberData::ParseStartPerPattern(const char *pattern, const int len, StyleD
     }
 
     // parse the percent sign and position
-    int perSignPos = UNKOWN; // 0 : no percent 1:left 2:right;
+    int perSignPos = 0; // 0 : no percent 1:left 2:right;
     int hasSpace = 0;
     int space = 0; // 0 = 0020 1 = c2a0
     if (pattern[0] == '%') {
         perSignPos = LEFT;
         if ((len >= 2) && pattern[1] == ' ') { // length >= 2 guarantees that we can safely get second byte
             hasSpace = 1;
-        }
-
-        // length >= 3 guarantees that we can safely get third byte
-        if ((len >= 3) && (static_cast<int>(pattern[2]) == ARABIC_NOBREAK_ONE) &&
-            (static_cast<int>(pattern[1]) == ARABIC_NOBREAK_TWO)) {
+        } else if (IsNoBreakSpace(pattern, len, true)) {
             // the last two char is no break space (c2a0)
             hasSpace = 1;
             space = 1;
         }
     } else if (pattern[len - 1] == '%') {
         perSignPos = RIGHT; // percent in right
-        if ((len >= 2) && (pattern[len - 2] == ' ')) { // the last but one is space
+        if ((len >= 2) && (pattern[len - 2] == ' ')) { // len -2 has a space
             hasSpace = 1;
-        }
-
-        // length >= 3 guarantees that we can safely get third byte
-        if ((len >= 3) &&
-            (static_cast<signed char>(pattern[len - 2]) == ARABIC_NOBREAK_ONE) && // the reciprocal second
-            (static_cast<signed char>(pattern[len - 3]) == ARABIC_NOBREAK_TWO)) { // the reciprocal third
+        } else if (IsNoBreakSpace(pattern, len, false)) { // the reciprocal third
             // the last two chars is no break space (c2a0)
             hasSpace = 1;
             space = 1;
@@ -221,6 +212,20 @@ void NumberData::ParseStartPerPattern(const char *pattern, const int len, StyleD
     }
     int info[INFO_SIZE] = { perSignPos, hasSpace, space };
     ParseOtherPerPattern(pattern, len, styleData, info, PERCENT_INFO_SIZE);
+}
+
+bool NumberData::IsNoBreakSpace(const char *pattern, const int len, bool order)
+{
+    if (len < 3) { // pattern should at least have 3 bytes
+        return false;
+    }
+    int firstPosition = order ? 2 : (len - 2); // 2 is the offset to find ARABIC_NOBREAK_ONE
+    int secondPosition = order ? 1 : (len - 3); // 3 is the offset to find ARABIC_NOBREAK_TWO
+    if ((static_cast<signed char>(pattern[firstPosition]) == ARABIC_NOBREAK_ONE) &&
+        (static_cast<signed char>(pattern[secondPosition]) == ARABIC_NOBREAK_TWO)) {
+        return true;
+    }
+    return false;
 }
 
 void NumberData::ParseOtherPerPattern(const char *pattern, const int len,

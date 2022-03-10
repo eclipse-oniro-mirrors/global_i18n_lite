@@ -76,10 +76,11 @@ bool NumberFormatImpl::Init(const DataResource &resource)
     int size = origin.size();
     std::string adjust = origin;
     // strip "0x80 0xe2 0x8f" these three bytes in pat
-    if (size >= 3 && (static_cast<unsigned char>(origin.at(size - 1)) == 0x8f) &&
-        (static_cast<unsigned char>(origin.at(size - 2)) == 0x80) &&
-        (static_cast<unsigned char>(origin.at(size - 3)) == 0xe2)) {
-        adjust = std::string(origin, 0, size - 3);
+    if (size >= 3 && // check the last 3 character
+        (static_cast<unsigned char>(origin.at(size - 1)) == 0x8f) && // check whether the last one is 0x8f
+        (static_cast<unsigned char>(origin.at(size - 2)) == 0x80) && // check whether the index of size - 2 is 0x80
+        (static_cast<unsigned char>(origin.at(size - 3)) == 0xe2)) { // check whether the index of size - 3 is 0xe2
+        adjust = std::string(origin, 0, size - 3); // strip the last 3 chars
     }
     const char *percentPat = adjust.c_str();
     defaultData = new(std::nothrow) NumberData(pat, percentPat, decSign, groupSign, perSign);

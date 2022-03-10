@@ -75,6 +75,7 @@ public:
 
 private:
     static void GetNumberingSystem(const char *numberingSystem, std::string &ret);
+    static bool IsNoBreakSpace(const char *pattern, const int len, bool order);
     void Init(const char *pat, int patLen, const char *percentPat, int perPatLen);
     void InitSign(const std::string *signs, const int signLength);
     void ParsePattern(const char *pattern, const int len, StyleData &styleData);
@@ -89,8 +90,8 @@ private:
     int maxDecimalLength = -1;
     const char *NUMBER_FORMAT = "%%.%df";
     const int NUMBER_FORMAT_LENGTH = 5;
-    const int ARABIC_NOBREAK_ONE = -96;
-    const int ARABIC_NOBREAK_TWO = -62;
+    static const int ARABIC_NOBREAK_ONE = -96;
+    static const int ARABIC_NOBREAK_TWO = -62;
 };
 
 enum EPercentLocation {

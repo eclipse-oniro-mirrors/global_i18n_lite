@@ -446,10 +446,10 @@ uint32_t DataResource::ConvertUint(unsigned char *src)
         return 0;
     }
     uint32_t ret = 0;
-    ret |= (src[0] << SHIFT_THREE_BYTE); // first byte
-    ret |= (src[1] << SHIFT_TWO_BYTE); // second byte
-    ret |= (src[2] << SHIFT_ONE_BYTE); // third byte
-    ret |= src[3]; // forth byte
+    ret |= (src[0] << SHIFT_THREE_BYTE); // 0 indicates first byte
+    ret |= (src[1] << SHIFT_TWO_BYTE); // 1 indicates second byte
+    ret |= (src[2] << SHIFT_ONE_BYTE); // 2 indicates third byte
+    ret |= src[3]; // 3 indicates forth byte
     return ret;
 }
 

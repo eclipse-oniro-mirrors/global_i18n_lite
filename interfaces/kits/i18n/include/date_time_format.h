@@ -52,8 +52,8 @@
 * @version 1.0
 */
 
-#include "types.h"
 #include <string>
+#include "types.h"
 #include "locale_info.h"
 #include "number_format.h"
 #include "time.h"
