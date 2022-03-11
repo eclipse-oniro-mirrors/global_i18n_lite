@@ -39,12 +39,8 @@ StyleData::StyleData(const StyleData &data)
 
 StyleData::~StyleData()
 {
-    if (numFormat != nullptr) {
-        I18nFree(numFormat);
-    }
-    if (entireFormat != nullptr) {
-        I18nFree(entireFormat);
-    }
+    I18nFree((void *)numFormat);
+    I18nFree((void *)entireFormat);
 }
 
 StyleData &StyleData::operator=(const StyleData &data)
@@ -316,33 +312,11 @@ NumberData::NumberData()
 
 NumberData::~NumberData()
 {
-    if (pattern != nullptr) {
-        I18nFree(pattern);
-    }
-    if (percentPattern != nullptr) {
-        I18nFree(percentPattern);
-    }
-    if (style.numFormat != nullptr) {
-        I18nFree(style.numFormat);
-    }
-    if (percentStyle.numFormat != nullptr) {
-        I18nFree(percentStyle.numFormat);
-    }
-    if (style.entireFormat != nullptr) {
-        I18nFree(style.entireFormat);
-    }
-    if (percentStyle.entireFormat != nullptr) {
-        I18nFree(percentStyle.entireFormat);
-    }
-    if (group != nullptr) {
-        I18nFree(group);
-    }
-    if (percent != nullptr) {
-        I18nFree(percent);
-    }
-    if (decimal != nullptr) {
-        I18nFree(decimal);
-    }
+    I18nFree((void *)pattern);
+    I18nFree((void *)percentPattern);
+    I18nFree((void *)group);
+    I18nFree((void *)percent);
+    I18nFree((void *)decimal);
 }
 
 bool NumberData::IsSuccess()

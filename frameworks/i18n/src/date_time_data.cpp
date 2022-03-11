@@ -21,7 +21,7 @@ using namespace OHOS::I18N;
 
 using namespace std;
 
-DateTimeData::DateTimeData(const char *amPmMarkers, const char *sepAndHour, const int size)
+DateTimeData::DateTimeData(const char *amPmMarkers, const char *configs, const int size)
 {
     if (amPmMarkers != nullptr) {
         size_t len = strlen(const_cast<char*>(amPmMarkers));
@@ -29,11 +29,11 @@ DateTimeData::DateTimeData(const char *amPmMarkers, const char *sepAndHour, cons
             this->amPmMarkers = NewArrayAndCopy(amPmMarkers, len);
         }
     }
-    // size must >= 2, The first 2 element of sepAndHour need to be extracted, the first element
+    // size must >= 2, The first 2 element of configs need to be extracted, the first element
     // is the time separator and the second is the default hour.
-    if (sepAndHour && size >= 2) {
-        timeSeparator = sepAndHour[0];
-        defaultHour = sepAndHour[1];
+    if (configs && size >= 2) {
+        timeSeparator = configs[0];
+        defaultHour = configs[1];
     }
 }
 
@@ -99,20 +99,20 @@ char DateTimeData::GetDefaultHour(void) const
 
 DateTimeData::~DateTimeData()
 {
-    I18nFree(formatAbbreviatedMonthNames);
-    I18nFree(formatWideMonthNames);
-    I18nFree(standaloneAbbreviatedMonthNames);
-    I18nFree(standaloneWideMonthNames);
-    I18nFree(formatAbbreviatedDayNames);
-    I18nFree(formatWideDayNames);
-    I18nFree(standaloneAbbreviatedDayNames);
-    I18nFree(standaloneWideDayNames);
-    I18nFree(timePatterns);
-    I18nFree(datePatterns);
-    I18nFree(amPmMarkers);
-    I18nFree(hourMinuteSecondPatterns);
-    I18nFree(fullMediumShortPatterns);
-    I18nFree(elapsedPatterns);
+    I18nFree((void *)formatAbbreviatedMonthNames);
+    I18nFree((void *)formatWideMonthNames);
+    I18nFree((void *)standaloneAbbreviatedMonthNames);
+    I18nFree((void *)standaloneWideMonthNames);
+    I18nFree((void *)formatAbbreviatedDayNames);
+    I18nFree((void *)formatWideDayNames);
+    I18nFree((void *)standaloneAbbreviatedDayNames);
+    I18nFree((void *)standaloneWideDayNames);
+    I18nFree((void *)timePatterns);
+    I18nFree((void *)datePatterns);
+    I18nFree((void *)amPmMarkers);
+    I18nFree((void *)hourMinuteSecondPatterns);
+    I18nFree((void *)fullMediumShortPatterns);
+    I18nFree((void *)elapsedPatterns);
 }
 
 void DateTimeData::SetMonthNamesData(const char *formatAbbreviatedMonthNames, const char *formatWideMonthNames,
@@ -161,14 +161,14 @@ void DateTimeData::SetPatternsData(const char *datePatterns, const char *timePat
     if ((timeLength == 0) || (dateLength == 0) || (hourLength == 0) || (fullLength == 0)) {
         return;
     }
-    I18nFree(this->timePatterns);
+    I18nFree((void *)this->timePatterns);
     this->timePatterns = NewArrayAndCopy(timePatterns, timeLength);
-    I18nFree(this->datePatterns);
+    I18nFree((void *)this->datePatterns);
     this->datePatterns = NewArrayAndCopy(datePatterns, dateLength);
-    I18nFree(this->hourMinuteSecondPatterns);
+    I18nFree((void *)this->hourMinuteSecondPatterns);
     this->hourMinuteSecondPatterns = NewArrayAndCopy(hourMinuteSecondPatterns, hourLength);
-    I18nFree(this->fullMediumShortPatterns);
+    I18nFree((void *)this->fullMediumShortPatterns);
     this->fullMediumShortPatterns = NewArrayAndCopy(fullMediumShortPatterns, fullLength);
-    I18nFree(this->elapsedPatterns);
+    I18nFree((void *)this->elapsedPatterns);
     this->elapsedPatterns = NewArrayAndCopy(elapsedPatterns, elapsedLength);
 }

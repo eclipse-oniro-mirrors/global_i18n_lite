@@ -138,20 +138,23 @@ std::string NumberFormatImpl::InnerFormat(double num, StyleData &style, bool has
         int lengths[] = { lastLen, len, style.isTwoGroup};
         AddGroup(resultAndContent, lengths, decimalNum, hasDec, decLen);
     } else {
-        errno_t rc = strcpy_s(result, lastLen + 1, content);
-        CheckStatus(rc, status);
+        errno_t rc = strcpy_s(result, lastLen + 1, buff);
+        if (rc != EOK) {
+            I18nFree((void *)result);
+            return "";
+        }
     }
     // del more zero
     lastLen = DelMoreZero(style, decLen, result, lastLen);
     // if percent
     if (!DealWithPercent(buff, result, status, style, lastLen)) {
-        I18nFree(result);
+        I18nFree((void *)result);
         return "";
     }
 
     // if have native number to convert
     std::string outStr = ConvertSignAndNum(result, lastLen, defaultData, style);
-    I18nFree(result);
+    I18nFree((void *)result);
     return outStr;
 }
 
@@ -165,7 +168,7 @@ bool NumberFormatImpl::DealWithPercent(char *buff, char *&result, int &status, S
         int len = static_cast<int>(sprintf_s(buff, NUMBER_MAX, style.entireFormat, result));
         if (len < 0) {
             status = IERROR;
-            I18nFree(result);
+            I18nFree((void *)result);
             return false;
         }
         char *perResult = reinterpret_cast<char *>(I18nMalloc(len + 1));
@@ -175,12 +178,12 @@ bool NumberFormatImpl::DealWithPercent(char *buff, char *&result, int &status, S
         errno_t rc = strcpy_s(perResult, len + 1, buff);
         CheckStatus(rc, status);
         if (status == IERROR) {
-            I18nFree(perResult);
+            I18nFree((void *)perResult);
             return false;
         }
         perResult[len] = '\0';
         lastLen = len;
-        I18nFree(result);
+        I18nFree((void *)result);
         result = perResult;
         perResult = nullptr;
     }
