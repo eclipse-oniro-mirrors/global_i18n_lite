@@ -14,9 +14,9 @@
  */
 
 #include "i18n_memory_adapter.h"
-#include "number_data.h"
 #include "securec.h"
 #include "str_util.h"
+#include "number_data.h"
 
 using namespace OHOS::I18N;
 
@@ -38,8 +38,8 @@ StyleData::StyleData(const StyleData &data)
 
 StyleData::~StyleData()
 {
-    I18nFree(numFormat);
-    I18nFree(entireFormat);
+    I18nFree((void *)numFormat);
+    I18nFree((void *)entireFormat);
 }
 
 StyleData &StyleData::operator=(const StyleData &data)
@@ -217,7 +217,7 @@ void NumberData::ParseOtherPerPattern(const char *pattern, const int len, const 
     } else {
         type = "%s%%";
     }
-    I18nFree(style.entireFormat);
+    I18nFree((void *)style.entireFormat);
     int typeLen = type.size();
     style.entireFormat = I18nNewCharString(type.data(), typeLen);
 }
@@ -259,11 +259,11 @@ NumberData::NumberData()
 
 NumberData::~NumberData()
 {
-    I18nFree(group);
-    I18nFree(percent);
-    I18nFree(decimal);
-    I18nFree(numberFormatPattern);
-    I18nFree(percentFormatPattern);
+    I18nFree((void *)group);
+    I18nFree((void *)percent);
+    I18nFree((void *)decimal);
+    I18nFree((void *)numberFormatPattern);
+    I18nFree((void *)percentFormatPattern);
 }
 
 bool NumberData::IsSuccess()
@@ -343,10 +343,10 @@ void NumberData::UpdateNumberFormat()
     int finalDecLength = GetNumberFormatLength();
     if (snprintf_s(format, NUMBER_FORMAT_LENGTH, NUMBER_FORMAT_LENGTH - 1, NUMBER_FORMAT, finalDecLength) == -1) {
         isSucc = false;
-        I18nFree(format);
+        I18nFree((void *)format);
         return;
     }
-    I18nFree(style.numFormat);
+    I18nFree((void *)style.numFormat);
     style.numFormat = format;
 }
 

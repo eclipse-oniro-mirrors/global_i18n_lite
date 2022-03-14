@@ -33,7 +33,7 @@ namespace OHOS {
 namespace I18N {
 class DateTimeData {
 public:
-    DateTimeData(const char *amPmMarkers, const char *sepAndHour, const int size);
+    DateTimeData(const char *amPmMarkers, const char *configs, const int size);
     ~DateTimeData();
     std::string GetMonthName(int32_t index, DateTimeDataType type = DateTimeDataType::FORMAT_ABBR);
     std::string GetDayName(int32_t index, DateTimeDataType type = DateTimeDataType::FORMAT_ABBR);
