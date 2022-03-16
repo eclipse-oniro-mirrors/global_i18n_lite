@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -178,8 +178,6 @@ bool PluralFormatImpl::ParseDecimalRule(const std::string &rule, const int ruleS
             // the final result should be true.
             } else if (nextSymbolIndex >= ruleSize) {
                 return true;
-            } else {
-                // do nothing
             }
         } else {
             // If next symbol is or and current result or temp result is false, skip to next formula.
@@ -194,8 +192,6 @@ bool PluralFormatImpl::ParseDecimalRule(const std::string &rule, const int ruleS
             } else if ((nextSymbolIndex >= ruleSize) &&
                         !ParseDecimalFormula(rule, ruleSize, i, numberInfo, numberInfoSize)) {
                 tempResult = false;
-            } else {
-                // do nothing
             }
         }
     }
@@ -264,8 +260,6 @@ bool PluralFormatImpl::ParseRule(const std::string &rule, const int ruleSize, co
             // the final result should be true.
             } else if (nextSymbolIndex >= ruleSize) {
                 return true;
-            } else {
-                // do nothing
             }
         } else {
             // If next symbol is or and current result or temp result is false, skip to next formula.
@@ -279,8 +273,6 @@ bool PluralFormatImpl::ParseRule(const std::string &rule, const int ruleSize, co
                 tempResult = false;
             } else if ((nextSymbolIndex >= ruleSize) && !ParseFormula(rule, ruleSize, i, number)) {
                 tempResult = false;
-            } else {
-                // do nothing
             }
         }
     }

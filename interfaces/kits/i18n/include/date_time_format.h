@@ -161,7 +161,7 @@ public:
     *   and <b>ab:cd</b> indicates <b>hour:minute</b>.
     * @param appendTo Used to save the formatting result.
     * @param status Indicates the formatting status.
-    * @return Returns 1 or -1 if am/pm markers should be put at the begining or end of the returned string when we call
+    * @return Returns 1 or -1 if am/pm markers should be put at the beginning or end of the returned string when we call
     *   format with HOUR12_MINUTE_SECOND, returns 0 if no am/pm markers should be added.
     */
     int8_t Get12HourTimeWithoutAmpm(const time_t &cal, const std::string &zoneInfo,

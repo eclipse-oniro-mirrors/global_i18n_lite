@@ -36,9 +36,9 @@ public:
     virtual ~WeekInfo() = default;
 
     /**
-    * @brief Get the index of the begining day of a week.
+    * @brief Get the index of the beginning day of a week.
     *
-    * @return Returns the index of the begining day of a week, 1 stands for Sunday and 7 stands for Saturday
+    * @return Returns the index of the beginning day of a week, 1 stands for Sunday and 7 stands for Saturday
     */
     uint8_t GetFirstDayOfWeek();
 
@@ -50,9 +50,9 @@ public:
     uint8_t GetMinimalDaysInFirstWeek();
 
     /**
-    * @brief Get the index of the begining day of weekend.
+    * @brief Get the index of the beginning day of weekend.
     *
-    * @return Returns the index of the begining day of weekend, 1 stands for Sunday and 7 stands for Saturday
+    * @return Returns the index of the beginning day of weekend, 1 stands for Sunday and 7 stands for Saturday
     */
     uint8_t GetFirstDayOfWeekend();
 
