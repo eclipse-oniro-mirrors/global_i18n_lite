@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -288,9 +288,9 @@ void NumberFormatImpl::AddGroup(char *targetAndSource[], const int len[], const 
         return;
     }
     char *target = targetAndSource[0]; // use array to store target and source string, first is target string
-    int targetLen = len[0]; // use array to store target length and source length, first is target legnth
+    int targetLen = len[0]; // use array to store target length and source length, first is target length
     char *source = targetAndSource[1]; // use array to store target and source string, second is source string
-    int sourceLen = len[1]; // use array to store target length and source length, second is source legnth
+    int sourceLen = len[1]; // use array to store target length and source length, second is source length
     int isTwoGroup = len[2]; // 2 is the index of group info
     int intLen = sourceLen - decLen;
     int addIndex = 0;
