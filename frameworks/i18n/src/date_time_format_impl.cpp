@@ -24,7 +24,7 @@ using namespace std;
 /**
  * construct a DateTimeFormat object with request pattern and locale.
  * now we only support patterns defined in AvailableDateTimeFormatPatterns.
- * locale, locale information to retrive datetime resource form icu data.
+ * locale, locale information to retrieve datetime resource form icu data.
  */
 DateTimeFormatImpl::DateTimeFormatImpl(AvailableDateTimeFormatPattern requestPattern, const LocaleInfo &locale)
 {

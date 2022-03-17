@@ -99,7 +99,7 @@ private:
 };
 
 enum EPercentLocation {
-    UNKOWN = 0,
+    UNKNOWN = 0,
     LEFT = 1,
     RIGHT = 2
 };

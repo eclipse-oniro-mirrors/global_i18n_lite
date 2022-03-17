@@ -136,7 +136,7 @@ public class DataFetcher {
      * If a locale's data equals to its fallback's data, this locale is excluded
      * if a meta data of a locale equals to its fallback's data, this meta data is excluded
      * validLocales keep track of how many locales will be available in dat file.
-     * count indicates how many metaData in total will be availabe in dat file.
+     * count indicates how many metaData in total will be available in dat file.
      *
      * @return Total number of meta data count
      */
