@@ -34,7 +34,7 @@ inline void *I18nMalloc(size_t size)
 inline void I18nFree(void *a)
 {
     if (a != nullptr) {
-        (void) free((void *) a);
+        (void) free(a);
         a = nullptr;
     }
 }
@@ -51,7 +51,7 @@ inline void *I18nMalloc(size_t size)
 inline void I18nFree(void *a)
 {
     if (a != nullptr) {
-        (void) OhosFree((void *) a);
+        (void) OhosFree(a);
         a = nullptr;
     }
 }

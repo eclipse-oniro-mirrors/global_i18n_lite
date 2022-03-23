@@ -227,7 +227,7 @@ int NumberFormatImpl::DelMoreZero(const StyleData &style, int decLen, int lastLe
             char *tempResult = FillMinDecimal(result, lastLen - num, add, false);
             if (result != nullptr) {
 #ifdef I18N_PRODUCT
-                (void)OhosFree((void *) result);
+                (void)OhosFree(reinterpret_cast<void *>(result));
 #else
                 (void)free(result);
 #endif
@@ -239,7 +239,7 @@ int NumberFormatImpl::DelMoreZero(const StyleData &style, int decLen, int lastLe
             char *tempResult = FillMinDecimal(result, lastLen - num, add, true);
             if (result != nullptr) {
 #ifdef I18N_PRODUCT
-                (void)OhosFree((void *) result);
+                (void)OhosFree(reinterpret_cast<void *>(result));
 #else
                 (void)free(result);
 #endif
