@@ -55,11 +55,6 @@
 
 namespace OHOS {
 namespace I18N {
-#ifdef I18N_PRODUCT
-static const char *gDataResourcePath = "system/i18n/i18n.dat";
-#else
-static const char *gDataResourcePath = "/storage/data/i18n.dat";
-#endif
 enum LocaleDataType {
     RESOURCE = 0,
     FALLBACK_RESOURCE,
@@ -143,6 +138,6 @@ private:
     char **defaultResource = nullptr;
     uint32_t loaded[DataResourceType::RESOURCE_TYPE_END] = { 0 };
 };
-} // I18N
-} // OHOS
+} // namespace I18N
+} // namespace OHOS
 #endif

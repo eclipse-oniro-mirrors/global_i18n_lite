@@ -166,7 +166,7 @@ private:
     NumberFormatImpl *impl = nullptr;
     LocaleInfo mLocale;
 };
-}
-}
+} // namespace I18N
+} // namespace OHOS
 /** @} */
 #endif

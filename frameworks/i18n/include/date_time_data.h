@@ -63,6 +63,6 @@ private:
     char timeSeparator = ':';
     char defaultHour = 'H';
 };
-}
-}
+} // namespace I18N
+} // namespace OHOS
 #endif

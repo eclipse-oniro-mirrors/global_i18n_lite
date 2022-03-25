@@ -103,6 +103,6 @@ enum EPercentLocation {
     LEFT = 1,
     RIGHT = 2
 };
-}
-}
+} // namespace I18N
+} // namespace OHOS
 #endif
