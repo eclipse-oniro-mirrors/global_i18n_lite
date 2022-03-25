@@ -17,11 +17,10 @@
 #define DATE_TIME_DATA_H
 
 #include <string>
-#include "locale_info.h"
-#include "types.h"
-#include "str_util.h"
 #include "i18n_memory_adapter.h"
+#include "locale_info.h"
 #include "securec.h"
+#include "str_util.h"
 #include "types.h"
 
 #define MONTH_SIZE 12

@@ -144,8 +144,8 @@ std::string Parse(const char *str, int32_t count)
     if (length == 0 || length > I18N_STRING_LENGTH_MAX) {
         return "";
     }
-    int tempCount = 0;
-    int ind = 0;
+    int32_t tempCount = 0;
+    size_t ind = 0;
     while ((ind < length) && (tempCount < count)) {
         if (str[ind] == '_') {
             ++tempCount;
@@ -155,7 +155,7 @@ std::string Parse(const char *str, int32_t count)
     if (tempCount < count) {
         return "";
     }
-    int last = ind;
+    size_t last = ind;
     while (last < length) {
         if (str[last] == '_') {
             break;
