@@ -22,6 +22,12 @@
 using namespace OHOS::I18N;
 using namespace std;
 
+#ifdef I18N_PRODUCT
+static const char *gDataResourcePath = "system/i18n/i18n.dat";
+#else
+static const char *gDataResourcePath = "/storage/data/i18n.dat";
+#endif
+
 DataResource::DataResource(const LocaleInfo *localeInfo)
 {
     uint32_t enMask = LocaleInfo("en", "US").GetMask();

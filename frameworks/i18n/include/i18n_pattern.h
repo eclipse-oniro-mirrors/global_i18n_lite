@@ -190,6 +190,6 @@ std::string GetStringFromElapsedPattern(const ElapsedPatternType &type, const Da
         }
     }
 }
-} // I18N
-} // OHOS
+} // namespace I18N
+} // namespace OHOS
 #endif

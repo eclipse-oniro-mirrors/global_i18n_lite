@@ -38,7 +38,7 @@ public:
     std::string mOtherRule = "";
     int mOtherRuleSize = 0;
 };
-}
-}
+} // namespace I18N
+} // namespace OHOS
 
 #endif

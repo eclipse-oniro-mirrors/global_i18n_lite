@@ -97,6 +97,6 @@ private:
     std::string fPattern = "";
     LocaleInfo fLocale;
 };
-}
-}
+} // namespace I18N
+} // namespace OHOS
 #endif

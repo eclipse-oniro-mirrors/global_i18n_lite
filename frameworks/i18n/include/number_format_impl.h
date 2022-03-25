@@ -53,6 +53,6 @@ private:
     static constexpr int NUMBER_MAX = 50;
     static constexpr int NO_SET = -1;
 };
-}
-}
+} // namespace I18N
+} // namespace OHOS
 #endif

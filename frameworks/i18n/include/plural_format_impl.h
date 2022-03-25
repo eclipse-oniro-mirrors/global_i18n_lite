@@ -67,7 +67,7 @@ private:
     const double EPS = 1e-6;
     const int MAX_FRACTION_NUMBERS = 6;
 };
-}
-}
+} // namespace I18N
+} // namespace OHOS
 
 #endif

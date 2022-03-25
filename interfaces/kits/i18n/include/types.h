@@ -186,7 +186,7 @@ enum PluralRuleType {
     /* Other */
     OTHER
 };
-}
-}
+} // namespace I18N
+} // namespace OHOS
 /** @} */
 #endif

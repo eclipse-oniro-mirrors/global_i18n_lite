@@ -71,6 +71,6 @@ private:
     uint8_t firstDayOfWeekend;
     uint8_t lastDayOfWeekend;
 };
-} // I18N
-} // OHOS
+} // namespace I18N
+} // namespace OHOS
 #endif

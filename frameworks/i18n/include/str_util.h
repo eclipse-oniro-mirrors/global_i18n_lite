@@ -39,6 +39,6 @@ void Split(const std::string &src, std::string *dst, const int32_t size, const c
 bool CompareLocaleItem(const char *src, const char *dst);
 
 std::string Parse(const char *str, int32_t count);
-}
-}
+} // namespace I18N
+} // namespace OHOS
 #endif

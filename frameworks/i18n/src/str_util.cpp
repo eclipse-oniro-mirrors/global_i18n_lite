@@ -167,5 +167,5 @@ std::string Parse(const char *str, int32_t count)
     }
     return std::string(str + ind, last - ind);
 }
-} // I18N
-} // OHOS
+} // namespace I18N
+} // namespace OHOS

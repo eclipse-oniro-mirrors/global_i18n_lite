@@ -181,7 +181,7 @@ private:
     LocaleInfo locale;
     AvailableDateTimeFormatPattern requestPattern;
 };
-}
-}
+} // namespace I18N
+} // namespace OHOS
 /** @} */
 #endif

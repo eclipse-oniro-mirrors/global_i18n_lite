@@ -230,7 +230,7 @@ enum EMask {
     LANG_SECOND_BEGIN = 18,
     LANG_FIRST_BEGIN = 25
 };
-}
-}
+} // namespace I18N
+} // namespace OHOS
 /** @} */
 #endif
