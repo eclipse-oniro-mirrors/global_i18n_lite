@@ -22,6 +22,11 @@ config("nativeapi_locale_simulator_config") {
     "-D_INC_STDIO_S",
     "-D_INC_STDLIB_S",
     "-D_INC_MEMORY_S",
+    "-pipe",
+    "-Wdate-time",
+    "-Wfloat-equal",
+    "-Wformat=2",
+    "-Wshadow",
   ]
 }
 
@@ -33,7 +38,6 @@ ohos_static_library("nativeapi_locale_simulator") {
     "//base/global/resmgr_lite/interfaces/innerkits/include",
     "//foundation/ace/ace_engine_lite/interfaces/innerkits/builtin/base",
     "//foundation/ace/ace_engine_lite/interfaces/innerkits/builtin/jsi",
-    "//third_party/bounds_checking_function/include",
     "//utils/native/lite/include",
   ]
   deps = [ "//third_party/bounds_checking_function:libsec_static" ]
