@@ -99,6 +99,7 @@ public:
     bool Init();
     char *GetString(DataResourceType type) const;
     virtual ~DataResource();
+    void GetString(DataResourceType type, std::string &ret) const;
 
 private:
     static uint32_t GetFallbackMask(const LocaleInfo &src);
