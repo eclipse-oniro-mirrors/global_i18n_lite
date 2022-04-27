@@ -514,3 +514,14 @@ uint32_t DataResource::GetFallbackMask(const LocaleInfo &src)
     }
     return LocaleInfo(language, script, "").GetMask();
 }
+
+void DataResource::GetString(DataResourceType type, std::string &ret) const
+{
+    uint32_t index = static_cast<uint32_t>(type);
+    char *temp = GetString(index);
+    if (temp == nullptr) {
+        ret = "";
+    } else {
+        ret = temp;
+    }
+}

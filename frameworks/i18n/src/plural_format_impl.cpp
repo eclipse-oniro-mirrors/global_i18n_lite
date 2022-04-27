@@ -42,8 +42,10 @@ PluralFormatImpl::~PluralFormatImpl()
 
 bool PluralFormatImpl::Init(const DataResource &resource)
 {
-    std::string unprocessedPluralData = resource.GetString(DataResourceType::PLURAL);
-    std::string unprocessedDecimalPluralData = resource.GetString(DataResourceType::DECIMAL_PLURAL);
+    std::string unprocessedPluralData;
+    resource.GetString(DataResourceType::PLURAL, unprocessedPluralData);
+    std::string unprocessedDecimalPluralData;
+    resource.GetString(DataResourceType::DECIMAL_PLURAL, unprocessedDecimalPluralData);
     mPluralRules = InitPluralRules(unprocessedPluralData);
     mDecimalPluralRules = InitPluralRules(unprocessedDecimalPluralData);
     if (mPluralRules == nullptr || mDecimalPluralRules == nullptr) {

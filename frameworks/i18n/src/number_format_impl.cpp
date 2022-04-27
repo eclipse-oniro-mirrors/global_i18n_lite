@@ -66,8 +66,10 @@ NumberFormatImpl::NumberFormatImpl(LocaleInfo &locale, int &status)
 bool NumberFormatImpl::Init(const DataResource &resource)
 {
     std::string numebrSystemFormat;
-    std::string unprocessedNumberFormat = resource.GetString(DataResourceType::NUMBER_FORMAT);
-    std::string unprocessedNumberDigit = resource.GetString(DataResourceType::NUMBER_DIGIT);
+    std::string unprocessedNumberFormat;
+    resource.GetString(DataResourceType::NUMBER_FORMAT, unprocessedNumberFormat);
+    std::string unprocessedNumberDigit;
+    resource.GetString(DataResourceType::NUMBER_DIGIT, unprocessedNumberDigit);
     std::string split[NUM_PATTERN_SIZE];
     Split(unprocessedNumberFormat, split, NUM_PATTERN_SIZE, NUM_PATTERN_SEP);
     std::string decSign = split[NUM_DEC_SIGN_INDEX];
@@ -104,7 +106,8 @@ bool NumberFormatImpl::Init(const DataResource &resource)
         defaultData->SetNumSystem(splitDigit, NUM_DIGIT_SIZE);
     }
     // set minus sign
-    std::string minus = resource.GetString(DataResourceType::MINUS_SIGN);
+    std::string minus;
+    resource.GetString(DataResourceType::MINUS_SIGN, minus);
     defaultData->SetMinusSign(minus);
     return true;
 }
