@@ -21,7 +21,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # header files
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include
-                    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../../resmgr_lite/frameworks/interfaces/innerkits/include
+                    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../../resource_management_lite/frameworks/interfaces/innerkits/include
                     ${CMAKE_SOURCE_DIR}/third_party/bounds_checking_function/include)
 
 # source files
