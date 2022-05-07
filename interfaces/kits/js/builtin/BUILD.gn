@@ -35,7 +35,7 @@ ohos_static_library("nativeapi_locale_simulator") {
 
   include_dirs = [
     "include",
-    "//base/global/resource_management_lite/interfaces/innerkits/include",
+    "//base/global/resource_management_lite/interfaces/inner_api/include",
     "//foundation/arkui/ace_engine_lite/interfaces/inner_api/builtin/base",
     "//foundation/arkui/ace_engine_lite/interfaces/inner_api/builtin/jsi",
     "//utils/native/lite/include",
