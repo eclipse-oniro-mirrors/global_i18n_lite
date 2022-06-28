@@ -183,7 +183,7 @@ public:
     static LocaleInfo ForLanguageTag(const char *languageTag, I18nStatus &status);
 
     /**
-    * @brief Get extension subtag assciated with the key.
+    * @brief Get extension subtag associated with the key.
     *
     * @param key Get the extension subtag using the key.
     * @return Returns the subtag

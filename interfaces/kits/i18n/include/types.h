@@ -131,10 +131,10 @@ enum AvailableDateTimeFormatPattern {
     /* Display week day */
     WEEK_DAY,
 
-    /* Display numberic month-day, and week day */
+    /* Display numeric month-day, and week day */
     NUMBER_MONTH_ABBR_WEEK_DAY,
 
-    /* Display numberic month-day */
+    /* Display numeric month-day */
     NUMBER_MONTH_DAY
 };
 

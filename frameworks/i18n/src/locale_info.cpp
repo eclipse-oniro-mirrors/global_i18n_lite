@@ -393,7 +393,7 @@ void LocaleInfo::ProcessExtension(LocaleInfo &locale, const char *key, const cha
     if (key == nullptr || value == nullptr) {
         return;
     }
-    // now we only support numbering systems in extentions
+    // now we only support numbering systems in extensions
     if (strcmp(key, "nu") == 0) {
         locale.numberDigits = NewArrayAndCopy(value, strlen(value));
         return;

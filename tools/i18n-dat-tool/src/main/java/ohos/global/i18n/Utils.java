@@ -167,7 +167,7 @@ public class Utils {
     /**
      * Write i18n.dat's Header to DataOutputStream
      *
-     * @param out data will be writen into the stream
+     * @param out data will be written into the stream
      * @param hashCode reserved for future use
      * @param localesCount valid locales in total
      * @param metaCount all metaData in total
