@@ -39,64 +39,63 @@ The directory structure for the i18n module is as follows:
 
 1. Change the date and time formats \(such as the sequence of year, month, and day, month and week names, and 12-hour or 24-hour system\) following the system settings to adapt to the cultural habits of users in different locales. For details, see the API reference. The sample code is as follows:
 
-```
-#include "date_time_format.h"
-using namespace OHOS::I18N
+    ```cpp
+    #include "date_time_format.h"
+    using namespace OHOS::I18N
 
-LocaleInfo locale("zh", "Hans", "CN"); // Obtain the locale.
-DateTimeFormat formatter(AvailableDateTimeFormatPattern::HOUR_MINUTE, locale); // Initialize the example date and time and obtain the data required to format the date and time for the specified locale. The first parameter specifies the formatting pattern. For details about the supported formatting patterns, see the types.h file.
-time_t time = 3600 * 3; // Obtain the time to be formatted.
-std::string zoneInfo = "+1:00"; // Set the time zone to be UTC+0 plus 1 hour.
-std::string out; // Store the formatting result in the out field.
-Ii8nStatus status = Ii8nStatus::ISUCCESS;
-formatter.Format(time, zoneInfo, out, status); // Check the status field for the formatting result.
+    LocaleInfo locale("zh", "Hans", "CN"); // Obtain the locale.
+    DateTimeFormat formatter(AvailableDateTimeFormatPattern::HOUR_MINUTE, locale); // Initialize the example date and time and obtain the data required to format the date and time for the specified locale. The first parameter specifies the formatting pattern. For details about the supported formatting patterns, see the types.h file.
+    time_t time = 3600 * 3; // Obtain the time to be formatted.
+    std::string zoneInfo = "+1:00"; // Set the time zone to be UTC+0 plus 1 hour.
+    std::string out; // Store the formatting result in the out field.
+    Ii8nStatus status = Ii8nStatus::ISUCCESS;
+    formatter.Format(time, zoneInfo, out, status); // Check the status field for the formatting result.
 
-output:  4:00
-```
+    output:  4:00
+    ```
 
 2.  Change the number format \(such as the numeral system, grouping, decimal point, and percent sign\) following the system settings to adapt to the cultural habits of users in different locales. For details, see the API reference. The sample code is as follows:
 
-```
-#include "number_format.h"
-using namespace OHOS::I18N
+    ```cpp
+    #include "number_format.h"
+    using namespace OHOS::I18N
 
-LocaleInfo locale("en", "US");
-int status = 0;
-NumberFormat formatter(locale, status); // Initialize the number formatting instance and obtain the data required to format numbers for the specified locale. The value of status indicates the initialization result. If the value is 1, the initialization has failed. 
-int num = 1234
-std::string out = formatter.Format(num, status); // Check the status field for the initialization result.
+    LocaleInfo locale("en", "US");
+    int status = 0;
+    NumberFormat formatter(locale, status); // Initialize the number formatting instance and obtain the data required to format numbers for the specified locale. The value of status indicates the initialization result. If the value is 1, the initialization has failed.
+    int num = 1234
+    std::string out = formatter.Format(num, status); // Check the status field for the initialization result.
 
-output: 1,234
-```
+    output: 1,234
+    ```
 
 3. Obtain the month and week names in the format for the specified locale. The sample code is as follows:
 
-```
-#include "date_time_format.h"
-using namespace OHOS::I18N
+    ```cpp
+    #include "date_time_format.h"
+    using namespace OHOS::I18N
 
-LocaleInfo locale("en", "US"); // Obtain the locale.
-DateTimeFormat formatter(AvailableDateTimeFormatPattern::HOUR_MINUTE, locale);
-std::string month = formatter.GetMonthName(0, DateTimeDataType::FORMAT_WIDE); //: Obtain the month name in the wide format.
+    LocaleInfo locale("en", "US"); // Obtain the locale.
+    DateTimeFormat formatter(AvailableDateTimeFormatPattern::HOUR_MINUTE, locale);
+    std::string month = formatter.GetMonthName(0, DateTimeDataType::FORMAT_WIDE); //: Obtain the month name in the wide format.
 
-output: January
-```
+    output: January
+    ```
 
 4. Change the plural rule type following the application's language to adapt to the cultural habits of users.
-
 Languages vary in how they handle plurals of nouns. For example, there can be "one apple" or "two apples" in English. Singular and plural forms of nouns are generally classified into six plural rule types: zero, one, two, a few, many, and others. Supported plural rule types vary depending on languages. For example, Chinese supports only  **others**, English supports  **one**  and  **others**, and Arabic supports all the six plural rule types. The sample code is as follows:
 
-```
-#include "plural_format.h"
-using namespace OHOS::I18N
+    ```cpp
+    #include "plural_format.h"
+    using namespace OHOS::I18N
 
-LocaleInfo locale("en", "US"); // Obtain the locale.
-Ii8nStatus status = Ii8nStatus::ISUCCESS;
-PluralFormatter formatter = PluralFormatter(locale, status); // Check the status field for the i18n status of the locale.
-int out = formatter.GetPluralFormatter(1, status); // Check the status field for the plural rule type.
+    LocaleInfo locale("en", "US"); // Obtain the locale.
+    Ii8nStatus status = Ii8nStatus::ISUCCESS;
+    PluralFormatter formatter = PluralFormatter(locale, status); // Check the status field for the i18n status of the locale.
+    int out = formatter.GetPluralFormatter(1, status); // Check the status field for the plural rule type.
 
-output: 1 // Value 1 indicates plural rule type 1.
-```
+    output: 1 // Value 1 indicates plural rule type 1.
+    ```
 
 ## Repositories Involved<a name="section15583142420413"></a>
 
