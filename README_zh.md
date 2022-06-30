@@ -37,64 +37,64 @@
 
 ## 说明<a name="section894511013511"></a>
 
-1.提供时间日期格式化接口，使时间日期格式（如年月日顺序、月份和星期词汇、使用12或24小时制等）跟随系统设置满足不同区域用户的文化习惯。更详细的内容见API文档。示例如下：
+1. 提供时间日期格式化接口，使时间日期格式（如年月日顺序、月份和星期词汇、使用12或24小时制等）跟随系统设置满足不同区域用户的文化习惯。更详细的内容见API文档。示例如下：
 
-```
-#include "date_time_format.h"
-using namespace OHOS::I18N
+    ```cpp
+    #include "date_time_format.h"
+    using namespace OHOS::I18N
 
-LocaleInfo locale("zh", "Hans", "CN");  // 获得区域
-DateTimeFormat formatter(AvailableDateTimeFormatPattern::HOUR_MINUTE, locale); // 初始化时间日期示例，并获取该区域时间格式化所需数据，第一个参数为时间日期格式化模板类型，所支持的模板类型见API文档types.h
-time_t time = 3600 * 3; // 所需要格式化的时间
-std::string zoneInfo = "+1:00"; // 设置时区，相对于UTC 0时区加一小时
-std::string out; // 时间日期格式化结果保存在out中
-Ii8nStatus status = Ii8nStatus::ISUCCESS;
-formatter.Format(time, zoneInfo, out, status); // 判断status状态
+    LocaleInfo locale("zh", "Hans", "CN");  // 获得区域
+    DateTimeFormat formatter(AvailableDateTimeFormatPattern::HOUR_MINUTE, locale); // 初始化时间日期示例，并获取该区域时间格式化所需数据，第一个参数为时间日期格式化模板类型，所支持的模板类型见API文档types.h
+    time_t time = 3600 * 3; // 所需要格式化的时间
+    std::string zoneInfo = "+1:00"; // 设置时区，相对于UTC 0时区加一小时
+    std::string out; // 时间日期格式化结果保存在out中
+    Ii8nStatus status = Ii8nStatus::ISUCCESS;
+    formatter.Format(time, zoneInfo, out, status); // 判断status状态
 
-output:  4:00
-```
+    output:  4:00
+    ```
 
 2.  提供数字格式化接口，使数字格式（如数字体系、数字分组、小数点、百分号等）跟随应用系统设置满足不同区域用户的文化习惯。更详细的内容见API文档。示例如下：
 
-```
-#include "number_format.h"
-using namespace OHOS::I18N
+    ```cpp
+    #include "number_format.h"
+    using namespace OHOS::I18N
 
-LocaleInfo locale("en", "US");
-int status = 0;
-NumberFormat formatter(locale, status);  // 初始化数据格式化实例，并获取指定locale数字格式化所需数据；status为初始化的结果，等于1时表示初始化失败
-int num = 1234
-std::string out = formatter.Format(num, status);  // 判断status状态
+    LocaleInfo locale("en", "US");
+    int status = 0;
+    NumberFormat formatter(locale, status);  // 初始化数据格式化实例，并获取指定locale数字格式化所需数据；status为初始化的结果，等于1时表示初始化失败
+    int num = 1234
+    std::string out = formatter.Format(num, status);  // 判断status状态
 
-output: 1,234
-```
+    output: 1,234
+    ```
 
 3. 提供获取指定区域月份、星期不同格式名称的能力。示例如下：
 
-```
-#include "date_time_format.h"
-using namespace OHOS::I18N
+    ```cpp
+    #include "date_time_format.h"
+    using namespace OHOS::I18N
 
-LocaleInfo locale("en", "US");  // 获得区域
-DateTimeFormat formatter(AvailableDateTimeFormatPattern::HOUR_MINUTE, locale);
-std::string month = formatter.GetMonthName(0, DateTimeDataType::FORMAT_WIDE); // 获取format类型的长格式
+    LocaleInfo locale("en", "US");  // 获得区域
+    DateTimeFormat formatter(AvailableDateTimeFormatPattern::HOUR_MINUTE, locale);
+    std::string month = formatter.GetMonthName(0, DateTimeDataType::FORMAT_WIDE); // 获取format类型的长格式
 
-output: January
-```
+    output: January
+    ```
 
 4. 不同语言下名称跟随数字有不同的表达，如英文下会有：“one apple”、“two apples”。单复数规范总结多种语言的语法规范将名词的单数和复数形式划分为zero、one、two、few、many、other六种类型。不同语言支持不同数量的单复数类型，如中文只支持other一种，英文支持one和other两种，阿拉伯语支持全部6种类型。提供单复数接口来计算不同语言下不同数字时应该使用的名词复数类型，使“数字+名词”这种表达形式跟随应用语言满足不同语言用户的文化习惯。示例如下：
 
-```
-#include "plural_format.h"
-using namespace OHOS::I18N
+    ```cpp
+    #include "plural_format.h"
+    using namespace OHOS::I18N
 
-Locale locale("en", "US"); // 获得区域
-Ii8nStatus status = Ii8nStatus::ISUCCESS;
-PluralFormatter formatter = PluralFormatter(locale, status);  // 判断status状态
-int out = formatter.GetPluralFormatter(1, status);  // 判断status状态
+    Locale locale("en", "US"); // 获得区域
+    Ii8nStatus status = Ii8nStatus::ISUCCESS;
+    PluralFormatter formatter = PluralFormatter(locale, status);  // 判断status状态
+    int out = formatter.GetPluralFormatter(1, status);  // 判断status状态
 
-output: 1 // 获取单复数六条规则中的第二条规则
-```
+    output: 1 // 获取单复数六条规则中的第二条规则
+    ```
 
 ## 相关仓<a name="section15583142420413"></a>
 
