@@ -183,7 +183,7 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
     }
 
     /**
-     * Equals function to determin whether two objs are equal
+     * Equals function to determine whether two objs are equal
      *
      * @param obj Object to be compared
      * @return Return true if obj is equals to this Fetcher object, otherwise false

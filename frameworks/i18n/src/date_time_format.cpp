@@ -88,7 +88,7 @@ bool DateTimeFormat::Init()
 /**
  * parse a time (represent by the seconds elapsed from UTC 1970, January 1 00:00:00) to its text format.
  * cal, seconds from from UTC 1970, January 1 00:00:00
- * zoneInfoOffest, string representation of offsett such as "+01:45"
+ * zoneInfoOffest, string representation of offset such as "+01:45"
  * appendTo, output of this method.
  */
 void DateTimeFormat::Format(const time_t &cal, const string &zoneInfo, string &appendTo, I18nStatus &status)

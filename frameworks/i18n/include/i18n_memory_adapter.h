@@ -45,7 +45,7 @@ inline void I18nFree(void *a)
 
 inline void *I18nMalloc(size_t size)
 {
-    retrun OhosMalloc(MEM_TYPE_I18N_LSRAM, size);
+    return OhosMalloc(MEM_TYPE_I18N_LSRAM, size);
 }
 
 inline void I18nFree(void *a)
