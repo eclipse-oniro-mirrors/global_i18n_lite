@@ -186,6 +186,23 @@ enum PluralRuleType {
     /* Other */
     OTHER
 };
+
+/**
+* @brief Measure Format types.
+*
+* @since 2.2
+* @version 1.0
+*/
+enum MeasureFormatType {
+    /* Short */
+    MEASURE_SHORT = 0,
+    /* Medium */
+    MEASURE_MEDIUM,
+    /* Long */
+    MEASURE_LONG,
+    /* Full */
+    MEASURE_FULL,
+};
 } // namespace I18N
 } // namespace OHOS
 /** @} */

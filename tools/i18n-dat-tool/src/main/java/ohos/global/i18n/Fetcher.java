@@ -458,6 +458,15 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
         getMonthNames(DateFormatSymbols.STANDALONE, DateFormatSymbols.WIDE);
     }
 
+    // 16. get measure format pattern
+    private void getMeasureFormatPatterns(ConfigItem config) {
+        String str = MeasureFormatPatternFetcher.getInstance().get(this.languageTag);
+        if (str == null) {
+            str = "";
+        }
+        this.datas.add(str);
+    }
+
     private String defaultHour() {
         DateFormat tempFormat = DateFormat
             .getTimeInstance(DateFormat.SHORT, ULocale.forLanguageTag(languageTag));

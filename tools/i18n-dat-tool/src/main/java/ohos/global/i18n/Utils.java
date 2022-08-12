@@ -24,12 +24,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import ohos.global.i18n.ResourceConfiguration.ConfigItem;
@@ -240,8 +240,8 @@ public class Utils {
      * @param configItems ConfigItems extracted from resource_items.json
      */
     public static void generateTypesFile(File src, File dst, ArrayList<ConfigItem> configItems) {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(src)));
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dst)))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(src), StandardCharsets.UTF_8));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dst), StandardCharsets.UTF_8))) {
             String line = null;
             boolean found = false;
             while ((line = reader.readLine()) != null) {

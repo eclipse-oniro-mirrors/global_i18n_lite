@@ -17,12 +17,14 @@ package ohos.global.i18n;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.FileOutputStream;
 import java.io.BufferedOutputStream;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -61,8 +63,9 @@ public class DataFetcher {
      * Add all required locales from locale.txt and fetch its related data.
      */
     private static void addFetchers() {
-        try ( BufferedReader fLocales = new BufferedReader(new
-            FileReader(new File(DataFetcher.class.getResource("/resource/locales.txt").toURI())))) {
+        try (BufferedReader fLocales = new BufferedReader(new InputStreamReader(new FileInputStream(
+                new File(MeasureFormatPatternFetcher.class.getResource("/resource/locales.txt").toURI())),
+                StandardCharsets.UTF_8))) {
             String line = "";
             int count = 0;
             ULocale[] availableLocales = ULocale.getAvailableLocales();
