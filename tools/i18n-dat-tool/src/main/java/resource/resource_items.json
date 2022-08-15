@@ -243,5 +243,9 @@
     "minus-sign" : {
         "index": 21,
         "method": "getMinusSign"
+    },
+    "measure-format-patterns" : {
+        "index": 22,
+        "method": "getMeasureFormatPatterns"
     }
 }

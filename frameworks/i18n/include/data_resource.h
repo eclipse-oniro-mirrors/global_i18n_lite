@@ -52,6 +52,12 @@
 #define SHIFT_TWO_BYTE 16
 #define SHIFT_THREE_BYTE 24
 #define MAX_LOCALE_ITEM_SIZE 500
+#define MEASURE_BASE_ITEM_COUNT 4
+#define MEASURE_SINGLE_UNIT_COUNT 24
+#define MEASURE_FORMAT_TYPE_NUM 4
+#define MEASURE_PLURAL_NUM 6
+#define MAX_MEASURE_FORMAT_LENGTH 128
+#define MEASURE_UNIT_SEP '|'
 
 namespace OHOS {
 namespace I18N {
@@ -85,7 +91,8 @@ enum DataResourceType {
     WEEK_DATA, // 19
     DECIMAL_PLURAL, // 20
     MINUS_SIGN, // 21
-    RESOURCE_TYPE_END // 22
+    MEASURE_FORMAT_PATTERNS, // 22
+    RESOURCE_TYPE_END // 23
 };
 
 class DataResource {

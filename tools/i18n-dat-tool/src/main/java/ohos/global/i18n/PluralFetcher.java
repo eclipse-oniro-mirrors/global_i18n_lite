@@ -17,10 +17,12 @@ package ohos.global.i18n;
 
 import java.util.HashMap;
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -49,8 +51,9 @@ public class PluralFetcher {
     private PluralFetcher() {}
 
     private void init() {
-        try (BufferedReader fin = new BufferedReader(new FileReader(
-                new File(PluralFetcher.class.getResource("/resource/plural.txt").toURI())))) {
+        try (BufferedReader fin = new BufferedReader(new InputStreamReader(new FileInputStream(
+                new File(MeasureFormatPatternFetcher.class.getResource("/resource/plural.txt").toURI())),
+                StandardCharsets.UTF_8))) {
             map = new HashMap<>();
             String line = "";
             while ((line = fin.readLine()) != null) {
@@ -60,9 +63,10 @@ public class PluralFetcher {
         } catch (IOException | URISyntaxException e) {
             logger.log(Level.SEVERE, "Init error");
         }
-        try (BufferedReader fin = new BufferedReader(new FileReader(
-                new File(PluralFetcher.class.getResource("/resource/decimalPlurals.txt").toURI())))) {
-                    decimalMap = new HashMap<>();
+        try (BufferedReader fin = new BufferedReader(new InputStreamReader(new FileInputStream(
+                new File(MeasureFormatPatternFetcher.class.getResource("/resource/decimalPlurals.txt").toURI())),
+                StandardCharsets.UTF_8))) {
+            decimalMap = new HashMap<>();
             String line = "";
             while ((line = fin.readLine()) != null) {
                 String[] temp = getPluralItems(line);

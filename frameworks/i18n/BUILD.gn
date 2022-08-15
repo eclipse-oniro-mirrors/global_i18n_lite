@@ -23,6 +23,8 @@ locale_sources = [
   "src/date_time_format.cpp",
   "src/date_time_format_impl.cpp",
   "src/locale_info.cpp",
+  "src/measure_format.cpp",
+  "src/measure_format_impl.cpp",
   "src/number_data.cpp",
   "src/number_format.cpp",
   "src/number_format_impl.cpp",

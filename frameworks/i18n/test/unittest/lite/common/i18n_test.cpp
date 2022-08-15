@@ -17,6 +17,7 @@
 #include <gtest/gtest.h>
 #include "date_time_format.h"
 #include "locale_info.h"
+#include "measure_format.h"
 #include "number_format.h"
 #include "plural_format.h"
 #include "types.h"
@@ -24,8 +25,9 @@
 
 using namespace std;
 using namespace testing::ext;
-using namespace OHOS::I18N;
 
+namespace OHOS {
+namespace I18N {
 class I18NTest : public testing::Test {
 public:
     void SetUp();
@@ -1215,3 +1217,157 @@ HWTEST_F(I18NTest, I18nFuncTest058, TestSize.Level1)
     expect = PluralRuleType::MANY;
     EXPECT_TRUE(expect == out);
 }
+
+/**
+ * @tc.name: I18nFuncTest059
+ * @tc.desc: Test MeasureFormat Format function
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest059, TestSize.Level1)
+{
+    LocaleInfo locale("en", "US");
+    I18nStatus status = I18nStatus::ISUCCESS;
+    MeasureFormat formatter(locale, status);
+    std::string unit = "min";
+
+    std::string expect = "12 min";
+    std::string out = formatter.Format(12, unit, status);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_SHORT);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_MEDIUM);
+    EXPECT_TRUE(expect.compare(out) == 0);
+
+    expect = "12 minutes";
+    out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_LONG);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_FULL);
+    EXPECT_TRUE(expect.compare(out) == 0);
+
+    expect = "1 min";
+    out = formatter.Format(1, unit, status);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_SHORT);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_MEDIUM);
+    EXPECT_TRUE(expect.compare(out) == 0);
+
+    expect = "1 minute";
+    out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_LONG);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_FULL);
+    EXPECT_TRUE(expect.compare(out) == 0);
+}
+
+/**
+ * @tc.name: I18nFuncTest060
+ * @tc.desc: Test MeasureFormat Format function
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest060, TestSize.Level1)
+{
+    LocaleInfo locale("en", "US");
+    I18nStatus status = I18nStatus::ISUCCESS;
+    MeasureFormat formatter(locale, status);
+    std::string unit = "stroke";
+
+    std::string expect = "12 strokes";
+    std::string out = formatter.Format(12, unit, status);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_SHORT);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_MEDIUM);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_LONG);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_FULL);
+    EXPECT_TRUE(expect.compare(out) == 0);
+
+    expect = "1 stroke";
+    out = formatter.Format(1, unit, status);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_SHORT);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_MEDIUM);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_LONG);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_FULL);
+    EXPECT_TRUE(expect.compare(out) == 0);
+}
+
+/**
+ * @tc.name: I18nFuncTest061
+ * @tc.desc: Test MeasureFormat Format function
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest061, TestSize.Level1)
+{
+    LocaleInfo locale("en", "US");
+    I18nStatus status = I18nStatus::ISUCCESS;
+    MeasureFormat formatter(locale, status);
+    std::string unit = "ft";
+
+    std::string expect = "12 ft";
+    std::string out = formatter.Format(12, unit, status);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_SHORT);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_MEDIUM);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_LONG);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_FULL);
+    EXPECT_TRUE(expect.compare(out) == 0);
+
+    expect = "1 ft";
+    out = formatter.Format(1, unit, status);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_SHORT);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_MEDIUM);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_LONG);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_FULL);
+    EXPECT_TRUE(expect.compare(out) == 0);
+}
+
+/**
+ * @tc.name: I18nFuncTest062
+ * @tc.desc: Test MeasureFormat Format function
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest062, TestSize.Level1)
+{
+    LocaleInfo locale("zh", "Hans", "");
+    I18nStatus status = I18nStatus::ISUCCESS;
+    MeasureFormat formatter(locale, status);
+    std::string unit = "min";
+
+    std::string expect = "12 分钟";
+    std::string out = formatter.Format(12, unit, status);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_SHORT);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_MEDIUM);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_LONG);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_FULL);
+    EXPECT_TRUE(expect.compare(out) == 0);
+
+    expect = "1 分钟";
+    out = formatter.Format(1, unit, status);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_SHORT);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_MEDIUM);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_LONG);
+    EXPECT_TRUE(expect.compare(out) == 0);
+    out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_FULL);
+    EXPECT_TRUE(expect.compare(out) == 0);
+}
+} // namespace I18N
+} // namespace OHOS
