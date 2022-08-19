@@ -149,8 +149,7 @@ void PluralFormatImpl::ComputeDecimalInfo(double number, int integerNumber, int 
                 i--;
                 temp /= 10;
             }
-            int tempInteger = integerNumber * pow(10, i);
-            fractionNumber = temp - tempInteger;
+            fractionNumber = (int)(temp - integerNumber * pow(10, i));
             numOfFraction = i;
             break;
         }
