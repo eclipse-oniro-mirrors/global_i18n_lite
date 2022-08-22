@@ -240,8 +240,10 @@ public class Utils {
      * @param configItems ConfigItems extracted from resource_items.json
      */
     public static void generateTypesFile(File src, File dst, ArrayList<ConfigItem> configItems) {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(src), StandardCharsets.UTF_8));
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dst), StandardCharsets.UTF_8))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(src),
+                StandardCharsets.UTF_8));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dst),
+                StandardCharsets.UTF_8))) {
             String line = null;
             boolean found = false;
             while ((line = reader.readLine()) != null) {
