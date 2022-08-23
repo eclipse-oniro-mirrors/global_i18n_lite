@@ -28,15 +28,21 @@ import java.util.logging.Level;
 
 /**
  * This class is used to extract measure format pattern data related to a locale
+ *
+ * @since 2022-8-22
  */
 public class MeasureFormatPatternFetcher {
     private static MeasureFormatPatternFetcher patternFetcher = new MeasureFormatPatternFetcher();
     private static final Logger logger = Logger.getLogger("MeasureFormatPatternFetcher");
-    private HashMap<String, String> locale2Pattern;
+    private static final String path = "/resource/measure_format_patterns.txt";
 
     static {
         patternFetcher.init();
     }
+
+    private HashMap<String, String> locale2Pattern;
+
+    private MeasureFormatPatternFetcher() {}
 
     /**
      * Return singleton instance;
@@ -61,17 +67,16 @@ public class MeasureFormatPatternFetcher {
         return pattern;
     }
 
-    private MeasureFormatPatternFetcher() {}
-
     private void init() {
         try (BufferedReader fin = new BufferedReader(new InputStreamReader(new FileInputStream(
-                new File(MeasureFormatPatternFetcher.class.getResource("/resource/measure_format_patterns.txt").toURI())),
-                StandardCharsets.UTF_8))) {
+                new File(MeasureFormatPatternFetcher.class.getResource(path).toURI())), StandardCharsets.UTF_8))) {
             locale2Pattern = new HashMap<>();
             String line = "";
             while ((line = fin.readLine()) != null) {
                 String[] temp = getPatterns(line);
-                locale2Pattern.put(temp[0], temp[1]);
+                if (temp.length == 2) {
+                    locale2Pattern.put(temp[0], temp[1]);
+                }
             }
         } catch (IOException | URISyntaxException e) {
             logger.log(Level.SEVERE, "Init error");
@@ -84,13 +89,12 @@ public class MeasureFormatPatternFetcher {
         String[] localeAndPatterns = trimedLine.split(" ", 2); // Split into 2 parts
         if (localeAndPatterns.length != 2) {
             logger.log(Level.SEVERE, "Init error");
-            return null;
+            return new String[0];
         }
         result[0] = localeAndPatterns[0];
         String[] patterns = localeAndPatterns[1].split(", ");
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < patterns.length; ++i) {
-            // skip ""
             if (patterns[i].length() > 2) {
                 int length = patterns[i].length();
                 sb.append(patterns[i].substring(1, length - 1));
