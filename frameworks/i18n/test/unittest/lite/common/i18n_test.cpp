@@ -1222,6 +1222,7 @@ HWTEST_F(I18NTest, I18nFuncTest058, TestSize.Level1)
  * @tc.name: I18nFuncTest059
  * @tc.desc: Test MeasureFormat Format function
  * @tc.type: FUNC
+ * @tc.require: I4WKP8
  */
 HWTEST_F(I18NTest, I18nFuncTest059, TestSize.Level1)
 {
@@ -1263,6 +1264,7 @@ HWTEST_F(I18NTest, I18nFuncTest059, TestSize.Level1)
  * @tc.name: I18nFuncTest060
  * @tc.desc: Test MeasureFormat Format function
  * @tc.type: FUNC
+ * @tc.require: I4WKP8
  */
 HWTEST_F(I18NTest, I18nFuncTest060, TestSize.Level1)
 {
@@ -1300,6 +1302,7 @@ HWTEST_F(I18NTest, I18nFuncTest060, TestSize.Level1)
  * @tc.name: I18nFuncTest061
  * @tc.desc: Test MeasureFormat Format function
  * @tc.type: FUNC
+ * @tc.require: I4WKP8
  */
 HWTEST_F(I18NTest, I18nFuncTest061, TestSize.Level1)
 {
@@ -1337,6 +1340,7 @@ HWTEST_F(I18NTest, I18nFuncTest061, TestSize.Level1)
  * @tc.name: I18nFuncTest062
  * @tc.desc: Test MeasureFormat Format function
  * @tc.type: FUNC
+ * @tc.require: I4WKP8
  */
 HWTEST_F(I18NTest, I18nFuncTest062, TestSize.Level1)
 {
