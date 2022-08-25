@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -34,7 +35,8 @@ import java.util.logging.Level;
 public class MeasureFormatPatternFetcher {
     private static MeasureFormatPatternFetcher patternFetcher = new MeasureFormatPatternFetcher();
     private static final Logger logger = Logger.getLogger("MeasureFormatPatternFetcher");
-    private static final String path = "/resource/measure_format_patterns.txt";
+    private static final String PATH = "/resource" + FileSystems.getDefault().getSeparator() +
+        "measure_format_patterns.txt";
 
     static {
         patternFetcher.init();
@@ -69,7 +71,7 @@ public class MeasureFormatPatternFetcher {
 
     private void init() {
         try (BufferedReader fin = new BufferedReader(new InputStreamReader(new FileInputStream(
-                new File(MeasureFormatPatternFetcher.class.getResource(path).toURI())), StandardCharsets.UTF_8))) {
+                new File(MeasureFormatPatternFetcher.class.getResource(PATH).toURI())), StandardCharsets.UTF_8))) {
             locale2Pattern = new HashMap<>();
             String line = "";
             while ((line = fin.readLine()) != null) {
