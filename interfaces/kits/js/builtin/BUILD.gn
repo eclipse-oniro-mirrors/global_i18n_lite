@@ -38,7 +38,7 @@ ohos_static_library("nativeapi_locale_simulator") {
     "//base/global/resource_management_lite/interfaces/inner_api/include",
     "//foundation/arkui/ace_engine_lite/interfaces/inner_api/builtin/base",
     "//foundation/arkui/ace_engine_lite/interfaces/inner_api/builtin/jsi",
-    "//utils/native/lite/include",
+    "//commonlibrary/utils_lite/include",
   ]
   deps = [ "//third_party/bounds_checking_function:libsec_static" ]
 
