@@ -85,7 +85,7 @@ public class PluralFetcher {
      */
     public String get(String lan) {
         String out = map.get(lan);
-        if (out == null) {
+        if (out.equals(null)) {
             out = "";
         }
         return out;
@@ -99,7 +99,7 @@ public class PluralFetcher {
      */
     public String getDecimal(String lan) {
         String out = decimalMap.get(lan);
-        if (out == null) {
+        if (out.equals(null)) {
             out = "";
         }
         return out;

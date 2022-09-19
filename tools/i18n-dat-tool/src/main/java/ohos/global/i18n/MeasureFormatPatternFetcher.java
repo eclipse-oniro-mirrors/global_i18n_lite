@@ -35,7 +35,7 @@ import java.util.logging.Level;
 public class MeasureFormatPatternFetcher {
     private static MeasureFormatPatternFetcher patternFetcher = new MeasureFormatPatternFetcher();
     private static final Logger logger = Logger.getLogger("MeasureFormatPatternFetcher");
-    private static final String PATH =  "/resource" + FileSystems.getDefault().getSeparator() +
+    private static final String PATH = "/resource" + FileSystems.getDefault().getSeparator() +
         "measure_format_patterns.txt";
 
     static {
@@ -63,7 +63,7 @@ public class MeasureFormatPatternFetcher {
      */
     public String get(String locale) {
         String pattern = locale2Pattern.get(locale);
-        if (pattern == null) {
+        if (pattern.equals(null)) {
             return "";
         }
         return pattern;
