@@ -53,7 +53,7 @@ char *NewArrayAndCopy(const char *source, const int len)
     }
     errno_t rc = strcpy_s(out, len + 1, source);
     if (rc != EOK) {
-        I18nFree((void *)out);
+        I18nFree(static_cast<void *>(out));
         return nullptr;
     }
     out[len] = '\0';
@@ -71,7 +71,7 @@ char *I18nNewCharString(const char *source, const int len)
     }
     errno_t rc = memcpy_s(out, len + 1, source, len);
     if (rc != EOK) {
-        I18nFree((void *)out);
+        I18nFree(static_cast<void *>(out));
         return nullptr;
     }
     out[len] = '\0';
@@ -162,7 +162,7 @@ std::string Parse(const char *str, int32_t count)
         }
         ++last;
     }
-    if (last - ind <= 0) {
+    if (last == ind) {
         return "";
     }
     return std::string(str + ind, last - ind);
