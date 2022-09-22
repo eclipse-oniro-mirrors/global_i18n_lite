@@ -188,6 +188,7 @@ bool NumberData::IsNoBreakSpace(const char *pattern, const int len, bool order)
 void NumberData::ParseOtherPerPattern(const char *pattern, const int len, const int perSignPos,
     const int space, const int hasSpace)
 {
+    // 2 is the minimal length of pattern
     if (pattern == nullptr || len < 2) {
         return;
     }
