@@ -367,7 +367,7 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
     // 5. get plural data
     private void getPluralRules(ConfigItem config) {
         String str = PluralFetcher.getInstance().get(this.lan);
-        if (str == null) {
+        if (str.equals(null)) {
             str = "";
         }
         this.datas.add(str);
@@ -375,7 +375,7 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
 
     private void getDecimalPluralRules(ConfigItem config) {
         String str = PluralFetcher.getInstance().getDecimal(this.lan);
-        if (str == null) {
+        if (str.equals(null)) {
             str = "";
         }
         this.datas.add(str);
@@ -461,7 +461,7 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
     // 16. get measure format pattern
     private void getMeasureFormatPatterns(ConfigItem config) {
         String str = MeasureFormatPatternFetcher.getInstance().get(this.languageTag);
-        if (str == null) {
+        if (str.equals(null)) {
             str = "";
         }
         this.datas.add(str);
@@ -506,12 +506,12 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
     }
 
     public @Override int compareTo(Fetcher other) {
-        if (languageTag == null && other.languageTag == null) {
+        if (languageTag.equals(null) && other.languageTag.equals(null)) {
             return 0;
         }
-        if (languageTag == null) {
+        if (languageTag.equals(null)) {
             return -1;
-        } else if (other.languageTag == null) {
+        } else if (other.languageTag.equals(null)) {
             return 1;
         } else {
             return languageTag.compareTo(other.languageTag);
