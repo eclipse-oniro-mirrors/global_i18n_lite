@@ -63,7 +63,7 @@ public class MeasureFormatPatternFetcher {
      */
     public String get(String locale) {
         String pattern = locale2Pattern.get(locale);
-        if (pattern.equals(null)) {
+        if (pattern == null) {
             return "";
         }
         return pattern;
