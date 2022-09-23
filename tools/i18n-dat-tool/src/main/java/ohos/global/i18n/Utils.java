@@ -78,7 +78,7 @@ public class Utils {
      * @return returns true if languageTag is valid, otherwise false.
      */
     public static boolean isValidLanguageTag(String languageTag) {
-        if (languageTag.equals(null)) {
+        if (languageTag == null) {
             return false;
         }
         String[] items = languageTag.split("-");
@@ -114,7 +114,7 @@ public class Utils {
     }
 
     private static boolean checkLanguage(String lan) {
-        if (lan.equals(null)) {
+        if (lan == null) {
             return false;
         }
         int length = lan.length();
