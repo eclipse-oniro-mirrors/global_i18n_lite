@@ -367,7 +367,7 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
     // 5. get plural data
     private void getPluralRules(ConfigItem config) {
         String str = PluralFetcher.getInstance().get(this.lan);
-        if (str.equals(null)) {
+        if (str == null) {
             str = "";
         }
         this.datas.add(str);
@@ -375,7 +375,7 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
 
     private void getDecimalPluralRules(ConfigItem config) {
         String str = PluralFetcher.getInstance().getDecimal(this.lan);
-        if (str.equals(null)) {
+        if (str == null) {
             str = "";
         }
         this.datas.add(str);
@@ -461,7 +461,7 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
     // 16. get measure format pattern
     private void getMeasureFormatPatterns(ConfigItem config) {
         String str = MeasureFormatPatternFetcher.getInstance().get(this.languageTag);
-        if (str.equals(null)) {
+        if (str == null) {
             str = "";
         }
         this.datas.add(str);
@@ -501,17 +501,19 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
         String formatValue = formatter.format(-1);
         NumberingSystem numberSystem = NumberingSystem.getInstance(locale);
         String description = numberSystem.getDescription();
-        String temp = formatValue.substring(0, formatValue.indexOf(description.charAt(1)));
-        datas.add(temp);
+        if (formatValue.length() > 0) {
+            String temp = formatValue.substring(0, formatValue.indexOf(description.charAt(1)));
+            datas.add(temp);
+        }
     }
 
     public @Override int compareTo(Fetcher other) {
-        if (languageTag.equals(null) && other.languageTag.equals(null)) {
+        if (languageTag == null && other.languageTag == null) {
             return 0;
         }
-        if (languageTag.equals(null)) {
+        if (languageTag == null) {
             return -1;
-        } else if (other.languageTag.equals(null)) {
+        } else if (other.languageTag == null) {
             return 1;
         } else {
             return languageTag.compareTo(other.languageTag);
