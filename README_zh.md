@@ -1,17 +1,23 @@
-# 国际化组件介绍<a name="ZH-CN_TOPIC_0000001078056612"></a>
+# 国际化部件
 
--   [简介](#section11660541593)
--   [目录](#section1464106163817)
--   [约束](#section568761318105)
--   [说明](#section894511013511)
--   [相关仓](#section15583142420413)
--   [附录](#section56601824115)
+## 简介
 
-## 简介<a name="section11660541593"></a>
+**国际化部件**为应用提供了一系列国际化接口，包括：时间日期格式化、数字格式化、月份星期格式化、单复数、度量衡等相关接口。基于这些国际化接口，开发者可以设计并实现具有良好国际化能力的应用，从而可以高效、低成本的实现应用的本地化。国际化部件支持如下设备：Multi-modal V200Z-R BES2600。
 
-**国际化组件**提供时间日期格式化、获取月份和星期的名称、数字格式化等国际化能力。
+![](figures/i18n_lite.png)
 
-## 目录<a name="section1464106163817"></a>
+**国际化部件架构图说明:**
+
+- **Kits**为提供的c++国际化接口接口。
+
+- **frameworks**为c++接口的底层c++实现。
+
+- **binary data generate tool**为数据打包工具。数据打包工具的输入为文本数据文件，输出为二进制数据文件i18n.dat，i18n.dat中包含了国际化接口所依赖的国际化数据。数据打包工具位于tools/i18n-dat-tool目录下，i18n.dat位于frameworks目录下。
+数据打包工具的使用方法：执行tools/i18n-dat-tool/src/main/java/ohos/global/i18n/Fetcher.java中的main方法。
+
+- **source data**文本格式的国际化数据，位于tools/i18n-dat-tool/resource目录下。
+
+## 目录
 
 国际化组件源代码目录结构如下所示：
 
@@ -29,13 +35,13 @@
 │   │   │   └── js            # javascript接口的C/C++支持
 ```
 
-## 约束<a name="section568761318105"></a>
+## 约束
 
 **语言限制**：C/C++语言
 
 **支持范围限制**：支持的区域和语言见附录
 
-## 说明<a name="section894511013511"></a>
+## 说明
 
 1. 提供时间日期格式化接口，使时间日期格式（如年月日顺序、月份和星期词汇、使用12或24小时制等）跟随系统设置满足不同区域用户的文化习惯。更详细的内容见API文档。示例如下：
 
@@ -96,15 +102,31 @@
     output: 1 // 获取单复数六条规则中的第二条规则
     ```
 
-## 相关仓<a name="section15583142420413"></a>
+5. 提供获取指定区域不同单复数、不同格式对应的度量衡名称的能力。示例如下：
+    ```cpp
+    #include "measure_format.h"
+    using namespace OHOS::I18N
+
+    LocaleInfo locale("en", "US");  // 获得区域
+    int num = 1;  // 度量衡前的数字，如 1h
+    std::string unit = "h";  // 度量衡
+    I18nStatus status = I18nStatus::ISUCCESS;
+    MeasureFormatType type = MeasureFormatType::MEASURE_FULL;  // 指定度量衡格式，包括SHORT、MEDIUM、LONG、FULL四种格式。
+    MeasureFormat formatter(locale, status);  // 判断status状态
+    std::string unit = formatter.Format(num, unit, status, type); // 获取前置数字1、FULL格式下，度量衡h（小时）的格式化表示。
+
+    output: hour
+    ```
+
+
+## 相关仓
 
 [全球化子系统](https://gitee.com/openharmony/docs/blob/master/zh-cn/readme/%E5%85%A8%E7%90%83%E5%8C%96%E5%AD%90%E7%B3%BB%E7%BB%9F.md)
 
-[global\_resmgr\_lite](https://gitee.com/openharmony/global_resmgr_lite/blob/master/README_zh.md)
+[global\_resource\_management\_lite](https://gitee.com/openharmony/global_resource_management_lite/blob/master/README_zh.md)
 
-**global\_i18n\_lite**
 
-## 附录<a name="section56601824115"></a>
+## 附录
 
 支持语言列表
 
