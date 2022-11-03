@@ -38,8 +38,8 @@ StyleData::StyleData(const StyleData &data)
 
 StyleData::~StyleData()
 {
-    I18nFree((void *)numFormat);
-    I18nFree((void *)entireFormat);
+    I18nFree(static_cast<void *>(numFormat));
+    I18nFree(static_cast<void *>(entireFormat));
 }
 
 StyleData &StyleData::operator=(const StyleData &data)
@@ -218,7 +218,7 @@ void NumberData::ParseOtherPerPattern(const char *pattern, const int len, const 
     } else {
         type = "%s%%";
     }
-    I18nFree((void *)style.entireFormat);
+    I18nFree(static_cast<void *>(style.entireFormat));
     int typeLen = type.size();
     style.entireFormat = I18nNewCharString(type.data(), typeLen);
 }
@@ -260,11 +260,11 @@ NumberData::NumberData()
 
 NumberData::~NumberData()
 {
-    I18nFree((void *)group);
-    I18nFree((void *)percent);
-    I18nFree((void *)decimal);
-    I18nFree((void *)numberFormatPattern);
-    I18nFree((void *)percentFormatPattern);
+    I18nFree(static_cast<void *>(group));
+    I18nFree(static_cast<void *>(percent));
+    I18nFree(static_cast<void *>(decimal));
+    I18nFree(static_cast<void *>(numberFormatPattern));
+    I18nFree(static_cast<void *>(percentFormatPattern));
 }
 
 bool NumberData::IsSuccess()
@@ -344,10 +344,10 @@ void NumberData::UpdateNumberFormat()
     int finalDecLength = GetNumberFormatLength();
     if (snprintf_s(format, NUMBER_FORMAT_LENGTH, NUMBER_FORMAT_LENGTH - 1, NUMBER_FORMAT, finalDecLength) == -1) {
         isSucc = false;
-        I18nFree((void *)format);
+        I18nFree(static_cast<void *>(format));
         return;
     }
-    I18nFree((void *)style.numFormat);
+    I18nFree(static_cast<void *>(style.numFormat));
     style.numFormat = format;
 }
 
