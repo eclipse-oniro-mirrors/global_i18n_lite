@@ -46,7 +46,7 @@ void LocaleInfo::Init(const char *newLang, const char *newScript, const char *ne
     if ((langLength > LANGUAGE_MAX_LENGTH) || (langLength < LANGUAGE_MIN_LENGTH)) {
         return;
     }
-    I18nFree((void *)language);
+    I18nFree(static_cast<void *>(language));
     language = NewArrayAndCopy(newLang, langLength);
     if (newScript != nullptr) {
         int scriptLength = LenCharArray(newScript);
@@ -77,7 +77,7 @@ void LocaleInfo::InitIdstr()
     if ((region != nullptr) && (LenCharArray(region) > 0)) {
         idStr = idStr + "-" + region;
     }
-    I18nFree((void *)id);
+    I18nFree(static_cast<void *>(id));
     id = NewArrayAndCopy(idStr.data(), idStr.size());
 }
 
@@ -129,11 +129,11 @@ LocaleInfo::~LocaleInfo()
 
 void LocaleInfo::FreeResource()
 {
-    I18nFree((void *)language);
-    I18nFree((void *)script);
-    I18nFree((void *)region);
-    I18nFree((void *)id);
-    I18nFree((void *)numberDigits);
+    I18nFree(static_cast<void *>(language));
+    I18nFree(static_cast<void *>(script));
+    I18nFree(static_cast<void *>(region));
+    I18nFree(static_cast<void *>(id));
+    I18nFree(static_cast<void *>(numberDigits));
 }
 
 bool LocaleInfo::operator ==(const LocaleInfo &other) const
@@ -321,8 +321,8 @@ void LocaleInfo::ParseLanguageTag(LocaleInfo &locale, const char *languageTag, I
             }
         }
     }
-    I18nFree((void *)key);
-    I18nFree((void *)value);
+    I18nFree(static_cast<void *>(const_cast<char *>(key)));
+    I18nFree(static_cast<void *>(const_cast<char *>(value)));
 }
 
 bool LocaleInfo::ParseNormalSubTag(LocaleInfo &locale, const char *start, size_t tagLength, uint16_t &options,
@@ -371,13 +371,13 @@ void LocaleInfo::ConfirmTagType(const char *start, size_t length, uint8_t &type,
         }
         case TAG_U: {
             type = TAG_KEY;
-            I18nFree((void *)key);
+            I18nFree(static_cast<void *>(const_cast<char *>(key)));
             key = I18nNewCharString(start, length);
             return;
         }
         case TAG_KEY: {
             type = TAG_VALUE;
-            I18nFree((void *)value);
+            I18nFree(static_cast<void *>(const_cast<char *>(value)));
             value = I18nNewCharString(start, length);
             return;
         }

@@ -65,7 +65,6 @@ NumberFormatImpl::NumberFormatImpl(LocaleInfo &locale, int &status)
 
 bool NumberFormatImpl::Init(const DataResource &resource)
 {
-    std::string numebrSystemFormat;
     std::string unprocessedNumberFormat;
     resource.GetString(DataResourceType::NUMBER_FORMAT, unprocessedNumberFormat);
     std::string unprocessedNumberDigit;
@@ -77,6 +76,7 @@ bool NumberFormatImpl::Init(const DataResource &resource)
     std::string perSign = split[NUM_PERCENT_SIGN_INDEX];
     const char *numberDigits = mLocale.GetExtension("nu");
     if (numberDigits != nullptr) {
+        std::string numebrSystemFormat;
         NumberData::GetNumberingSystem(numberDigits, numebrSystemFormat, unprocessedNumberDigit);
         std::string temp[NUM_PATTERN_SIZE];
         Split(numebrSystemFormat, temp, NUM_PATTERN_SIZE, NUM_PATTERN_SEP);
@@ -159,7 +159,7 @@ std::string NumberFormatImpl::InnerFormat(double num, bool hasDec, bool isShowGr
     } else {
         errno_t rc = strcpy_s(result, lastLen + 1, buff);
         if (rc != EOK) {
-            I18nFree((void *)result);
+            I18nFree(static_cast<void *>(result));
             return "";
         }
     }
@@ -167,12 +167,12 @@ std::string NumberFormatImpl::InnerFormat(double num, bool hasDec, bool isShowGr
     lastLen = DelMoreZero(defaultData->style, decLen, lastLen, adjustHasDec, result);
     // if percent
     if (isPercent && !DealWithPercent(buff, result, status, defaultData->style, lastLen)) {
-        I18nFree((void *)result);
+        I18nFree(static_cast<void *>(result));
         return "";
     }
     // if have native number to convert
     std::string outStr = ConvertSignAndNum(result, lastLen, defaultData, defaultData->style);
-    I18nFree((void *)result);
+    I18nFree(static_cast<void *>(result));
     if (num < 0) {
         outStr.insert(0, defaultData->GetMinusSign());
     }
@@ -189,7 +189,7 @@ bool NumberFormatImpl::DealWithPercent(char *buff, char *&result, int &status, S
         int len = static_cast<int>(sprintf_s(buff, NUMBER_MAX, style.entireFormat, result));
         if (len < 0) {
             status = IERROR;
-            I18nFree((void *)result);
+            I18nFree(static_cast<void *>(result));
             return false;
         }
         char *perResult = reinterpret_cast<char *>(I18nMalloc(len + 1));
@@ -198,12 +198,12 @@ bool NumberFormatImpl::DealWithPercent(char *buff, char *&result, int &status, S
         }
         errno_t rc = strcpy_s(perResult, len + 1, buff);
         if (rc != EOK) {
-            I18nFree((void *)perResult);
+            I18nFree(static_cast<void *>(perResult));
             return false;
         }
         perResult[len] = '\0';
         lastLen = len;
-        I18nFree((void *)result);
+        I18nFree(static_cast<void *>(result));
         result = perResult;
         perResult = nullptr;
     }
@@ -230,7 +230,7 @@ int NumberFormatImpl::DelMoreZero(const StyleData &style, int decLen, int lastLe
             char *tempResult = FillMinDecimal(result, lastLen - num, add, false);
             if (result != nullptr) {
 #ifdef I18N_PRODUCT
-                (void)OhosFree(reinterpret_cast<void *>(result));
+                (void)OhosFree(static_cast<void *>(result));
 #else
                 (void)free(result);
 #endif
@@ -242,7 +242,7 @@ int NumberFormatImpl::DelMoreZero(const StyleData &style, int decLen, int lastLe
             char *tempResult = FillMinDecimal(result, lastLen - num, add, true);
             if (result != nullptr) {
 #ifdef I18N_PRODUCT
-                (void)OhosFree(reinterpret_cast<void *>(result));
+                (void)OhosFree(static_cast<void *>(result));
 #else
                 (void)free(result);
 #endif
