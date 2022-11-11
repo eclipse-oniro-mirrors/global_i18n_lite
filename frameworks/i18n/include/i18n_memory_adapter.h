@@ -40,6 +40,7 @@ inline void I18nFree(void *a)
 }
 
 #else // I18N_PRODUCT
+#include "stddef.h"
 #include "stdint.h"
 #include "ohos_mem_pool.h"
 
