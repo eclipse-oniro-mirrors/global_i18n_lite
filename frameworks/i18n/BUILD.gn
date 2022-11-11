@@ -11,6 +11,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import("//base/global/i18n_lite/i18n_lite.gni")
 if (defined(ohos_lite)) {
   import("//build/lite/config/component/lite_component.gni")
 } else {
@@ -57,6 +58,12 @@ if (defined(ohos_lite)) {
         ":global_dat",
         "//third_party/bounds_checking_function:libsec_static",
       ]
+      if (i18n_lite_support_i18n_product) {
+        include_dirs +=
+            [ "//vendor/huawei/domains/wearable/platform/utils/memory" ]
+        defines = [ "I18N_PRODUCT" ]
+        deps += [ "//vendor/huawei/domains/wearable/platform/utils:utils_wear" ]
+      }
     }
   } else {
     shared_library("global_i18n") {
