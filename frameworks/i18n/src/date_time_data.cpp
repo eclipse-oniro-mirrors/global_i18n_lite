@@ -99,20 +99,20 @@ char DateTimeData::GetDefaultHour(void) const
 
 DateTimeData::~DateTimeData()
 {
-    I18nFree((void *)formatAbbreviatedMonthNames);
-    I18nFree((void *)formatWideMonthNames);
-    I18nFree((void *)standaloneAbbreviatedMonthNames);
-    I18nFree((void *)standaloneWideMonthNames);
-    I18nFree((void *)formatAbbreviatedDayNames);
-    I18nFree((void *)formatWideDayNames);
-    I18nFree((void *)standaloneAbbreviatedDayNames);
-    I18nFree((void *)standaloneWideDayNames);
-    I18nFree((void *)timePatterns);
-    I18nFree((void *)datePatterns);
-    I18nFree((void *)amPmMarkers);
-    I18nFree((void *)hourMinuteSecondPatterns);
-    I18nFree((void *)fullMediumShortPatterns);
-    I18nFree((void *)elapsedPatterns);
+    I18nFree(static_cast<void *>(formatAbbreviatedMonthNames));
+    I18nFree(static_cast<void *>(formatWideMonthNames));
+    I18nFree(static_cast<void *>(standaloneAbbreviatedMonthNames));
+    I18nFree(static_cast<void *>(standaloneWideMonthNames));
+    I18nFree(static_cast<void *>(formatAbbreviatedDayNames));
+    I18nFree(static_cast<void *>(formatWideDayNames));
+    I18nFree(static_cast<void *>(standaloneAbbreviatedDayNames));
+    I18nFree(static_cast<void *>(standaloneWideDayNames));
+    I18nFree(static_cast<void *>(timePatterns));
+    I18nFree(static_cast<void *>(datePatterns));
+    I18nFree(static_cast<void *>(amPmMarkers));
+    I18nFree(static_cast<void *>(hourMinuteSecondPatterns));
+    I18nFree(static_cast<void *>(fullMediumShortPatterns));
+    I18nFree(static_cast<void *>(elapsedPatterns));
 }
 
 void DateTimeData::SetMonthNamesData(const char *formatAbbreviatedMonthNames, const char *formatWideMonthNames,
@@ -161,14 +161,14 @@ void DateTimeData::SetPatternsData(const char *datePatterns, const char *timePat
     if ((timeLength == 0) || (dateLength == 0) || (hourLength == 0) || (fullLength == 0)) {
         return;
     }
-    I18nFree((void *)this->timePatterns);
+    I18nFree(static_cast<void *>(this->timePatterns));
     this->timePatterns = NewArrayAndCopy(timePatterns, timeLength);
-    I18nFree((void *)this->datePatterns);
+    I18nFree(static_cast<void *>(this->datePatterns));
     this->datePatterns = NewArrayAndCopy(datePatterns, dateLength);
-    I18nFree((void *)this->hourMinuteSecondPatterns);
+    I18nFree(static_cast<void *>(this->hourMinuteSecondPatterns));
     this->hourMinuteSecondPatterns = NewArrayAndCopy(hourMinuteSecondPatterns, hourLength);
-    I18nFree((void *)this->fullMediumShortPatterns);
+    I18nFree(static_cast<void *>(this->fullMediumShortPatterns));
     this->fullMediumShortPatterns = NewArrayAndCopy(fullMediumShortPatterns, fullLength);
-    I18nFree((void *)this->elapsedPatterns);
+    I18nFree(static_cast<void *>(this->elapsedPatterns));
     this->elapsedPatterns = NewArrayAndCopy(elapsedPatterns, elapsedLength);
 }

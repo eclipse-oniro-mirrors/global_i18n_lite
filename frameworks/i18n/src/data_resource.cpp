@@ -52,13 +52,13 @@ DataResource::DataResource(const LocaleInfo *localeInfo)
 DataResource::~DataResource()
 {
     if (resourceIndex != nullptr) {
-        I18nFree((void *)resourceIndex);
+        I18nFree(static_cast<void *>(resourceIndex));
     }
     if (fallbackResourceIndex) {
-        I18nFree((void *)fallbackResourceIndex);
+        I18nFree(static_cast<void *>(fallbackResourceIndex));
     }
     if (defaultResourceIndex) {
-        I18nFree((void *)defaultResourceIndex);
+        I18nFree(static_cast<void *>(defaultResourceIndex));
     }
     FreeResource();
 }
@@ -67,25 +67,25 @@ void DataResource::FreeResource()
 {
     if (resource != nullptr) {
         while (resourceCount > 0) {
-            I18nFree((void *)resource[resourceCount - 1]);
+            I18nFree(static_cast<void *>(resource[resourceCount - 1]));
             --resourceCount;
         }
     }
-    I18nFree((void *)resource);
+    I18nFree(static_cast<void *>(resource));
     if (fallbackResource != nullptr) {
         while (fallbackResourceCount > 0) {
-            I18nFree((void *)fallbackResource[fallbackResourceCount - 1]);
+            I18nFree(static_cast<void *>(fallbackResource[fallbackResourceCount - 1]));
             --fallbackResourceCount;
         }
     }
-    I18nFree((void *)fallbackResource);
+    I18nFree(static_cast<void *>(fallbackResource));
     if (defaultResource != nullptr) {
         while (defaultResourceCount > 0) {
-            I18nFree((void *)defaultResource[defaultResourceCount - 1]);
+            I18nFree(static_cast<void *>(defaultResource[defaultResourceCount - 1]));
             --defaultResourceCount;
         }
     }
-    I18nFree((void *)defaultResource);
+    I18nFree(static_cast<void *>(defaultResource));
 }
 
 char *DataResource::GetString(DataResourceType type) const
@@ -189,7 +189,7 @@ bool DataResource::PrepareData(int32_t infile)
     }
     int32_t readSize = read(infile, locales, localeSize);
     if (readSize < 0 || localeSize != static_cast<uint32_t>(readSize)) {
-        I18nFree((void *)locales);
+        I18nFree(static_cast<void *>(locales));
         return false;
     }
     int32_t localeIndex = BinarySearchLocale(localeMask, reinterpret_cast<unsigned char*>(locales));
@@ -207,7 +207,7 @@ bool DataResource::PrepareData(int32_t infile)
     uint32_t defaultConfigOffset = 0;
     GetFallbackAndDefaultInfo(fallbackLocaleIndex, defaultLocaleIndex, fallbackConfigOffset, defaultConfigOffset,
         locales);
-    I18nFree((void *)locales);
+    I18nFree(static_cast<void *>(locales));
     bool ret = true;
     if (IsTypeNeeded(localeIndex, resourceCount)) {
         ret = PrepareLocaleData(infile, configOffset, resourceCount, LocaleDataType::RESOURCE);
@@ -271,16 +271,16 @@ bool DataResource::PrepareLocaleData(int32_t infile, uint32_t configOffset, uint
     }
     int32_t seekSize = lseek(infile, configOffset, SEEK_SET);
     if (configOffset != static_cast<uint32_t>(seekSize)) {
-        I18nFree((void *)configs);
+        I18nFree(static_cast<void *>(configs));
         return false;
     }
     int32_t readSize = read(infile, configs, resourceSize);
     if (readSize != resourceSize) {
-        I18nFree((void *)configs);
+        I18nFree(static_cast<void *>(configs));
         return false;
     }
     bool ret = GetStringFromStringPool(configs, resourceSize, infile, type);
-    I18nFree((void *)configs);
+    I18nFree(static_cast<void *>(configs));
     return ret;
 }
 
@@ -410,7 +410,7 @@ bool DataResource::Retrieve(char *configs, uint32_t configsSize, int32_t infile,
             int32_t readSize = read(infile, temp, length);
             temp[length] = 0;
             if ((readSize < 0) || (static_cast<uint32_t>(readSize) != length)) {
-                I18nFree((void *)temp);
+                I18nFree(static_cast<void *>(temp));
                 return false;
             }
             adjustResource[currentIndex] = temp;
