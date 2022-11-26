@@ -148,6 +148,9 @@ void DateTimeData::SetDayNamesData(const char *formatAbbreviatedDayNames, const 
 void DateTimeData::SetPatternsData(const char *datePatterns, const char *timePatterns,
     const char *hourMinuteSecondPatterns, const char *fullMediumShortPatterns, const char *elapsedPatterns)
 {
+    if (elapsedPatterns == nullptr) {
+        elapsedPatterns = "mm:ss_mm:ss.SS";
+    }
     if ((datePatterns == nullptr) || (timePatterns == nullptr) ||
         (hourMinuteSecondPatterns == nullptr) || (fullMediumShortPatterns == nullptr) ||
         (elapsedPatterns == nullptr)) {
