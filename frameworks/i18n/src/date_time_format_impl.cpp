@@ -517,14 +517,6 @@ std::string DateTimeFormatImpl::FormatElapsedDuration(int32_t milliseconds, Elap
         return "";
     }
     string pattern = GetStringFromElapsedPattern(type, data);
-    if (pattern.length() == 0) {
-        if (type == ElapsedPatternType::ELAPSED_MINUTE_SECOND) {
-            pattern = "mm:ss";
-        }
-        if (type == ElapsedPatternType::ELAPSED_MINUTE_SECOND_MILLISECOND) {
-            pattern = "mm:ss.SS";
-        }
-    }
     int32_t mil = milliseconds % SECOND_IN_MILLIS / CONSTANT_TIME_NUMBER;
     int32_t sec = milliseconds % MINUTE_IN_MILLIS / SECOND_IN_MILLIS;
     int32_t min;
