@@ -70,6 +70,7 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
     private DateTimePatternGenerator patternGenerator;
     private int status = 0;
     private String defaultHourString;
+    private ArrayList<Integer> reserved = new ArrayList<>();
 
     static {
         configItems = ResourceConfiguration.parse();
@@ -220,6 +221,25 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
     public void run() {
         getData();
         dump();
+    }
+
+    /**
+     * the i'th value represent whether i'th resource should reserved for this locale
+     *
+     * @param index resource id
+     * @return 1 represents i'th resource reserved.
+     */
+    public int reservedGet(int index) {
+        return reserved.get(index);
+    }
+
+    /**
+     * the i'th value represent whether i'th resource should reserved for this locale
+     *
+     * @param val whether reserves current resource
+     */
+    public void reservedAdd(int val) {
+        reserved.add(val);
     }
 
     private String convertNoAscii(String str) {
