@@ -59,10 +59,9 @@ if (defined(ohos_lite)) {
         "//third_party/bounds_checking_function:libsec_static",
       ]
       if (i18n_lite_support_i18n_product) {
-        include_dirs =
-            [ "//vendor/huawei/domains/wearable/platform/utils/memory" ]
+        include_dirs = [ "//commonlibrary/utils_lite/memory/include" ]
         defines = [ "I18N_PRODUCT" ]
-        deps += [ "//vendor/huawei/domains/wearable/platform/utils:utils_wear" ]
+        deps += [ "//commonlibrary/utils_lite:utils" ]
       }
     }
   } else {
