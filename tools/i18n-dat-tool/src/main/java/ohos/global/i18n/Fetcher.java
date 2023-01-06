@@ -51,6 +51,12 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
     private static HashMap<String, Integer> str2Int = new HashMap<>();
     private static boolean sStatusOk = true;
 
+    static {
+        configItems = ResourceConfiguration.parse();
+        configItems.sort((ConfigItem first, ConfigItem second) -> first.getIndex() - second.getIndex());
+        resourceCount = configItems.size();
+    }
+
     /** Used to store data related to a locale */
     public ArrayList<String> datas = new ArrayList<>();
 
@@ -71,12 +77,6 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
     private int status = 0;
     private String defaultHourString;
     private ArrayList<Integer> reserved = new ArrayList<>();
-
-    static {
-        configItems = ResourceConfiguration.parse();
-        configItems.sort((ConfigItem first, ConfigItem second) -> first.getIndex() - second.getIndex());
-        resourceCount = configItems.size();
-    }
 
     /**
      * show whether resouce_items is loaded successfully
