@@ -1,5 +1,5 @@
 {
-    "name": "@ohos/global_i18n_lite",
+    "name": "@ohos/i18n_lite",
     "version": "1.0.0",
     "description": "Provides internationalization APIS for implementing functions such as date and time formatting.",
     "homePage": "https://gitee.com/openharmony/",
@@ -39,12 +39,13 @@
         "subsystem": "global",
         "features": [],
         "adapted_system_type": [
+            "mini",
             "small"
         ],
         "rom": "",
         "ram": "",
         "deps": {
-            "components": [ "utils_base" ],
+            "components": [ "utils_lite" ],
             "third_party": [
                 "bounds_checking_function"         
             ]
