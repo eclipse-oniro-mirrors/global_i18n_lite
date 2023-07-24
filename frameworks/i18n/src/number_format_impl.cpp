@@ -134,6 +134,7 @@ std::string NumberFormatImpl::InnerFormat(double num, bool hasDec, bool isShowGr
     if (isPercent) {
         len = static_cast<int>(sprintf_s(buff, NUMBER_MAX, "%.f", adjustNum));
     }
+    // convert decimal to char and format
     if (len < 0) {
         status = IERROR;
         return "";
@@ -159,11 +160,14 @@ std::string NumberFormatImpl::InnerFormat(double num, bool hasDec, bool isShowGr
             return "";
         }
     }
+    // del more zero
     lastLen = DelMoreZero(defaultData->style, decLen, lastLen, adjustHasDec, result);
+    // if percent
     if (isPercent && !DealWithPercent(buff, result, status, defaultData->style, lastLen)) {
         I18nFree(static_cast<void *>(result));
         return "";
     }
+    // if have native number to convert
     std::string outStr = ConvertSignAndNum(result, lastLen, defaultData, defaultData->style);
     I18nFree(static_cast<void *>(result));
     if (num < 0) {
