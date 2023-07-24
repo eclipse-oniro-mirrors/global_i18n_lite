@@ -129,22 +129,18 @@ std::string NumberFormatImpl::InnerFormat(double num, bool hasDec, bool isShowGr
     }
     char buff[NUMBER_MAX] = { 0 };
     bool isPercentDefault = isPercent && (defaultData->style.minDecimalLength < 0);
-    int len;
     double adjustNum = (num < 0) ? (-1 * num) : num;
-    if (isPercentDefault) {
+    int len = static_cast<int>(sprintf_s(buff, NUMBER_MAX, defaultData->style.numFormat, adjustNum));
+    if (isPercent) {
         len = static_cast<int>(sprintf_s(buff, NUMBER_MAX, "%.f", adjustNum));
-    } else {
-        len = static_cast<int>(sprintf_s(buff, NUMBER_MAX, defaultData->style.numFormat, adjustNum));
     }
-    // convert decimal to char and format
     if (len < 0) {
         status = IERROR;
         return "";
     }
     char *decimalNum = strchr(buff, NumberData::NUMBER_DECIMAL);
     int decLen = (decimalNum == nullptr) ? 0 : strlen(decimalNum);
-    int adjustIntLength = len - decLen;
-    int lastLen = isShowGroup ? (len + CountGroupNum(adjustIntLength, defaultData->style.isTwoGroup)) : len;
+    int lastLen = isShowGroup ? (len + CountGroupNum(len - decLen, defaultData->style.isTwoGroup)) : len;
     char *result = reinterpret_cast<char *>(I18nMalloc(lastLen + 1));
     if (result == nullptr) {
         status = IERROR;
@@ -163,14 +159,11 @@ std::string NumberFormatImpl::InnerFormat(double num, bool hasDec, bool isShowGr
             return "";
         }
     }
-    // del more zero
     lastLen = DelMoreZero(defaultData->style, decLen, lastLen, adjustHasDec, result);
-    // if percent
     if (isPercent && !DealWithPercent(buff, result, status, defaultData->style, lastLen)) {
         I18nFree(static_cast<void *>(result));
         return "";
     }
-    // if have native number to convert
     std::string outStr = ConvertSignAndNum(result, lastLen, defaultData, defaultData->style);
     I18nFree(static_cast<void *>(result));
     if (num < 0) {
