@@ -130,8 +130,8 @@ std::string NumberFormatImpl::InnerFormat(double num, bool hasDec, bool isShowGr
     char buff[NUMBER_MAX] = { 0 };
     bool isPercentDefault = isPercent && (defaultData->style.minDecimalLength < 0);
     double adjustNum = (num < 0) ? (-1 * num) : num;
-    int len = isPercent ? static_cast<int>(sprintf_s(buff, NUMBER_MAX, "%.f", adjustNum)) : 
-                          static_cast<int>(sprintf_s(buff, NUMBER_MAX, defaultData->style.numFormat, adjustNum));
+    int len = isPercentDefault ? static_cast<int>(sprintf_s(buff, NUMBER_MAX, "%.f", adjustNum)) :
+        static_cast<int>(sprintf_s(buff, NUMBER_MAX, defaultData->style.numFormat, adjustNum));
     // convert decimal to char and format
     if (len < 0) {
         status = IERROR;
