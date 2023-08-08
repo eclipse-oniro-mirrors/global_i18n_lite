@@ -28,27 +28,30 @@ import java.util.logging.Level;
 
 /**
  * This class is used to extract plural data related to a locale
+ * 
+ * @since 2022-8-22
  */
 public class PluralFetcher {
-    private static PluralFetcher PLURAL = new PluralFetcher();
+    private static PluralFetcher plural = new PluralFetcher();
     private static final Logger logger = Logger.getLogger("PluralFetcher");
+
+    static {
+        plural.init();
+    }
+
     private HashMap<String, String> map;
     private HashMap<String, String> decimalMap;
 
-    static {
-        PLURAL.init();
-    }
+    private PluralFetcher() {}
 
     /**
      * Return the singleton instance
      *
-     * @return PLURAL
+     * @return plural
      */
     public static PluralFetcher getInstance() {
-        return PLURAL;
+        return plural;
     }
-
-    private PluralFetcher() {}
 
     private void init() {
         try (BufferedReader fin = new BufferedReader(new InputStreamReader(new FileInputStream(
@@ -111,7 +114,8 @@ public class PluralFetcher {
         String[] splits = trimedLine.split(" ", 2); // Split into 2 parts
         if (splits.length != 2) {
             logger.log(Level.SEVERE, "Init error");
-            return null;
+            String[] emptyArray = new String[0];
+            return emptyArray;
         }
         String languageTag = splits[0];
         if (!languageTag.contains("-")) {
@@ -123,8 +127,7 @@ public class PluralFetcher {
         String[] resources = splits[1].split(", ");
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < resources.length; ++i) {
-            // skip ""
-            if (resources[i].length() > 2) {
+            if (resources[i].length() > 2) { // 2 means skip ""
                 int length = resources[i].length();
                 sb.append(resources[i].substring(1, length - 1));
             }

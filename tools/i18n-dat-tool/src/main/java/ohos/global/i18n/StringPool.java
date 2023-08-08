@@ -28,17 +28,22 @@ import com.ibm.icu.util.ULocale;
 
 /**
  * Represents the global string pool in i18n.dat file
+ * 
+ * @since 2022-8-22
  */
 public class StringPool {
     private static final String ARABIC_PERCENT = new DecimalFormatSymbols(new ULocale("ar")).getPercentString();
     private static final Logger logger = Logger.getLogger("StringPool");
+    
     private HashMap<Integer, Integer> lengthMap = new HashMap<>();
     private int size;
     private HashMap<Integer, StringItem> offsetMap;
     private HashMap<Integer, String> int2StrMap = new HashMap<>();
 
+    /**
+     * Constructor of class StringPool.
+     */
     public StringPool(HashMap<String, Integer> hashMap, int offset) {
-        int current = 0;
         size = hashMap.size();
         for (Map.Entry<String, Integer> next : hashMap.entrySet()) {
             this.int2StrMap.put(next.getValue(), next.getKey());
@@ -54,6 +59,7 @@ public class StringPool {
         }
         offsetMap = new HashMap<>();
         int currentIndex = 0;
+        int current = 0;
         while (true) {
             if (currentIndex < this.size) {
                 int stringLength = lengthMap.get(currentIndex);
@@ -71,10 +77,10 @@ public class StringPool {
      */
     public static class StringItem {
         /** Length of a string */
-        public int length;
+        public final int length;
 
         /** Offset from the begging of the string pool */
-        public int offset;
+        public final int offset;
 
         public StringItem(int length, int offset) {
             this.offset = length;

@@ -17,17 +17,22 @@ package ohos.global.i18n;
 
 /**
  * Represents a meta data config in dat file
+ * 
+ * @since 2022-8-22
  */
 public class LocaleConfig {
     /** Meata data's name for example calendar/gregorian/monthNames/format/abbreviated */
-    public String name;
+    public final String name;
 
     /** Meta data's index in str2Int */
-    public int nameId;
+    public final int nameId;
 
     /** Meta data's index in sIdMap */
-    public int stringId;
+    public final int stringId;
 
+    /**
+     * Constructor of class LocaleConfig
+     */
     public LocaleConfig(String str, int nameId, int stringId) {
         this.name = str;
         this.nameId = nameId;

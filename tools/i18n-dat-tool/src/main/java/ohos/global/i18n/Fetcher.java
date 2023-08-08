@@ -40,7 +40,9 @@ import ohos.global.i18n.ResourceConfiguration.ConfigItem;
 import ohos.global.i18n.ResourceConfiguration.Element;
 
 /**
- * Fetcher is used to fetche a locale's specified data
+ * Fetcher is used to fetche a locale's specified data.
+ * 
+ * @since 2022-8-22
  */
 public class Fetcher implements Runnable, Comparable<Fetcher> {
     /** configuration extracted from resourec_items.json */
@@ -57,18 +59,22 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
         resourceCount = configItems.size();
     }
 
-    /** Used to store data related to a locale */
-    public ArrayList<String> datas = new ArrayList<>();
+    /** 
+     * Used to store data related to a locale. 
+     */
+    public final ArrayList<String> datas = new ArrayList<>();
 
-    /** All non-repeated strings will be put into idMap */
-    public Map<String, Integer> idMap;
+    /** 
+     * All non-repeated strings will be put into idMap.
+     */
+    public final Map<String, Integer> idMap;
 
-    /** Indicate whether this Fetcher is included in the final generation process of i18n.dat file */
-    public boolean included = true;
+    /** 
+     * LanguageTag related to the locale.
+     */
+    public final String languageTag;
 
-    /** LanguageTag related to the locale */
-    public String languageTag;
-
+    private boolean included = true; // Indicate whether this Fetcher is included in the final generation process of i18n.dat file.
     private String lan; // language
     private ReentrantLock lock; // Lock used to synchronize dump operation
     private ULocale locale;
@@ -77,6 +83,26 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
     private int status = 0;
     private String defaultHourString;
     private ArrayList<Integer> reserved = new ArrayList<>();
+
+    /**
+     * Constructor of class Fetcher.
+     */
+    public Fetcher(String tag, ReentrantLock lock, Map<String, Integer> idMap) {
+        if (!Utils.isValidLanguageTag(tag)) {
+            LOG.log(Level.SEVERE, String.format("wrong languageTag %s", tag));
+            status = 1;
+        }
+        this.languageTag = tag;
+        Objects.requireNonNull(lock);
+        this.lock = lock;
+        Objects.requireNonNull(idMap);
+        this.idMap = idMap;
+        this.lan = this.languageTag.split("-")[0];
+        this.locale = ULocale.forLanguageTag(this.languageTag);
+        formatSymbols = DateFormatSymbols.getInstance(locale);
+        patternGenerator = DateTimePatternGenerator.getInstance(locale);
+        defaultHourString = defaultHour();
+    }
 
     /**
      * show whether resouce_items is loaded successfully
@@ -114,23 +140,6 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
         return str2Int;
     }
 
-    public Fetcher(String tag, ReentrantLock lock, Map<String, Integer> idMap) {
-        if (!Utils.isValidLanguageTag(tag)) {
-            LOG.log(Level.SEVERE, String.format("wrong languageTag %s", tag));
-            status = 1;
-        }
-        this.languageTag = tag;
-        Objects.requireNonNull(lock);
-        this.lock = lock;
-        Objects.requireNonNull(idMap);
-        this.idMap = idMap;
-        this.lan = this.languageTag.split("-")[0];
-        this.locale = ULocale.forLanguageTag(this.languageTag);
-        formatSymbols = DateFormatSymbols.getInstance(locale);
-        patternGenerator = DateTimePatternGenerator.getInstance(locale);
-        defaultHourString = defaultHour();
-    }
-
     /**
      * Check the status of the fetcher, normally a wrong language tag
      * can make the status wrong.
@@ -157,11 +166,25 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
                 method = Fetcher.class.getDeclaredMethod(methodString, ConfigItem.class);
                 method.setAccessible(true);
                 method.invoke(this, item);
-            } catch(IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                 LOG.severe("get data failed for index " + current);
             }
             ++current;
         }
+    }
+
+    /**
+     * Get included.
+     */
+    public boolean getIncluded() {
+        return included;
+    }
+
+    /**
+     * Set included.
+     */
+    public void setIncluded(boolean val) {
+        included = val;
     }
 
     /**
@@ -350,11 +373,11 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
             Field patternField = DateFormat.class.getField(skeleton);
             int patternIndex = patternField.getInt(null);
             formatter = DateFormat.getDateInstance(patternIndex, locale);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e ) {
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
             LOG.log(Level.SEVERE, "cannot get field " + skeleton);
         }
         if (formatter instanceof SimpleDateFormat) {
-            return ((SimpleDateFormat)formatter).toPattern();
+            return ((SimpleDateFormat) formatter).toPattern();
         } else {
             LOG.log(Level.SEVERE, "wrong type in getFMSPattern");
             return "";
@@ -404,13 +427,13 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
     // 6. get number format data
     @SuppressWarnings("Deprecation")
     private void getNumberFormat(ConfigItem config) {
+        StringBuilder sb = new StringBuilder();
         String pattern = NumberFormat.getPatternForStyle(locale, NumberFormat.NUMBERSTYLE);
         String percentPattern = NumberFormat.getPatternForStyle(locale, NumberFormat.PERCENTSTYLE);
         DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(locale);
-        String percent = decimalFormatSymbols.getPercentString();
-        String  groupingSeparator = decimalFormatSymbols.getGroupingSeparatorString();
         String decimalSeparator = decimalFormatSymbols.getDecimalSeparatorString();
-        StringBuilder sb = new StringBuilder();
+        String groupingSeparator = decimalFormatSymbols.getGroupingSeparatorString();
+        String percent = decimalFormatSymbols.getPercentString();
         sb.append(pattern);
         sb.append(FileConfig.SEP);
         sb.append(percentPattern);
@@ -527,7 +550,8 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
         }
     }
 
-    public @Override int compareTo(Fetcher other) {
+    @Override
+    public int compareTo(Fetcher other) {
         if (languageTag == null && other.languageTag == null) {
             return 0;
         }
