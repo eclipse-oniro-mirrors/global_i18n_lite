@@ -23,6 +23,8 @@ import java.util.Map;
 
 /**
  * Represents a locale in dat file
+ * 
+ * @since 2022-8-22
  */
 public class LocaleList {
     private ArrayList<LocaleMaskItem> list = new ArrayList<>(70);
@@ -30,6 +32,9 @@ public class LocaleList {
     private int size;
     private int startOffset;
 
+    /**
+     * Constructor of class LocaleList.
+     */
     public LocaleList(int startOffset, HashMap<String, Integer> locales, Map<Integer,
         ArrayList<LocaleConfig>> localeConfigs, StringPool stringPool) {
         this.startOffset = startOffset;

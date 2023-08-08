@@ -25,6 +25,8 @@ import com.ibm.icu.util.ULocale;
 
 /**
  * Represent the mask value of a locale
+ * 
+ * @since 2022-8-22
  */
 public class LocaleMaskItem implements Comparable<LocaleMaskItem> {
     private static final Logger logger = Logger.getLogger("LocaleMaskItem");
@@ -35,13 +37,16 @@ public class LocaleMaskItem implements Comparable<LocaleMaskItem> {
     private int offset = -1;
     private ArrayList<LocaleConfig> configs;
 
+    /**
+     * Constructor of class LocaleMaskItem.
+     */
     public LocaleMaskItem(String languageTag, ArrayList<LocaleConfig> configs) {
         this.languageTag = languageTag;
         this.configs = configs;
         configs.sort(new Comparator<LocaleConfig>() {
             @Override
             public int compare(LocaleConfig first, LocaleConfig second) {
-                if (first.nameId ==  second.nameId) {
+                if (first.nameId == second.nameId) {
                     return 0;
                 } else if (first.nameId < second.nameId) {
                     return -1;

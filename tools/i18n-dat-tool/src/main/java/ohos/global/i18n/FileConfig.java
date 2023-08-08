@@ -17,6 +17,8 @@ package ohos.global.i18n;
 
 /**
  * This class encapsulate some configurations
+ * 
+ * @since 2022-8-22
  */
 public class FileConfig {
     /**
@@ -28,22 +30,27 @@ public class FileConfig {
      * Version number
      */
     public static final int FILE_VERSION = 1;
+
     /**
      * Dat file's header size is 16 bytes
      */
     public static final int HEADER_SIZE = 16;
+
     /**
      * Every locale need 8 bytes
      */
     public static final int LOCALE_MASK_ITEM_SIZE = 8;
+
     /**
      * Locales mask is a 4-byte-length unsigned integer
      */
     public static final int LOCALE_MASK_SIZE = 4;
+
     /**
      * Separator used to separate numbers
      */
     public static final String NUMBER_SEP = ";";
+
     /**
      * Separator used to separate (except numbers)
      */

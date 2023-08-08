@@ -24,8 +24,8 @@ import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.ArrayList;
@@ -45,6 +45,8 @@ import net.sf.json.JSONObject;
 
 /**
  * This class is used to generate i18n.dat file
+ * 
+ * @since 2022-8-22
  */
 public class DataFetcher {
     private static final ReentrantLock LOCK = new ReentrantLock();
@@ -68,10 +70,16 @@ public class DataFetcher {
     private static final Pattern RE_LANGUAGE = Pattern.compile("^([a-z]{2,3})-\\*$");
     private static final int MAX_TIME_TO_WAIT = 10;
     private static final String SEP = File.separator;
+    private static final int CORE_POOL_SIZE = 1000;
+    private static final int MAX_POOL_SIZE = 1000;
+    private static final int QUEUE_CAPACITY = 2000;
+    private static final Long KEEP_ALIVE_TIME = 1L;
 
     static {
         addFetchers();
     }
+
+    private DataFetcher() {}
 
     /**
      *
@@ -116,7 +124,6 @@ public class DataFetcher {
     private static int processWildcard(String line, ULocale[] availableLocales, int count) {
         String tag = line.trim();
         int tempCount = count;
-        Matcher matcher = RE_LANGUAGE.matcher(line);
         if ("*".equals(line)) { // special treatment to wildcard xx-*
             for (ULocale loc : availableLocales) {
                 String finalLanguageTag = loc.toLanguageTag();
@@ -129,6 +136,7 @@ public class DataFetcher {
             }
             return tempCount;
         }
+        Matcher matcher = RE_LANGUAGE.matcher(line);
         if (matcher.matches()) { // special treatment to wildcard language-*
             String baseName = matcher.group(1);
             for (ULocale loc : availableLocales) {
@@ -148,7 +156,26 @@ public class DataFetcher {
         return sStatus == 0;
     }
 
-    private DataFetcher() {}
+    private static int countData(Fetcher currentFetcher, int count, Fetcher fallbackFetcher, ArrayList<LocaleConfig> temp) {
+        String fallbackData = null;
+        for (int i = 0; i < Fetcher.getResourceCount(); i++) {
+            String targetMetaData = Fetcher.getInt2Str().get(i);
+            String myData = currentFetcher.datas.get(i);
+            if (fallbackFetcher != null) {
+                fallbackData = fallbackFetcher.datas.get(i);
+            } else {
+                fallbackData = null;
+            }
+            if (!myData.equals(fallbackData)) {
+                temp.add(new LocaleConfig(targetMetaData, i, ID_MAP.get(myData)));
+                ++count;
+                currentFetcher.reservedAdd(1);
+            } else {
+                currentFetcher.reservedAdd(0);
+            }
+        }
+        return count;
+    }
 
     /**
      * If a locale's data equals to its fallback's data, this locale is excluded
@@ -160,7 +187,6 @@ public class DataFetcher {
      */
     private static int buildLocaleConfigs() {
         Fetcher fallbackFetcher = null;
-        String fallbackData = null;
         int count = 0;
         for (Map.Entry<String, Integer> entry : LOCALES.entrySet()) {
             String languageTag = entry.getKey();
@@ -177,24 +203,9 @@ public class DataFetcher {
                 fallbackFetcher = FETCHERS.get(LOCALES.get(fallbackLanguageTag));
             }
             if (currentFetcher.equals(fallbackFetcher)) {
-                currentFetcher.included = false;
+                currentFetcher.setIncluded(false);
             } else {
-                for (int i = 0; i < Fetcher.getResourceCount(); i++) {
-                    String targetMetaData = Fetcher.getInt2Str().get(i);
-                    String myData = currentFetcher.datas.get(i);
-                    if (fallbackFetcher != null) {
-                        fallbackData = fallbackFetcher.datas.get(i);
-                    } else {
-                        fallbackData = null;
-                    }
-                    if (!myData.equals(fallbackData)) {
-                        temp.add(new LocaleConfig(targetMetaData, i, ID_MAP.get(myData)));
-                        ++count;
-                        currentFetcher.reservedAdd(1);
-                    } else {
-                        currentFetcher.reservedAdd(0);
-                    }
-                }
+                count = countData(currentFetcher, count, fallbackFetcher, temp);
             }
         }
         return count;
@@ -270,7 +281,7 @@ public class DataFetcher {
         for (Fetcher fetcher : FETCHERS) {
             String language = fetcher.languageTag;
             String data = fetcher.datas.get(index);
-            if (data.length() == 0 || !fetcher.included || fetcher.reservedGet(index) == 0) {
+            if (data.length() == 0 || !fetcher.getIncluded() || fetcher.reservedGet(index) == 0) {
                 continue;
             }
             String[] values = data.split("_", -1);
@@ -348,11 +359,12 @@ public class DataFetcher {
      *
      * @param args Main function's argument
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         if (!Fetcher.isFetcherStatusOk() || !checkStatus()) {
             return;
         }
-        ExecutorService exec = Executors.newCachedThreadPool();
+        ThreadPoolExecutor exec = new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_POOL_SIZE, 
+            KEEP_ALIVE_TIME, TimeUnit.SECONDS, new ArrayBlockingQueue<>(QUEUE_CAPACITY));
         for (Fetcher fe : FETCHERS) {
             exec.execute(fe);
         }
@@ -364,7 +376,7 @@ public class DataFetcher {
         }
         buildLocaleConfigs(); // every metaData needs 6 bytes
         for (Fetcher fetcher : FETCHERS) {
-            if (!fetcher.included) {
+            if (!fetcher.getIncluded()) {
                 LOCALES.remove(fetcher.languageTag);
             }
         }

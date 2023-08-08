@@ -37,16 +37,18 @@ import ohos.global.i18n.ResourceConfiguration.Element;
 
 /**
  * utils class.
+ * 
+ * @since 2022-8-22
  */
 public class Utils {
-    private Utils() {}
-
     private static final String AVAILABLE_LINE = "enum AvailableDateTimeFormatPattern {";
     private static final String AVAILABLE_END_LINE = "};";
     private static final int TYPE_SHIFT = 16;
     private static final String PATTERN_INDEX_MASK = "#define PATTERN_INDEX_MASK = 0x0000ffff";
     private static final String I18N_MACROS_BEGIN = "// this file should only be included by date_time_format_impl.cpp";
     private static final int MAX_CASE_NUMBER = 14;
+
+    private Utils() {}
 
     /**
      * Get a locale's fallback, locale is specified with languageTag
@@ -136,7 +138,7 @@ public class Utils {
             return false;
         }
         for (int i = 0; i < length; ++i) {
-            if (i == 0 ) {
+            if (i == 0) {
                 if (!Character.isUpperCase(script.charAt(0))) {
                     return false;
                 }
@@ -171,7 +173,7 @@ public class Utils {
      * @param hashCode reserved for future use
      * @param localesCount valid locales in total
      * @param metaCount all metaData in total
-     * @throws IOException
+     * @throws IOException throw IOException if write error happen 
      */
     public static void writeHeader(DataOutputStream out, int hashCode, int localesCount,
         int metaCount) throws IOException {
@@ -182,7 +184,7 @@ public class Utils {
         out.writeChar(0); // reserved
         out.writeChar(FileConfig.HEADER_SIZE + 8 * localesCount);
         out.writeChar(localesCount);
-        out.writeChar(FileConfig.HEADER_SIZE + 8 * localesCount  + metaCount * 6);
+        out.writeChar(FileConfig.HEADER_SIZE + 8 * localesCount + metaCount * 6);
         out.flush();
     }
 
@@ -195,7 +197,7 @@ public class Utils {
      * @throws UnsupportedEncodingException if getBytes function failed
      */
     public static String getMask(ULocale locale, long[] maskOut) throws UnsupportedEncodingException {
-        long mask = 0;
+        long mask = 0L;
         byte[] langs;
         // Deal with "fil" and "mai" these 3-leters language
         if ("fil".equals(locale.getLanguage())) {
@@ -205,7 +207,7 @@ public class Utils {
         } else {
             langs = locale.getLanguage().getBytes("utf-8");
         }
-        mask = mask | ((long)(langs[0] - 48)) << 25 | ((long)(langs[1] - 48)) << 18;
+        mask = mask | ((long) (langs[0] - 48)) << 25 | ((long) (langs[1] - 48)) << 18;
         int temp = 0;
         if ("Latn".equals(locale.getScript())) {
             temp = 1;
@@ -222,14 +224,13 @@ public class Utils {
         } else {
             temp = "Guru".equals(locale.getScript()) ? 7 : 0;
         }
-        mask = mask | ((long)temp << 14);
+        mask = mask | ((long) temp << 14);
         if (locale.getCountry() != null && locale.getCountry().length() == 2) {
             byte[] ret = locale.getCountry().getBytes("utf-8");
-            mask = mask | ((long) (ret[0] - 48) << 7) | ((long)(ret[1] - 48));
+            mask = mask | ((long) (ret[0] - 48) << 7) | ((long) (ret[1] - 48));
         }
         maskOut[0] = mask;
-        String ret = "0x" + Long.toHexString(mask);
-        return ret;
+        return "0x" + Long.toHexString(mask);
     }
 
     /**
@@ -266,7 +267,6 @@ public class Utils {
     }
 
     private static String generateAvailableDateTimeFormatPattern(ArrayList<ConfigItem> configItems) {
-        StringBuilder sb = new StringBuilder();
         ArrayList<Element> adjust = new ArrayList<>();
         for (ConfigItem item : configItems) {
             if ("true".equals(item.pub) && item.elements != null) {
@@ -287,6 +287,7 @@ public class Utils {
                 }
             }
         });
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < adjust.size(); ++i) {
             sb.append("\t");
             sb.append(adjust.get(i).getAvailableFormat());
@@ -299,7 +300,6 @@ public class Utils {
     }
 
     private static String generateI18nPatternMacros(ArrayList<ConfigItem> configItems) {
-        StringBuilder sb = new StringBuilder();
         ArrayList<ConfigItem> adjust = new ArrayList<>();
         for (ConfigItem item : configItems) {
             if (item.elements != null) {
@@ -319,6 +319,7 @@ public class Utils {
             }
         });
         int current = 0;
+        StringBuilder sb = new StringBuilder();
         for (ConfigItem item : adjust) {
             int type = current++;
             int innerIndex = 0;
@@ -343,8 +344,8 @@ public class Utils {
      * @param items ConfigItems extracted from resource_items.json
      */
     public static void generateI18nPatternFile(File src, File dst, ArrayList<ConfigItem> items) {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(src)));
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dst)))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(src), "utf-8"));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dst), "utf-8"))) {
             String line = null;
             boolean found = false;
             while ((line = reader.readLine()) != null) {
@@ -473,7 +474,7 @@ public class Utils {
             }
         }
         for (int i = 0; i < adjust.size(); ++i) {
-            if ( i != adjust.size() - 1) {
+            if (i != adjust.size() - 1) {
                 sb.append("        case " + adjust.get(i).type + ": {" + System.lineSeparator());
             } else {
                 sb.append("        default: {" + System.lineSeparator());
@@ -494,7 +495,7 @@ public class Utils {
             if (configItems.get(i).type == null) {
                 continue;
             }
-            if ( i == 0) {
+            if (i == 0) {
                 sb.append("    " + configItems.get(i).type + " = PATTERN_TYPE_BEGIN," + System.lineSeparator());
             } else {
                 sb.append("    " + configItems.get(i).type + "," + System.lineSeparator());
