@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 /**
  * Resource configuration defined in the reource_items.json
- * 
+ *
  * @since 2022-8-22
  */
 public class ResourceConfiguration {

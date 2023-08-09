@@ -41,7 +41,7 @@ import ohos.global.i18n.ResourceConfiguration.Element;
 
 /**
  * Fetcher is used to fetche a locale's specified data.
- * 
+ *
  * @since 2022-8-22
  */
 public class Fetcher implements Runnable, Comparable<Fetcher> {
@@ -59,17 +59,17 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
         resourceCount = configItems.size();
     }
 
-    /** 
-     * Used to store data related to a locale. 
+    /**
+     * Used to store data related to a locale.
      */
     public final ArrayList<String> datas = new ArrayList<>();
 
-    /** 
+    /**
      * All non-repeated strings will be put into idMap.
      */
     public final Map<String, Integer> idMap;
 
-    /** 
+    /**
      * LanguageTag related to the locale.
      */
     public final String languageTag;

@@ -23,7 +23,7 @@ import java.util.Map;
 
 /**
  * Represents a locale in dat file
- * 
+ *
  * @since 2022-8-22
  */
 public class LocaleList {

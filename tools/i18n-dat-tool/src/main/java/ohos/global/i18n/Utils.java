@@ -37,7 +37,7 @@ import ohos.global.i18n.ResourceConfiguration.Element;
 
 /**
  * utils class.
- * 
+ *
  * @since 2022-8-22
  */
 public class Utils {
@@ -173,7 +173,7 @@ public class Utils {
      * @param hashCode reserved for future use
      * @param localesCount valid locales in total
      * @param metaCount all metaData in total
-     * @throws IOException throw IOException if write error happen 
+     * @throws IOException throw IOException if write error happen
      */
     public static void writeHeader(DataOutputStream out, int hashCode, int localesCount,
         int metaCount) throws IOException {

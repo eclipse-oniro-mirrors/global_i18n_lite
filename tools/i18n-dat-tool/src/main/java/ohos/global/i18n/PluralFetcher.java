@@ -28,7 +28,7 @@ import java.util.logging.Level;
 
 /**
  * This class is used to extract plural data related to a locale
- * 
+ *
  * @since 2022-8-22
  */
 public class PluralFetcher {

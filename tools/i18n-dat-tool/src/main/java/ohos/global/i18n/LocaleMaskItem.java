@@ -25,7 +25,7 @@ import com.ibm.icu.util.ULocale;
 
 /**
  * Represent the mask value of a locale
- * 
+ *
  * @since 2022-8-22
  */
 public class LocaleMaskItem implements Comparable<LocaleMaskItem> {

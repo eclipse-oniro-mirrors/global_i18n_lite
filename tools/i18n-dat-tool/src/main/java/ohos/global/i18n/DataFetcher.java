@@ -45,7 +45,7 @@ import net.sf.json.JSONObject;
 
 /**
  * This class is used to generate i18n.dat file
- * 
+ *
  * @since 2022-8-22
  */
 public class DataFetcher {
@@ -363,7 +363,7 @@ public class DataFetcher {
         if (!Fetcher.isFetcherStatusOk() || !checkStatus()) {
             return;
         }
-        ThreadPoolExecutor exec = new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_POOL_SIZE, 
+        ThreadPoolExecutor exec = new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_POOL_SIZE,
             KEEP_ALIVE_TIME, TimeUnit.SECONDS, new ArrayBlockingQueue<>(QUEUE_CAPACITY));
         for (Fetcher fe : FETCHERS) {
             exec.execute(fe);

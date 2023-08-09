@@ -17,7 +17,7 @@ package ohos.global.i18n;
 
 /**
  * Represents a meta data config in dat file
- * 
+ *
  * @since 2022-8-22
  */
 public class LocaleConfig {
