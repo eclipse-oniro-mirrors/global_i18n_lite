@@ -17,7 +17,7 @@ package ohos.global.i18n;
 
 /**
  * This class encapsulate some configurations
- * 
+ *
  * @since 2022-8-22
  */
 public class FileConfig {

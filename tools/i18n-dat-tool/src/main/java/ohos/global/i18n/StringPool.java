@@ -28,13 +28,13 @@ import com.ibm.icu.util.ULocale;
 
 /**
  * Represents the global string pool in i18n.dat file
- * 
+ *
  * @since 2022-8-22
  */
 public class StringPool {
     private static final String ARABIC_PERCENT = new DecimalFormatSymbols(new ULocale("ar")).getPercentString();
     private static final Logger logger = Logger.getLogger("StringPool");
-    
+
     private HashMap<Integer, Integer> lengthMap = new HashMap<>();
     private int size;
     private HashMap<Integer, StringItem> offsetMap;
