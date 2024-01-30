@@ -19,19 +19,6 @@
 #include "types.h"
 #include "locale_info.h"
 
-static constexpr uint16_t OPT_LANG = 0x0001;
-static constexpr uint16_t OPT_SCRIPT = 0x0002;
-static constexpr uint16_t OPT_REGION = 0x0004;
-static constexpr uint16_t OPT_EXTENSION = 0x0008;
-static constexpr uint8_t TAG_COMMON = 0;
-static constexpr uint8_t TAG_U = 1;
-static constexpr uint8_t TAG_KEY = 2;
-static constexpr uint8_t TAG_VALUE = 3;
-static constexpr int LANGUAGE_MIN_LENGTH = 2;
-static constexpr int LANGUAGE_MAX_LENGTH = 3;
-static constexpr int REGION_LENGTH = 2;
-static constexpr int SCRIPT_LENGTH = 4;
-
 using namespace OHOS::I18N;
 
 void LocaleInfo::Init(const char *newLang, const char *newScript, const char *newRegion, int &status)
