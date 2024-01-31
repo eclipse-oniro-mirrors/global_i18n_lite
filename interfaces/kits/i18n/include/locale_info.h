@@ -211,6 +211,18 @@ private:
     void SetFail();
     void Init(const char *lang, const char *script, const char *region, int &status);
     const int CHAR_OFF = 48;
+    static constexpr uint16_t OPT_LANG = 0x0001;
+    static constexpr uint16_t OPT_SCRIPT = 0x0002;
+    static constexpr uint16_t OPT_REGION = 0x0004;
+    static constexpr uint16_t OPT_EXTENSION = 0x0008;
+    static constexpr uint8_t TAG_COMMON = 0;
+    static constexpr uint8_t TAG_U = 1;
+    static constexpr uint8_t TAG_KEY = 2;
+    static constexpr uint8_t TAG_VALUE = 3;
+    static constexpr int LANGUAGE_MIN_LENGTH = 2;
+    static constexpr int LANGUAGE_MAX_LENGTH = 3;
+    static constexpr int REGION_LENGTH = 2;
+    static constexpr int SCRIPT_LENGTH = 4;
 };
 
 enum ESupportScript {
