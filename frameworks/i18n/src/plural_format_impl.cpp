@@ -145,9 +145,9 @@ void PluralFormatImpl::ComputeDecimalInfo(double number, int integerNumber, int 
             temp = round(temp);
         }
         if (temp - ((int)temp) < EPS) {
-            while (i > 1 && (int) temp % 10 == 0) { // 10 means decimal
+            while (i > 1 && (int) temp % DECIMALISM == 0) { // 10 means decimal
                 i--;
-                temp /= 10; // 10 means decimal
+                temp /= DECIMALISM; // 10 means decimal
             }
             // 10 is base
             fractionNumber = (int)(temp - integerNumber * pow(10, i));
@@ -378,7 +378,7 @@ int PluralFormatImpl::ParseNumber(const std::string &rule, const int ruleSize, i
 
     // Parse number in the formula.
     while ((index < ruleSize) && (rule[index] != ' ') && (rule[index] != TO) && (rule[index] != COMMA)) {
-        num *= 10; // 10 means decimal. Calculate decimal value of the number.
+        num *= DECIMALISM; // 10 means decimal. Calculate decimal value of the number.
         num += rule[index] - '0';
         index++;
     }

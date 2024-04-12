@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -156,7 +156,8 @@ public class DataFetcher {
         return sStatus == 0;
     }
 
-    private static int countData(Fetcher currentFetcher, int count, Fetcher fallbackFetcher, ArrayList<LocaleConfig> temp) {
+    private static int countData(Fetcher currentFetcher, int count,
+            Fetcher fallbackFetcher, ArrayList<LocaleConfig> temp) {
         String fallbackData = null;
         for (int i = 0; i < Fetcher.getResourceCount(); i++) {
             String targetMetaData = Fetcher.getInt2Str().get(i);
@@ -272,7 +273,7 @@ public class DataFetcher {
             osw.flush();
             osw.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "Write locales.json failed: IO exception");
         }
     }
 
@@ -298,7 +299,7 @@ public class DataFetcher {
             osw.flush();
             osw.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "Write file failed: IO exception");
         }
     }
 
@@ -350,7 +351,7 @@ public class DataFetcher {
             osw.flush();
             osw.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "Write measure data failed: IO exception");
         }
     }
 

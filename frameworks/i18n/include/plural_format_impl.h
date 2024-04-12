@@ -66,6 +66,7 @@ private:
     static constexpr int NUMBER_INFO_SIZE = 3;
     const double EPS = 1e-6;
     const int MAX_FRACTION_NUMBERS = 6;
+    const int DECIMALISM = 10;
 };
 } // namespace I18N
 } // namespace OHOS

@@ -26,12 +26,12 @@
 // memory operator define
 #include <stdlib.h>
 
-inline void *I18nMalloc(size_t size)
+inline static void *I18nMalloc(size_t size)
 {
     return malloc(size);
 }
 
-inline void I18nFree(void *a)
+inline static void I18nFree(void *a)
 {
     if (a != nullptr) {
         (void) free(a);

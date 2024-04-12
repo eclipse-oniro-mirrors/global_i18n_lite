@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -74,7 +74,8 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
      */
     public final String languageTag;
 
-    private boolean included = true; // Indicate whether this Fetcher is included in the final generation process of i18n.dat file.
+    // Indicate whether this Fetcher is included in the final generation process of i18n.dat file.
+    private boolean included = true;
     private String lan; // language
     private ReentrantLock lock; // Lock used to synchronize dump operation
     private ULocale locale;
@@ -175,6 +176,8 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
 
     /**
      * Get included.
+     *
+     * @return If this Fetcher is included in the final generation process of i18n.dat file.
      */
     public boolean getIncluded() {
         return included;
@@ -182,6 +185,8 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
 
     /**
      * Set included.
+     *
+     * @param val this Fetcher is included in the final generation process of i18n.dat file.
      */
     public void setIncluded(boolean val) {
         included = val;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -114,8 +114,7 @@ public class PluralFetcher {
         String[] splits = trimedLine.split(" ", 2); // Split into 2 parts
         if (splits.length != 2) {
             logger.log(Level.SEVERE, "Init error");
-            String[] emptyArray = new String[0];
-            return emptyArray;
+            return new String[0];
         }
         String languageTag = splits[0];
         if (!languageTag.contains("-")) {

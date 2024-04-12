@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Resource configuration defined in the reource_items.json
@@ -31,6 +33,8 @@ import java.util.ArrayList;
  * @since 2022-8-22
  */
 public class ResourceConfiguration {
+    private static final Logger LOG = Logger.getLogger("ResourceConfiguration");
+
     private ResourceConfiguration() {}
 
     /**
@@ -56,7 +60,7 @@ public class ResourceConfiguration {
                 ret.add(item);
             }
         } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "Generated errors when read resource_items.json file.");
         }
         return ret;
     }

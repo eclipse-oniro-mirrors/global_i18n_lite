@@ -62,6 +62,7 @@ private:
     char *amPmMarkers = nullptr;
     char timeSeparator = ':';
     char defaultHour = 'H';
+    const int CONFIG_MIN_SIZE = 2;
 };
 } // namespace I18N
 } // namespace OHOS
