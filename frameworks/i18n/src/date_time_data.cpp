@@ -31,7 +31,7 @@ DateTimeData::DateTimeData(const char *amPmMarkers, const char *configs, const i
     }
     // size must >= 2, The first 2 element of configs need to be extracted, the first element
     // is the time separator and the second is the default hour.
-    if (configs && size >= 2) { // 2 is the size of configs need to be extracted
+    if (configs && size >= CONFIG_MIN_SIZE) { // 2 is the size of configs need to be extracted
         timeSeparator = configs[0];
         defaultHour = configs[1];
     }

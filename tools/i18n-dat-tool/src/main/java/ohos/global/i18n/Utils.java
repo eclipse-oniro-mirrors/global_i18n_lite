@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -31,6 +31,8 @@ import java.util.Iterator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import ohos.global.i18n.ResourceConfiguration.ConfigItem;
 import ohos.global.i18n.ResourceConfiguration.Element;
@@ -47,6 +49,7 @@ public class Utils {
     private static final String PATTERN_INDEX_MASK = "#define PATTERN_INDEX_MASK = 0x0000ffff";
     private static final String I18N_MACROS_BEGIN = "// this file should only be included by date_time_format_impl.cpp";
     private static final int MAX_CASE_NUMBER = 14;
+    private static final Logger LOG = Logger.getLogger("Utils");
 
     private Utils() {}
 
@@ -262,7 +265,7 @@ public class Utils {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "Generated errors when processed file.");
         }
     }
 
@@ -370,7 +373,7 @@ public class Utils {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "Generated error when processed file.");
         }
     }
 
