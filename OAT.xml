@@ -58,6 +58,7 @@ Note:If the text contains special characters, please escape them according to th
         <filefilterlist>
             <filefilter name="binaryFileTypePolicyFilter" desc="binary file filter policy">
                 <filteritem type="filepath" name="frameworks/i18n/i18n.dat" desc="i18n.dat file"/>
+                <filteritem type="filepath" name="figures/i18n_lite.png" desc="the description of this repository"/>
             </filefilter>
         </filefilterlist>
     </oatconfig>
