@@ -87,6 +87,10 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
 
     /**
      * Constructor of class Fetcher.
+     *
+     * @param tag language tag
+     * @param lock used to synchronize dump operation
+     * @param idMap all non-repeated strings will be put into idMap.
      */
     public Fetcher(String tag, ReentrantLock lock, Map<String, Integer> idMap) {
         if (!Utils.isValidLanguageTag(tag)) {

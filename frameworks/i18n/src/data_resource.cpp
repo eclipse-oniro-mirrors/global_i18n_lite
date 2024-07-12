@@ -23,9 +23,9 @@ using namespace OHOS::I18N;
 using namespace std;
 
 #ifdef I18N_PRODUCT
-static const char *g_DataResourcePath = "system/i18n/i18n.dat";
+static const char *DATA_RESOURCE_PATH = "system/i18n/i18n.dat";
 #else
-static const char *g_DataResourcePath = "/storage/data/i18n.dat";
+static const char *DATA_RESOURCE_PATH = "/storage/data/i18n.dat";
 #endif
 
 DataResource::DataResource(const LocaleInfo *localeInfo)
@@ -145,7 +145,7 @@ char *DataResource::BinarySearchString(uint32_t *indexArray, uint32_t length, ui
 
 bool DataResource::Init(void)
 {
-    int32_t infile = open(g_DataResourcePath, O_RDONLY);
+    int32_t infile = open(DATA_RESOURCE_PATH, O_RDONLY);
     if (infile < 0) {
         return false;
     }

@@ -34,6 +34,11 @@ public class LocaleList {
 
     /**
      * Constructor of class LocaleList.
+     *
+     * @param startOffset string's start offset
+     * @param locales locale string and it's key in localeConfigs mappings
+     * @param localeConfigs locale's key and it's configure list mappings
+     * @param stringPool the global string pool in i18n.dat file
      */
     public LocaleList(int startOffset, HashMap<String, Integer> locales, Map<Integer,
         ArrayList<LocaleConfig>> localeConfigs, StringPool stringPool) {
