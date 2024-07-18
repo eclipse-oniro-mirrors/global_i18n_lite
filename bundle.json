@@ -38,7 +38,7 @@
         "name": "i18n_lite",
         "subsystem": "global",
         "features": [
-            "i18n_lite_support_i18n_product = false"
+            "i18n_lite_support_i18n_product"
         ],
         "adapted_system_type": [
             "mini",
