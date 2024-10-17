@@ -35,7 +35,7 @@ def collect_value_in_dict(val):
 
 def add_string_to_pool(all_metas, string_pool, locale_id, resource_id, val):
     locale_metas = all_metas.get(locale_id)
-    if locale_metas is None or not isinstance(locale_metas, dict):
+    if locale_metas is None or (not isinstance(locale_metas, dict)):
         return all_metas, string_pool
     locale_metas[resource_id] = collect_value_in_dict(val)
 
