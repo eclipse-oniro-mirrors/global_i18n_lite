@@ -23,19 +23,19 @@ import stat
 
 def collect_value_in_dict(val):
     res = []
-    if type(val) is dict:
+    if isinstance(val, dict):
         for item_val in val.values():
             res += collect_value_in_dict(item_val)
-    elif type(val) is list:
+    elif isinstance(val, list):
         res += val
-    elif type(val) is str:
+    elif isinstance(val, str):
         res.append(val)
     return res
 
 
 def add_string_to_pool(all_metas, string_pool, locale_id, resource_id, val):
     locale_metas = all_metas.get(locale_id)
-    if locale_metas is None or type(locale_metas) is not dict:
+    if locale_metas is None or not isinstance(locale_metas, dict):
         return all_metas, string_pool
     locale_metas[resource_id] = collect_value_in_dict(val)
 
