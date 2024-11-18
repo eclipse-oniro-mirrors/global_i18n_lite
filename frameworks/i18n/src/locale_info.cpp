@@ -21,6 +21,10 @@
 
 using namespace OHOS::I18N;
 
+const std::set<std::string> LocaleInfo::SCRIPTS = {
+    "Hans", "Latn", "Hant", "Qaag", "Cyrl", "Deva", "Guru"
+};
+
 void LocaleInfo::Init(const char *newLang, const char *newScript, const char *newRegion, int &status)
 {
     id = nullptr;
@@ -408,19 +412,7 @@ bool LocaleInfo::IsScript(const char *start, uint8_t length)
     if (length != SCRIPT_LENGTH || start == nullptr) {
         return false;
     }
-    if (memcmp(start, "Hans", length) == 0) {
-        return true;
-    } else if (memcmp(start, "Latn", length) == 0) {
-        return true;
-    } else if (memcmp(start, "Hant", length) == 0) {
-        return true;
-    } else if (memcmp(start, "Qaag", length) == 0) {
-        return true;
-    } else if (memcmp(start, "Cyrl", length) == 0) {
-        return true;
-    } else if (memcmp(start, "Deva", length) == 0) {
-        return true;
-    } else if (memcmp(start, "Guru", length) == 0) {
+    if (SCRIPTS.find(std::string(start, length)) != SCRIPTS.end()) {
         return true;
     } else {
         return false;

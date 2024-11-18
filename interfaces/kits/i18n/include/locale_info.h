@@ -44,6 +44,8 @@
 */
 
 #include <cstdint>
+#include <string>
+#include <set>
 #include "types.h"
 
 namespace OHOS {
@@ -211,6 +213,7 @@ private:
     void SetFail();
     void Init(const char *lang, const char *script, const char *region, int &status);
     const int CHAR_OFF = 48;
+    static const std::set<std::string> SCRIPTS;
     static constexpr uint16_t OPT_LANG = 0x0001;
     static constexpr uint16_t OPT_SCRIPT = 0x0002;
     static constexpr uint16_t OPT_REGION = 0x0004;
