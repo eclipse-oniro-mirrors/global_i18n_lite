@@ -96,7 +96,7 @@ bool NumberFormatImpl::Init(const DataResource &resource)
         adjust = std::string(origin, 0, size - 3); // strip the last 3 chars
     }
     const char *percentPat = adjust.c_str();
-    defaultData = new(std::nothrow) NumberData(pat, percentPat, decSign, groupSign, perSign);
+    defaultData = new (std::nothrow) NumberData(pat, percentPat, decSign, groupSign, perSign);
     if (defaultData == nullptr) {
         return false;
     }
@@ -397,7 +397,7 @@ bool NumberFormatImpl::SetMaxDecimalLength(int length)
         defaultData->SetMinDecimalLength(adjustValue);
     }
     maxDecimalLength = adjustValue;
-    defaultData->SetMaxDecimalLength(length);
+    defaultData->SetMaxDecimalLength(adjustValue);
     defaultData->UpdateNumberFormat();
     return true;
 }

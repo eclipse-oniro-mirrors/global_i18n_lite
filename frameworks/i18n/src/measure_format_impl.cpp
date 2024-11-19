@@ -26,13 +26,13 @@ MeasureFormatImpl::MeasureFormatImpl(LocaleInfo &localeinfo, I18nStatus &status)
         return;
     }
     locale = localeinfo;
-    pluralFormat = new PluralFormat(localeinfo, status);
+    pluralFormat = new (std::nothrow) PluralFormat(localeinfo, status);
     if (status != I18nStatus::ISUCCESS || pluralFormat == nullptr) {
         status = I18nStatus::IERROR;
         return;
     }
     int numberFormatStatus = 0;
-    numberFormat = new NumberFormat(localeinfo, numberFormatStatus);
+    numberFormat = new (std::nothrow) NumberFormat(localeinfo, numberFormatStatus);
     if (numberFormatStatus || numberFormat == nullptr) {
         status = I18nStatus::IERROR;
         return;
@@ -201,6 +201,7 @@ bool MeasureFormatImpl::InitMeasureFormat(std::string &unprocessedMeasureData)
     Split(unprocessedMeasureData, items, itemCount, PLURAL_SEP);
     // items[1] is unit list, such as h|min|kcal|time...
     if (!ParseUnits(items[1])) {
+        delete[] items;
         return false;
     }
     // items[2] is pattern
@@ -213,6 +214,7 @@ bool MeasureFormatImpl::InitMeasureFormat(std::string &unprocessedMeasureData)
     }
     formattedUnitCount = unitCount * MEASURE_FORMAT_TYPE_NUM;
     if (!AllocaFormattedUnits()) {
+        delete[] items;
         return false;
     }
     int itemStartIndex = MEASURE_BASE_ITEM_COUNT;
