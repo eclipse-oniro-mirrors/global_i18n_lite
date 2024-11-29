@@ -15,6 +15,10 @@
 
 #include "data_resource.h"
 #include <cstring>
+#ifdef I18N_PRODUCT
+#include <cerrno>
+#include "i18n_hilog_lite.h"
+#endif
 #include "i18n_memory_adapter.h"
 #include "securec.h"
 #include "str_util.h"
@@ -147,6 +151,9 @@ bool DataResource::Init(void)
 {
     int32_t infile = open(DATA_RESOURCE_PATH, O_RDONLY);
     if (infile < 0) {
+#ifdef I18N_PRODUCT
+        HILOG_ERROR("DataResource::Init: open DATA_RESOURCE_PATH failed, errno is %{public}d.", errno);
+#endif
         return false;
     }
     bool ret = ReadHeader(infile);

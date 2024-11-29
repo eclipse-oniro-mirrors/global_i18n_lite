@@ -61,7 +61,10 @@ if (defined(ohos_lite)) {
       if (i18n_lite_support_i18n_product) {
         include_dirs = [ "//commonlibrary/utils_lite/memory/include" ]
         defines = [ "I18N_PRODUCT" ]
-        deps += [ "//commonlibrary/utils_lite:utils" ]
+        deps += [
+          "//base/hiviewdfx/hilog_lite/frameworks/featured:hilog_shared",
+          "//commonlibrary/utils_lite:utils",
+        ]
       }
     }
   } else {
