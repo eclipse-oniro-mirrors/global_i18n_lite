@@ -59,12 +59,12 @@ if (defined(ohos_lite)) {
         "//third_party/bounds_checking_function:libsec_static",
       ]
       if (i18n_lite_support_i18n_product) {
-        include_dirs = [ "//commonlibrary/utils_lite/memory/include" ]
-        defines = [ "I18N_PRODUCT" ]
-        deps += [
-          "//base/hiviewdfx/hilog_lite/frameworks/featured:hilog_shared",
-          "//commonlibrary/utils_lite:utils",
+        include_dirs = [
+          "//base/hiviewdfx/hilog_lite/interfaces/native/kits/hilog_lite",
+          "//commonlibrary/utils_lite/memory/include",
         ]
+        defines = [ "I18N_PRODUCT" ]
+        deps += [ "//commonlibrary/utils_lite:utils" ]
       }
     }
   } else {
