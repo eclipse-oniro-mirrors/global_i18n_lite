@@ -17,7 +17,7 @@
 #include <cstring>
 #ifdef I18N_PRODUCT
 #include <cerrno>
-#include "i18n_hilog_lite.h"
+#include <log.h>
 #endif
 #include "i18n_memory_adapter.h"
 #include "securec.h"
@@ -152,7 +152,7 @@ bool DataResource::Init(void)
     int32_t infile = open(DATA_RESOURCE_PATH, O_RDONLY);
     if (infile < 0) {
 #ifdef I18N_PRODUCT
-        HILOG_ERROR("DataResource::Init: open DATA_RESOURCE_PATH failed, errno is %{public}d.", errno);
+        HILOG_ERROR(HILOG_MODULE_GLOBAL, "DataResource::Init: open DATA_RESOURCE_PATH failed, errno(%d)!", errno);
 #endif
         return false;
     }
