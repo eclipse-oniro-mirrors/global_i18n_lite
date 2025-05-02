@@ -1015,9 +1015,9 @@
     "y/M/d"
   ],
   "uz":   [
-    "EEEE, y MMMM d",
-    "y MMM d",
-    "yy/MM/dd"
+    "EEEE, d-MMMM, y",
+    "d-MMM, y",
+    "dd/MM/yy"
   ],
   "uz-AF":   [
     "y MMMM d, EEEE",

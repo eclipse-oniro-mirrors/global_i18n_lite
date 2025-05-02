@@ -572,7 +572,7 @@
   "km":   [
     "h:mm a",
     "HH:mm",
-    "HH:mm"
+    "h:mm a"
   ],
   "ko":   [
     "a h:mm",
