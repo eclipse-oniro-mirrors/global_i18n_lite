@@ -40,8 +40,8 @@
     "dd.MM.yy"
   ],
   "be":   [
-    "EEEE, d MMMM y 'г'.",
-    "d.MM.y",
+    "EEEE, d MMMM y 'г'.",
+    "d MMM y 'г'.",
     "d.MM.yy"
   ],
   "bg":   [
@@ -745,8 +745,8 @@
     "dd.MM.yy"
   ],
   "kk":   [
-    "y 'ж'. d MMMM, EEEE",
-    "y 'ж'. d MMM",
+    "y 'ж'. d MMMM, EEEE",
+    "y 'ж'. d MMM",
     "dd.MM.yy"
   ],
   "km":   [
@@ -1015,9 +1015,9 @@
     "y/M/d"
   ],
   "uz":   [
-    "EEEE, d-MMMM, y",
-    "d-MMM, y",
-    "dd/MM/yy"
+    "EEEE, y MMMM d",
+    "y MMM d",
+    "yy/MM/dd"
   ],
   "uz-AF":   [
     "y MMMM d, EEEE",
