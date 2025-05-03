@@ -1445,7 +1445,7 @@ HWTEST_F(I18NTest, I18nFuncTest066, TestSize.Level1)
 
 /**
  * @tc.name: I18nFuncTest067
- * @tc.desc: Test WeekInfo GetFirstDayOfWeekend
+ * @tc.desc: Test WeekInfo GetFirstDayOfWeek
  * @tc.type: FUNC
  * @tc.require: issueI4WKP8
  */
@@ -1454,15 +1454,15 @@ HWTEST_F(I18NTest, I18nFuncTest067, TestSize.Level1)
     I18nStatus status = I18nStatus::ISUCCESS;
     LocaleInfo locale("kk", "KZ");
     WeekInfo weekInfo(locale, status);
-    uint8_t ret = weekInfo.GetFirstDayOfWeekend();
+    uint8_t ret = weekInfo.GetFirstDayOfWeek();
     EXPECT_EQ(ret, 2);
     LocaleInfo locale2("km", "KH");
     WeekInfo weekInfo2(locale2, status);
-    ret = weekInfo2.GetFirstDayOfWeekend();
+    ret = weekInfo2.GetFirstDayOfWeek();
     EXPECT_EQ(ret, 1);
     LocaleInfo locale3("uz", "UZ");
     WeekInfo weekInfo3(locale3, status);
-    ret = weekInfo3.GetFirstDayOfWeekend();
+    ret = weekInfo3.GetFirstDayOfWeek();
     EXPECT_EQ(ret, 2);
 }
 
