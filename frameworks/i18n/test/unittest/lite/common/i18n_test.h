@@ -80,6 +80,20 @@ int I18NFuncTest059(void);
 int I18NFuncTest060(void);
 int I18NFuncTest061(void);
 int I18NFuncTest062(void);
+int I18NFuncTest063(void);
+int I18NFuncTest064(void);
+int I18NFuncTest065(void);
+int I18NFuncTest066(void);
+int I18NFuncTest067(void);
+int I18NFuncTest068(void);
+int I18NFuncTest069(void);
+int I18NFuncTest070(void);
+int I18nFuncTest071(void);
+int I18NFuncTest072(void);
+int I18NFuncTest073(void);
+int I18NFuncTest074(void);
+int I18NFuncTest075(void);
+int I18NFuncTest076(void);
 } // namespace I18N
 } // namespace OHOS
 #endif

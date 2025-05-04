@@ -1373,5 +1373,286 @@ HWTEST_F(I18NTest, I18nFuncTest062, TestSize.Level1)
     out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_FULL);
     EXPECT_TRUE(expect.compare(out) == 0);
 }
+
+/**
+ * @tc.name: I18nFuncTest063
+ * @tc.desc: Test LocaleInfo copy constructor
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18NFuncTest063, TestSize.Level1)
+{
+    LocaleInfo locale("km", "KH");
+    LocaleInfo locale2(locale);
+    const char *language = locale2.GetLanguage();
+    const char *region = locale2.GetRegion();
+    EXPECT_TRUE(language != nullptr);
+    EXPECT_TRUE(region != nullptr);
+    if (language != nullptr) {
+        EXPECT_TRUE(strcmp(language, "km") == 0);
+    }
+    if (region != nullptr) {
+        EXPECT_TRUE(strcmp(region, "KH") == 0);
+    }
+}
+
+/**
+ * @tc.name: I18nFuncTest064
+ * @tc.desc: Test DateTimeFormat km
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest064, TestSize.Level1)
+{
+    I18nStatus status = I18nStatus::ISUCCESS;
+    LocaleInfo locale("km", "", "");
+    AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::ABBR_MONTH_WEEKDAY_DAY;
+    DateTimeFormat formatter(pattern, locale);
+    string out;
+    formatter.Format(0, "", out, status);
+    EXPECT_EQ(out, "ព្រហ 1 មករា");
+}
+
+/**
+ * @tc.name: I18nFuncTest065
+ * @tc.desc: Test DateTimeFormat kk
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest065, TestSize.Level1)
+{
+    I18nStatus status = I18nStatus::ISUCCESS;
+    LocaleInfo locale("kk", "", "");
+    AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::ABBR_MONTH_WEEKDAY_DAY;
+    DateTimeFormat formatter(pattern, locale);
+    string out;
+    formatter.Format(0, "", out, status);
+    EXPECT_EQ(out, "1 қаң., бс");
+}
+
+/**
+ * @tc.name: I18nFuncTest066
+ * @tc.desc: Test DateTimeFormat uz
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18nFuncTest066, TestSize.Level1)
+{
+    I18nStatus status = I18nStatus::ISUCCESS;
+    LocaleInfo locale("uz", "", "");
+    AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::ABBR_MONTH_WEEKDAY_DAY;
+    DateTimeFormat formatter(pattern, locale);
+    string out;
+    formatter.Format(0, "", out, status);
+    EXPECT_EQ(out, "Pay, 1-yan");
+}
+
+/**
+ * @tc.name: I18nFuncTest067
+ * @tc.desc: Test WeekInfo GetFirstDayOfWeek
+ * @tc.type: FUNC
+ * @tc.require: issueI4WKP8
+ */
+HWTEST_F(I18NTest, I18nFuncTest067, TestSize.Level1)
+{
+    I18nStatus status = I18nStatus::ISUCCESS;
+    LocaleInfo locale("kk", "KZ");
+    WeekInfo weekInfo(locale, status);
+    uint8_t ret = weekInfo.GetFirstDayOfWeek();
+    EXPECT_EQ(ret, 2);
+    LocaleInfo locale2("km", "KH");
+    WeekInfo weekInfo2(locale2, status);
+    ret = weekInfo2.GetFirstDayOfWeek();
+    EXPECT_EQ(ret, 1);
+    LocaleInfo locale3("uz", "UZ");
+    WeekInfo weekInfo3(locale3, status);
+    ret = weekInfo3.GetFirstDayOfWeek();
+    EXPECT_EQ(ret, 2);
+}
+
+/**
+ * @tc.name: I18nFuncTest068
+ * @tc.desc: Test PluralFormat Format function
+ * @tc.type: FUNC
+ * @tc.require: issueI4WKP8
+ */
+HWTEST_F(I18NTest, I18nFuncTest068, TestSize.Level1)
+{
+    LocaleInfo locale("km", "", "");
+    I18nStatus status = I18nStatus::ISUCCESS;
+    PluralFormat formatter(locale, status);
+    double number = 2.3;
+    int out = formatter.GetPluralRuleIndex(number, status);
+    int expect = PluralRuleType::OTHER;
+    EXPECT_EQ(expect, out);
+    number = 10.1;
+    out = formatter.GetPluralRuleIndex(number, status);
+    expect = PluralRuleType::OTHER;
+    EXPECT_EQ(expect, out);
+    number = 1.5;
+    out = formatter.GetPluralRuleIndex(number, status);
+    expect = PluralRuleType::OTHER;
+    EXPECT_EQ(expect, out);
+}
+
+/**
+ * @tc.name: I18nFuncTest069
+ * @tc.desc: Test DateTimeFormat Format function
+ * @tc.type: FUNC
+ * @tc.require: issueI4WKP8
+ */
+HWTEST_F(I18NTest, I18nFuncTest069, TestSize.Level1)
+{
+    LocaleInfo locale("be", "", "");
+    std::string out = "";
+    time_t now = 3600 * 3 + 3600 * 24 * 6;
+    I18nStatus status =  I18nStatus::ISUCCESS;
+    AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::FULL;
+    DateTimeFormat formatter(pattern, locale);
+    formatter.Format(now, "-1:45", out, status);
+    std::string expect = "серда, 7 студзеня 1970 г.";
+    EXPECT_EQ(expect, out);
+}
+
+/**
+ * @tc.name: I18nFuncTest070
+ * @tc.desc: Test DateTimeFormat Format function
+ * @tc.type: FUNC
+ * @tc.require: issueI4WKP8
+ */
+HWTEST_F(I18NTest, I18nFuncTest070, TestSize.Level1)
+{
+    LocaleInfo locale("kk", "", "");
+    std::string out = "";
+    time_t now = 3600 * 3 + 3600 * 24 * 6;
+    I18nStatus status =  I18nStatus::ISUCCESS;
+    AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::MEDIUM;
+    DateTimeFormat formatter(pattern, locale);
+    formatter.Format(now, "-1:45", out, status);
+    std::string expect = "1970 ж. 7 қаң.";
+    EXPECT_EQ(expect, out);
+}
+
+/**
+ * @tc.name: I18nFuncTest071
+ * @tc.desc: Test DateTimeFormat Format function
+ * @tc.type: FUNC
+ * @tc.require: issueI4WKP8
+ */
+HWTEST_F(I18NTest, I18nFuncTest071, TestSize.Level1)
+{
+    LocaleInfo locale("km", "", "");
+    std::string out = "";
+    time_t now = 3600 * 3 + 3600 * 24 * 6;
+    I18nStatus status =  I18nStatus::ISUCCESS;
+    AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::MEDIUM;
+    DateTimeFormat formatter(pattern, locale);
+    formatter.Format(now, "-1:45", out, status);
+    std::string expect = "7 មករា 1970";
+    EXPECT_EQ(expect, out);
+}
+
+/**
+ * @tc.name: I18nFuncTest072
+ * @tc.desc: Test DateTimeFormat Format function
+ * @tc.type: FUNC
+ * @tc.require: issueI4WKP8
+ */
+HWTEST_F(I18NTest, I18nFuncTest072, TestSize.Level1)
+{
+    LocaleInfo locale("uz", "", "");
+    std::string out = "";
+    time_t now = 3600 * 3 + 3600 * 24 * 6;
+    I18nStatus status =  I18nStatus::ISUCCESS;
+    AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::FULL;
+    DateTimeFormat formatter(pattern, locale);
+    formatter.Format(now, "-1:45", out, status);
+    std::string expect = "chorshanba, 7-yanvar, 1970";
+    EXPECT_EQ(expect, out);
+}
+
+/**
+ * @tc.name: I18nFuncTest073
+ * @tc.desc: Test numberFormat format integer
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18NFuncTest073, TestSize.Level1)
+{
+    LocaleInfo locale("be", "", "");
+    int status =  0;
+    NumberFormat formatter(locale, status);
+    EXPECT_TRUE(status == 0);
+    int intNum1 = 1234567;
+    int intNum2 = 123456789;
+    int intNum3 = 1234;
+    std::string out = formatter.Format(intNum1, status);
+    std::string out2 = formatter.Format(intNum2, status);
+    std::string out3 = formatter.Format(intNum3, status);
+    EXPECT_EQ(out, "1 234 567");
+    EXPECT_EQ(out2, "123 456 789");
+    EXPECT_EQ(out3, "1 234");
+}
+
+/**
+ * @tc.name: I18nFuncTest074
+ * @tc.desc: Test numberFormat format integer
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18NFuncTest074, TestSize.Level1)
+{
+    LocaleInfo locale("km", "", "");
+    int status =  0;
+    NumberFormat formatter(locale, status);
+    EXPECT_TRUE(status == 0);
+    int intNum1 = 1234567;
+    int intNum2 = 123456789;
+    int intNum3 = 1234;
+    std::string out = formatter.Format(intNum1, status);
+    std::string out2 = formatter.Format(intNum2, status);
+    std::string out3 = formatter.Format(intNum3, status);
+    EXPECT_EQ(out, "1.234.567");
+    EXPECT_EQ(out2, "123.456.789");
+    EXPECT_EQ(out3, "1.234");
+}
+
+/**
+ * @tc.name: I18nFuncTest075
+ * @tc.desc: Test numberFormat format integer
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18NFuncTest075, TestSize.Level1)
+{
+    LocaleInfo locale("kk", "", "");
+    int status =  0;
+    NumberFormat formatter(locale, status);
+    EXPECT_TRUE(status == 0);
+    int intNum1 = 1234567;
+    int intNum2 = 123456789;
+    int intNum3 = 1234;
+    std::string out = formatter.Format(intNum1, status);
+    std::string out2 = formatter.Format(intNum2, status);
+    std::string out3 = formatter.Format(intNum3, status);
+    EXPECT_EQ(out, "1 234 567");
+    EXPECT_EQ(out2, "123 456 789");
+    EXPECT_EQ(out3, "1 234");
+}
+
+/**
+ * @tc.name: I18nFuncTest076
+ * @tc.desc: Test numberFormat format integer
+ * @tc.type: FUNC
+ */
+HWTEST_F(I18NTest, I18NFuncTest076, TestSize.Level1)
+{
+    LocaleInfo locale("uz", "", "");
+    int status =  0;
+    NumberFormat formatter(locale, status);
+    EXPECT_TRUE(status == 0);
+    int intNum1 = 1234567;
+    int intNum2 = 123456789;
+    int intNum3 = 1234;
+    std::string out = formatter.Format(intNum1, status);
+    std::string out2 = formatter.Format(intNum2, status);
+    std::string out3 = formatter.Format(intNum3, status);
+    EXPECT_EQ(out, "1 234 567");
+    EXPECT_EQ(out2, "123 456 789");
+    EXPECT_EQ(out3, "1 234");
+}
 } // namespace I18N
 } // namespace OHOS
