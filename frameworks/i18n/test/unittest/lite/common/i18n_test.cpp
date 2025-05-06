@@ -221,7 +221,7 @@ HWTEST_F(I18NTest, I18NFuncTest013, TestSize.Level1)
     LocaleInfo locale("zh", "", "");
     std::string out = "";
     time_t now = 3600 * 3 + 3600 * 24 * 6;
-    I18nStatus status =  I18nStatus::ISUCCESS;
+    I18nStatus status = I18nStatus::ISUCCESS;
     AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::FULL;
     DateTimeFormat formatter(pattern, locale);
     formatter.Format(now, "-1:45", out, status);
@@ -239,7 +239,7 @@ HWTEST_F(I18NTest, I18NFuncTest014, TestSize.Level1)
     LocaleInfo locale("ar", "", "");
     std::string out = "";
     time_t now = 3600 * 3 + 3600 * 24 * 6;
-    I18nStatus status =  I18nStatus::ISUCCESS;
+    I18nStatus status = I18nStatus::ISUCCESS;
     AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::FULL;
     DateTimeFormat formatter(pattern, locale);
     formatter.Format(now, "-1:45", out, status);
@@ -257,7 +257,7 @@ HWTEST_F(I18NTest, I18NFuncTest015, TestSize.Level1)
     LocaleInfo locale("en", "", "US");
     std::string out = "";
     time_t now = 3600 * 3 + 3600 * 24 * 6;
-    I18nStatus status =  I18nStatus::ISUCCESS;
+    I18nStatus status = I18nStatus::ISUCCESS;
     AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::FULL;
     DateTimeFormat formatter(pattern, locale);
     formatter.Format(now, "-1:45", out, status);
@@ -275,7 +275,7 @@ HWTEST_F(I18NTest, I18NFuncTest016, TestSize.Level1)
     LocaleInfo locale("zh", "", "");
     std::string out = "";
     time_t now = 3600 * 3 + 3600 * 24 * 6;
-    I18nStatus status =  I18nStatus::ISUCCESS;
+    I18nStatus status = I18nStatus::ISUCCESS;
     AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::SHORT;
     DateTimeFormat formatter(pattern, locale);
     formatter.ApplyPattern(AvailableDateTimeFormatPattern::FULL);
@@ -294,7 +294,7 @@ HWTEST_F(I18NTest, I18NFuncTest017, TestSize.Level1)
     LocaleInfo locale("ar", "", "");
     std::string out = "";
     time_t now = 3600 * 3 + 3600 * 24 * 6;
-    I18nStatus status =  I18nStatus::ISUCCESS;
+    I18nStatus status = I18nStatus::ISUCCESS;
     AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::SHORT;
     DateTimeFormat formatter(pattern, locale);
     formatter.ApplyPattern(AvailableDateTimeFormatPattern::FULL);
@@ -313,7 +313,7 @@ HWTEST_F(I18NTest, I18NFuncTest018, TestSize.Level1)
     LocaleInfo locale("en", "", "US");
     std::string out = "";
     time_t now = 3600 * 3 + 3600 * 24 * 6;
-    I18nStatus status =  I18nStatus::ISUCCESS;
+    I18nStatus status = I18nStatus::ISUCCESS;
     AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::SHORT;
     DateTimeFormat formatter(pattern, locale);
     formatter.ApplyPattern(AvailableDateTimeFormatPattern::FULL);
@@ -365,7 +365,7 @@ HWTEST_F(I18NTest, I18NFuncTest020, TestSize.Level1)
 HWTEST_F(I18NTest, I18NFuncTest021, TestSize.Level1)
 {
     LocaleInfo locale("am", "", "");
-    int status =  0;
+    int status = 0;
     NumberFormat formatter(locale, status);
     EXPECT_TRUE(status == 0);
     int intNum1 = 1234567;
@@ -409,7 +409,7 @@ HWTEST_F(I18NTest, I18NFuncTest022, TestSize.Level1)
 HWTEST_F(I18NTest, I18NFuncTest023, TestSize.Level1)
 {
     LocaleInfo locale("am", "", "");
-    int status =  0;
+    int status = 0;
     NumberFormat formatter(locale, status);
     EXPECT_TRUE(status == 0);
     double doubleNum1 = 1234567.567;
@@ -431,7 +431,7 @@ HWTEST_F(I18NTest, I18NFuncTest023, TestSize.Level1)
 HWTEST_F(I18NTest, I18NFuncTest024, TestSize.Level1)
 {
     LocaleInfo locale("am", "", "");
-    int status =  0;
+    int status = 0;
     NumberFormat formatter(locale, status);
     EXPECT_TRUE(status == 0);
     double doubleNum1 = 1234567.567;
@@ -476,7 +476,7 @@ HWTEST_F(I18NTest, I18NFuncTest025, TestSize.Level1)
 HWTEST_F(I18NTest, I18NFuncTest026, TestSize.Level1)
 {
     LocaleInfo locale("am", "", "");
-    int status =  0;
+    int status = 0;
     NumberFormat formatter(locale, status);
     EXPECT_TRUE(status == 0);
     double doubleNum1 = 1234567.56;
@@ -1165,7 +1165,7 @@ HWTEST_F(I18NTest, I18nFuncTest056, TestSize.Level1)
 HWTEST_F(I18NTest, I18nFuncTest057, TestSize.Level1)
 {
     LocaleInfo locale("be", "", "");
-    int status =  0;
+    int status = 0;
     NumberFormat formatter(locale, status);
     EXPECT_TRUE(status == 0);
     int intNum1 = 1234567;
@@ -1375,7 +1375,7 @@ HWTEST_F(I18NTest, I18nFuncTest062, TestSize.Level1)
 }
 
 /**
- * @tc.name: I18nFuncTest063
+ * @tc.name: I18NFuncTest063
  * @tc.desc: Test LocaleInfo copy constructor
  * @tc.type: FUNC
  */
@@ -1396,11 +1396,11 @@ HWTEST_F(I18NTest, I18NFuncTest063, TestSize.Level1)
 }
 
 /**
- * @tc.name: I18nFuncTest064
+ * @tc.name: I18NFuncTest064
  * @tc.desc: Test DateTimeFormat km
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, I18nFuncTest064, TestSize.Level1)
+HWTEST_F(I18NTest, I18NFuncTest064, TestSize.Level1)
 {
     I18nStatus status = I18nStatus::ISUCCESS;
     LocaleInfo locale("km", "", "");
@@ -1412,11 +1412,11 @@ HWTEST_F(I18NTest, I18nFuncTest064, TestSize.Level1)
 }
 
 /**
- * @tc.name: I18nFuncTest065
+ * @tc.name: I18NFuncTest065
  * @tc.desc: Test DateTimeFormat kk
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, I18nFuncTest065, TestSize.Level1)
+HWTEST_F(I18NTest, I18NFuncTest065, TestSize.Level1)
 {
     I18nStatus status = I18nStatus::ISUCCESS;
     LocaleInfo locale("kk", "", "");
@@ -1428,11 +1428,11 @@ HWTEST_F(I18NTest, I18nFuncTest065, TestSize.Level1)
 }
 
 /**
- * @tc.name: I18nFuncTest066
+ * @tc.name: I18NFuncTest066
  * @tc.desc: Test DateTimeFormat uz
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, I18nFuncTest066, TestSize.Level1)
+HWTEST_F(I18NTest, I18NFuncTest066, TestSize.Level1)
 {
     I18nStatus status = I18nStatus::ISUCCESS;
     LocaleInfo locale("uz", "", "");
@@ -1444,12 +1444,12 @@ HWTEST_F(I18NTest, I18nFuncTest066, TestSize.Level1)
 }
 
 /**
- * @tc.name: I18nFuncTest067
+ * @tc.name: I18NFuncTest067
  * @tc.desc: Test WeekInfo GetFirstDayOfWeek
  * @tc.type: FUNC
  * @tc.require: issueI4WKP8
  */
-HWTEST_F(I18NTest, I18nFuncTest067, TestSize.Level1)
+HWTEST_F(I18NTest, I18NFuncTest067, TestSize.Level1)
 {
     I18nStatus status = I18nStatus::ISUCCESS;
     LocaleInfo locale("kk", "KZ");
@@ -1467,12 +1467,12 @@ HWTEST_F(I18NTest, I18nFuncTest067, TestSize.Level1)
 }
 
 /**
- * @tc.name: I18nFuncTest068
+ * @tc.name: I18NFuncTest068
  * @tc.desc: Test PluralFormat Format function
  * @tc.type: FUNC
  * @tc.require: issueI4WKP8
  */
-HWTEST_F(I18NTest, I18nFuncTest068, TestSize.Level1)
+HWTEST_F(I18NTest, I18NFuncTest068, TestSize.Level1)
 {
     LocaleInfo locale("km", "", "");
     I18nStatus status = I18nStatus::ISUCCESS;
@@ -1492,17 +1492,17 @@ HWTEST_F(I18NTest, I18nFuncTest068, TestSize.Level1)
 }
 
 /**
- * @tc.name: I18nFuncTest069
+ * @tc.name: I18NFuncTest069
  * @tc.desc: Test DateTimeFormat Format function
  * @tc.type: FUNC
  * @tc.require: issueI4WKP8
  */
-HWTEST_F(I18NTest, I18nFuncTest069, TestSize.Level1)
+HWTEST_F(I18NTest, I18NFuncTest069, TestSize.Level1)
 {
     LocaleInfo locale("be", "", "");
     std::string out = "";
     time_t now = 3600 * 3 + 3600 * 24 * 6;
-    I18nStatus status =  I18nStatus::ISUCCESS;
+    I18nStatus status = I18nStatus::ISUCCESS;
     AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::FULL;
     DateTimeFormat formatter(pattern, locale);
     formatter.Format(now, "-1:45", out, status);
@@ -1511,17 +1511,17 @@ HWTEST_F(I18NTest, I18nFuncTest069, TestSize.Level1)
 }
 
 /**
- * @tc.name: I18nFuncTest070
+ * @tc.name: I18NFuncTest070
  * @tc.desc: Test DateTimeFormat Format function
  * @tc.type: FUNC
  * @tc.require: issueI4WKP8
  */
-HWTEST_F(I18NTest, I18nFuncTest070, TestSize.Level1)
+HWTEST_F(I18NTest, I18NFuncTest070, TestSize.Level1)
 {
     LocaleInfo locale("kk", "", "");
     std::string out = "";
     time_t now = 3600 * 3 + 3600 * 24 * 6;
-    I18nStatus status =  I18nStatus::ISUCCESS;
+    I18nStatus status = I18nStatus::ISUCCESS;
     AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::MEDIUM;
     DateTimeFormat formatter(pattern, locale);
     formatter.Format(now, "-1:45", out, status);
@@ -1530,17 +1530,17 @@ HWTEST_F(I18NTest, I18nFuncTest070, TestSize.Level1)
 }
 
 /**
- * @tc.name: I18nFuncTest071
+ * @tc.name: I18NFuncTest071
  * @tc.desc: Test DateTimeFormat Format function
  * @tc.type: FUNC
  * @tc.require: issueI4WKP8
  */
-HWTEST_F(I18NTest, I18nFuncTest071, TestSize.Level1)
+HWTEST_F(I18NTest, I18NFuncTest071, TestSize.Level1)
 {
     LocaleInfo locale("km", "", "");
     std::string out = "";
     time_t now = 3600 * 3 + 3600 * 24 * 6;
-    I18nStatus status =  I18nStatus::ISUCCESS;
+    I18nStatus status = I18nStatus::ISUCCESS;
     AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::MEDIUM;
     DateTimeFormat formatter(pattern, locale);
     formatter.Format(now, "-1:45", out, status);
@@ -1549,17 +1549,17 @@ HWTEST_F(I18NTest, I18nFuncTest071, TestSize.Level1)
 }
 
 /**
- * @tc.name: I18nFuncTest072
+ * @tc.name: I18NFuncTest072
  * @tc.desc: Test DateTimeFormat Format function
  * @tc.type: FUNC
  * @tc.require: issueI4WKP8
  */
-HWTEST_F(I18NTest, I18nFuncTest072, TestSize.Level1)
+HWTEST_F(I18NTest, I18NFuncTest072, TestSize.Level1)
 {
     LocaleInfo locale("uz", "", "");
     std::string out = "";
     time_t now = 3600 * 3 + 3600 * 24 * 6;
-    I18nStatus status =  I18nStatus::ISUCCESS;
+    I18nStatus status = I18nStatus::ISUCCESS;
     AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::FULL;
     DateTimeFormat formatter(pattern, locale);
     formatter.Format(now, "-1:45", out, status);
@@ -1568,14 +1568,14 @@ HWTEST_F(I18NTest, I18nFuncTest072, TestSize.Level1)
 }
 
 /**
- * @tc.name: I18nFuncTest073
+ * @tc.name: I18NFuncTest073
  * @tc.desc: Test numberFormat format integer
  * @tc.type: FUNC
  */
 HWTEST_F(I18NTest, I18NFuncTest073, TestSize.Level1)
 {
     LocaleInfo locale("be", "", "");
-    int status =  0;
+    int status = 0;
     NumberFormat formatter(locale, status);
     EXPECT_TRUE(status == 0);
     int intNum1 = 1234567;
@@ -1590,14 +1590,14 @@ HWTEST_F(I18NTest, I18NFuncTest073, TestSize.Level1)
 }
 
 /**
- * @tc.name: I18nFuncTest074
+ * @tc.name: I18NFuncTest074
  * @tc.desc: Test numberFormat format integer
  * @tc.type: FUNC
  */
 HWTEST_F(I18NTest, I18NFuncTest074, TestSize.Level1)
 {
     LocaleInfo locale("km", "", "");
-    int status =  0;
+    int status = 0;
     NumberFormat formatter(locale, status);
     EXPECT_TRUE(status == 0);
     int intNum1 = 1234567;
@@ -1612,14 +1612,14 @@ HWTEST_F(I18NTest, I18NFuncTest074, TestSize.Level1)
 }
 
 /**
- * @tc.name: I18nFuncTest075
+ * @tc.name: I18NFuncTest075
  * @tc.desc: Test numberFormat format integer
  * @tc.type: FUNC
  */
 HWTEST_F(I18NTest, I18NFuncTest075, TestSize.Level1)
 {
     LocaleInfo locale("kk", "", "");
-    int status =  0;
+    int status = 0;
     NumberFormat formatter(locale, status);
     EXPECT_TRUE(status == 0);
     int intNum1 = 1234567;
@@ -1634,14 +1634,14 @@ HWTEST_F(I18NTest, I18NFuncTest075, TestSize.Level1)
 }
 
 /**
- * @tc.name: I18nFuncTest076
+ * @tc.name: I18NFuncTest076
  * @tc.desc: Test numberFormat format integer
  * @tc.type: FUNC
  */
 HWTEST_F(I18NTest, I18NFuncTest076, TestSize.Level1)
 {
     LocaleInfo locale("uz", "", "");
-    int status =  0;
+    int status = 0;
     NumberFormat formatter(locale, status);
     EXPECT_TRUE(status == 0);
     int intNum1 = 1234567;

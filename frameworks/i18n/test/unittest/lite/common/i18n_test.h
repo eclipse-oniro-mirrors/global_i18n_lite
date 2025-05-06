@@ -88,7 +88,7 @@ int I18NFuncTest067(void);
 int I18NFuncTest068(void);
 int I18NFuncTest069(void);
 int I18NFuncTest070(void);
-int I18nFuncTest071(void);
+int I18NFuncTest071(void);
 int I18NFuncTest072(void);
 int I18NFuncTest073(void);
 int I18NFuncTest074(void);
