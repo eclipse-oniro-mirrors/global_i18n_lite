@@ -569,6 +569,11 @@
     "HH:mm:ss",
     "HH:mm:ss"
   ],
+  "km":   [
+    "h:mm:ss a",
+    "HH:mm:ss",
+    "h:mm:ss a"
+  ],
   "ko":   [
     "a h:mm:ss",
     "HH:mm:ss",

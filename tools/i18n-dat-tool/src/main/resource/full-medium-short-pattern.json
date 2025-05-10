@@ -40,8 +40,8 @@
     "dd.MM.yy"
   ],
   "be":   [
-    "EEEE, d MMMM y 'г'.",
-    "d.MM.y",
+    "EEEE, d MMMM y 'г'.",
+    "d MMM y 'г'.",
     "d.MM.yy"
   ],
   "bg":   [
@@ -745,8 +745,8 @@
     "dd.MM.yy"
   ],
   "kk":   [
-    "y 'ж'. d MMMM, EEEE",
-    "y 'ж'. d MMM",
+    "y 'ж'. d MMMM, EEEE",
+    "y 'ж'. d MMM",
     "dd.MM.yy"
   ],
   "km":   [
