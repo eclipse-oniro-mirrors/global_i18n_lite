@@ -22,6 +22,9 @@ using namespace OHOS::I18N;
 
 std::string NumberFormatImpl::ConvertSignAndNum(const char *content, int len, NumberData *data, StyleData &style) const
 {
+    if (content == nullptr) {
+        return "";
+    }
     std::string strContent = content;
     int off = 0;
     for (int i = 0; i < len; i++) {
