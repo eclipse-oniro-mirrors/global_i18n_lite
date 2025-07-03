@@ -65,7 +65,7 @@ void NumberData::SetNumSystem(std::string *numSym, const int numSize)
         return;
     }
     ArrayCopy(nativeNums, NUM_SIZE, numSym, numSize);
-    if (!(numSym[0]).empty() && (numSym[0].at(0) != '0')) {
+    if (!(numSym[0]).empty() && ((numSym[0]).at(0) != '0')) {
         isNative = true;
     }
 }
