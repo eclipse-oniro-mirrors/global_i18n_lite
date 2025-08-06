@@ -41,11 +41,9 @@ private:
     bool CompareResult(const std::string &rule, const int ruleSize, int &index, const int number) const;
     bool CompareNotEqualResult(const std::string &rule, const int ruleSize, int &index, const int number) const;
     int ParseNumber(const std::string &rule, const int ruleSize, int &index) const;
-    bool ParseDecimalRule(const std::string &rule, const int ruleSize, const int *numberInfo,
-        const int numberInfoSize) const;
-    bool ParseDecimalFormula(const std::string &rule, const int ruleSize, int &index, const int *numberInfo,
-        const int numberInfoSize) const;
-    void ComputeDecimalInfo(double number, int integerNumber, int *numberInfo, const int numberInfoSize) const;
+    bool ParseDecimalRule(const std::string &rule, const int ruleSize, const int *numberInfo) const;
+    bool ParseDecimalFormula(const std::string &rule, const int ruleSize, int &index, const int *numberInfo) const;
+    void ComputeDecimalInfo(double number, int integerNumber, int *numberInfo) const;
     PluralRules *InitPluralRules(std::string unprocessedPluralData);
     bool CheckContainsIntegerRule() const;
     const int SYMBOL_LENGTH = 1;

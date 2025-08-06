@@ -189,10 +189,10 @@ bool MeasureFormatImpl::Init(const DataResource &resource)
 bool MeasureFormatImpl::InitMeasureFormat(std::string &unprocessedMeasureData)
 {
     int end = 0;
-    while (end < unprocessedMeasureData.length() && unprocessedMeasureData[end] != PLURAL_SEP) {
+    while (end < static_cast<int>(unprocessedMeasureData.length()) && unprocessedMeasureData[end] != PLURAL_SEP) {
         end++;
     }
-    unitCount = std::stoi(std::string(unprocessedMeasureData, 0, end));
+    unitCount = std::atoi(std::string(unprocessedMeasureData, 0, end).c_str());
     int itemCount = MEASURE_BASE_ITEM_COUNT + unitCount * MEASURE_SINGLE_UNIT_COUNT;
     std::string *items = new std::string[itemCount];
     if (items == nullptr) {
@@ -239,7 +239,7 @@ bool MeasureFormatImpl::ParseUnits(std::string &unitsList)
     }
     int begin = 0;
     int end = 0;
-    int unitsLength = unitsList.length();
+    int unitsLength = static_cast<int>(unitsList.length());
     int count = 0;
     while (count < unitCount) {
         while (end < unitsLength && unitsList[end] != MEASURE_UNIT_SEP) {

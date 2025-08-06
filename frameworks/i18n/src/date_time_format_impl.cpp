@@ -53,7 +53,7 @@ string DateTimeFormatImpl::AddSeconds(const string &hmPattern) const
     if (size == 0 || data == nullptr) {
         return "";
     }
-    int32_t i = hmPattern.size() - 1;
+    int32_t i = static_cast<int32_t>(hmPattern.size() - 1);
     string out;
     out.reserve(DECIMAL_COUNT); // allocate ten more bytes
     while (i >= 0) {
@@ -227,7 +227,7 @@ int32_t DateTimeFormatImpl::ParseZoneInfo(const string &zoneInfo) const
     if (!isHour && (temp != 0)) {
         minute = temp;
     }
-    ret = SECONDS_IN_HOUR * hour + minute * SECONDS_IN_MINUTE;
+    ret = static_cast<int32_t>(SECONDS_IN_HOUR * hour + minute * SECONDS_IN_MINUTE);
 
     if (!sign) {
         return -ret;
@@ -244,7 +244,7 @@ void DateTimeFormatImpl::Process(const tm &time, string &appendTo, char pre, uin
         return;
     }
     if (IsTimeChar(pre)) {
-        ProcessTime(time, appendTo, pre, count, status);
+        ProcessTime(time, appendTo, pre, count);
         return;
     }
     switch (pre) {
@@ -271,13 +271,13 @@ void DateTimeFormatImpl::Process(const tm &time, string &appendTo, char pre, uin
             break;
         }
         default: {
-            ProcessWeekDayYear(time, appendTo, pre, count, status);
+            ProcessWeekDayYear(time, appendTo, pre, count);
         }
     }
 }
 
 void DateTimeFormatImpl::ProcessWeekDayYear(const tm &time, string &appendTo, char pre,
-    uint32_t count, I18nStatus &status) const
+    uint32_t count) const
 {
     switch (pre) {
         case 'c': {
@@ -332,7 +332,7 @@ bool DateTimeFormatImpl::IsTimeChar(char ch) const
 }
 
 void DateTimeFormatImpl::ProcessTime(const tm &time, string &appendTo, char pre,
-    uint32_t count, I18nStatus &status) const
+    uint32_t count) const
 {
     switch (pre) {
         case 'a': {
@@ -421,7 +421,7 @@ uint32_t DateTimeFormatImpl::GetLength(int32_t value) const
         return 1;
     }
     uint32_t count = 0;
-    uint32_t temp = value;
+    uint32_t temp = static_cast<uint32_t>(value);
     while (temp) {
         ++count;
         temp = temp / DECIMAL_COUNT;

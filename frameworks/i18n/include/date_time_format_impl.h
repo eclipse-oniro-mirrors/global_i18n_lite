@@ -79,9 +79,8 @@ private:
     void Format(const struct tm &time, const std::string &pattern, std::string &appendTo, I18nStatus &status) const;
     void ZeroPadding(std::string &appendTo, uint32_t minValue, uint32_t maxValue, int32_t value) const;
     void Process(const tm &time, std::string &append, char pre, uint32_t count,  I18nStatus &status) const;
-    void ProcessTime(const tm &time, std::string &append, char pre, uint32_t count, I18nStatus &status) const;
-    void ProcessWeekDayYear(const tm &time, std::string &appendTo, char pre,
-        uint32_t count,  I18nStatus &status) const;
+    void ProcessTime(const tm &time, std::string &append, char pre, uint32_t count) const;
+    void ProcessWeekDayYear(const tm &time, std::string &appendTo, char pre, uint32_t count) const;
     bool IsTimeChar(char ch) const;
     int32_t ParseZoneInfo(const std::string &zoneInfo) const;
     char *GetNoAmPmPattern(const std::string &patternString, int8_t &ret) const;

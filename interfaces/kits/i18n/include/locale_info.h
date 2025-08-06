@@ -194,7 +194,7 @@ private:
     void FreeResource();
     static void ProcessExtension(LocaleInfo &locale, const char *key, const char *value);
     static void ConfirmTagType(const char *start, size_t length, uint8_t &type, const char* &key, const char* &value);
-    static void ParseLanguageTag(LocaleInfo &locale, const char *languageTag, I18nStatus &status);
+    static void ParseLanguageTag(LocaleInfo &locale, const char *languageTag);
     static bool ParseNormalSubTag(LocaleInfo &locale, const char *start, size_t tagLength, uint16_t &options,
         uint8_t &type);
     static bool IsLanguage(const char *start, uint8_t length);

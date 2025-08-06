@@ -60,7 +60,7 @@ void InitLocaleModule(JSIValue exports)
     JSI::SetModuleAPI(exports, "getLocale", LocaleModule::GetLocale);
 }
 
-JSIValue LocaleModule::GetLocale(const JSIValue thisVal, const JSIValue *args, uint8_t argsNum)
+JSIValue LocaleModule::GetLocale(const JSIValue /* thisVal */, const JSIValue* /* args */, uint8_t /* argsNum */)
 {
     JSIValue result = JSI::CreateObject();
     char *lang = GetLanguage();

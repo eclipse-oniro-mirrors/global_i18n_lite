@@ -282,16 +282,16 @@ bool DataResource::PrepareLocaleData(int32_t infile, uint32_t configOffset, uint
         return false;
     }
     int32_t readSize = read(infile, configs, resourceSize);
-    if (readSize != resourceSize) {
+    if (readSize != static_cast<int32_t>(resourceSize)) {
         I18nFree(static_cast<void *>(configs));
         return false;
     }
-    bool ret = GetStringFromStringPool(configs, resourceSize, infile, type);
+    bool ret = GetStringFromStringPool(configs, infile, type);
     I18nFree(static_cast<void *>(configs));
     return ret;
 }
 
-uint32_t DataResource::GetFinalCount(char *configs, uint32_t configSize, LocaleDataType type)
+uint32_t DataResource::GetFinalCount(char *configs, LocaleDataType type)
 {
     uint32_t count = 0;
     switch (type) {
@@ -323,10 +323,10 @@ uint32_t DataResource::GetFinalCount(char *configs, uint32_t configSize, LocaleD
     return finalCount;
 }
 
-bool DataResource::GetStringFromStringPool(char *configs, const uint32_t configsSize, int32_t infile,
+bool DataResource::GetStringFromStringPool(char *configs, int32_t infile,
     LocaleDataType type)
 {
-    uint32_t finalCount = GetFinalCount(configs, configsSize, type);
+    uint32_t finalCount = GetFinalCount(configs, type);
     if (finalCount == 0) {
         return true;
     }
@@ -359,7 +359,7 @@ bool DataResource::GetStringFromStringPool(char *configs, const uint32_t configs
     if (!ApplyForResource(index, wanted, finalCount)) {
         return false;
     }
-    return Retrieve(configs, configsSize, infile, originalCount, type);
+    return Retrieve(configs, infile, originalCount, type);
 }
 
 void DataResource::GetType(char** &adjustResource, uint32_t* &adjustResourceIndex, uint32_t &count,
@@ -387,7 +387,7 @@ void DataResource::GetType(char** &adjustResource, uint32_t* &adjustResourceInde
     }
 }
 
-bool DataResource::Retrieve(char *configs, uint32_t configsSize, int32_t infile, const uint32_t orginalCount,
+bool DataResource::Retrieve(char *configs, int32_t infile, const uint32_t orginalCount,
     LocaleDataType type)
 {
     uint32_t count = 0;
@@ -405,7 +405,7 @@ bool DataResource::Retrieve(char *configs, uint32_t configsSize, int32_t infile,
         uint32_t length = ConvertUChar(reinterpret_cast<unsigned char*>(configs + i *
             GLOBAL_RESOURCE_CONFIG_SIZE + GLOBAL_RESOURCE_MASK_OFFSET));
         int32_t seekSize = lseek(infile, stringPoolOffset + offset, SEEK_SET);
-        if ((length == 0) || (seekSize != static_cast<uint32_t>(stringPoolOffset + offset))) {
+        if ((length == 0) || (seekSize != static_cast<int32_t>(stringPoolOffset + offset))) {
             adjustResource[currentIndex] = nullptr;
             adjustResourceIndex[currentIndex] = index;
         } else {
