@@ -20,7 +20,7 @@
 
 using namespace OHOS::I18N;
 
-std::string NumberFormatImpl::ConvertSignAndNum(const char *content, int len, NumberData *data, StyleData &style) const
+std::string NumberFormatImpl::ConvertSignAndNum(const char *content, int len, NumberData *data) const
 {
     if (content == nullptr) {
         return "";
@@ -89,7 +89,7 @@ bool NumberFormatImpl::Init(const DataResource &resource)
     }
     std::string origin = split[NUM_PERCENT_PAT_INDEX];
     const char *pat = split[NUM_PAT_INDEX].c_str();
-    int size = origin.size();
+    size_t size = origin.size();
     std::string adjust = origin;
     // strip "0x80 0xe2 0x8f" these three bytes in pat
     if (size >= 3 && // check the last 3 character
@@ -162,14 +162,14 @@ std::string NumberFormatImpl::InnerFormat(double num, bool hasDec, bool isShowGr
         }
     }
     // del more zero
-    lastLen = DelMoreZero(defaultData->style, decLen, lastLen, adjustHasDec, result);
+    lastLen = DelMoreZero(decLen, lastLen, adjustHasDec, result);
     // if percent
     if (isPercent && !DealWithPercent(buff, result, status, defaultData->style, lastLen)) {
         I18nFree(static_cast<void *>(result));
         return "";
     }
     // if have native number to convert
-    std::string outStr = ConvertSignAndNum(result, lastLen, defaultData, defaultData->style);
+    std::string outStr = ConvertSignAndNum(result, lastLen, defaultData);
     I18nFree(static_cast<void *>(result));
     if (num < 0) {
         outStr.insert(0, defaultData->GetMinusSign());
@@ -209,7 +209,7 @@ bool NumberFormatImpl::DealWithPercent(char *buff, char *&result, int &status, S
 }
 
 
-int NumberFormatImpl::DelMoreZero(const StyleData &style, int decLen, int lastLen, bool hasDec, char *&result) const
+int NumberFormatImpl::DelMoreZero(int decLen, int lastLen, bool hasDec, char *&result) const
 {
     int num = 0;
     if (decLen > 1) {

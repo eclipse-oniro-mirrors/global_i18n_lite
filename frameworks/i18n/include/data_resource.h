@@ -108,7 +108,7 @@ private:
     bool ReadHeader(int32_t infile);
     bool PrepareData(int32_t infile);
     int32_t BinarySearchLocale(const uint32_t mask, unsigned char *locales);
-    bool GetStringFromStringPool(char *configs, const uint32_t configsSize, int32_t infile, LocaleDataType type);
+    bool GetStringFromStringPool(char *configs, int32_t infile, LocaleDataType type);
     uint32_t ConvertUint(unsigned char *src);
     uint32_t ConvertUChar(unsigned char *src);
     char *GetString2(DataResourceType type) const;
@@ -120,12 +120,12 @@ private:
         char *locales);
     void GetFallbackAndDefaultInfo(const int32_t &fallbackLocaleIndex, const int32_t &defaultLocaleIndex,
         uint32_t &fallbackConfigOffset, uint32_t &defaultConfigOffset, char *locales);
-    bool Retrieve(char *configs, const uint32_t configsSize, int32_t infile, const uint32_t originalCount,
+    bool Retrieve(char *configs, int32_t infile, const uint32_t originalCount,
         LocaleDataType type);
     bool PrepareLocaleData(int32_t infile, uint32_t configOffset, uint32_t count, LocaleDataType type);
     bool FullLoaded();
     void GetType(char** &adjustResource, uint32_t* &adjustResourceIndex, uint32_t &count, LocaleDataType type);
-    uint32_t GetFinalCount(char *configs, uint32_t configSize, LocaleDataType type);
+    uint32_t GetFinalCount(char *configs, LocaleDataType type);
     void FreeResource();
     bool IsTypeNeeded(int32_t index, uint32_t count);
     bool ApplyForResource(uint32_t **index, char ***wanted, uint32_t totalCount);

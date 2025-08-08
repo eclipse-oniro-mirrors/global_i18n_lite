@@ -79,7 +79,7 @@ string DateTimeData::GetDayName(int32_t index, DateTimeDataType type)
     }
 }
 
-string DateTimeData::GetAmPmMarker(int32_t index, DateTimeDataType type)
+string DateTimeData::GetAmPmMarker(int32_t index, DateTimeDataType /* type */)
 {
     if ((index < 0) || (index >= AM_SIZE) || amPmMarkers == nullptr) {
         return "";

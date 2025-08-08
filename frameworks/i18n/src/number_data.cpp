@@ -219,7 +219,7 @@ void NumberData::ParseOtherPerPattern(const char *pattern, const int len, const 
         type = "%s%%";
     }
     I18nFree(static_cast<void *>(style.entireFormat));
-    int typeLen = type.size();
+    int typeLen = static_cast<int>(type.size());
     style.entireFormat = I18nNewCharString(type.data(), typeLen);
 }
 

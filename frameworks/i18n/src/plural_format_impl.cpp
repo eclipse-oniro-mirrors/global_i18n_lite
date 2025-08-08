@@ -86,21 +86,21 @@ int PluralFormatImpl::GetPluralRuleIndex(double number, I18nStatus status) const
     }
     int integerNumber = (int)number;
     int numberInfo[NUMBER_INFO_SIZE];
-    ComputeDecimalInfo(number, integerNumber, numberInfo, NUMBER_INFO_SIZE);
+    ComputeDecimalInfo(number, integerNumber, numberInfo);
     if ((mDecimalPluralRules->mZeroRuleSize > 0) && ParseDecimalRule(mDecimalPluralRules->mZeroRule,
-        mDecimalPluralRules->mZeroRuleSize, numberInfo, NUMBER_INFO_SIZE)) {
+        mDecimalPluralRules->mZeroRuleSize, numberInfo)) {
         return PluralRuleType::ZERO;
     } else if ((mDecimalPluralRules->mOneRuleSize > 0) && ParseDecimalRule(mDecimalPluralRules->mOneRule,
-        mDecimalPluralRules->mOneRuleSize, numberInfo, NUMBER_INFO_SIZE)) {
+        mDecimalPluralRules->mOneRuleSize, numberInfo)) {
         return PluralRuleType::ONE;
     } else if ((mDecimalPluralRules->mTwoRuleSize > 0) && ParseDecimalRule(mDecimalPluralRules->mTwoRule,
-        mDecimalPluralRules->mTwoRuleSize, numberInfo, NUMBER_INFO_SIZE)) {
+        mDecimalPluralRules->mTwoRuleSize, numberInfo)) {
         return PluralRuleType::TWO;
     } else if ((mDecimalPluralRules->mFewRuleSize > 0) && ParseDecimalRule(mDecimalPluralRules->mFewRule,
-        mDecimalPluralRules->mFewRuleSize, numberInfo, NUMBER_INFO_SIZE)) {
+        mDecimalPluralRules->mFewRuleSize, numberInfo)) {
         return PluralRuleType::FEW;
     } else if ((mDecimalPluralRules->mManyRuleSize > 0) && ParseDecimalRule(mDecimalPluralRules->mManyRule,
-        mDecimalPluralRules->mManyRuleSize, numberInfo, NUMBER_INFO_SIZE)) {
+        mDecimalPluralRules->mManyRuleSize, numberInfo)) {
         return PluralRuleType::MANY;
     } else {
         if (!CheckContainsIntegerRule() && numberInfo[FRACTION_NUMBER_INDEX] == 0) {
@@ -132,8 +132,7 @@ bool PluralFormatImpl::CheckContainsIntegerRule() const
     }
 }
 
-void PluralFormatImpl::ComputeDecimalInfo(double number, int integerNumber, int *numberInfo,
-    const int numberInfoSize) const
+void PluralFormatImpl::ComputeDecimalInfo(double number, int integerNumber, int *numberInfo) const
 {
     int fractionNumber = 0;
     int numOfFraction = 0;
@@ -160,12 +159,11 @@ void PluralFormatImpl::ComputeDecimalInfo(double number, int integerNumber, int 
     numberInfo[NUM_OF_FRACTION_INDEX] = numOfFraction;
 }
 
-bool PluralFormatImpl::ParseDecimalRule(const std::string &rule, const int ruleSize, const int *numberInfo,
-    const int numberInfoSize) const
+bool PluralFormatImpl::ParseDecimalRule(const std::string &rule, const int ruleSize, const int *numberInfo) const
 {
     bool tempResult = true;
     for (int i = 0; i < ruleSize; i++) {
-        bool curResult = ParseDecimalFormula(rule, ruleSize, i, numberInfo, numberInfoSize);
+        bool curResult = ParseDecimalFormula(rule, ruleSize, i, numberInfo);
         int nextSymbolIndex = i + SYMBOL_LENGTH;
         if (curResult && tempResult) {
             // If next symbol is or and current result and temp result are true, the final result should be true.
@@ -192,7 +190,7 @@ bool PluralFormatImpl::ParseDecimalRule(const std::string &rule, const int ruleS
                 i += SKIP_SYMBOL_LENGTH;
                 tempResult = false;
             } else if ((nextSymbolIndex >= ruleSize) &&
-                        !ParseDecimalFormula(rule, ruleSize, i, numberInfo, numberInfoSize)) {
+                        !ParseDecimalFormula(rule, ruleSize, i, numberInfo)) {
                 tempResult = false;
             }
         }
@@ -201,7 +199,7 @@ bool PluralFormatImpl::ParseDecimalRule(const std::string &rule, const int ruleS
 }
 
 bool PluralFormatImpl::ParseDecimalFormula(const std::string &rule, const int ruleSize, int &index,
-    const int *numberInfo, const int numberInfoSize) const
+    const int *numberInfo) const
 {
     int currentNumber = 0;
     if ((index < ruleSize) && (rule[index] == NUM_OF_FRACTION)) {

@@ -274,12 +274,12 @@ LocaleInfo LocaleInfo::ForLanguageTag(const char *languageTag, I18nStatus &statu
         status = IERROR;
         return locale;
     }
-    ParseLanguageTag(locale, languageTag, status);
+    ParseLanguageTag(locale, languageTag);
     locale.InitIdstr();
     return locale;
 }
 
-void LocaleInfo::ParseLanguageTag(LocaleInfo &locale, const char *languageTag, I18nStatus &status)
+void LocaleInfo::ParseLanguageTag(LocaleInfo &locale, const char *languageTag)
 {
     const char *tag = languageTag;
     uint16_t options = OPT_LANG;
