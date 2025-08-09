@@ -387,7 +387,7 @@ HWTEST_F(I18NTest, I18NFuncTest021, TestSize.Level1)
 HWTEST_F(I18NTest, I18NFuncTest022, TestSize.Level1)
 {
     LocaleInfo locale("am", "", "");
-    int  status =  0;
+    int status = 0;
     NumberFormat formatter(locale, status);
     EXPECT_TRUE(status == 0);
     int intNum1 = 1234567;
