@@ -1424,7 +1424,7 @@ HWTEST_F(I18NTest, I18NFuncTest065, TestSize.Level1)
     DateTimeFormat formatter(pattern, locale);
     string out;
     formatter.Format(0, "", out, status);
-    EXPECT_EQ(out, "1 қаң., Бс");
+    EXPECT_EQ(out, "1 Қаң., Бс");
 }
 
 /**

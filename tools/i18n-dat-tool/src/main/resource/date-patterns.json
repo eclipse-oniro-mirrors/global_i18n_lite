@@ -2108,12 +2108,12 @@
   "kk":   [
     "d MMM, EEE",
     "d MMM",
-    "y 'ж'. d MMM, EEE",
-    "y 'ж'. d MMMM, EEE",
+    "y 'ж'. d MMM, EEE",
+    "y 'ж'. d MMMM, EEE",
     "dd.MM.y, EEEE",
     "dd.MM.y, EEE",
-    "y 'ж'. d MMM, EEEE",
-    "y 'ж'. d MMMM",
+    "y 'ж'. d MMM, EEEE",
+    "y 'ж'. d MMMM",
     "d, EEE",
     "dd.MM, EEE",
     "dd.MM"
