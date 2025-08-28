@@ -1424,7 +1424,7 @@ HWTEST_F(I18NTest, I18NFuncTest065, TestSize.Level1)
     DateTimeFormat formatter(pattern, locale);
     string out;
     formatter.Format(0, "", out, status);
-    EXPECT_EQ(out, "1 қаң., Бс");
+    EXPECT_EQ(out, "1 Қаң., Бс");
 }
 
 /**
@@ -1525,7 +1525,7 @@ HWTEST_F(I18NTest, I18NFuncTest070, TestSize.Level1)
     AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::MEDIUM;
     DateTimeFormat formatter(pattern, locale);
     formatter.Format(now, "-1:45", out, status);
-    std::string expect = "1970 ж. 7 қаң.";
+    std::string expect = "1970 ж. 7 Қаң.";
     EXPECT_EQ(expect, out);
 }
 
