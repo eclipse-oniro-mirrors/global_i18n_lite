@@ -10,7 +10,12 @@
     "d MMMM y",
     "EEE d",
     "EEE፣ dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE፣ MMMM d፣ y",
+    "EEEE፣ MMMM d",
+    "LLL",
+    "cccc"
   ],
   "ar":   [
     "EEE، d MMM",
@@ -23,7 +28,12 @@
     "d MMMM، y",
     "EEE، d",
     "EEE، d/‏M",
-    "d/‏M"
+    "d/‏M",
+    "MMM y",
+    "EEEE، d MMMM، y",
+    "EEEE، d MMMM",
+    "LLL",
+    "cccc"
   ],
   "ar-XB":   [
     "EEE، d MMM",
@@ -36,7 +46,12 @@
     "d MMMM y",
     "EEE، d",
     "EEE، d/‏M",
-    "d/‏M"
+    "d/‏M",
+    "MMM y",
+    "EEEE، d MMMM y",
+    "EEEE، d MMMM",
+    "LLL",
+    "cccc"
   ],
   "as":   [
     "EEE, d MMM",
@@ -49,7 +64,12 @@
     "d MMMM, y",
     "EEE d",
     "EEE, dd-MM",
-    "dd-MM"
+    "dd-MM",
+    "MMM y",
+    "EEEE, d MMMM, y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "as-Latn":   [
     "EEE, d MMM",
@@ -62,7 +82,12 @@
     "d MMMM, y",
     "EEE d",
     "EEE, dd-MM",
-    "dd-MM"
+    "dd-MM",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "az":   [
     "d MMM, EEE",
@@ -75,7 +100,12 @@
     "d MMMM y",
     "d EEE",
     "dd.MM, EEE",
-    "dd.MM"
+    "dd.MM",
+    "MMM y",
+    "d MMMM y, EEEE",
+    "d MMMM, EEEE",
+    "LLL",
+    "cccc"
   ],
   "az-Cyrl":   [
     "d MMM, EEE",
@@ -88,7 +118,12 @@
     "d MMMM y",
     "d EEE",
     "dd.MM, EEE",
-    "dd.MM"
+    "dd.MM",
+    "MMM, y",
+    "d MMMM y, EEEE",
+    "d MMMM, EEEE",
+    "LLL",
+    "cccc"
   ],
   "az-Latn":   [
     "d MMM, EEE",
@@ -101,7 +136,12 @@
     "d MMMM y",
     "d EEE",
     "dd.MM, EEE",
-    "dd.MM"
+    "dd.MM",
+    "MMM y",
+    "d MMMM y, EEEE",
+    "d MMMM, EEEE",
+    "LLL",
+    "cccc"
   ],
   "be":   [
     "EEE, d MMM",
@@ -114,7 +154,12 @@
     "d MMMM y 'г'.",
     "d, EEE",
     "EEE, d.M",
-    "d.M"
+    "d.M",
+    "LLL y",
+    "EEEE, d MMMM y 'г'.",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "bg":   [
     "EEE, d MMM",
@@ -127,7 +172,12 @@
     "d MMMM y 'г'.",
     "EEE, d",
     "EEE, d.MM",
-    "d.MM"
+    "d.MM",
+    "MMM y 'г'.",
+    "EEEE, d MMMM y 'г'.",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "bn":   [
     "EEE, d MMM",
@@ -140,7 +190,12 @@
     "d MMMM, y",
     "d EEE",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM, y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "bn-Latn":   [
     "EEE, d MMM",
@@ -153,7 +208,12 @@
     "d MMMM, y",
     "d EEE",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "bo":   [
     "MMMཚེས་d EEE",
@@ -166,7 +226,12 @@
     "སྤྱི་ལོ་y MMMMའི་ཚེས་d",
     "d EEE",
     "EEE M/d",
-    "M/d"
+    "M/d",
+    "y ལོའི ་MMM ཚེས",
+    "སྤྱི་ལོ་y MMMMའི་ཚེས་d EEEE",
+    "MMMM འི་ཚེས་ d EEEE",
+    "LLL",
+    "cccc"
   ],
   "bs":   [
     "EEE, d. MMM",
@@ -179,7 +244,12 @@
     "d. MMMM y.",
     "EEE, d.",
     "EEE, d.M.",
-    "d.M."
+    "d.M.",
+    "MMM y.",
+    "EEEE, d. MMMM y.",
+    "EEEE, d. MMMM",
+    "LLL",
+    "cccc"
   ],
   "bs-Cyrl":   [
     "EEE, dd. MMM",
@@ -192,7 +262,12 @@
     "d. MMMM y.",
     "EEE, d.",
     "EEE, dd.MM.",
-    "dd.MM."
+    "dd.MM.",
+    "MMM y.",
+    "EEEE, d. MMMM y.",
+    "EEEE, dd. MMMM",
+    "LLL",
+    "cccc"
   ],
   "bs-Latn":   [
     "EEE, d. MMM",
@@ -205,7 +280,12 @@
     "d. MMMM y.",
     "EEE, d.",
     "EEE, d.M.",
-    "d.M."
+    "d.M.",
+    "MMM y.",
+    "EEEE, d. MMMM y.",
+    "EEEE, d. MMMM",
+    "LLL",
+    "cccc"
   ],
   "ca":   [
     "EEE, d MMM",
@@ -218,7 +298,12 @@
     "d MMMM 'de' y",
     "EEE d",
     "EEE d/M",
-    "d/M"
+    "d/M",
+    "LLL y",
+    "EEEE, d MMMM 'de' y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "cs":   [
     "EEE d. MMM",
@@ -231,7 +316,12 @@
     "d. MMMM y",
     "EEE d.",
     "EEE dd.MM.",
-    "dd.MM."
+    "dd.MM.",
+    "LLLL y",
+    "EEEE d. MMMM y",
+    "EEEE d. MMMM",
+    "LLL",
+    "cccc"
   ],
   "da":   [
     "EEE 'd'. d. MMM",
@@ -244,7 +334,12 @@
     "d. MMMM y",
     "EEE 'd'. d.",
     "EEE dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE 'den' d. MMMM y",
+    "EEEE 'd'. d. MMMM",
+    "MMM",
+    "cccc"
   ],
   "de":   [
     "EEE, d. MMM",
@@ -257,7 +352,12 @@
     "d. MMMM y",
     "EEE, d.",
     "EEE, d.M.",
-    "d.M."
+    "d.M.",
+    "MMM y",
+    "EEEE, d. MMMM y",
+    "EEEE, d. MMMM",
+    "LLL",
+    "cccc"
   ],
   "el":   [
     "EEE, d MMM",
@@ -270,7 +370,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "LLL y",
+    "EEEE d MMMM y",
+    "EEEE d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en":   [
     "EEE, MMM d",
@@ -283,7 +388,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-AF":   [
     "EEE, MMM d",
@@ -296,7 +406,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-AG":   [
     "EEE, d MMM",
@@ -309,7 +424,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-AI":   [
     "EEE, d MMM",
@@ -322,7 +442,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-AL":   [
     "EEE, MMM d",
@@ -335,7 +460,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-AM":   [
     "EEE, MMM d",
@@ -348,7 +478,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-AS":   [
     "EEE, MMM d",
@@ -361,7 +496,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-AT":   [
     "EEE, d MMM",
@@ -374,7 +514,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-AU":   [
     "EEE, d MMM",
@@ -387,7 +532,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE d MMMM y",
+    "EEEE d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-BB":   [
     "EEE, d MMM",
@@ -400,7 +550,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-BE":   [
     "EEE, d MMM",
@@ -413,7 +568,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-BI":   [
     "EEE, MMM d",
@@ -426,7 +586,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-BM":   [
     "EEE, d MMM",
@@ -439,7 +604,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-BS":   [
     "EEE, d MMM",
@@ -452,7 +622,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-BW":   [
     "EEE, dd MMM",
@@ -465,7 +640,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, dd MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-BZ":   [
     "EEE, dd MMM",
@@ -478,7 +658,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, dd MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-CA":   [
     "EEE, MMM d",
@@ -491,7 +676,12 @@
     "MMMM d, y",
     "EEE d",
     "EEE, MM-dd",
-    "MM-dd"
+    "MM-dd",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-CC":   [
     "EEE, d MMM",
@@ -504,7 +694,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-CH":   [
     "EEE, d MMM",
@@ -517,7 +712,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-CK":   [
     "EEE, d MMM",
@@ -530,7 +730,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-CM":   [
     "EEE, d MMM",
@@ -543,7 +748,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-CX":   [
     "EEE, d MMM",
@@ -556,7 +766,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-CY":   [
     "EEE, d MMM",
@@ -569,7 +784,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-DE":   [
     "EEE, d MMM",
@@ -582,7 +802,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-DG":   [
     "EEE, d MMM",
@@ -595,7 +820,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-DK":   [
     "EEE, d MMM",
@@ -608,7 +838,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-DM":   [
     "EEE, d MMM",
@@ -621,7 +856,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-ER":   [
     "EEE, d MMM",
@@ -634,7 +874,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-FI":   [
     "EEE, d MMM",
@@ -647,7 +892,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-FJ":   [
     "EEE, d MMM",
@@ -660,7 +910,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-FK":   [
     "EEE, d MMM",
@@ -673,7 +928,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-FM":   [
     "EEE, d MMM",
@@ -686,7 +946,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-GB":   [
     "EEE, d MMM",
@@ -699,7 +964,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE d MMMM y",
+    "EEEE d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-GD":   [
     "EEE, d MMM",
@@ -712,7 +982,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-GG":   [
     "EEE, d MMM",
@@ -725,7 +1000,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-GH":   [
     "EEE, d MMM",
@@ -738,7 +1018,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-GI":   [
     "EEE, d MMM",
@@ -751,7 +1036,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-GM":   [
     "EEE, d MMM",
@@ -764,7 +1054,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-GU":   [
     "EEE, MMM d",
@@ -777,7 +1072,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-GY":   [
     "EEE, d MMM",
@@ -790,7 +1090,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-HK":   [
     "EEE, d MMM",
@@ -803,7 +1108,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-IE":   [
     "EEE, d MMM",
@@ -816,7 +1126,12 @@
     "d MMMM y",
     "EEE d",
     "EEE dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-IL":   [
     "EEE, d MMM",
@@ -829,7 +1144,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-IM":   [
     "EEE, d MMM",
@@ -842,7 +1162,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-IN":   [
     "EEE, d MMM",
@@ -855,7 +1180,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE d MMMM, y",
+    "EEEE d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-IO":   [
     "EEE, d MMM",
@@ -868,7 +1198,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-IR":   [
     "EEE, MMM d",
@@ -881,7 +1216,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-IS":   [
     "EEE, MMM d",
@@ -894,7 +1234,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-JE":   [
     "EEE, d MMM",
@@ -907,7 +1252,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-JM":   [
     "EEE, d MMM",
@@ -920,7 +1270,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-KE":   [
     "EEE, d MMM",
@@ -933,7 +1288,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-KI":   [
     "EEE, d MMM",
@@ -946,7 +1306,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-KN":   [
     "EEE, d MMM",
@@ -959,7 +1324,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-KY":   [
     "EEE, d MMM",
@@ -972,7 +1342,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-LC":   [
     "EEE, d MMM",
@@ -985,7 +1360,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-LR":   [
     "EEE, d MMM",
@@ -998,7 +1378,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-LS":   [
     "EEE, d MMM",
@@ -1011,7 +1396,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-MG":   [
     "EEE, d MMM",
@@ -1024,7 +1414,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-MH":   [
     "EEE, MMM d",
@@ -1037,7 +1432,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-MO":   [
     "EEE, d MMM",
@@ -1050,7 +1450,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-MP":   [
     "EEE, MMM d",
@@ -1063,7 +1468,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-MS":   [
     "EEE, d MMM",
@@ -1076,7 +1486,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-MT":   [
     "EEE, d MMM",
@@ -1089,7 +1504,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-MU":   [
     "EEE, d MMM",
@@ -1102,7 +1522,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-MV":   [
     "EEE, MMM d",
@@ -1115,7 +1540,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-MW":   [
     "EEE, d MMM",
@@ -1128,7 +1558,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-MY":   [
     "EEE, d MMM",
@@ -1141,7 +1576,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-NA":   [
     "EEE, d MMM",
@@ -1154,7 +1594,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-NF":   [
     "EEE, d MMM",
@@ -1167,7 +1612,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-NG":   [
     "EEE, d MMM",
@@ -1180,7 +1630,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-NL":   [
     "EEE, d MMM",
@@ -1193,7 +1648,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-NR":   [
     "EEE, d MMM",
@@ -1206,7 +1666,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-NU":   [
     "EEE, d MMM",
@@ -1219,7 +1684,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-NZ":   [
     "EEE, d MMM",
@@ -1232,7 +1702,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, d/MM",
-    "d/MM"
+    "d/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-PG":   [
     "EEE, d MMM",
@@ -1245,7 +1720,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-PH":   [
     "EEE, d MMM",
@@ -1258,7 +1738,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-PK":   [
     "EEE, d MMM",
@@ -1271,7 +1756,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-PN":   [
     "EEE, d MMM",
@@ -1284,7 +1774,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-PR":   [
     "EEE, MMM d",
@@ -1297,7 +1792,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-PW":   [
     "EEE, d MMM",
@@ -1310,7 +1810,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-Qaag":   [
     "EEE, d MMM",
@@ -1323,7 +1828,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE d MMMM y",
+    "EEEE d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-RW":   [
     "EEE, d MMM",
@@ -1336,7 +1846,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-SB":   [
     "EEE, d MMM",
@@ -1349,7 +1864,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-SC":   [
     "EEE, d MMM",
@@ -1362,7 +1882,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-SD":   [
     "EEE, d MMM",
@@ -1375,7 +1900,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-SE":   [
     "EEE, d MMM",
@@ -1388,7 +1918,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-SG":   [
     "EEE, d MMM",
@@ -1401,7 +1936,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-SH":   [
     "EEE, d MMM",
@@ -1414,7 +1954,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-SI":   [
     "EEE, d MMM",
@@ -1427,7 +1972,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-SL":   [
     "EEE, d MMM",
@@ -1440,7 +1990,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-SS":   [
     "EEE, d MMM",
@@ -1453,7 +2008,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-SX":   [
     "EEE, d MMM",
@@ -1466,7 +2026,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-SZ":   [
     "EEE, d MMM",
@@ -1479,7 +2044,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-TC":   [
     "EEE, d MMM",
@@ -1492,7 +2062,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-TJ":   [
     "EEE, MMM d",
@@ -1505,7 +2080,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-TK":   [
     "EEE, d MMM",
@@ -1518,7 +2098,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-TM":   [
     "EEE, MMM d",
@@ -1531,7 +2116,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-TO":   [
     "EEE, d MMM",
@@ -1544,7 +2134,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-TT":   [
     "EEE, d MMM",
@@ -1557,7 +2152,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-TV":   [
     "EEE, d MMM",
@@ -1570,7 +2170,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-TZ":   [
     "EEE, d MMM",
@@ -1583,7 +2188,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-UG":   [
     "EEE, d MMM",
@@ -1596,7 +2206,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-UM":   [
     "EEE, MMM d",
@@ -1609,7 +2224,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-US":   [
     "EEE, MMM d",
@@ -1622,7 +2242,12 @@
     "MMMM d, y",
     "EEE d",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-VC":   [
     "EEE, d MMM",
@@ -1635,7 +2260,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-VG":   [
     "EEE, d MMM",
@@ -1648,7 +2278,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-VI":   [
     "EEE, MMM d",
@@ -1661,7 +2296,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "en-VU":   [
     "EEE, d MMM",
@@ -1674,7 +2314,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-WS":   [
     "EEE, d MMM",
@@ -1687,7 +2332,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-ZA":   [
     "EEE, dd MMM",
@@ -1700,7 +2350,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, MM/dd",
-    "MM/dd"
+    "MM/dd",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, dd MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-ZM":   [
     "EEE, d MMM",
@@ -1713,7 +2368,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "en-ZW":   [
     "EEE, dd MMM",
@@ -1726,7 +2386,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, dd MMMM",
+    "LLL",
+    "cccc"
   ],
   "es":   [
     "EEE, d MMM",
@@ -1739,7 +2404,12 @@
     "d 'de' MMMM 'de' y",
     "EEE d",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d 'de' MMMM 'de' y",
+    "EEEE, d 'de' MMMM",
+    "LLL",
+    "cccc"
   ],
   "es-AR":   [
     "EEE, d MMM",
@@ -1752,7 +2422,12 @@
     "d 'de' MMMM 'de' y",
     "EEE d",
     "EEE d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d 'de' MMMM 'de' y",
+    "EEEE, d 'de' MMMM",
+    "LLL",
+    "cccc"
   ],
   "es-CL":   [
     "EEE, d MMM",
@@ -1765,7 +2440,12 @@
     "d 'de' MMMM 'de' y",
     "EEE d",
     "EEE, dd-MM",
-    "dd-MM"
+    "dd-MM",
+    "MMM y",
+    "EEEE, d 'de' MMMM 'de' y",
+    "EEEE, d 'de' MMMM",
+    "LLL",
+    "cccc"
   ],
   "es-MX":   [
     "EEE d 'de' MMM",
@@ -1778,7 +2458,12 @@
     "d 'de' MMMM 'de' y",
     "EEE d",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d 'de' MMMM 'de' y",
+    "EEEE, d 'de' MMMM",
+    "LLL",
+    "cccc"
   ],
   "es-PA":   [
     "EEE, d MMM",
@@ -1791,7 +2476,12 @@
     "d 'de' MMMM 'de' y",
     "EEE d",
     "EEE, MM/dd",
-    "MM/dd"
+    "MM/dd",
+    "MMM y",
+    "EEEE, d 'de' MMMM 'de' y",
+    "EEEE, d 'de' MMMM",
+    "LLL",
+    "cccc"
   ],
   "es-PR":   [
     "EEE, d MMM",
@@ -1804,7 +2494,12 @@
     "d 'de' MMMM 'de' y",
     "EEE d",
     "EEE, MM/dd",
-    "MM/dd"
+    "MM/dd",
+    "MMM y",
+    "EEEE, d 'de' MMMM 'de' y",
+    "EEEE, d 'de' MMMM",
+    "LLL",
+    "cccc"
   ],
   "es-US":   [
     "EEE, d 'de' MMM",
@@ -1817,7 +2512,12 @@
     "d 'de' MMMM 'de' y",
     "EEE d",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d 'de' MMMM 'de' y",
+    "EEEE, d 'de' MMMM",
+    "LLL",
+    "cccc"
   ],
   "et":   [
     "EEE, d. MMM",
@@ -1830,7 +2530,12 @@
     "d. MMMM y",
     "EEE, d",
     "EEE, d.M",
-    "d.M"
+    "d.M",
+    "MMM y",
+    "EEEE, d. MMMM y",
+    "EEEE, d. MMMM",
+    "MMMM",
+    "cccc"
   ],
   "eu":   [
     "MMM d'a', EEE",
@@ -1843,7 +2548,12 @@
     "y('e')'ko' MMMM'ren' d'a'",
     "d, EEE",
     "M/d, EEE",
-    "M/d"
+    "M/d",
+    "y MMM",
+    "y('e')'ko' MMMM'ren' d'a', EEEE",
+    "MMMM d'a', EEEE",
+    "LLL",
+    "cccc"
   ],
   "fa":   [
     "EEE d LLL",
@@ -1856,7 +2566,12 @@
     "d MMMM y",
     "EEE d",
     "EEE M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE d MMMM y",
+    "EEEE d LLLL",
+    "LLL",
+    "cccc"
   ],
   "fa-AF":   [
     "EEE, MMM d",
@@ -1869,7 +2584,12 @@
     "d MMMM y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE d MMMM y",
+    "EEEE d LLLL",
+    "LLL",
+    "cccc"
   ],
   "fa-Latn":   [
     "EEE d LLL",
@@ -1882,7 +2602,12 @@
     "d MMMM y",
     "EEE d",
     "EEE M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "fi":   [
     "ccc d. MMM",
@@ -1895,7 +2620,12 @@
     "d. MMMM y",
     "EEE d.",
     "EEE d.M.",
-    "d.M."
+    "d.M.",
+    "LLL y",
+    "EEEE d. MMMM y",
+    "cccc d. MMMM",
+    "LLL",
+    "cccc"
   ],
   "fr":   [
     "EEE d MMM",
@@ -1908,7 +2638,12 @@
     "d MMMM y",
     "EEE d",
     "EEE dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM y",
+    "EEEE d MMMM y",
+    "EEEE d MMMM",
+    "LLL",
+    "EEEE"
   ],
   "fr-CA":   [
     "EEE d MMM",
@@ -1921,7 +2656,12 @@
     "d MMMM y",
     "EEE d",
     "EEE M-d",
-    "M-d"
+    "M-d",
+    "MMM y",
+    "EEEE d MMMM y",
+    "EEEE d MMMM",
+    "LLL",
+    "EEEE"
   ],
   "fr-CH":   [
     "EEE d MMM",
@@ -1934,7 +2674,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd.MM.",
-    "dd.MM."
+    "dd.MM.",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE d MMMM",
+    "LLL",
+    "EEEE"
   ],
   "gl":   [
     "ccc, d MMM",
@@ -1947,7 +2692,12 @@
     "d 'de' MMMM 'de' y",
     "EEE d",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "LLL y",
+    "EEEE, d 'de' MMMM 'de' y",
+    "cccc, d 'de' MMMM",
+    "LLL",
+    "cccc"
   ],
   "gu":   [
     "EEE, d MMM",
@@ -1960,7 +2710,12 @@
     "d MMMM, y",
     "EEE d",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM, y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "hi":   [
     "EEE, d MMM",
@@ -1973,7 +2728,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "hr":   [
     "EEE, d. MMM",
@@ -1986,7 +2746,12 @@
     "d. MMMM y.",
     "EEE, d.",
     "EEE, dd. MM.",
-    "dd. MM."
+    "dd. MM.",
+    "LLL y.",
+    "EEEE, d. MMMM y.",
+    "EEEE, d. MMMM",
+    "LLL",
+    "cccc"
   ],
   "hu":   [
     "MMM d., EEE",
@@ -1999,7 +2764,12 @@
     "y. MMMM d.",
     "d., EEE",
     "M. d., EEE",
-    "MM. dd."
+    "MM. dd.",
+    "y. MMM",
+    "y. MMMM d., EEEE",
+    "MMMM d., EEEE",
+    "LLL",
+    "cccc"
   ],
   "in":   [
     "EEE, d MMM",
@@ -2012,7 +2782,12 @@
     "d MMMM y",
     "EEE, d",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "it":   [
     "EEE d MMM",
@@ -2025,7 +2800,12 @@
     "d MMMM y",
     "EEE d",
     "EEE d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE d MMMM y",
+    "EEEE d MMMM",
+    "LLL",
+    "cccc"
   ],
   "it-CH":   [
     "EEE d MMM",
@@ -2038,7 +2818,12 @@
     "d MMMM y",
     "EEE d",
     "EEE d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE d MMMM",
+    "LLL",
+    "cccc"
   ],
   "iw":   [
     "EEE, d בMMM",
@@ -2051,7 +2836,12 @@
     "d בMMMM y",
     "EEE ה-d",
     "EEE, d.M",
-    "d.M"
+    "d.M",
+    "MMM y",
+    "EEEE, d בMMMM y",
+    "EEEE, d בMMMM",
+    "LLL",
+    "cccc"
   ],
   "ja":   [
     "M月d日(EEE)",
@@ -2064,7 +2854,12 @@
     "y年M月d日",
     "d日(EEE)",
     "MM/dd(EEE)",
-    "M/d"
+    "M/d",
+    "y年M月",
+    "y年M月d日EEEE",
+    "M月d日EEEE",
+    "M月",
+    "cccc"
   ],
   "jv":   [
     "EEE, d MMM",
@@ -2077,7 +2872,12 @@
     "d MMMM, y",
     "d EEE",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM, y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "jv-Latn":   [
     "EEE, d MMM",
@@ -2090,7 +2890,12 @@
     "d MMMM, y",
     "d EEE",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM, y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "ka":   [
     "EEE, d MMM",
@@ -2103,7 +2908,12 @@
     "d MMMM, y",
     "d EEE",
     "EEE, d.M",
-    "d.M"
+    "d.M",
+    "MMM, y",
+    "EEEE, d MMMM, y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "kk":   [
     "d MMM, EEE",
@@ -2116,7 +2926,12 @@
     "y 'ж'. d MMMM",
     "d, EEE",
     "dd.MM, EEE",
-    "dd.MM"
+    "dd.MM",
+    "y 'ж'. MMM",
+    "y 'ж'. d MMMM, EEEE",
+    "d MMMM, EEEE",
+    "LLL",
+    "cccc"
   ],
   "km":   [
     "EEE d MMM",
@@ -2129,7 +2944,12 @@
     "ថ្ងៃទីd MMMM ឆ្នាំy",
     "d EEE",
     "EEE d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE ទីd MMMM ឆ្នាំy",
+    "EEEE ទីd MMMM",
+    "LLL",
+    "cccc"
   ],
   "kn":   [
     "d MMM, EEE",
@@ -2142,7 +2962,12 @@
     "d MMMM y",
     "d EEE",
     "d/M, EEE",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "d MMMM y, EEEE",
+    "d MMMM, EEEE",
+    "LLL",
+    "cccc"
   ],
   "ko":   [
     "MMM d일 (EEE)",
@@ -2155,7 +2980,12 @@
     "y년 MMMM d일",
     "d일 (EEE)",
     "M. d. (EEE)",
-    "M. d."
+    "M. d.",
+    "y년 MMM",
+    "y년 MMMM d일 EEEE",
+    "MMMM d일 EEEE",
+    "LLL",
+    "cccc"
   ],
   "lo":   [
     "EEE d MMM",
@@ -2168,7 +2998,12 @@
     "d MMMM y",
     "EEE, d",
     "EEE d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE ທີ d MMMM y",
+    "EEEE ທີ d MMMM",
+    "LLL",
+    "cccc"
   ],
   "lt":   [
     "MMM d 'd'., EEE",
@@ -2181,7 +3016,12 @@
     "y 'm'. MMMM d 'd'.",
     "d, EEE",
     "MM-dd, EEE",
-    "MM-dd"
+    "MM-dd",
+    "y 'm'. LLL",
+    "y 'm'. MMMM d 'd'., EEEE",
+    "MMMM d 'd'., EEEE",
+    "LLL",
+    "cccc"
   ],
   "lv":   [
     "EEE, d. MMM",
@@ -2194,7 +3034,12 @@
     "y. 'gada' d. MMMM",
     "EEE, d.",
     "EEE, dd.MM.",
-    "dd.MM."
+    "dd.MM.",
+    "y. 'gada' MMM",
+    "EEEE, y. 'gada' d. MMMM",
+    "EEEE, d. MMMM",
+    "LLL",
+    "cccc"
   ],
   "mai":   [
     "EEE, d MMM",
@@ -2207,7 +3052,12 @@
     "d MMMM y",
     "d EEE",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "mai-Deva":   [
     "EEE, d MMM",
@@ -2220,7 +3070,12 @@
     "d MMMM y",
     "d EEE",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "mi":   [
     "EEE, 'te' d 'o' MMM",
@@ -2233,7 +3088,12 @@
     "d 'o' MMMM, y",
     "d EEE",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "mk":   [
     "EEE, d MMM",
@@ -2246,7 +3106,12 @@
     "d MMMM y",
     "d EEE",
     "EEE, d.M",
-    "d.M"
+    "d.M",
+    "MMM y 'г'.",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "ml":   [
     "MMM d, EEE",
@@ -2259,7 +3124,12 @@
     "y, MMMM d",
     "d, EEE",
     "d/M, EEE",
-    "d/M"
+    "d/M",
+    "y MMM",
+    "y, MMMM d, EEEE",
+    "MMMM d, EEEE",
+    "LLL",
+    "cccc"
   ],
   "mn":   [
     "EEE, MMM d",
@@ -2272,7 +3142,12 @@
     "y 'оны' MMMM d 'өдөр'",
     "dd. EEE",
     "EEE, M-d",
-    "M-d"
+    "M-d",
+    "y 'оны' LLL",
+    "y 'оны' MMMM d 'өдөр', EEEE",
+    "MMMM d 'өдөр', EEEE",
+    "LLL",
+    "cccc"
   ],
   "mr":   [
     "EEE, d MMM",
@@ -2285,7 +3160,12 @@
     "d MMMM, y",
     "d EEE",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM, y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "ms":   [
     "EEE, d MMM",
@@ -2298,7 +3178,12 @@
     "d MMMM y",
     "d EEE",
     "EEE, d/MM",
-    "d/MM"
+    "d/MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "my":   [
     "EEEနေ့၊ MMMလ d ရက်",
@@ -2311,7 +3196,12 @@
     "y ခုနှစ် MMMMလ d ရက်",
     "EEE, d",
     "EEEနေ့၊ MM/dd",
-    "MM/dd"
+    "MM/dd",
+    "yyyy ခုနှစ် MMMMလ",
+    "y ခုနှစ် MMMMလ d ရက်၊ EEEEနေ့",
+    "EEEEနေ့၊ MMMMလ d ရက်",
+    "LLL",
+    "cccc"
   ],
   "my-Qaag":   [
     "EEEေန႔၊ MMMလ d ရက္",
@@ -2324,7 +3214,12 @@
     "y ခုႏွစ္ MMMMလ d ရက္",
     "EEE, d",
     "EEEေန႔၊ MM/dd",
-    "MM/dd"
+    "MM/dd",
+    "y ခုႏွစ္ MMMလ",
+    "EEEEေန႔၊ y ခုႏွစ္ MMMMလ d ရက္",
+    "EEEEေန႔၊ MMMMလ d ရက္",
+    "LLL",
+    "cccc"
   ],
   "nb":   [
     "EEE d. MMM",
@@ -2337,7 +3232,12 @@
     "d. MMMM y",
     "EEE d.",
     "EEE dd.MM.",
-    "dd.MM."
+    "dd.MM.",
+    "MMM y",
+    "EEEE d. MMMM y",
+    "EEEE d. MMMM",
+    "LLL",
+    "cccc"
   ],
   "ne":   [
     "MMM d, EEE",
@@ -2350,7 +3250,12 @@
     "y MMMM d",
     "d EEE",
     "MM-dd, EEE",
-    "MM-dd"
+    "MM-dd",
+    "y MMM",
+    "y MMMM d, EEEE",
+    "MMMM d, EEEE",
+    "LLL",
+    "cccc"
   ],
   "nl":   [
     "EEE d MMM",
@@ -2363,7 +3268,12 @@
     "d MMMM y",
     "EEE d",
     "EEE dd-MM",
-    "dd-MM"
+    "dd-MM",
+    "MMM y",
+    "EEEE d MMMM y",
+    "EEEE d MMMM",
+    "LLL",
+    "cccc"
   ],
   "nl-BE":   [
     "EEE d MMM",
@@ -2376,7 +3286,12 @@
     "d MMMM y",
     "EEE d",
     "EEE d/MM",
-    "d/MM"
+    "d/MM",
+    "MMM y",
+    "EEEE d MMMM y",
+    "EEEE d MMMM",
+    "LLL",
+    "cccc"
   ],
   "or":   [
     "EEE, d MMM",
@@ -2389,7 +3304,12 @@
     "d MMMM y",
     "d EEE",
     "EEE, d-M",
-    "d-M"
+    "d-M",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "pa":   [
     "EEE, d MMM",
@@ -2402,7 +3322,12 @@
     "d MMMM y",
     "d, EEE",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "pa-Guru":   [
     "EEE, d MMM",
@@ -2415,7 +3340,12 @@
     "d MMMM y",
     "d, EEE",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "pa-PK":   [
     "MMM d, EEE",
@@ -2428,7 +3358,12 @@
     "d MMMM y",
     "d, EEE",
     "MM-dd, EEE",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "MMMM d, EEEE",
+    "LLL",
+    "cccc"
   ],
   "pl":   [
     "EEE, d MMM",
@@ -2441,7 +3376,12 @@
     "d MMMM y",
     "EEE, d",
     "EEE, d.MM",
-    "d.MM"
+    "d.MM",
+    "LLL y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "pt":   [
     "EEE, d 'de' MMM",
@@ -2454,7 +3394,12 @@
     "d 'de' MMMM 'de' y",
     "EEE, d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM 'de' y",
+    "EEEE, d 'de' MMMM 'de' y",
+    "EEEE, d 'de' MMMM",
+    "LLL",
+    "cccc"
   ],
   "pt-AO":   [
     "EEE, d/MM",
@@ -2467,7 +3412,12 @@
     "d 'de' MMMM 'de' y",
     "EEE, d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM 'de' y",
+    "EEEE, d 'de' MMMM 'de' y",
+    "cccc, d 'de' MMMM",
+    "LLL",
+    "cccc"
   ],
   "pt-CV":   [
     "EEE, d/MM",
@@ -2480,7 +3430,12 @@
     "d 'de' MMMM 'de' y",
     "EEE, d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM 'de' y",
+    "EEEE, d 'de' MMMM 'de' y",
+    "cccc, d 'de' MMMM",
+    "LLL",
+    "cccc"
   ],
   "pt-GW":   [
     "EEE, d/MM",
@@ -2493,7 +3448,12 @@
     "d 'de' MMMM 'de' y",
     "EEE, d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM 'de' y",
+    "EEEE, d 'de' MMMM 'de' y",
+    "cccc, d 'de' MMMM",
+    "LLL",
+    "cccc"
   ],
   "pt-MO":   [
     "EEE, d/MM",
@@ -2506,7 +3466,12 @@
     "d 'de' MMMM 'de' y",
     "EEE, d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM 'de' y",
+    "EEEE, d 'de' MMMM 'de' y",
+    "cccc, d 'de' MMMM",
+    "LLL",
+    "cccc"
   ],
   "pt-MZ":   [
     "EEE, d/MM",
@@ -2519,7 +3484,12 @@
     "d 'de' MMMM 'de' y",
     "EEE, d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM 'de' y",
+    "EEEE, d 'de' MMMM 'de' y",
+    "cccc, d 'de' MMMM",
+    "LLL",
+    "cccc"
   ],
   "pt-PT":   [
     "EEE, d/MM",
@@ -2532,7 +3502,12 @@
     "d 'de' MMMM 'de' y",
     "EEE, d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM 'de' y",
+    "EEEE, d 'de' MMMM 'de' y",
+    "cccc, d 'de' MMMM",
+    "LLL",
+    "cccc"
   ],
   "pt-ST":   [
     "EEE, d/MM",
@@ -2545,7 +3520,12 @@
     "d 'de' MMMM 'de' y",
     "EEE, d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM 'de' y",
+    "EEEE, d 'de' MMMM 'de' y",
+    "cccc, d 'de' MMMM",
+    "LLL",
+    "cccc"
   ],
   "pt-TL":   [
     "EEE, d/MM",
@@ -2558,7 +3538,12 @@
     "d 'de' MMMM 'de' y",
     "EEE, d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM 'de' y",
+    "EEEE, d 'de' MMMM 'de' y",
+    "cccc, d 'de' MMMM",
+    "LLL",
+    "cccc"
   ],
   "ro":   [
     "EEE, d MMM",
@@ -2571,7 +3556,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, dd.MM",
-    "dd.MM"
+    "dd.MM",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "ru":   [
     "ccc, d MMM",
@@ -2584,7 +3574,12 @@
     "d MMMM y 'г'.",
     "ccc, d",
     "EEE, dd.MM",
-    "dd.MM"
+    "dd.MM",
+    "LLL y 'г'.",
+    "EEEE, d MMMM y 'г'.",
+    "cccc, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "ru-UA":   [
     "ccc, d MMM",
@@ -2597,7 +3592,12 @@
     "d MMMM y 'г'.",
     "ccc, d",
     "EEE, dd.MM",
-    "dd.MM"
+    "dd.MM",
+    "LLL y 'г'.",
+    "EEEE, d MMMM y 'г'.",
+    "cccc, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "si":   [
     "MMM d, EEE",
@@ -2610,7 +3610,12 @@
     "y MMMM d",
     "d EEE",
     "MM-dd, EEE",
-    "MM-dd"
+    "MM-dd",
+    "y MMM",
+    "y MMMM d, EEEE",
+    "MMMM d, EEEE",
+    "LLL",
+    "cccc"
   ],
   "sk":   [
     "EEE, d. MMM",
@@ -2623,7 +3628,12 @@
     "d. MMMM y",
     "EEE d.",
     "EEE d. M.",
-    "d. M."
+    "d. M.",
+    "LLL y",
+    "EEEE, d. MMMM y",
+    "EEEE, d. MMMM",
+    "LLL",
+    "cccc"
   ],
   "sl":   [
     "EEE, d. MMM",
@@ -2636,7 +3646,12 @@
     "d. MMMM y",
     "EEE, d.",
     "EEE, d. M.",
-    "d. M."
+    "d. M.",
+    "MMM y",
+    "EEEE, d. MMMM y",
+    "EEEE, d. MMMM",
+    "LLL",
+    "cccc"
   ],
   "sr":   [
     "EEE d. MMM",
@@ -2649,7 +3664,12 @@
     "d. MMMM y.",
     "EEE d.",
     "EEE, d.M.",
-    "d.M."
+    "d.M.",
+    "MMM y.",
+    "EEEE, d. MMMM y.",
+    "EEEE, d. MMMM",
+    "LLL",
+    "EEEE"
   ],
   "sr-Cyrl":   [
     "EEE d. MMM",
@@ -2662,7 +3682,12 @@
     "d. MMMM y.",
     "EEE d.",
     "EEE, d.M.",
-    "d.M."
+    "d.M.",
+    "MMM y.",
+    "EEEE, d. MMMM y.",
+    "EEEE, d. MMMM",
+    "LLL",
+    "EEEE"
   ],
   "sr-Latn":   [
     "EEE, dd. MMM",
@@ -2675,7 +3700,12 @@
     "d. MMMM y.",
     "EEE d.",
     "EEE, d.M.",
-    "d.M."
+    "d.M.",
+    "MMM y.",
+    "EEEE, d. MMMM y.",
+    "EEEE, d. MMMM",
+    "LLL",
+    "EEEE"
   ],
   "sv":   [
     "EEE d MMM",
@@ -2688,7 +3718,12 @@
     "d MMMM y",
     "EEE d",
     "EEE MM-dd",
-    "MM-dd"
+    "MM-dd",
+    "MMM y",
+    "EEEE d MMMM y",
+    "EEEE d MMMM",
+    "LLL",
+    "cccc"
   ],
   "sv-FI":   [
     "EEE d MMM",
@@ -2701,7 +3736,12 @@
     "d MMMM y",
     "EEE d",
     "EEE d.M",
-    "d.M"
+    "d.M",
+    "MMM y",
+    "EEEE d MMMM y",
+    "EEEE d MMMM",
+    "LLL",
+    "cccc"
   ],
   "sw":   [
     "EEE, d MMM",
@@ -2714,7 +3754,12 @@
     "d MMMM y",
     "EEE d",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "ta":   [
     "EEE, d MMM",
@@ -2727,7 +3772,12 @@
     "d MMMM, y",
     "d EEE",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEE, d MMMM, y",
+    "MMMM d, EEEE",
+    "LLL",
+    "cccc"
   ],
   "te":   [
     "EEE, d MMM",
@@ -2740,7 +3790,12 @@
     "d MMMM, y",
     "d, EEE",
     "EEE, dd-MM",
-    "dd-MM"
+    "dd-MM",
+    "MMM y",
+    "EEEE, d MMMM, y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "th":   [
     "EEE d MMM",
@@ -2753,7 +3808,12 @@
     "d MMMM G y",
     "EEE d",
     "EEE d/M",
-    "d/M"
+    "d/M",
+    "MMM y",
+    "EEEEที่ d MMMM y",
+    "EEEEที่ d MMMM",
+    "LLL",
+    "cccc"
   ],
   "tl":   [
     "EEE, MMM d",
@@ -2766,7 +3826,12 @@
     "MMMM d, y",
     "d EEE",
     "EEE, M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "tr":   [
     "d MMMM EEE",
@@ -2779,7 +3844,12 @@
     "d MMMM y",
     "d EEE",
     "d.MM EEE",
-    "d.MM"
+    "d.MM",
+    "MMM y",
+    "d MMMM y EEEE",
+    "d MMMM EEEE",
+    "LLL",
+    "cccc"
   ],
   "ug":   [
     "d-MMM، EEE",
@@ -2792,7 +3862,12 @@
     "y، d-MMMM",
     "d EEE",
     "M/d، EEE",
-    "M/d"
+    "M/d",
+    "y MMM",
+    "y-يىلى M-ئاينىڭ d-كۈنى EEEE",
+    "M-ئاينىڭ d-كۈنى EEEE",
+    "LLL",
+    "cccc"
   ],
   "uk":   [
     "EEE, d MMM",
@@ -2805,7 +3880,12 @@
     "d MMMM y 'р'.",
     "EEE, d",
     "EEE, dd.MM",
-    "dd.MM"
+    "dd.MM",
+    "LLL y 'р'.",
+    "EEEE, d MMMM y 'р'.",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "ur":   [
     "EEE، d MMM",
@@ -2818,7 +3898,12 @@
     "d MMMM، y",
     "d EEE",
     "EEE، M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE، d MMMM، y",
+    "EEEE، d MMMM",
+    "LLL",
+    "cccc"
   ],
   "ur-Latn":   [
     "EEE، d MMM",
@@ -2831,7 +3916,12 @@
     "d MMMM، y",
     "d EEE",
     "EEE، M/d",
-    "M/d"
+    "M/d",
+    "MMM y",
+    "EEEE, MMMM d, y",
+    "EEEE, MMMM d",
+    "LLL",
+    "cccc"
   ],
   "uz":   [
     "EEE, d-MMM",
@@ -2844,7 +3934,12 @@
     "d-MMMM, y",
     "d, EEE",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM, y",
+    "EEEE, d-MMMM, y",
+    "EEEE, d-MMMM",
+    "LLL",
+    "cccc"
   ],
   "uz-AF":   [
     "MMM d, EEE",
@@ -2857,7 +3952,12 @@
     "y MMMM d",
     "d, EEE",
     "MM-dd, EEE",
-    "MM-dd"
+    "MM-dd",
+    "y MMM",
+    "y MMMM d, EEEE",
+    "MMMM d, EEEE",
+    "LLL",
+    "cccc"
   ],
   "uz-Cyrl":   [
     "EEE, d MMM",
@@ -2870,7 +3970,12 @@
     "d MMMM, y",
     "d, EEE",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM, y",
+    "EEEE, d MMMM, y",
+    "EEEE, d MMMM",
+    "LLL",
+    "cccc"
   ],
   "uz-Latn":   [
     "EEE, d-MMM",
@@ -2883,7 +3988,12 @@
     "d-MMMM, y",
     "d, EEE",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM, y",
+    "EEEE, d-MMMM, y",
+    "EEEE, d-MMMM",
+    "LLL",
+    "cccc"
   ],
   "vi":   [
     "EEE, 'ngày' dd MMM",
@@ -2896,7 +4006,12 @@
     "d MMMM, y",
     "EEE, 'ngày' d",
     "EEE, dd/MM",
-    "dd/MM"
+    "dd/MM",
+    "MMM 'năm' y",
+    "EEEE, 'ngày' d MMMM 'năm' y",
+    "EEEE, 'ngày' dd MMMM",
+    "LLL",
+    "cccc"
   ],
   "zh":   [
     "M月d日EEE",
@@ -2909,7 +4024,12 @@
     "y年M月d日",
     "d日EEE",
     "M/dEEE",
-    "M/d"
+    "M/d",
+    "y年M月",
+    "y年M月d日EEEE",
+    "M月d日EEEE",
+    "LLL",
+    "cccc"
   ],
   "zh-Hans":   [
     "M月d日EEE",
@@ -2922,7 +4042,12 @@
     "y年M月d日",
     "d日EEE",
     "M/dEEE",
-    "M/d"
+    "M/d",
+    "y年M月",
+    "y年M月d日EEEE",
+    "M月d日EEEE",
+    "LLL",
+    "cccc"
   ],
   "zh-Hans-HK":   [
     "M月d日EEE",
@@ -2935,7 +4060,12 @@
     "y年M月d日",
     "d日EEE",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "y年M月",
+    "y年M月d日EEEE",
+    "M月d日EEEE",
+    "LLL",
+    "cccc"
   ],
   "zh-Hans-MO":   [
     "M月d日EEE",
@@ -2948,7 +4078,12 @@
     "y年M月d日",
     "d日EEE",
     "EEE, d/M",
-    "d/M"
+    "d/M",
+    "y年M月",
+    "y年M月d日EEEE",
+    "M月d日EEEE",
+    "LLL",
+    "cccc"
   ],
   "zh-Hans-SG":   [
     "M月d日EEE",
@@ -2961,7 +4096,12 @@
     "y年M月d日",
     "d日EEE",
     "dd/MM EEE",
-    "dd/MM"
+    "dd/MM",
+    "y年M月",
+    "y年M月d日EEEE",
+    "M月d日EEEE",
+    "M月",
+    "cccc"
   ],
   "zh-Hant":   [
     "M月d日 EEE",
@@ -2974,7 +4114,12 @@
     "y年M月d日",
     "d日 EEE",
     "M/d（EEE）",
-    "M/d"
+    "M/d",
+    "y 年 M 月",
+    "y 年 M 月 d 日 EEEE",
+    "M 月 d 日 EEEE",
+    "LLL",
+    "cccc"
   ],
   "zh-Hant-HK":   [
     "M月d日 EEE",
@@ -2987,7 +4132,12 @@
     "y年M月d日",
     "d日 EEE",
     "d/M（EEE）",
-    "d/M"
+    "d/M",
+    "y 年 M 月",
+    "y 年 M 月 d 日 EEEE",
+    "M 月 d 日 EEEE",
+    "LLL",
+    "cccc"
   ],
   "zh-Hant-MO":   [
     "M月d日 EEE",
@@ -3000,6 +4150,11 @@
     "y年M月d日",
     "d日 EEE",
     "d/M（EEE）",
-    "d/M"
+    "d/M",
+    "y 年 M 月",
+    "y 年 M 月 d 日 EEEE",
+    "M 月 d 日 EEEE",
+    "LLL",
+    "cccc"
   ]
 }

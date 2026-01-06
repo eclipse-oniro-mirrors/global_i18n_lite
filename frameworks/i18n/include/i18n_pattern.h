@@ -17,6 +17,7 @@
 #define GLOBAL_I18N_PATTERN_H
 
 #include <string>
+#include <unordered_map>
 #include "date_time_data.h"
 #include "str_util.h"
 
@@ -35,6 +36,11 @@
 #define WEEK_DAY_INDEX                          0x00010008
 #define NUMBER_MONTH_ABBR_WEEK_DAY_INDEX        0x00010009
 #define NUMBER_MONTH_DAY_INDEX                  0x0001000A
+#define YEAR_ABBR_MONTH_INDEX                   0x0001000B
+#define YEAR_WIDE_MONTH_WIDE_WEEKDAY_DAY_INDEX  0x0001000C
+#define WIDE_MONTH_WIDE_WEEKDAY_DAY_INDEX       0x0001000D
+#define ABBR_MONTH_INDEX                        0x0001000E
+#define WIDE_WEEKDAY_INDEX                      0x0001000F
 #define HOUR12_MINUTE_SECOND_INDEX              0x00020000
 #define HOUR24_MINUTE_SECOND_INDEX              0x00020001
 #define HOUR_MINUTE_SECOND_INDEX                0x00020002
@@ -57,6 +63,34 @@ enum PatternType {
     FULL_MEDIUM_SHORT_PATTERN,
     ELAPSED_PATTERN,
     PATTERN_TYPE_END,
+};
+
+static const std::unordered_map<AvailableDateTimeFormatPattern, uint32_t> PATTERN_TO_INDEX = {
+    { HOUR12_MINUTE_SECOND, HOUR12_MINUTE_SECOND_INDEX },
+    { HOUR24_MINUTE_SECOND, HOUR24_MINUTE_SECOND_INDEX },
+    { HOUR_MINUTE_SECOND, HOUR_MINUTE_SECOND_INDEX },
+    { ABBR_MONTH_DAY, ABBR_MONTH_DAY_INDEX },
+    { HOUR12_MINUTE, HOUR12_MINUTE_INDEX },
+    { HOUR24_MINUTE, HOUR24_MINUTE_INDEX },
+    { HOUR_MINUTE, HOUR_MINUTE_INDEX },
+    { ABBR_MONTH_WEEKDAY_DAY, ABBR_MONTH_WEEKDAY_DAY_INDEX },
+    { FULL, FULL_INDEX },
+    { MEDIUM, MEDIUM_INDEX },
+    { SHORT, SHORT_INDEX },
+    { YEAR_ABBR_MONTH_ABBR_WEEKDAY_DAY, YEAR_ABBR_MONTH_ABBR_WEEKDAY_DAY_INDEX },
+    { YEAR_WIDE_MONTH_ABBR_WEEKDAY_DAY, YEAR_WIDE_MONTH_ABBR_WEEKDAY_DAY_INDEX },
+    { YEAR_SHORT_MONTH_WIDE_WEEKDAY_DAY, YEAR_SHORT_MONTH_WIDE_WEEKDAY_DAY_INDEX },
+    { YEAR_SHORT_MONTH_ABBR_WEEKDAY_DAY, YEAR_SHORT_MONTH_ABBR_WEEKDAY_DAY_INDEX },
+    { YEAR_ABBR_MONTH_WIDE_WEEKDAY_DAY, YEAR_ABBR_MONTH_WIDE_WEEKDAY_DAY_INDEX },
+    { YEAR_WIDE_MONTH_DAY, YEAR_WIDE_MONTH_DAY_INDEX },
+    { WEEK_DAY, WEEK_DAY_INDEX },
+    { NUMBER_MONTH_ABBR_WEEK_DAY, NUMBER_MONTH_ABBR_WEEK_DAY_INDEX },
+    { NUMBER_MONTH_DAY, NUMBER_MONTH_DAY_INDEX },
+    { YEAR_ABBR_MONTH, YEAR_ABBR_MONTH_INDEX },
+    { YEAR_WIDE_MONTH_WIDE_WEEKDAY_DAY, YEAR_WIDE_MONTH_WIDE_WEEKDAY_DAY_INDEX },
+    { WIDE_MONTH_WIDE_WEEKDAY_DAY, WIDE_MONTH_WIDE_WEEKDAY_DAY_INDEX },
+    { ABBR_MONTH, ABBR_MONTH_INDEX },
+    { WIDE_WEEKDAY, WIDE_WEEKDAY_INDEX }
 };
 
 std::string GetPatternFromIndex(uint32_t index, const DateTimeData * const data)
@@ -86,85 +120,17 @@ std::string GetPatternFromIndex(uint32_t index, const DateTimeData * const data)
     }
 }
 
-std::string GetStringFromPattern2(const AvailableDateTimeFormatPattern &requestPattern, const DateTimeData * const data)
-{
-    switch (requestPattern) {
-        case ABBR_MONTH_WEEKDAY_DAY: {
-            return GetPatternFromIndex(ABBR_MONTH_WEEKDAY_DAY_INDEX, data);
-        }
-        case FULL: {
-            return GetPatternFromIndex(FULL_INDEX, data);
-        }
-        case MEDIUM: {
-            return GetPatternFromIndex(MEDIUM_INDEX, data);
-        }
-        case SHORT: {
-            return GetPatternFromIndex(SHORT_INDEX, data);
-        }
-        case YEAR_ABBR_MONTH_ABBR_WEEKDAY_DAY: {
-            return GetPatternFromIndex(YEAR_ABBR_MONTH_ABBR_WEEKDAY_DAY_INDEX, data);
-        }
-        case YEAR_WIDE_MONTH_ABBR_WEEKDAY_DAY: {
-            return GetPatternFromIndex(YEAR_WIDE_MONTH_ABBR_WEEKDAY_DAY_INDEX, data);
-        }
-        case YEAR_SHORT_MONTH_WIDE_WEEKDAY_DAY: {
-            return GetPatternFromIndex(YEAR_SHORT_MONTH_WIDE_WEEKDAY_DAY_INDEX, data);
-        }
-        case YEAR_SHORT_MONTH_ABBR_WEEKDAY_DAY: {
-            return GetPatternFromIndex(YEAR_SHORT_MONTH_ABBR_WEEKDAY_DAY_INDEX, data);
-        }
-        case YEAR_ABBR_MONTH_WIDE_WEEKDAY_DAY: {
-            return GetPatternFromIndex(YEAR_ABBR_MONTH_WIDE_WEEKDAY_DAY_INDEX, data);
-        }
-        case YEAR_WIDE_MONTH_DAY: {
-            return GetPatternFromIndex(YEAR_WIDE_MONTH_DAY_INDEX, data);
-        }
-        case WEEK_DAY: {
-            return GetPatternFromIndex(WEEK_DAY_INDEX, data);
-        }
-        case NUMBER_MONTH_ABBR_WEEK_DAY: {
-            return GetPatternFromIndex(NUMBER_MONTH_ABBR_WEEK_DAY_INDEX, data);
-        }
-        case NUMBER_MONTH_DAY: {
-            return GetPatternFromIndex(NUMBER_MONTH_DAY_INDEX, data);
-        }
-        default: {
-            return "";
-        }
-    }
-}
-
 std::string GetStringFromPattern(const AvailableDateTimeFormatPattern &requestPattern, const DateTimeData * const data)
 {
     if (data == nullptr) {
         return "";
     }
-    switch (requestPattern) {
-        case HOUR12_MINUTE_SECOND: {
-            return GetPatternFromIndex(HOUR12_MINUTE_SECOND_INDEX, data);
-        }
-        case HOUR24_MINUTE_SECOND: {
-            return GetPatternFromIndex(HOUR24_MINUTE_SECOND_INDEX, data);
-        }
-        case HOUR_MINUTE_SECOND: {
-            return GetPatternFromIndex(HOUR_MINUTE_SECOND_INDEX, data);
-        }
-        case ABBR_MONTH_DAY: {
-            return GetPatternFromIndex(ABBR_MONTH_DAY_INDEX, data);
-        }
-        case HOUR12_MINUTE: {
-            return GetPatternFromIndex(HOUR12_MINUTE_INDEX, data);
-        }
-        case HOUR24_MINUTE: {
-            return GetPatternFromIndex(HOUR24_MINUTE_INDEX, data);
-        }
-        case HOUR_MINUTE: {
-            return GetPatternFromIndex(HOUR_MINUTE_INDEX, data);
-        }
-        default: {
-            return GetStringFromPattern2(requestPattern, data);
-        }
+    
+    auto iter = PATTERN_TO_INDEX.find(requestPattern);
+    if (iter == PATTERN_TO_INDEX.end()) {
+        return "";
     }
+    return GetPatternFromIndex(iter->second, data);
 }
 
 std::string GetStringFromElapsedPattern(const ElapsedPatternType &type, const DateTimeData * const data)
