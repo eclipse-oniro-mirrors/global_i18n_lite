@@ -19,11 +19,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -270,12 +267,14 @@ public class DataFetcher {
         if (!outputDir.exists()) {
             outputDir.mkdirs();
         }
-        try (OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(localesFile), StandardCharsets.UTF_8)) {
+        try (OutputStreamWriter osw = new OutputStreamWriter(
+            new FileOutputStream(localesFile), StandardCharsets.UTF_8)) {
             osw.write(jsonObject.toString(2));
             osw.flush();
             osw.close();
         } catch (IOException e) {
-            LOG.log(Level.SEVERE, "Write locales.json failed: IO exception. Path: " + localesFile.getAbsolutePath(), e);
+            LOG.log(Level.SEVERE, 
+                    "Write locales.json failed: IO exception. Path: " + localesFile.getAbsolutePath(), e);
         }
     }
 
@@ -301,7 +300,8 @@ public class DataFetcher {
             outputDir.mkdirs();
         }
 
-        try (OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(localesFile), StandardCharsets.UTF_8)) {
+        try (OutputStreamWriter osw = new OutputStreamWriter(
+            new FileOutputStream(localesFile), StandardCharsets.UTF_8)) {
             osw.write(object.toString(2));
             osw.flush();
             osw.close();
@@ -358,7 +358,8 @@ public class DataFetcher {
             outputDir.mkdirs();
         }
 
-        try (OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(localesFile), StandardCharsets.UTF_8)) {
+        try (OutputStreamWriter osw = new OutputStreamWriter(
+            new FileOutputStream(localesFile), StandardCharsets.UTF_8)) {
             osw.write(object.toString(2));
             osw.flush();
             osw.close();
@@ -380,7 +381,8 @@ public class DataFetcher {
             outputDir.mkdirs();
         }
 
-        try (OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(localesFile), StandardCharsets.UTF_8)) {
+        try (OutputStreamWriter osw = new OutputStreamWriter(
+            new FileOutputStream(localesFile), StandardCharsets.UTF_8)) {
             osw.write(object.toString(2));
             osw.flush();
             osw.close();

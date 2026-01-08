@@ -18,7 +18,7 @@ package ohos.global.i18n;
 import java.util.HashMap;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream; // 确保导入 InputStream
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
@@ -74,16 +74,15 @@ public class MeasureFormatPatternFetcher {
             }
 
             locale2Pattern = new HashMap<>();
-            String line;
+            String line = "";
             while ((line = fin.readLine()) != null) {
                 String[] temp = getPatterns(line);
                 if (temp.length == 2) {
                     locale2Pattern.put(temp[0], temp[1]);
                 }
             }
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to initialize MeasureFormatPatternFetcher: Error reading " + PATH, e);
-            throw new ExceptionInInitializerError(e);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Init error");
         }
     }
 

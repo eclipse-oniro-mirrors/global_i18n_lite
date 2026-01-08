@@ -20,9 +20,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -68,9 +65,8 @@ public class PluralFetcher {
                 String[] temp = getPluralItems(line);
                 map.put(temp[0], temp[1]);
             }
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to initialize PluralFetcher: Error reading plural.txt", e);
-            throw new ExceptionInInitializerError(e);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Init error");
         }
         try (InputStream inputStream = PluralFetcher.class.getResourceAsStream("/decimalPlurals.txt");
              BufferedReader fin = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
@@ -84,9 +80,8 @@ public class PluralFetcher {
                 String[] temp = getPluralItems(line);
                 decimalMap.put(temp[0], temp[1]);
             }
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to initialize PluralFetcher: Error reading decimalPlurals.txt", e);
-            throw new ExceptionInInitializerError(e);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Init error");
         }
     }
 

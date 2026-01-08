@@ -19,10 +19,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.logging.Level;

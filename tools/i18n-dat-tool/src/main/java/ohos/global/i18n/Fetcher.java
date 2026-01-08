@@ -173,9 +173,7 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
                 method.setAccessible(true);
                 method.invoke(this, item);
             } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                LOG.log(Level.SEVERE, String.format("getData failed for locale '%s', index %d, method: %s",
-                                                    this.languageTag, current, methodString), e);
-                // LOG.severe("get data failed for index " + current);
+                LOG.severe("get data failed for index " + current);
             }
             ++current;
         }
@@ -321,7 +319,7 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
         for (Element ele : elements) {
             int index = ele.index;
             if (current != index) {
-                throw new IllegalStateException("wrong index order in patterns for index: " + config.index + " current is " + current);
+                throw new IllegalStateException("wrong index order in patterns for index: " + config.index);
             }
             ++current;
             skeletons.add(ele.skeleton);
@@ -554,7 +552,7 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
     private void getMinusSign(ConfigItem config) {
         ULocale latnLocale = new ULocale.Builder()
             .setLocale(this.locale)
-            .setExtension('u', "nu-latn")
+            .setUnicodeLocaleKeyword("nu", "latn")
             .build();
 
         NumberFormat formatter = NumberFormat.getNumberInstance(latnLocale);

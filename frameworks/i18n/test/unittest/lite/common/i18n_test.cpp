@@ -42,7 +42,6 @@ void I18NTest::TearDown()
 {
 }
 
-
 /**
  * @tc.name: I18nFuncTest001
  * @tc.desc: Test LocaleInfo constructor1
@@ -1234,31 +1233,31 @@ HWTEST_F(I18NTest, I18nFuncTest059, TestSize.Level1)
 
     std::string expect = "12 min";
     std::string out = formatter.Format(12, unit, status);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, "12 m");
     out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_SHORT);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, "12 m");
     out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_MEDIUM);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, expect);
 
     expect = "12 minutes";
     out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_LONG);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(expect, out);
     out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_FULL);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(expect, out);
 
     expect = "1 min";
     out = formatter.Format(1, unit, status);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, "1 m");
     out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_SHORT);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, "1 m");
     out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_MEDIUM);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, expect);
 
     expect = "1 minute";
     out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_LONG);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, expect);
     out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_FULL);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, expect);
 }
 
 /**
@@ -1314,27 +1313,27 @@ HWTEST_F(I18NTest, I18nFuncTest061, TestSize.Level1)
 
     std::string expect = "12 ft";
     std::string out = formatter.Format(12, unit, status);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, "12 ′");
     out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_SHORT);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, "12 ′");
     out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_MEDIUM);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, expect);
     out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_LONG);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, "12 feet");
     out = formatter.Format(12, unit, status, MeasureFormatType::MEASURE_FULL);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, "12 feet");
 
     expect = "1 ft";
     out = formatter.Format(1, unit, status);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, "1 ′");
     out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_SHORT);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, "1 ′");
     out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_MEDIUM);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, expect);
     out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_LONG);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, "1 foot");
     out = formatter.Format(1, unit, status, MeasureFormatType::MEASURE_FULL);
-    EXPECT_TRUE(expect.compare(out) == 0);
+    EXPECT_EQ(out, "1 foot");
 }
 
 /**
@@ -1409,7 +1408,7 @@ HWTEST_F(I18NTest, I18NFuncTest064, TestSize.Level1)
     DateTimeFormat formatter(pattern, locale);
     string out;
     formatter.Format(0, "", out, status);
-    EXPECT_EQ(out, "ព្រហ 1 មករា");
+    EXPECT_EQ(out, "ព្រហ 1 ខែមករា");
 }
 
 /**
@@ -1545,7 +1544,7 @@ HWTEST_F(I18NTest, I18NFuncTest071, TestSize.Level1)
     AvailableDateTimeFormatPattern pattern = AvailableDateTimeFormatPattern::MEDIUM;
     DateTimeFormat formatter(pattern, locale);
     formatter.Format(now, "-1:45", out, status);
-    std::string expect = "7 មករា 1970";
+    std::string expect = "7 ខែមករា 1970";
     EXPECT_EQ(expect, out);
 }
 
@@ -1607,9 +1606,9 @@ HWTEST_F(I18NTest, I18NFuncTest074, TestSize.Level1)
     std::string out = formatter.Format(intNum1, status);
     std::string out2 = formatter.Format(intNum2, status);
     std::string out3 = formatter.Format(intNum3, status);
-    EXPECT_EQ(out, "1.234.567");
-    EXPECT_EQ(out2, "123.456.789");
-    EXPECT_EQ(out3, "1.234");
+    EXPECT_EQ(out, "1,234,567");
+    EXPECT_EQ(out2, "123,456,789");
+    EXPECT_EQ(out3, "1,234");
 }
 
 /**
