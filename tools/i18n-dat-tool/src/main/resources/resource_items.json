@@ -99,10 +99,40 @@
                 "skeleton" : "MEd"
             },
             {   
-                "availableFormat" : "NUMBER_MONTH_ABBR_WEEK_DAY",
+                "availableFormat" : "NUMBER_MONTH_DAY",
                 "enumIndex" : 18,
                 "index" : 10,
                 "skeleton" : "Md"
+            },
+            {
+                "availableFormat" : "YEAR_ABBR_MONTH",
+                "enumIndex" : 19,
+                "index" : 11,
+                "skeleton" : "yMMM"
+            },
+            {
+                "availableFormat" : "YEAR_WIDE_MONTH_WIDE_WEEKDAY_DAY",
+                "enumIndex" : 20,
+                "index" : 12,
+                "skeleton" : "yMMMMEEEEd"
+            },
+            {
+                "availableFormat" : "WIDE_MONTH_WIDE_WEEKDAY_DAY",
+                "enumIndex" : 21,
+                "index" : 13,
+                "skeleton" : "MMMMEEEEd"
+            },
+            {
+                "availableFormat" : "ABBR_MONTH",
+                "enumIndex" : 22,
+                "index" : 14,
+                "skeleton" : "MMM"
+            },
+            {
+                "availableFormat" : "WIDE_WEEKDAY",
+                "enumIndex" : 23,
+                "index" : 15,
+                "skeleton" : "EEEE"
             }
         ],
         "pointer": "datePatterns",

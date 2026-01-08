@@ -24,6 +24,7 @@ import com.ibm.icu.util.ULocale;
 import com.ibm.icu.text.DateFormat;
 import com.ibm.icu.text.SimpleDateFormat;
 import com.ibm.icu.util.Calendar;
+import com.ibm.icu.util.ULocale;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -172,7 +173,9 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
                 method.setAccessible(true);
                 method.invoke(this, item);
             } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                LOG.severe("get data failed for index " + current);
+                LOG.log(Level.SEVERE, String.format("getData failed for locale '%s', index %d, method: %s",
+                                                    this.languageTag, current, methodString), e);
+                // LOG.severe("get data failed for index " + current);
             }
             ++current;
         }
@@ -318,7 +321,7 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
         for (Element ele : elements) {
             int index = ele.index;
             if (current != index) {
-                throw new IllegalStateException("wrong index order in patterns for index: " + config.index);
+                throw new IllegalStateException("wrong index order in patterns for index: " + config.index + " current is " + current);
             }
             ++current;
             skeletons.add(ele.skeleton);
@@ -549,9 +552,14 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
     }
 
     private void getMinusSign(ConfigItem config) {
-        NumberFormat formatter = NumberFormat.getNumberInstance(locale);
+        ULocale latnLocale = new ULocale.Builder()
+            .setLocale(this.locale)
+            .setExtension('u', "nu-latn")
+            .build();
+
+        NumberFormat formatter = NumberFormat.getNumberInstance(latnLocale);
         String formatValue = formatter.format(-1);
-        NumberingSystem numberSystem = NumberingSystem.getInstance(locale);
+        NumberingSystem numberSystem = NumberingSystem.getInstance(latnLocale);
         String description = numberSystem.getDescription();
         if (formatValue.length() > 0) {
             String temp = formatValue.substring(0, formatValue.indexOf(description.charAt(1)));

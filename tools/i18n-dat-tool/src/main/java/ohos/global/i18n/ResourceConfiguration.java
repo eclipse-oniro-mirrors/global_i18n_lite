@@ -21,6 +21,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.ArrayList;
@@ -44,10 +45,13 @@ public class ResourceConfiguration {
      */
     public static ArrayList<ResourceConfiguration.ConfigItem> parse() {
         ArrayList<ResourceConfiguration.ConfigItem> ret = new ArrayList<>();
-        try {
-            File json = new File(ResourceConfiguration.class.getResource("/resource/resource_items.json").toURI());
+        try (InputStream inputStream = ResourceConfiguration.class.getResourceAsStream("/resource_items.json")) {
+            if (inputStream == null) {
+                LOG.log(Level.SEVERE, "resource_items.json not found in classpath.");
+                return ret;
+            }
             ObjectMapper mapper = new ObjectMapper();
-            JsonNode jsonNode = mapper.readTree(json);
+            JsonNode jsonNode = mapper.readTree(inputStream);
             Iterator<JsonNode> jsonNodes = jsonNode.getElements();
             int count = 0;
             while (jsonNodes.hasNext()) {
@@ -59,8 +63,8 @@ public class ResourceConfiguration {
                 ++count;
                 ret.add(item);
             }
-        } catch (IOException | URISyntaxException e) {
-            LOG.log(Level.SEVERE, "Generated errors when read resource_items.json file.");
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, "Generated errors when reading resource_items.json file.", e);
         }
         return ret;
     }

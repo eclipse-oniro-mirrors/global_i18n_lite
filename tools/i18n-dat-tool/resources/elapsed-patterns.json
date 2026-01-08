@@ -3,6 +3,10 @@
     "mm:ss",
     "mm:ss٫SS"
   ],
+  "ar-AE":   [
+    "mm:ss",
+    "mm:ss.SS"
+  ],
   "ar-BH":   [
     "mm:ss",
     "mm:ss.SS"
@@ -12,10 +16,6 @@
     "mm:ss,SS"
   ],
   "ar-IL":   [
-    "mm:ss",
-    "mm:ss.SS"
-  ],
-  "ar-JO":   [
     "mm:ss",
     "mm:ss.SS"
   ],
@@ -84,8 +84,8 @@
     "mm:ss,SS"
   ],
   "ca":   [
-    "mm.ss",
-    "mm.ss,SS"
+    "mm:ss",
+    "mm:ss,SS"
   ],
   "cs":   [
     "mm:ss",
@@ -146,10 +146,6 @@
   "en-US":   [
     "mm:ss",
     "mm:ss.SS"
-  ],
-  "en-ZA":   [
-    "mm:ss",
-    "mm:ss,SS"
   ],
   "es":   [
     "mm:ss",
@@ -219,10 +215,6 @@
     "m:ss",
     "m:ss٫SS"
   ],
-  "fa-Latn":   [
-    "m:ss",
-    "m:ss٫SS"
-  ],
   "fi":   [
     "m.ss",
     "m.ss,SS"
@@ -244,8 +236,8 @@
     "mm:ss,SS"
   ],
   "in":   [
-    "mm:ss",
-    "mm:ss,SS"
+    "mm.ss",
+    "mm.ss,SS"
   ],
   "it":   [
     "mm:ss",
@@ -268,10 +260,6 @@
     "mm:ss,SS"
   ],
   "kk":   [
-    "mm:ss",
-    "mm:ss,SS"
-  ],
-  "km":   [
     "mm:ss",
     "mm:ss,SS"
   ],

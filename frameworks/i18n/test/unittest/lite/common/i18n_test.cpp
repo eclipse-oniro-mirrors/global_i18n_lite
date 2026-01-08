@@ -42,6 +42,7 @@ void I18NTest::TearDown()
 {
 }
 
+
 /**
  * @tc.name: I18nFuncTest001
  * @tc.desc: Test LocaleInfo constructor1
