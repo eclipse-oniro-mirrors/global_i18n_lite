@@ -195,7 +195,7 @@ def content2bytes(all_metas, string_pool, dat_save_path):
 
 if __name__ == '__main__':
     current_file_path = os.path.abspath(__file__)
-    resource_path = os.path.join(os.path.dirname(current_file_path), "..", "..", "..", "..", "resource")
+    resource_path = os.path.join(os.path.dirname(current_file_path), "..", "..", "..", "..", "..", "..", "resources")
     metas, pool = generate_all_metas(resource_path)
 
     up_path = [".."] * 8

@@ -18,12 +18,9 @@ package ohos.global.i18n;
 import java.util.HashMap;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -35,8 +32,7 @@ import java.util.logging.Level;
 public class MeasureFormatPatternFetcher {
     private static MeasureFormatPatternFetcher patternFetcher = new MeasureFormatPatternFetcher();
     private static final Logger logger = Logger.getLogger("MeasureFormatPatternFetcher");
-    private static final String PATH = "/resource" + FileSystems.getDefault().getSeparator() +
-        "measure_format_patterns.txt";
+    private static final String PATH = "/measure_format_patterns.txt";
 
     static {
         patternFetcher.init();
@@ -70,8 +66,13 @@ public class MeasureFormatPatternFetcher {
     }
 
     private void init() {
-        try (BufferedReader fin = new BufferedReader(new InputStreamReader(new FileInputStream(
-                new File(MeasureFormatPatternFetcher.class.getResource(PATH).toURI())), StandardCharsets.UTF_8))) {
+        try (InputStream inputStream = MeasureFormatPatternFetcher.class.getResourceAsStream(PATH);
+            BufferedReader fin = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+
+            if (inputStream == null) {
+                throw new IOException("Resource '" + PATH + "' not found in classpath.");
+            }
+
             locale2Pattern = new HashMap<>();
             String line = "";
             while ((line = fin.readLine()) != null) {
@@ -80,7 +81,7 @@ public class MeasureFormatPatternFetcher {
                     locale2Pattern.put(temp[0], temp[1]);
                 }
             }
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException e) {
             logger.log(Level.SEVERE, "Init error");
         }
     }

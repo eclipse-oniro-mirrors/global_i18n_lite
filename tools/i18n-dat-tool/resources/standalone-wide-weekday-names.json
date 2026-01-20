@@ -35,15 +35,6 @@
     "শুক্ৰবাৰ",
     "শনিবাৰ"
   ],
-  "as-Latn":   [
-    "দেওবাৰ",
-    "সোমবাৰ",
-    "মঙ্গলবাৰ",
-    "বুধবাৰ",
-    "বৃহস্পতিবাৰ",
-    "শুক্ৰবাৰ",
-    "শনিবাৰ"
-  ],
   "az":   [
     "bazar",
     "bazar ertəsi",
@@ -90,15 +81,6 @@
     "събота"
   ],
   "bn":   [
-    "রবিবার",
-    "সোমবার",
-    "মঙ্গলবার",
-    "বুধবার",
-    "বৃহস্পতিবার",
-    "শুক্রবার",
-    "শনিবার"
-  ],
-  "bn-Latn":   [
     "রবিবার",
     "সোমবার",
     "মঙ্গলবার",
@@ -233,23 +215,14 @@
     "جمعه",
     "شنبه"
   ],
-  "fa-Latn":   [
-    "یکشنبه",
-    "دوشنبه",
-    "سه‌شنبه",
-    "چهارشنبه",
-    "پنجشنبه",
-    "جمعه",
-    "شنبه"
-  ],
   "fi":   [
-    "sunnuntaina",
-    "maanantaina",
-    "tiistaina",
-    "keskiviikkona",
-    "torstaina",
-    "perjantaina",
-    "lauantaina"
+    "sunnuntai",
+    "maanantai",
+    "tiistai",
+    "keskiviikko",
+    "torstai",
+    "perjantai",
+    "lauantai"
   ],
   "fr":   [
     "dimanche",
@@ -261,13 +234,13 @@
     "samedi"
   ],
   "gl":   [
-    "domingo",
-    "luns",
-    "martes",
-    "mércores",
-    "xoves",
-    "venres",
-    "sábado"
+    "Domingo",
+    "Luns",
+    "Martes",
+    "Mércores",
+    "Xoves",
+    "Venres",
+    "Sábado"
   ],
   "gu":   [
     "રવિવાર",
@@ -342,22 +315,22 @@
     "土曜日"
   ],
   "jv":   [
-    "Minggu",
-    "Senen",
+    "Ahad",
+    "Senin",
     "Selasa",
-    "Rebo",
-    "Kemis",
-    "Jemuwah",
-    "Setu"
+    "Rabu",
+    "Kamis",
+    "Jumat",
+    "Sabtu"
   ],
   "jv-Latn":   [
-    "Minggu",
-    "Senen",
+    "Ahad",
+    "Senin",
     "Selasa",
-    "Rebo",
-    "Kemis",
-    "Jemuwah",
-    "Setu"
+    "Rabu",
+    "Kamis",
+    "Jumat",
+    "Sabtu"
   ],
   "ka":   [
     "კვირა",
@@ -423,31 +396,31 @@
     "šeštadienis"
   ],
   "lv":   [
-    "svētdiena",
-    "pirmdiena",
-    "otrdiena",
-    "trešdiena",
-    "ceturtdiena",
-    "piektdiena",
-    "sestdiena"
+    "Svētdiena",
+    "Pirmdiena",
+    "Otrdiena",
+    "Trešdiena",
+    "Ceturtdiena",
+    "Piektdiena",
+    "Sestdiena"
   ],
   "mai":   [
-    "रविवार",
-    "सोमवार",
-    "मंगलवार",
-    "बुधवार",
-    "बृहस्पतिवार",
-    "शुक्रवार",
-    "शनिवार"
+    "रवि दिन",
+    "सोम दिन",
+    "मंगल दिन",
+    "बुध दिन",
+    "बृहस्पति दिन",
+    "शुक्र दिन",
+    "शनि दिन"
   ],
   "mai-Deva":   [
-    "रविवार",
-    "सोमवार",
-    "मंगलवार",
-    "बुधवार",
-    "बृहस्पतिवार",
-    "शुक्रवार",
-    "शनिवार"
+    "रवि दिन",
+    "सोम दिन",
+    "मंगल दिन",
+    "बुध दिन",
+    "बृहस्पति दिन",
+    "शुक्र दिन",
+    "शनि दिन"
   ],
   "mi":   [
     "Rātapu",
@@ -470,7 +443,7 @@
   "ml":   [
     "ഞായറാഴ്‌ച",
     "തിങ്കളാഴ്‌ച",
-    "ചൊവ്വാഴ്ച",
+    "ചൊവ്വാഴ്‌ച",
     "ബുധനാഴ്‌ച",
     "വ്യാഴാഴ്‌ച",
     "വെള്ളിയാഴ്‌ച",
@@ -667,7 +640,7 @@
   ],
   "sr-Cyrl-BA":   [
     "недјеља",
-    "понедељак",
+    "понедјељак",
     "уторак",
     "сриједа",
     "четвртак",
@@ -694,7 +667,7 @@
   ],
   "sr-Latn-BA":   [
     "nedjelja",
-    "ponedeljak",
+    "ponedjeljak",
     "utorak",
     "srijeda",
     "četvrtak",
@@ -792,15 +765,6 @@
     "субота"
   ],
   "ur":   [
-    "اتوار",
-    "پیر",
-    "منگل",
-    "بدھ",
-    "جمعرات",
-    "جمعہ",
-    "ہفتہ"
-  ],
-  "ur-Latn":   [
     "اتوار",
     "پیر",
     "منگل",

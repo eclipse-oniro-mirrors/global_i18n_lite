@@ -18,10 +18,8 @@ package ohos.global.i18n;
 import java.util.HashMap;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -54,28 +52,35 @@ public class PluralFetcher {
     }
 
     private void init() {
-        try (BufferedReader fin = new BufferedReader(new InputStreamReader(new FileInputStream(
-                new File(MeasureFormatPatternFetcher.class.getResource("/resource/plural.txt").toURI())),
-                StandardCharsets.UTF_8))) {
+        try (InputStream inputStream = PluralFetcher.class.getResourceAsStream("/plural.txt");
+             BufferedReader fin = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+
+            if (inputStream == null) {
+                throw new IOException("Resource '/plural.txt' not found in classpath.");
+            }
+
             map = new HashMap<>();
             String line = "";
             while ((line = fin.readLine()) != null) {
                 String[] temp = getPluralItems(line);
                 map.put(temp[0], temp[1]);
             }
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException e) {
             logger.log(Level.SEVERE, "Init error");
         }
-        try (BufferedReader fin = new BufferedReader(new InputStreamReader(new FileInputStream(
-                new File(MeasureFormatPatternFetcher.class.getResource("/resource/decimalPlurals.txt").toURI())),
-                StandardCharsets.UTF_8))) {
+        try (InputStream inputStream = PluralFetcher.class.getResourceAsStream("/decimalPlurals.txt");
+             BufferedReader fin = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+
+            if (inputStream == null) {
+                throw new IOException("Resource '/decimalPlurals.txt' not found in classpath.");
+            }
             decimalMap = new HashMap<>();
             String line = "";
             while ((line = fin.readLine()) != null) {
                 String[] temp = getPluralItems(line);
                 decimalMap.put(temp[0], temp[1]);
             }
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException e) {
             logger.log(Level.SEVERE, "Init error");
         }
     }

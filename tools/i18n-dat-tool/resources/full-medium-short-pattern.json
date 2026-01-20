@@ -1,7 +1,7 @@
 {
   "am":   [
-    "EEEE፣ d MMMM y",
-    "d MMM y",
+    "EEEE፣ MMMM d፣ y",
+    "MMM d፣ y",
     "dd/MM/y"
   ],
   "ar":   [
@@ -15,11 +15,6 @@
     "d‏/M‏/y"
   ],
   "as":   [
-    "EEEE, d MMMM, y",
-    "dd-MM-y",
-    "d-M-y"
-  ],
-  "as-Latn":   [
     "EEEE, d MMMM, y",
     "dd-MM-y",
     "d-M-y"
@@ -45,16 +40,11 @@
     "d.MM.yy"
   ],
   "bg":   [
-    "EEEE, d MMMM y 'г'.",
-    "d.MM.y 'г'.",
-    "d.MM.yy 'г'."
+    "EEEE, d MMMM y 'г'.",
+    "d.MM.y 'г'.",
+    "d.MM.yy 'г'."
   ],
   "bn":   [
-    "EEEE, d MMMM, y",
-    "d MMM, y",
-    "d/M/yy"
-  ],
-  "bn-Latn":   [
     "EEEE, d MMMM, y",
     "d MMM, y",
     "d/M/yy"
@@ -63,6 +53,11 @@
     "སྤྱི་ལོ་y MMMMའི་ཚེས་d EEEE",
     "y ལོའི་MMMཚེས་d",
     "y/M/d"
+  ],
+  "bo-IN":   [
+    "y MMMMའི་ཚེས་d, EEEE",
+    "y ལོའི་MMMཚེས་d",
+    "y-MM-dd"
   ],
   "bs":   [
     "EEEE, d. MMMM y.",
@@ -100,7 +95,7 @@
     "dd.MM.yy"
   ],
   "el":   [
-    "EEEE, d MMMM y",
+    "EEEE d MMMM y",
     "d MMM y",
     "d/M/yy"
   ],
@@ -120,7 +115,7 @@
     "dd/MM/y"
   ],
   "en-AU":   [
-    "EEEE, d MMMM y",
+    "EEEE d MMMM y",
     "d MMM y",
     "d/M/yy"
   ],
@@ -167,7 +162,7 @@
   "en-CH":   [
     "EEEE, d MMMM y",
     "d MMM y",
-    "dd/MM/y"
+    "dd.MM.y"
   ],
   "en-CK":   [
     "EEEE, d MMMM y",
@@ -235,7 +230,7 @@
     "dd/MM/y"
   ],
   "en-GB":   [
-    "EEEE, d MMMM y",
+    "EEEE d MMMM y",
     "d MMM y",
     "dd/MM/y"
   ],
@@ -290,8 +285,8 @@
     "dd/MM/y"
   ],
   "en-IN":   [
-    "EEEE, d MMMM, y",
-    "dd-MMM-y",
+    "EEEE d MMMM, y",
+    "d MMM y",
     "dd/MM/yy"
   ],
   "en-IO":   [
@@ -369,6 +364,11 @@
     "d MMM y",
     "dd/MM/y"
   ],
+  "en-MV":   [
+    "EEEE d MMMM y",
+    "dd-MM-y",
+    "d-M-yy"
+  ],
   "en-MW":   [
     "EEEE, d MMMM y",
     "d MMM y",
@@ -411,15 +411,10 @@
   ],
   "en-NZ":   [
     "EEEE, d MMMM y",
-    "d/MM/y",
-    "d/MM/yy"
-  ],
-  "en-PG":   [
-    "EEEE, d MMMM y",
     "d MMM y",
     "dd/MM/y"
   ],
-  "en-PH":   [
+  "en-PG":   [
     "EEEE, d MMMM y",
     "d MMM y",
     "dd/MM/y"
@@ -440,7 +435,7 @@
     "dd/MM/y"
   ],
   "en-Qaag":   [
-    "EEEE, d MMMM y",
+    "EEEE d MMMM y",
     "d MMM y",
     "dd/MM/y"
   ],
@@ -644,11 +639,6 @@
     "d MMM y",
     "y/M/d"
   ],
-  "fa-Latn":   [
-    "EEEE d MMMM y",
-    "d MMM y",
-    "y/M/d"
-  ],
   "fi":   [
     "cccc d. MMMM y",
     "d.M.y",
@@ -667,7 +657,7 @@
   "fr-CA":   [
     "EEEE d MMMM y",
     "d MMM y",
-    "yy-MM-dd"
+    "y-MM-dd"
   ],
   "fr-CH":   [
     "EEEE, d MMMM y",
@@ -760,7 +750,7 @@
     "d/M/yy"
   ],
   "ko":   [
-    "y년 M월 d일 EEEE",
+    "y년 MMMM d일 EEEE",
     "y. M. d.",
     "yy. M. d."
   ],
@@ -782,17 +772,17 @@
   "mai":   [
     "EEEE, d MMMM y",
     "d MMM y",
-    "d/M/y"
+    "d/M/yy"
   ],
   "mai-Deva":   [
     "EEEE, d MMMM y",
     "d MMM y",
-    "d/M/y"
+    "d/M/yy"
   ],
   "mi":   [
-    "EEEE, 'te' d 'o' MMMM, y",
-    "d 'o' MMM, y",
-    "d/M/y"
+    "EEEE, d MMMM y",
+    "d MMM y",
+    "dd-MM-y"
   ],
   "mk":   [
     "EEEE, d MMMM y",
@@ -825,7 +815,7 @@
     "d/MM/yy"
   ],
   "my":   [
-    "EEEEနေ့၊ y ခုနှစ် MMMMလ d ရက်",
+    "y ခုနှစ် MMMMလ d ရက်၊ EEEEနေ့",
     "y ခုနှစ် MMMလ d ရက်",
     "yy/MM/dd"
   ],
@@ -877,7 +867,7 @@
   "pl":   [
     "EEEE, d MMMM y",
     "d MMM y",
-    "dd.MM.y"
+    "d.MM.y"
   ],
   "pt":   [
     "EEEE, d 'de' MMMM 'de' y",
@@ -930,8 +920,8 @@
     "dd.MM.y"
   ],
   "ru":   [
-    "EEEE, d MMMM y 'г'.",
-    "d MMM y 'г'.",
+    "EEEE, d MMMM y 'г'.",
+    "d MMM y 'г'.",
     "dd.MM.y"
   ],
   "si":   [
@@ -945,23 +935,23 @@
     "d. M. y"
   ],
   "sl":   [
-    "EEEE, dd. MMMM y",
+    "EEEE, d. MMMM y",
     "d. MMM y",
     "d. M. yy"
   ],
   "sr":   [
-    "EEEE, dd. MMMM y.",
-    "dd.MM.y.",
+    "EEEE, d. MMMM y.",
+    "d. M. y.",
     "d.M.yy."
   ],
   "sr-Cyrl":   [
-    "EEEE, dd. MMMM y.",
-    "dd.MM.y.",
+    "EEEE, d. MMMM y.",
+    "d. M. y.",
     "d.M.yy."
   ],
   "sr-Latn":   [
-    "EEEE, dd. MMMM y.",
-    "dd.MM.y.",
+    "EEEE, d. MMMM y.",
+    "d. M. y.",
     "d.M.yy."
   ],
   "sv":   [
@@ -995,24 +985,19 @@
     "d.MM.y"
   ],
   "ug":   [
-    "y، d-MMMM، EEEE",
-    "y، d-MMM",
-    "M/d/y"
+    "y-يىلى M-ئاينىڭ d-كۈنى EEEE",
+    "y-يىلى M-ئاينىڭ d-كۈنى",
+    "d/M/y"
   ],
   "uk":   [
-    "EEEE, d MMMM y 'р'.",
-    "d MMM y 'р'.",
+    "EEEE, d MMMM y 'р'.",
+    "d MMM y 'р'.",
     "dd.MM.yy"
   ],
   "ur":   [
     "EEEE، d MMMM، y",
     "d MMM، y",
-    "y/M/d"
-  ],
-  "ur-Latn":   [
-    "EEEE، d MMMM، y",
-    "d MMM، y",
-    "y/M/d"
+    "d/M/yy"
   ],
   "uz":   [
     "EEEE, d-MMMM, y",
@@ -1037,7 +1022,7 @@
   "vi":   [
     "EEEE, 'ngày' dd MMMM 'năm' y",
     "dd 'tháng' M 'năm' y",
-    "dd/MM/y"
+    "d/M/yy"
   ],
   "zh":   [
     "y年M月d日EEEE",
@@ -1065,18 +1050,18 @@
     "dd/MM/yy"
   ],
   "zh-Hant":   [
-    "y年M月d日 EEEE",
-    "y年M月d日",
+    "y 年 M 月 d 日 EEEE",
+    "y 年 M 月 d 日",
     "y/M/d"
   ],
   "zh-Hant-HK":   [
-    "y年M月d日 EEEE",
-    "y年M月d日",
+    "y 年 M 月 d 日 EEEE",
+    "y 年 M 月 d 日",
     "d/M/y"
   ],
   "zh-Hant-MO":   [
-    "y年M月d日 EEEE",
-    "y年M月d日",
+    "y 年 M 月 d 日 EEEE",
+    "y 年 M 月 d 日",
     "d/M/y"
   ]
 }

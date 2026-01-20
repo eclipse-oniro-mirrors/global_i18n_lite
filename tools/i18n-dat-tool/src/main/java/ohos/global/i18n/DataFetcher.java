@@ -19,10 +19,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -86,8 +84,8 @@ public class DataFetcher {
      * Add all required locales from locale.txt and fetch its related data.
      */
     private static void addFetchers() {
-        try (BufferedReader fLocales = new BufferedReader(new InputStreamReader(new FileInputStream(
-                new File(MeasureFormatPatternFetcher.class.getResource("/resource/locales.txt").toURI())),
+        try (BufferedReader fLocales = new BufferedReader(new InputStreamReader(
+                DataFetcher.class.getResourceAsStream("/locales.txt"),
                 StandardCharsets.UTF_8))) {
             String line = "";
             int count = 0;
@@ -112,9 +110,6 @@ public class DataFetcher {
                 LOCALES.put(tag, count);
                 ++count;
             }
-        } catch (URISyntaxException e) {
-            LOG.log(Level.SEVERE, "Add fetchers failed: Url syntax exception");
-            sStatus = 1;
         } catch (IOException e) {
             LOG.log(Level.SEVERE, "Add fetchers failed: Io exception");
             sStatus = 1;
@@ -266,14 +261,20 @@ public class DataFetcher {
         }
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("locales", locales);
+
+        File outputDir = new File("resources");
+        File localesFile = new File(outputDir, "locales.json");
+        if (!outputDir.exists()) {
+            outputDir.mkdirs();
+        }
         try (OutputStreamWriter osw = new OutputStreamWriter(
-            new FileOutputStream("tools" + SEP + "i18n-dat-tool" + SEP + "src" + SEP + "main" + SEP + "resource" +
-                SEP + "locales.json"), StandardCharsets.UTF_8)) {
+            new FileOutputStream(localesFile), StandardCharsets.UTF_8)) {
             osw.write(jsonObject.toString(2));
             osw.flush();
             osw.close();
         } catch (IOException e) {
-            LOG.log(Level.SEVERE, "Write locales.json failed: IO exception");
+            LOG.log(Level.SEVERE, 
+                    "Write locales.json failed: IO exception. Path: " + localesFile.getAbsolutePath(), e);
         }
     }
 
@@ -292,14 +293,20 @@ public class DataFetcher {
             }
             object.put(language, array);
         }
+
+        File outputDir = new File("resources");
+        File localesFile = new File(outputDir, fileName + ".json");
+        if (!outputDir.exists()) {
+            outputDir.mkdirs();
+        }
+
         try (OutputStreamWriter osw = new OutputStreamWriter(
-            new FileOutputStream("tools" + SEP + "i18n-dat-tool" + SEP + "src" + SEP + "main" + SEP + "resource" +
-                SEP + fileName + ".json"), StandardCharsets.UTF_8)) {
+            new FileOutputStream(localesFile), StandardCharsets.UTF_8)) {
             osw.write(object.toString(2));
             osw.flush();
             osw.close();
         } catch (IOException e) {
-            LOG.log(Level.SEVERE, "Write file failed: IO exception");
+            LOG.log(Level.SEVERE, "Write file failed: IO exception. Path: " + localesFile.getAbsolutePath(), e);
         }
     }
 
@@ -344,14 +351,43 @@ public class DataFetcher {
             languageJson.put("units", units);
             object.put(fetcher.languageTag, languageJson);
         }
+
+        File outputDir = new File("resources");
+        File localesFile = new File(outputDir, "measure-format-patterns.json");
+        if (!outputDir.exists()) {
+            outputDir.mkdirs();
+        }
+
         try (OutputStreamWriter osw = new OutputStreamWriter(
-            new FileOutputStream("tools" + SEP + "i18n-dat-tool" + SEP + "src" + SEP + "main" + SEP + "resource" +
-                SEP + "measure-format-patterns.json"), StandardCharsets.UTF_8)) {
+            new FileOutputStream(localesFile), StandardCharsets.UTF_8)) {
             osw.write(object.toString(2));
             osw.flush();
             osw.close();
         } catch (IOException e) {
-            LOG.log(Level.SEVERE, "Write measure data failed: IO exception");
+            LOG.log(Level.SEVERE, "Write measure data failed. Path: " + localesFile.getAbsolutePath(), e);
+        }
+    }
+
+    private static void writeResourceItems() {
+        JSONObject object = new JSONObject();
+        for (int i = 0; i < DATA_TYPES.size(); i++) {
+            object.put(DATA_TYPES.get(i), i);
+        }
+        object.put("measure-format-patterns", DATA_TYPES.size());
+
+        File outputDir = new File("resources");
+        File localesFile = new File(outputDir, "resource_items.json");
+        if (!outputDir.exists()) {
+            outputDir.mkdirs();
+        }
+
+        try (OutputStreamWriter osw = new OutputStreamWriter(
+            new FileOutputStream(localesFile), StandardCharsets.UTF_8)) {
+            osw.write(object.toString(2));
+            osw.flush();
+            osw.close();
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, "Write resource items failed. Path: " + localesFile.getAbsolutePath(), e);
         }
     }
 
@@ -388,5 +424,6 @@ public class DataFetcher {
             writeData(DATA_TYPES.get(i), i);
         }
         writeMeasureData();
+        writeResourceItems();
     }
 }

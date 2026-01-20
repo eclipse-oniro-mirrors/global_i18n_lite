@@ -24,6 +24,7 @@ import com.ibm.icu.util.ULocale;
 import com.ibm.icu.text.DateFormat;
 import com.ibm.icu.text.SimpleDateFormat;
 import com.ibm.icu.util.Calendar;
+import com.ibm.icu.util.ULocale;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -549,9 +550,14 @@ public class Fetcher implements Runnable, Comparable<Fetcher> {
     }
 
     private void getMinusSign(ConfigItem config) {
-        NumberFormat formatter = NumberFormat.getNumberInstance(locale);
+        ULocale latnLocale = new ULocale.Builder()
+            .setLocale(this.locale)
+            .setUnicodeLocaleKeyword("nu", "latn")
+            .build();
+
+        NumberFormat formatter = NumberFormat.getNumberInstance(latnLocale);
         String formatValue = formatter.format(-1);
-        NumberingSystem numberSystem = NumberingSystem.getInstance(locale);
+        NumberingSystem numberSystem = NumberingSystem.getInstance(latnLocale);
         String description = numberSystem.getDescription();
         if (formatValue.length() > 0) {
             String temp = formatValue.substring(0, formatValue.indexOf(description.charAt(1)));
