@@ -97,29 +97,29 @@ public:
 private:
     explicit Hyphenation(const char* lang);
 
-    bool checkAlienChars(const std::vector<uint32_t>& codepoints) const;
-    void processNoPatterns(const std::vector<uint32_t>& codepoints,
+    bool CheckAlienChars(const std::vector<uint32_t>& codepoints) const;
+    void ProcessNoPatterns(const std::vector<uint32_t>& codepoints,
                            std::vector<int>& result) const;
-    void processHyphenBreak(const std::vector<uint32_t>& codepoints,
+    void ProcessHyphenBreak(const std::vector<uint32_t>& codepoints,
                              std::vector<int>& result, size_t i) const;
 
-    std::vector<uint8_t> convertToCharCodes(const std::vector<uint32_t>& codepoints,
+    std::vector<uint8_t> ConvertToCharCodes(const std::vector<uint32_t>& codepoints,
                                               size_t len) const;
-    void matchPatterns(const char* word, const std::vector<uint8_t>& charCodes,
+    void MatchPatterns(const char* word, const std::vector<uint8_t>& charCodes,
                        size_t len, std::vector<int>& result) const;
 
-    const char* getHyphenCharByLocale(const char* locale) const;
-    bool preCharIsPolishHyphen(uint32_t prevChar, size_t i,
+    const char* GetHyphenCharByLocale(const char* locale) const;
+    bool PreCharIsPolishHyphen(uint32_t prevChar, size_t i,
         const std::vector<uint32_t>& codepoints) const;
-    bool isPreCharIsCatalanHyphen(uint32_t prevChar, size_t i,
+    bool IsPreCharIsCatalanHyphen(uint32_t prevChar, size_t i,
         size_t len, const std::vector<uint32_t>& codepoints) const;
 
-    std::string m_locale;
-    int m_minPrefix;
-    int m_minSuffix;
-    void* m_patternData;
-    size_t m_patternSize;
-    int m_hyphenLocale;
+    std::string mLocale;
+    int mMinPrefix;
+    int mMinSuffix;
+    void* mPatternData;
+    size_t mPatternSize;
+    int mHyphenLocale;
 };
 
 }

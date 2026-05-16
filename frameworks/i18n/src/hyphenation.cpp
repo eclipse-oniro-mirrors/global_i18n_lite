@@ -41,6 +41,8 @@ constexpr uint32_t CHAR_HYPHENATION_POINT = 0x2027;
 constexpr uint32_t CHAR_DOUBLE_OBLIQUE_HYPHEN = 0x2E17;
 constexpr uint32_t CHAR_DOUBLE_HYPHEN = 0x2E40;
 constexpr size_t MAX_HYPHENATED_SIZE = 64;
+constexpr size_t PRE_CHAR_OFFSET = 2;
+constexpr size_t ADD_ARRAY_HEAD_TAIL = 2;
 
 const char* HYPHEN_PATH_PREFIX = "/system/i18n/hyphen-data/hyph-";
 constexpr char SYSTEM_HYPHENATOR_SUFFIX[] = ".hyb";
@@ -78,7 +80,7 @@ enum class Script {
     UNKNOWN
 };
 
-bool isLineBreakingHyphen(uint32_t c)
+bool IsLineBreakingHyphen(uint32_t c)
 {
     return (c == CHAR_HYPHEN_MINUS ||
             c == CHAR_ARMENIAN_HYPHEN ||
@@ -91,161 +93,161 @@ bool isLineBreakingHyphen(uint32_t c)
             c == CHAR_DOUBLE_HYPHEN);
 }
 
-bool isLatinRange(uint32_t codepoint)
+bool IsLatinRange(uint32_t codepoint)
 {
     return (codepoint >= 0x0041 && codepoint <= 0x005A) ||
            (codepoint >= 0x0061 && codepoint <= 0x007A) ||
            (codepoint >= 0x00C0 && codepoint <= 0x024F);
 }
 
-bool isCyrillicRange(uint32_t codepoint)
+bool IsCyrillicRange(uint32_t codepoint)
 {
     return (codepoint >= 0x0400 && codepoint <= 0x04FF) ||
            (codepoint >= 0x0500 && codepoint <= 0x052F);
 }
 
-bool isArabicRange(uint32_t codepoint)
+bool IsArabicRange(uint32_t codepoint)
 {
     return (codepoint >= 0x0600 && codepoint <= 0x06FF) ||
            (codepoint >= 0x0750 && codepoint <= 0x077F);
 }
 
-bool isGreekRange(uint32_t codepoint)
+bool IsGreekRange(uint32_t codepoint)
 {
     return (codepoint >= 0x0370 && codepoint <= 0x03FF);
 }
 
-bool isHebrewRange(uint32_t codepoint)
+bool IsHebrewRange(uint32_t codepoint)
 {
     return (codepoint >= 0x0590 && codepoint <= 0x05FF);
 }
 
-bool isArmenianRange(uint32_t codepoint)
+bool IsArmenianRange(uint32_t codepoint)
 {
     return (codepoint >= 0x0530 && codepoint <= 0x058F);
 }
 
-bool isDevanagariRange(uint32_t codepoint)
+bool IsDevanagariRange(uint32_t codepoint)
 {
     return (codepoint >= 0x0900 && codepoint <= 0x097F);
 }
 
-bool isBengaliRange(uint32_t codepoint)
+bool IsBengaliRange(uint32_t codepoint)
 {
     return (codepoint >= 0x0980 && codepoint <= 0x09FF);
 }
 
-bool isGujaratiRange(uint32_t codepoint)
+bool IsGujaratiRange(uint32_t codepoint)
 {
     return (codepoint >= 0x0A80 && codepoint <= 0x0AFF);
 }
 
-bool isGurmukhiRange(uint32_t codepoint)
+bool IsGurmukhiRange(uint32_t codepoint)
 {
     return (codepoint >= 0x0A00 && codepoint <= 0x0A7F);
 }
 
-bool isTeluguRange(uint32_t codepoint)
+bool IsTeluguRange(uint32_t codepoint)
 {
     return (codepoint >= 0x0C00 && codepoint <= 0x0C7F);
 }
 
-bool isKannadaRange(uint32_t codepoint)
+bool IsKannadaRange(uint32_t codepoint)
 {
     return (codepoint >= 0x0C80 && codepoint <= 0x0CFF);
 }
 
-bool isMalayalamRange(uint32_t codepoint)
+bool IsMalayalamRange(uint32_t codepoint)
 {
     return (codepoint >= 0x0D00 && codepoint <= 0x0D7F);
 }
 
-bool isTamilRange(uint32_t codepoint)
+bool IsTamilRange(uint32_t codepoint)
 {
     return (codepoint >= 0x0B80 && codepoint <= 0x0BFF);
 }
 
-bool isKanaRange(uint32_t codepoint)
+bool IsKanaRange(uint32_t codepoint)
 {
     return (codepoint >= 0x3040 && codepoint <= 0x309F) ||
            (codepoint >= 0x30A0 && codepoint <= 0x30FF);
 }
 
-bool isHanRange(uint32_t codepoint)
+bool IsHanRange(uint32_t codepoint)
 {
     return (codepoint >= 0x4E00 && codepoint <= 0x9FFF) ||
            (codepoint >= 0x3400 && codepoint <= 0x4DBF);
 }
 
-bool isCanadianAboriginalRange(uint32_t codepoint)
+bool IsCanadianAboriginalRange(uint32_t codepoint)
 {
     return (codepoint >= 0x1400 && codepoint <= 0x167F);
 }
 
 Script MatchScript(uint32_t codepoint)
 {
-    if (isTeluguRange(codepoint)) {
+    if (IsTeluguRange(codepoint)) {
         return Script::TELUGU;
     }
-    if (isKannadaRange(codepoint)) {
+    if (IsKannadaRange(codepoint)) {
         return Script::KANNADA;
     }
-    if (isMalayalamRange(codepoint)) {
+    if (IsMalayalamRange(codepoint)) {
         return Script::MALAYALAM;
     }
-    if (isTamilRange(codepoint)) {
+    if (IsTamilRange(codepoint)) {
         return Script::TAMIL;
     }
-    if (isKanaRange(codepoint)) {
+    if (IsKanaRange(codepoint)) {
         return Script::KANA;
     }
-    if (isHanRange(codepoint)) {
+    if (IsHanRange(codepoint)) {
         return Script::HAN;
     }
-    if (isCanadianAboriginalRange(codepoint)) {
+    if (IsCanadianAboriginalRange(codepoint)) {
         return Script::CANADIAN_ABORIGINAL;
     }
     return Script::UNKNOWN;
 }
 
-Script getScript(uint32_t codepoint)
+Script GetScript(uint32_t codepoint)
 {
-    if (isLatinRange(codepoint)) {
+    if (IsLatinRange(codepoint)) {
         return Script::LATIN;
     }
-    if (isCyrillicRange(codepoint)) {
+    if (IsCyrillicRange(codepoint)) {
         return Script::CYRILLIC;
     }
-    if (isArabicRange(codepoint)) {
+    if (IsArabicRange(codepoint)) {
         return Script::ARABIC;
     }
-    if (isGreekRange(codepoint)) {
+    if (IsGreekRange(codepoint)) {
         return Script::GREEK;
     }
-    if (isHebrewRange(codepoint)) {
+    if (IsHebrewRange(codepoint)) {
         return Script::HEBREW;
     }
-    if (isArmenianRange(codepoint)) {
+    if (IsArmenianRange(codepoint)) {
         return Script::ARMENIAN;
     }
-    if (isDevanagariRange(codepoint)) {
+    if (IsDevanagariRange(codepoint)) {
         return Script::DEVANAGARI;
     }
-    if (isBengaliRange(codepoint)) {
+    if (IsBengaliRange(codepoint)) {
         return Script::BENGALI;
     }
-    if (isGujaratiRange(codepoint)) {
+    if (IsGujaratiRange(codepoint)) {
         return Script::GUJARATI;
     }
-    if (isGurmukhiRange(codepoint)) {
+    if (IsGurmukhiRange(codepoint)) {
         return Script::GURMUKHI;
     }
     return MatchScript(codepoint);
 }
 
-int hyphenationTypeBasedOnScript(uint32_t codePoint)
+int HyphenationTypeBasedOnScript(uint32_t codePoint)
 {
-    Script script = getScript(codePoint);
+    Script script = GetScript(codePoint);
     if (script == Script::KANNADA || script == Script::MALAYALAM ||
         script == Script::TAMIL || script == Script::TELUGU) {
         return 2;
@@ -253,7 +255,7 @@ int hyphenationTypeBasedOnScript(uint32_t codePoint)
     return 1;
 }
 
-const char* getHyphenByLocale(const char* locale)
+const char* GetHyphenByLocale(const char* locale)
 {
     if (locale == nullptr) {
         return HYPHEN_STANDARD;
@@ -275,7 +277,7 @@ const char* getHyphenByLocale(const char* locale)
     return HYPHEN_STANDARD;
 }
 
-std::string toLower(const std::string& str)
+std::string ToLower(const std::string& str)
 {
     std::string result;
     result.reserve(str.size());
@@ -285,7 +287,7 @@ std::string toLower(const std::string& str)
     return result;
 }
 
-std::string mapLocaleToFile(const std::string& locale)
+std::string MapLocaleToFile(const std::string& locale)
 {
     static const std::map<std::string, std::string> localeMapping = {
         { "en-US", "en-us" },
@@ -318,15 +320,15 @@ std::string mapLocaleToFile(const std::string& locale)
     return lang;
 }
 
-std::string buildFileName(const std::string& locale)
+std::string BuildFileName(const std::string& locale)
 {
-    std::string lowerLocale = toLower(mapLocaleToFile(locale));
+    std::string lowerLocale = ToLower(MapLocaleToFile(locale));
     return HYPHEN_PATH_PREFIX + lowerLocale + SYSTEM_HYPHENATOR_SUFFIX;
 }
 
-std::pair<const uint8_t*, size_t> loadPatternFile(const std::string& locale)
+std::pair<const uint8_t*, size_t> LoadPatternFile(const std::string& locale)
 {
-    const std::string hyFilePath = buildFileName(locale);
+    const std::string hyFilePath = BuildFileName(locale);
     struct stat buffer;
     if (stat(hyFilePath.c_str(), &buffer) != 0) {
         return std::make_pair(nullptr, 0);
@@ -348,34 +350,34 @@ std::pair<const uint8_t*, size_t> loadPatternFile(const std::string& locale)
     return std::make_pair(dataBuffer, static_cast<size_t>(size));
 }
 
-bool isOnePrefixSuffixLang(const std::string& locale)
+bool IsOnePrefixSuffixLang(const std::string& locale)
 {
     return locale == "af" || locale == "am" || locale == "el" || locale == "cu";
 }
 
-int getDefaultMinPrefix(const std::string& locale)
+int GetDefaultMinPrefix(const std::string& locale)
 {
-    if (isOnePrefixSuffixLang(locale)) {
-        return 1;
+    if (IsOnePrefixSuffixLang(locale)) {
+        return 1; // word break keep 1 char at head
     }
-    return 2;
+    return 2; // word break keep 2 char at head
 }
 
-bool isThreeSuffixLang(const std::string& locale)
+bool IsThreeSuffixLang(const std::string& locale)
 {
     return locale == "pt" || locale == "fr" || locale == "en" || locale == "ga" ||
            locale == "cy" || locale == "et" || locale == "lv";
 }
 
-int getDefaultMinSuffix(const std::string& locale)
+int GetDefaultMinSuffix(const std::string& locale)
 {
-    if (isThreeSuffixLang(locale)) {
-        return 3;
+    if (IsThreeSuffixLang(locale)) {
+        return 3; // word break keep 3 char at tail
     }
-    return 2;
+    return 2; // word break keep 2 char at tail
 }
 
-HyphenationLocale parseLocale(const std::string& locale)
+HyphenationLocale ParseLocale(const std::string& locale)
 {
     if (locale == "pl") {
         return LOCALE_POLISH;
@@ -392,12 +394,12 @@ HyphenationLocale parseLocale(const std::string& locale)
     return LOCALE_OTHER;
 }
 
-bool isLatinChar(uint32_t c)
+bool IsLatinChar(uint32_t c)
 {
-    return isLatinRange(c);
+    return IsLatinRange(c);
 }
 
-uint32_t utf8ToCodepoint(const char*& ptr)
+uint32_t Utf8ToCodepoint(const char*& ptr)
 {
     const uint8_t* u = reinterpret_cast<const uint8_t*>(ptr);
     if ((*u & 0x80) == 0) {
@@ -424,12 +426,12 @@ uint32_t utf8ToCodepoint(const char*& ptr)
     return *u++;
 }
 
-std::vector<uint32_t> utf8ToCodepoints(const char* word)
+std::vector<uint32_t> Utf8ToCodepoints(const char* word)
 {
     std::vector<uint32_t> codepoints;
     const char* ptr = word;
     while (*ptr != '\0') {
-        codepoints.push_back(utf8ToCodepoint(ptr));
+        codepoints.push_back(Utf8ToCodepoint(ptr));
     }
     return codepoints;
 }
@@ -437,32 +439,32 @@ std::vector<uint32_t> utf8ToCodepoints(const char* word)
 } // namespace
 
 Hyphenation::Hyphenation(const char* lang)
-    : m_locale(lang), m_minPrefix(2), m_minSuffix(2), m_patternData(nullptr), m_patternSize(0),
-      m_hyphenLocale(0)
+    : mLocale(lang), mMinPrefix(2), mMinSuffix(2), mPatternData(nullptr), mPatternSize(0),
+      mHyphenLocale(0)
 {
     std::string locale = lang;
     size_t pos = locale.find('-');
     if (pos != std::string::npos) {
         locale = locale.substr(0, pos);
     }
-    m_minPrefix = getDefaultMinPrefix(locale);
-    m_minSuffix = getDefaultMinSuffix(locale);
-    m_hyphenLocale = parseLocale(locale);
-    auto result = loadPatternFile(locale);
+    mMinPrefix = GetDefaultMinPrefix(locale);
+    mMinSuffix = GetDefaultMinSuffix(locale);
+    mHyphenLocale = ParseLocale(locale);
+    auto result = LoadPatternFile(locale);
     if (result.first != nullptr) {
-        m_patternData = const_cast<uint8_t*>(result.first);
-        m_patternSize = result.second;
+        mPatternData = const_cast<uint8_t*>(result.first);
+        mPatternSize = result.second;
     }
 }
 
 Hyphenation::~Hyphenation()
 {
-    if (m_patternData != nullptr) {
-        delete[] static_cast<uint8_t*>(m_patternData);
+    if (mPatternData != nullptr) {
+        delete[] static_cast<uint8_t*>(mPatternData);
     }
 }
 
-Hyphenation* Hyphenation::createInstance(const char* lang)
+Hyphenation* Hyphenation::CreateInstance(const char* lang)
 {
     if (lang == nullptr || strlen(lang) == 0) {
         return nullptr;
@@ -470,9 +472,9 @@ Hyphenation* Hyphenation::createInstance(const char* lang)
     return new Hyphenation(lang);
 }
 
-const char* Hyphenation::getHyphenCharByLocale(const char* locale) const
+const char* Hyphenation::GetHyphenCharByLocale(const char* locale) const
 {
-    return getHyphenByLocale(locale);
+    return GetHyphenByLocale(locale);
 }
 
 struct Header {
@@ -514,13 +516,13 @@ struct AlphabetTable0 {
     }
 };
 
-bool Hyphenation::checkAlienChars(const std::vector<uint32_t>& codepoints) const
+bool Hyphenation::CheckAlienChars(const std::vector<uint32_t>& codepoints) const
 {
-    if (m_patternData == nullptr) {
+    if (mPatternData == nullptr) {
         return false;
     }
 
-    const Header* header = reinterpret_cast<const Header*>(m_patternData);
+    const Header* header = reinterpret_cast<const Header*>(mPatternData);
     uint32_t alphabetVersion = header->alphabetVersion();
     if (alphabetVersion == 0) {
         const AlphabetTable0* alphabet = reinterpret_cast<const AlphabetTable0*>(
@@ -552,37 +554,37 @@ bool Hyphenation::checkAlienChars(const std::vector<uint32_t>& codepoints) const
     return false;
 }
 
-bool Hyphenation::preCharIsPolishHyphen(uint32_t prevChar, size_t i,
+bool Hyphenation::PreCharIsPolishHyphen(uint32_t prevChar, size_t i,
     const std::vector<uint32_t>& codepoints) const
 {
     return (prevChar == CHAR_HYPHEN_MINUS || prevChar == CHAR_HYPHEN) &&
-           (m_hyphenLocale == LOCALE_POLISH || m_hyphenLocale == LOCALE_SLOVENIAN) &&
-                i < codepoints.size() && isLatinChar(codepoints[i]);
+           (mHyphenLocale == LOCALE_POLISH || mHyphenLocale == LOCALE_SLOVENIAN) &&
+                i < codepoints.size() && IsLatinChar(codepoints[i]);
 }
 
-void Hyphenation::processNoPatterns(const std::vector<uint32_t>& codepoints,
+void Hyphenation::ProcessNoPatterns(const std::vector<uint32_t>& codepoints,
                                     std::vector<int>& result) const
 {
     result[0] = 0;
     for (size_t i = 1; i < codepoints.size(); i++) {
         uint32_t prevChar = codepoints[i - 1];
-        if (i > 1 && isLineBreakingHyphen(prevChar)) {
-            if (preCharIsPolishHyphen(prevChar, i, codepoints)) {
+        if (i > 1 && IsLineBreakingHyphen(prevChar)) {
+            if (PreCharIsPolishHyphen(prevChar, i, codepoints)) {
                 result[i] = HyphenType::BREAK_INSERT_AND_NEXT;
             } else {
                 result[i] = HyphenType::BREAK_NO_INSERT;
             }
         } else if (i > 1 && prevChar == CHAR_SOFT_HYPHEN) {
-            if (getScript(codepoints[i]) == Script::ARABIC) {
+            if (GetScript(codepoints[i]) == Script::ARABIC) {
                 result[i] = HyphenType::BREAK_INSERT_AND_NEXT;
             } else {
-                result[i] = hyphenationTypeBasedOnScript(codepoints[i]);
+                result[i] = HyphenationTypeBasedOnScript(codepoints[i]);
             }
-        } else if (prevChar == CHAR_MIDDLE_DOT && m_minPrefix < static_cast<int>(i) &&
-                   i <= codepoints.size() - static_cast<size_t>(m_minSuffix) &&
-                   m_hyphenLocale == LOCALE_CATALAN &&
-                   ((codepoints[i - 2] == 'l' && codepoints[i] == 'l') ||
-                    (codepoints[i - 2] == 'L' && codepoints[i] == 'L'))) {
+        } else if (prevChar == CHAR_MIDDLE_DOT && mMinPrefix < static_cast<int>(i) &&
+                   i <= codepoints.size() - static_cast<size_t>(mMinSuffix) &&
+                   mHyphenLocale == LOCALE_CATALAN &&
+                   ((codepoints[i - PRE_CHAR_OFFSET] == 'l' && codepoints[i] == 'l') ||
+                    (codepoints[i - PRE_CHAR_OFFSET] == 'L' && codepoints[i] == 'L'))) {
             result[i] = HyphenType::BREAK_AND_REPLACE;
         } else {
             result[i] = HyphenType::NO_BREAK;
@@ -590,14 +592,14 @@ void Hyphenation::processNoPatterns(const std::vector<uint32_t>& codepoints,
     }
 }
 
-std::vector<uint8_t> Hyphenation::convertToCharCodes(const std::vector<uint32_t>& codepoints,
+std::vector<uint8_t> Hyphenation::ConvertToCharCodes(const std::vector<uint32_t>& codepoints,
                                                      size_t len) const
 {
-    std::vector<uint8_t> charCodes(len + 2);
+    std::vector<uint8_t> charCodes(len + ADD_ARRAY_HEAD_TAIL);
     charCodes[0] = 0;
     charCodes[len + 1] = 0;
 
-    const Header* header = reinterpret_cast<const Header*>(m_patternData);
+    const Header* header = reinterpret_cast<const Header*>(mPatternData);
     uint32_t alphabetVersion = header->alphabetVersion();
 
     if (alphabetVersion == 0) {
@@ -627,10 +629,10 @@ std::vector<uint8_t> Hyphenation::convertToCharCodes(const std::vector<uint32_t>
     return charCodes;
 }
 
-void Hyphenation::matchPatterns(const char* word, const std::vector<uint8_t>& charCodes,
+void Hyphenation::MatchPatterns(const char* word, const std::vector<uint8_t>& charCodes,
                                 size_t len, std::vector<int>& result) const
 {
-    const Header* header = reinterpret_cast<const Header*>(m_patternData);
+    const Header* header = reinterpret_cast<const Header*>(mPatternData);
     const Trie* trie = header->trieTable();
     const Pattern* pattern = header->patternTable();
     const uint32_t* trieData = trie->data;
@@ -638,8 +640,8 @@ void Hyphenation::matchPatterns(const char* word, const std::vector<uint8_t>& ch
     uint32_t link_shift = trie->link_shift;
     uint32_t link_mask = trie->link_mask;
     uint32_t pattern_shift = trie->pattern_shift;
-    size_t paddedLen = len + 2;
-    size_t maxOffset = paddedLen - m_minSuffix - 1;
+    size_t paddedLen = len + ADD_ARRAY_HEAD_TAIL;
+    size_t maxOffset = paddedLen - mMinSuffix - 1;
 
     std::vector<uint8_t> buffer(paddedLen, 0);
     for (size_t i = 0; i < paddedLen - 1; i++) {
@@ -662,17 +664,17 @@ void Hyphenation::matchPatterns(const char* word, const std::vector<uint8_t>& ch
             const uint8_t* pat_buf = pattern->buf(pat_entry);
             int offset = j + 1 - (pat_len + pat_shift_val);
 
-            int start = std::max(static_cast<int>(m_minPrefix) - offset, 0);
+            int start = std::max(static_cast<int>(mMinPrefix) - offset, 0);
             int end = std::min(pat_len, static_cast<int>(maxOffset) - offset);
             for (int k = start; k < end; k++) {
                 buffer[offset + k] = std::max(buffer[offset + k], pat_buf[k]);
             }
         }
     }
-    for (size_t i = m_minPrefix; i < maxOffset; i++) {
+    for (size_t i = mMinPrefix; i < maxOffset; i++) {
         result[i] = (buffer[i] & 1u) ? 1 : 0;
-        if (i > 0 && isLineBreakingHyphen(word[i - 1])) {
-            if (m_hyphenLocale == LOCALE_PORTUGUESE) {
+        if (i > 0 && IsLineBreakingHyphen(word[i - 1])) {
+            if (mHyphenLocale == LOCALE_PORTUGUESE) {
                 result[i - 1] = HyphenType::BREAK_NO_INSERT;
                 result[i] = HyphenType::NO_BREAK;
             } else {
@@ -683,45 +685,45 @@ void Hyphenation::matchPatterns(const char* word, const std::vector<uint8_t>& ch
     }
 }
 
-std::vector<int> Hyphenation::getBreakCandidate(const char* word)
+std::vector<int> Hyphenation::GetBreakCandidate(const char* word)
 {
-    return getBreakCandidate(word, m_minPrefix, m_minSuffix);
+    return GetBreakCandidate(word, mMinPrefix, mMinSuffix);
 }
 
-std::vector<int> Hyphenation::getBreakCandidate(const char* word, int minPrefix, int minSuffix)
+std::vector<int> Hyphenation::GetBreakCandidate(const char* word, int minPrefix, int minSuffix)
 {
-    if (m_patternData == nullptr || word == nullptr || strlen(word) == 0) {
+    if (mPatternData == nullptr || word == nullptr || strlen(word) == 0) {
         return std::vector<int>(1, 0);
     }
-    std::vector<uint32_t> codepoints = utf8ToCodepoints(word);
+    std::vector<uint32_t> codepoints = Utf8ToCodepoints(word);
     size_t len = codepoints.size();
     if (len == 0) {
         return std::vector<int>(1, 0);
     }
-    size_t paddedLen = len + 2;
+    size_t paddedLen = len + ADD_ARRAY_HEAD_TAIL;
 
-    if (m_patternData != nullptr && len >= static_cast<size_t>(minPrefix + minSuffix) &&
+    if (mPatternData != nullptr && len >= static_cast<size_t>(minPrefix + minSuffix) &&
         paddedLen <= MAX_HYPHENATED_SIZE) {
-        bool hasAlienChar = checkAlienChars(codepoints);
+        bool hasAlienChar = CheckAlienChars(codepoints);
         if (!hasAlienChar) {
             std::vector<int> result(len, 0);
             result[0] = 0;
 
-            std::vector<uint8_t> charCodes = convertToCharCodes(codepoints, len);
-            matchPatterns(word, charCodes, len, result);
+            std::vector<uint8_t> charCodes = ConvertToCharCodes(codepoints, len);
+            MatchPatterns(word, charCodes, len, result);
             return result;
         }
     }
     std::vector<int> result(len, 0);
     result[0] = 0;
-    processNoPatterns(codepoints, result);
+    ProcessNoPatterns(codepoints, result);
     return result;
 }
 
-std::vector<const char*> Hyphenation::getHyphenation(const char* lang, HyphenType type)
+std::vector<const char*> Hyphenation::GetHyphenation(const char* lang, HyphenType type)
 {
     std::vector<const char*> result;
-    const char* hyphen = getHyphenByLocale(lang);
+    const char* hyphen = GetHyphenByLocale(lang);
 
     switch (type) {
         case HyphenType::NO_BREAK:
@@ -745,15 +747,15 @@ std::vector<const char*> Hyphenation::getHyphenation(const char* lang, HyphenTyp
     return result;
 }
 
-void Hyphenation::processHyphenBreak(const std::vector<uint32_t>& codepoints,
+void Hyphenation::ProcessHyphenBreak(const std::vector<uint32_t>& codepoints,
                                      std::vector<int>& result, size_t i) const
 {
     uint32_t prevChar = codepoints[i - 1];
     if ((prevChar == CHAR_HYPHEN_MINUS || prevChar == CHAR_HYPHEN) &&
-        (m_hyphenLocale == LOCALE_POLISH || m_hyphenLocale == LOCALE_SLOVENIAN) &&
-        i < codepoints.size() && isLatinChar(codepoints[i])) {
+        (mHyphenLocale == LOCALE_POLISH || mHyphenLocale == LOCALE_SLOVENIAN) &&
+        i < codepoints.size() && IsLatinChar(codepoints[i])) {
         result[i] = HyphenType::BREAK_INSERT_AND_NEXT;
-    } else if (m_hyphenLocale == LOCALE_PORTUGUESE && i > 1) {
+    } else if (mHyphenLocale == LOCALE_PORTUGUESE && i > 1) {
         result[i - 1] = HyphenType::BREAK_NO_INSERT;
         result[i] = HyphenType::NO_BREAK;
     } else {
@@ -762,28 +764,28 @@ void Hyphenation::processHyphenBreak(const std::vector<uint32_t>& codepoints,
     }
 }
 
-bool Hyphenation::isPreCharIsCatalanHyphen(uint32_t prevChar, size_t i,
+bool Hyphenation::IsPreCharIsCatalanHyphen(uint32_t prevChar, size_t i,
     size_t len, const std::vector<uint32_t>& codepoints) const
 {
-    return prevChar == CHAR_MIDDLE_DOT && m_minPrefix < static_cast<int>(i) &&
-           i <= len - m_minSuffix && m_hyphenLocale == LOCALE_CATALAN &&
-           ((codepoints[i - 2] == 'l' && codepoints[i] == 'l') ||
-           (codepoints[i - 2] == 'L' && codepoints[i] == 'L'));
+    return prevChar == CHAR_MIDDLE_DOT && mMinPrefix < static_cast<int>(i) &&
+           i <= len - mMinSuffix && mHyphenLocale == LOCALE_CATALAN &&
+           ((codepoints[i - PRE_CHAR_OFFSET] == 'l' && codepoints[i] == 'l') ||
+           (codepoints[i - PRE_CHAR_OFFSET] == 'L' && codepoints[i] == 'L'));
 }
 
-std::vector<int> Hyphenation::hyphenationWithNoRule(const char* word)
+std::vector<int> Hyphenation::HyphenationWithNoRule(const char* word)
 {
     if (word == nullptr || strlen(word) == 0) {
         return std::vector<int>(1, 0);
     }
 
-    std::vector<uint32_t> codepoints = utf8ToCodepoints(word);
+    std::vector<uint32_t> codepoints = Utf8ToCodepoints(word);
     size_t len = codepoints.size();
     if (len == 0) {
         return std::vector<int>(1, 0);
     }
 
-    if (checkAlienChars(codepoints)) {
+    if (CheckAlienChars(codepoints)) {
         return std::vector<int>(1, 0);
     }
 
@@ -792,19 +794,19 @@ std::vector<int> Hyphenation::hyphenationWithNoRule(const char* word)
 
     for (size_t i = 1; i < len; i++) {
         uint32_t prevChar = codepoints[i - 1];
-        if (i > 1 && isLineBreakingHyphen(prevChar)) {
-            if (preCharIsPolishHyphen(prevChar, i, codepoints)) {
+        if (i > 1 && IsLineBreakingHyphen(prevChar)) {
+            if (PreCharIsPolishHyphen(prevChar, i, codepoints)) {
                 result[i] = HyphenType::BREAK_INSERT_AND_NEXT;
             } else {
                 result[i] = HyphenType::BREAK_NO_INSERT;
             }
         } else if (i > 1 && prevChar == CHAR_SOFT_HYPHEN) {
-            if (getScript(codepoints[i]) == Script::ARABIC) {
+            if (GetScript(codepoints[i]) == Script::ARABIC) {
                 result[i] = HyphenType::BREAK_INSERT_AND_NEXT;
             } else {
-                result[i] = hyphenationTypeBasedOnScript(codepoints[i]);
+                result[i] = HyphenationTypeBasedOnScript(codepoints[i]);
             }
-        } else if (isPreCharIsCatalanHyphen(prevChar, i, len, codepoints)) {
+        } else if (IsPreCharIsCatalanHyphen(prevChar, i, len, codepoints)) {
             result[i] = HyphenType::BREAK_AND_REPLACE;
         } else {
             result[i] = 0;
