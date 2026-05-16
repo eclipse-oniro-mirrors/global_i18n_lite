@@ -23,6 +23,7 @@ locale_sources = [
   "src/date_time_data.cpp",
   "src/date_time_format.cpp",
   "src/date_time_format_impl.cpp",
+  "src/hyphenation.cpp",
   "src/locale_info.cpp",
   "src/measure_format.cpp",
   "src/measure_format_impl.cpp",
