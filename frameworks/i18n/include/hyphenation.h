@@ -51,12 +51,12 @@ struct Pattern {
 
     static uint32_t Len(uint32_t entry)
     {
-        return entry >> 26; // 26 is shift bits 
+        return entry >> 26; // 26 is shift bits
     }
 
     static uint32_t Shift(uint32_t entry)
     {
-        return (entry >> 20) & 0x3f; // 20 is shift bits 
+        return (entry >> 20) & 0x3f; // 20 is shift bits
     }
 
     const uint8_t* Buf(uint32_t entry) const
@@ -72,7 +72,7 @@ struct AlphabetTable1 {
 
     static uint32_t Codepoint(uint32_t entry)
     {
-        return entry >> 11; // 11 is shift bits 
+        return entry >> 11; // 11 is shift bits
     }
 
     static uint32_t Value(uint32_t entry)

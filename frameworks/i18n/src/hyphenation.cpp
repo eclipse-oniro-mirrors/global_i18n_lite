@@ -339,13 +339,11 @@ std::pair<const uint8_t*, size_t> LoadPatternFile(const std::string& locale)
     if (!file.is_open()) {
         return std::make_pair(nullptr, 0);
     }
-
     std::streamsize size = file.tellg();
     file.seekg(0, std::ios::beg);
     if (static_cast<size_t>(size) > MAX_BINARY_FILE_SIZE) {
         return std::make_pair(nullptr, 0);
     }
-
     auto* dataBuffer = new uint8_t[size];
     if (!file.read(reinterpret_cast<char*>(dataBuffer), size)) {
         delete[] dataBuffer;
