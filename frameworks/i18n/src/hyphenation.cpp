@@ -44,6 +44,7 @@ constexpr size_t MAX_HYPHENATED_SIZE = 64;
 constexpr size_t PRE_CHAR_OFFSET = 2;
 constexpr size_t ADD_ARRAY_HEAD_TAIL = 2;
 const static int DEFAULT_MIN_VAL = 2;
+const static MAX_BINARY_FILE_SIZE = 1048576;
 
 const char* HYPHEN_PATH_PREFIX = "/system/i18n/hyphen-data/hyph-";
 constexpr char SYSTEM_HYPHENATOR_SUFFIX[] = ".hyb";
@@ -341,6 +342,9 @@ std::pair<const uint8_t*, size_t> LoadPatternFile(const std::string& locale)
 
     std::streamsize size = file.tellg();
     file.seekg(0, std::ios::beg);
+    if (static_cast<size_t>(size) > MAX_BINARY_FILE_SIZE) {
+        return std::make_pair(nullptr, 0);
+    }
 
     auto* dataBuffer = new uint8_t[size];
     if (!file.read(reinterpret_cast<char*>(dataBuffer), size)) {
@@ -359,9 +363,9 @@ bool IsOnePrefixSuffixLang(const std::string& locale)
 int GetDefaultMinPrefix(const std::string& locale)
 {
     if (IsOnePrefixSuffixLang(locale)) {
-        return 1; // word break keep 1 char at head
+        return 1; // word break keep at least 1 char at head
     }
-    return 2; // word break keep 2 char at head
+    return 2; // word break keep at least 2 char at head
 }
 
 bool IsThreeSuffixLang(const std::string& locale)
@@ -373,9 +377,9 @@ bool IsThreeSuffixLang(const std::string& locale)
 int GetDefaultMinSuffix(const std::string& locale)
 {
     if (IsThreeSuffixLang(locale)) {
-        return 3; // word break keep 3 char at tail
+        return 3; // word break keep at least 3 char at tail
     }
-    return 2; // word break keep 2 char at tail
+    return 2; // word break keep at least 2 char at tail
 }
 
 HyphenationLocale ParseLocale(const std::string& locale)
@@ -487,19 +491,23 @@ struct Header {
     uint32_t patternOffset;
     uint32_t fileSize;
 
-    const uint8_t* Bytes() const {
+    const uint8_t* Bytes() const
+    {
         return reinterpret_cast<const uint8_t*>(this);
     }
 
-    uint32_t AlphabetVersion() const {
+    uint32_t AlphabetVersion() const
+    {
         return *reinterpret_cast<const uint32_t*>(Bytes() + alphabetOffset);
     }
 
-    const Trie* TrieTable() const {
+    const Trie* TrieTable() const
+    {
         return reinterpret_cast<const Trie*>(Bytes() + trieOffset);
     }
 
-    const Pattern* PatternTable() const {
+    const Pattern* PatternTable() const
+    {
         return reinterpret_cast<const Pattern*>(Bytes() + patternOffset);
     }
 };
@@ -510,7 +518,8 @@ struct AlphabetTable0 {
     uint32_t maxCodepoint;
     uint8_t data[1];
 
-    uint8_t GetCode(uint32_t codepoint) const {
+    uint8_t GetCode(uint32_t codepoint) const
+    {
         if (codepoint < minCodepoint || codepoint >= maxCodepoint) {
             return 0;
         }
@@ -547,7 +556,7 @@ bool Hyphenation::CheckAlienChars(const std::vector<uint32_t>& codepoints) const
         const uint32_t* end = begin + nEntries;
         for (size_t i = 0; i < codepoints.size(); i++) {
             uint16_t c = static_cast<uint16_t>(codepoints[i]);
-            auto p = std::lower_bound(begin, end, static_cast<uint32_t>(c) << 11);
+            auto p = std::lower_bound(begin, end, static_cast<uint32_t>(c) << 11); // 11 is shift bits
             if (p == end || AlphabetTable1::Codepoint(*p) != c) {
                 return true;
             }
@@ -600,10 +609,8 @@ std::vector<uint8_t> Hyphenation::ConvertToCharCodes(const std::vector<uint32_t>
     std::vector<uint8_t> charCodes(len + ADD_ARRAY_HEAD_TAIL);
     charCodes[0] = 0;
     charCodes[len + 1] = 0;
-
     const Header* header = reinterpret_cast<const Header*>(mPatternData);
     uint32_t alphabetVersion = header->AlphabetVersion();
-
     if (alphabetVersion == 0) {
         const AlphabetTable0* alphabet = reinterpret_cast<const AlphabetTable0*>(
             header->Bytes() + header->alphabetOffset);
