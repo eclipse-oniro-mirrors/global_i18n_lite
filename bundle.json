@@ -64,6 +64,7 @@
                     "header": {
                         "header_files": [
                             "date_time_format.h",
+                            "hyphenation.h",
                             "locale_info.h",
                             "number_format.h",
                             "plural_format.h",
