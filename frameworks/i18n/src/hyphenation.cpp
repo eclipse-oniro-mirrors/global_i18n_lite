@@ -43,6 +43,7 @@ constexpr uint32_t CHAR_DOUBLE_HYPHEN = 0x2E40;
 constexpr size_t MAX_HYPHENATED_SIZE = 64;
 constexpr size_t PRE_CHAR_OFFSET = 2;
 constexpr size_t ADD_ARRAY_HEAD_TAIL = 2;
+const static int DEFAULT_MIN_VAL = 2;
 
 const char* HYPHEN_PATH_PREFIX = "/system/i18n/hyphen-data/hyph-";
 constexpr char SYSTEM_HYPHENATOR_SUFFIX[] = ".hyb";
@@ -250,9 +251,9 @@ int HyphenationTypeBasedOnScript(uint32_t codePoint)
     Script script = GetScript(codePoint);
     if (script == Script::KANNADA || script == Script::MALAYALAM ||
         script == Script::TAMIL || script == Script::TELUGU) {
-        return 2;
+        return 2; // 2 means HyphenType::BREAK_NO_INSERT
     }
-    return 1;
+    return 1; // 1 means HyphenType::BREAK
 }
 
 const char* GetHyphenByLocale(const char* locale)
@@ -409,18 +410,18 @@ uint32_t Utf8ToCodepoint(const char*& ptr)
     }
     if ((*u & 0xE0) == 0xC0) {
         uint32_t cp = ((*u & 0x1F) << 6) | (u[1] & 0x3F);
-        ptr += 2;
+        ptr += 2; // 2 means unicode char has 2 bytes
         return cp;
     }
     if ((*u & 0xF0) == 0xE0) {
         uint32_t cp = ((*u & 0x0F) << 12) | ((u[1] & 0x3F) << 6) | (u[2] & 0x3F);
-        ptr += 3;
+        ptr += 3; // 3 means unicode char has 3 bytes
         return cp;
     }
     if ((*u & 0xF8) == 0xF0) {
         uint32_t cp = ((*u & 0x07) << 18) | ((u[1] & 0x3F) << 12) |
                       ((u[2] & 0x3F) << 6) | (u[3] & 0x3F);
-        ptr += 4;
+        ptr += 4; // 4 means unicode char has 4 bytes
         return cp;
     }
     return *u++;
@@ -439,7 +440,8 @@ std::vector<uint32_t> Utf8ToCodepoints(const char* word)
 } // namespace
 
 Hyphenation::Hyphenation(const char* lang)
-    : mLocale(lang), mMinPrefix(2), mMinSuffix(2), mPatternData(nullptr), mPatternSize(0),
+    : mLocale(lang), mMinPrefix(DEFAULT_MIN_VAL),
+      mMinSuffix(DEFAULT_MIN_VAL), mPatternData(nullptr), mPatternSize(0),
       mHyphenLocale(0)
 {
     std::string locale = lang;
@@ -480,39 +482,39 @@ const char* Hyphenation::GetHyphenCharByLocale(const char* locale) const
 struct Header {
     uint32_t magic;
     uint32_t version;
-    uint32_t alphabet_offset;
-    uint32_t trie_offset;
-    uint32_t pattern_offset;
-    uint32_t file_size;
+    uint32_t alphabetOffset;
+    uint32_t trieOffset;
+    uint32_t patternOffset;
+    uint32_t fileSize;
 
-    const uint8_t* bytes() const {
+    const uint8_t* Bytes() const {
         return reinterpret_cast<const uint8_t*>(this);
     }
 
-    uint32_t alphabetVersion() const {
-        return *reinterpret_cast<const uint32_t*>(bytes() + alphabet_offset);
+    uint32_t AlphabetVersion() const {
+        return *reinterpret_cast<const uint32_t*>(Bytes() + alphabetOffset);
     }
 
-    const Trie* trieTable() const {
-        return reinterpret_cast<const Trie*>(bytes() + trie_offset);
+    const Trie* TrieTable() const {
+        return reinterpret_cast<const Trie*>(Bytes() + trieOffset);
     }
 
-    const Pattern* patternTable() const {
-        return reinterpret_cast<const Pattern*>(bytes() + pattern_offset);
+    const Pattern* PatternTable() const {
+        return reinterpret_cast<const Pattern*>(Bytes() + patternOffset);
     }
 };
 
 struct AlphabetTable0 {
     uint32_t version;
-    uint32_t min_codepoint;
-    uint32_t max_codepoint;
+    uint32_t minCodepoint;
+    uint32_t maxCodepoint;
     uint8_t data[1];
 
-    uint8_t getCode(uint32_t codepoint) const {
-        if (codepoint < min_codepoint || codepoint >= max_codepoint) {
+    uint8_t GetCode(uint32_t codepoint) const {
+        if (codepoint < minCodepoint || codepoint >= maxCodepoint) {
             return 0;
         }
-        return data[codepoint - min_codepoint];
+        return data[codepoint - minCodepoint];
     }
 };
 
@@ -523,30 +525,30 @@ bool Hyphenation::CheckAlienChars(const std::vector<uint32_t>& codepoints) const
     }
 
     const Header* header = reinterpret_cast<const Header*>(mPatternData);
-    uint32_t alphabetVersion = header->alphabetVersion();
+    uint32_t alphabetVersion = header->AlphabetVersion();
     if (alphabetVersion == 0) {
         const AlphabetTable0* alphabet = reinterpret_cast<const AlphabetTable0*>(
-            header->bytes() + header->alphabet_offset);
+            header->Bytes() + header->alphabetOffset);
         for (size_t i = 0; i < codepoints.size(); i++) {
             uint16_t c = static_cast<uint16_t>(codepoints[i]);
-            if (c < alphabet->min_codepoint || c >= alphabet->max_codepoint) {
+            if (c < alphabet->minCodepoint || c >= alphabet->maxCodepoint) {
                 return true;
             }
-            uint8_t code = alphabet->getCode(c);
+            uint8_t code = alphabet->GetCode(c);
             if (code == 0) {
                 return true;
             }
         }
     } else if (alphabetVersion == 1) {
         const AlphabetTable1* alphabet = reinterpret_cast<const AlphabetTable1*>(
-            header->bytes() + header->alphabet_offset);
-        size_t n_entries = alphabet->n_entries;
+            header->Bytes() + header->alphabetOffset);
+        size_t nEntries = alphabet->nEntries;
         const uint32_t* begin = alphabet->data;
-        const uint32_t* end = begin + n_entries;
+        const uint32_t* end = begin + nEntries;
         for (size_t i = 0; i < codepoints.size(); i++) {
             uint16_t c = static_cast<uint16_t>(codepoints[i]);
             auto p = std::lower_bound(begin, end, static_cast<uint32_t>(c) << 11);
-            if (p == end || AlphabetTable1::codepoint(*p) != c) {
+            if (p == end || AlphabetTable1::Codepoint(*p) != c) {
                 return true;
             }
         }
@@ -600,26 +602,26 @@ std::vector<uint8_t> Hyphenation::ConvertToCharCodes(const std::vector<uint32_t>
     charCodes[len + 1] = 0;
 
     const Header* header = reinterpret_cast<const Header*>(mPatternData);
-    uint32_t alphabetVersion = header->alphabetVersion();
+    uint32_t alphabetVersion = header->AlphabetVersion();
 
     if (alphabetVersion == 0) {
         const AlphabetTable0* alphabet = reinterpret_cast<const AlphabetTable0*>(
-            header->bytes() + header->alphabet_offset);
+            header->Bytes() + header->alphabetOffset);
         for (size_t i = 0; i < len; i++) {
             uint16_t c = static_cast<uint16_t>(codepoints[i]);
-            charCodes[i + 1] = alphabet->getCode(c);
+            charCodes[i + 1] = alphabet->GetCode(c);
         }
     } else if (alphabetVersion == 1) {
         const AlphabetTable1* alphabet = reinterpret_cast<const AlphabetTable1*>(
-            header->bytes() + header->alphabet_offset);
-        size_t n_entries = alphabet->n_entries;
+            header->Bytes() + header->alphabetOffset);
+        size_t nEntries = alphabet->nEntries;
         const uint32_t* begin = alphabet->data;
-        const uint32_t* end = begin + n_entries;
+        const uint32_t* end = begin + nEntries;
         for (size_t i = 0; i < len; i++) {
             uint16_t c = static_cast<uint16_t>(codepoints[i]);
             auto p = std::lower_bound(begin, end, static_cast<uint32_t>(c) << 11);
-            if (p != end && AlphabetTable1::codepoint(*p) == c) {
-                charCodes[i + 1] = static_cast<uint8_t>(AlphabetTable1::value(*p));
+            if (p != end && AlphabetTable1::Codepoint(*p) == c) {
+                charCodes[i + 1] = static_cast<uint8_t>(AlphabetTable1::Value(*p));
             } else {
                 charCodes[i + 1] = 0;
             }
@@ -633,13 +635,13 @@ void Hyphenation::MatchPatterns(const char* word, const std::vector<uint8_t>& ch
                                 size_t len, std::vector<int>& result) const
 {
     const Header* header = reinterpret_cast<const Header*>(mPatternData);
-    const Trie* trie = header->trieTable();
-    const Pattern* pattern = header->patternTable();
+    const Trie* trie = header->TrieTable();
+    const Pattern* pattern = header->PatternTable();
     const uint32_t* trieData = trie->data;
-    uint32_t char_mask = trie->char_mask;
-    uint32_t link_shift = trie->link_shift;
-    uint32_t link_mask = trie->link_mask;
-    uint32_t pattern_shift = trie->pattern_shift;
+    uint32_t charMask = trie->charMask;
+    uint32_t linkShift = trie->linkShift;
+    uint32_t linkMask = trie->linkMask;
+    uint32_t patternShift = trie->patternShift;
     size_t paddedLen = len + ADD_ARRAY_HEAD_TAIL;
     size_t maxOffset = paddedLen - mMinSuffix - 1;
 
@@ -649,25 +651,25 @@ void Hyphenation::MatchPatterns(const char* word, const std::vector<uint8_t>& ch
         for (size_t j = i; j < paddedLen; j++) {
             uint16_t c = charCodes[j];
             uint32_t entry = trieData[node + c];
-            if ((entry & char_mask) != c) {
+            if ((entry & charMask) != c) {
                 break;
             }
-            node = (entry & link_mask) >> link_shift;
+            node = (entry & linkMask) >> linkShift;
 
-            uint32_t pat_ix = trieData[node] >> pattern_shift;
-            if (pat_ix == 0) {
+            uint32_t patIx = trieData[node] >> patternShift;
+            if (patIx == 0) {
                 continue;
             }
-            uint32_t pat_entry = pattern->data[pat_ix];
-            int pat_len = Pattern::len(pat_entry);
-            int pat_shift_val = Pattern::shift(pat_entry);
-            const uint8_t* pat_buf = pattern->buf(pat_entry);
-            int offset = j + 1 - (pat_len + pat_shift_val);
+            uint32_t patEntry = pattern->data[patIx];
+            int patLen = Pattern::Len(patEntry);
+            int patShiftVal = Pattern::Shift(patEntry);
+            const uint8_t* patBuf = pattern->Buf(patEntry);
+            int offset = j + 1 - (patLen + patShiftVal);
 
             int start = std::max(static_cast<int>(mMinPrefix) - offset, 0);
-            int end = std::min(pat_len, static_cast<int>(maxOffset) - offset);
+            int end = std::min(patLen, static_cast<int>(maxOffset) - offset);
             for (int k = start; k < end; k++) {
-                buffer[offset + k] = std::max(buffer[offset + k], pat_buf[k]);
+                buffer[offset + k] = std::max(buffer[offset + k], patBuf[k]);
             }
         }
     }

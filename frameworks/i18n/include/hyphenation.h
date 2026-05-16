@@ -34,48 +34,48 @@ enum HyphenType {
 
 struct Trie {
     uint32_t version;
-    uint32_t char_mask;
-    uint32_t link_shift;
-    uint32_t link_mask;
-    uint32_t pattern_shift;
-    uint32_t n_entries;
+    uint32_t charMask;
+    uint32_t linkShift;
+    uint32_t linkMask;
+    uint32_t patternShift;
+    uint32_t nEntries;
     uint32_t data[1];
 };
 
 struct Pattern {
     uint32_t version;
-    uint32_t n_entries;
-    uint32_t pattern_offset;
-    uint32_t pattern_size;
+    uint32_t nEntries;
+    uint32_t patternOffset;
+    uint32_t patternSize;
     uint32_t data[1];
 
-    static uint32_t len(uint32_t entry)
+    static uint32_t Len(uint32_t entry)
     {
         return entry >> 26;
     }
 
-    static uint32_t shift(uint32_t entry)
+    static uint32_t Shift(uint32_t entry)
     {
         return (entry >> 20) & 0x3f;
     }
 
-    const uint8_t* buf(uint32_t entry) const
+    const uint8_t* Buf(uint32_t entry) const
     {
-        return reinterpret_cast<const uint8_t*>(this) + pattern_offset + (entry & 0xfffff);
+        return reinterpret_cast<const uint8_t*>(this) + patternOffset + (entry & 0xfffff);
     }
 };
 
 struct AlphabetTable1 {
     uint32_t version;
-    uint32_t n_entries;
+    uint32_t nEntries;
     uint32_t data[1];
 
-    static uint32_t codepoint(uint32_t entry)
+    static uint32_t Codepoint(uint32_t entry)
     {
         return entry >> 11;
     }
 
-    static uint32_t value(uint32_t entry)
+    static uint32_t Value(uint32_t entry)
     {
         return entry & 0x7ff;
     }
@@ -83,14 +83,14 @@ struct AlphabetTable1 {
 
 class Hyphenation {
 public:
-    static Hyphenation* createInstance(const char* lang);
+    static Hyphenation* CreateInstance(const char* lang);
 
-    std::vector<int> getBreakCandidate(const char* word);
-    std::vector<int> getBreakCandidate(const char* word, int minPrefix, int minSuffix);
+    std::vector<int> GetBreakCandidate(const char* word);
+    std::vector<int> GetBreakCandidate(const char* word, int minPrefix, int minSuffix);
 
-    static std::vector<const char*> getHyphenation(const char* lang, HyphenType type);
+    static std::vector<const char*> GetHyphenation(const char* lang, HyphenType type);
 
-    std::vector<int> hyphenationWithNoRule(const char* word);
+    std::vector<int> HyphenationWithNoRule(const char* word);
 
     ~Hyphenation();
 
