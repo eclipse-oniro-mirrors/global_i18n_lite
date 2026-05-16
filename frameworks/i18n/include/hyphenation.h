@@ -13,8 +13,8 @@
  * limitations under the License.
  */
 
-#ifndef BLOBAL_I18N_LITE_HYPHENATION_H
-#define BLOBAL_I18N_LITE_HYPHENATION_H
+#ifndef GLOBAL_I18N_LITE_HYPHENATION_H
+#define GLOBAL_I18N_LITE_HYPHENATION_H
 
 #include <cstdint>
 #include <cstring>
