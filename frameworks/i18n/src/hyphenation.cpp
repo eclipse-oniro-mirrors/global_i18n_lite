@@ -44,7 +44,7 @@ constexpr size_t MAX_HYPHENATED_SIZE = 64;
 constexpr size_t PRE_CHAR_OFFSET = 2;
 constexpr size_t ADD_ARRAY_HEAD_TAIL = 2;
 const static int DEFAULT_MIN_VAL = 2;
-const static MAX_BINARY_FILE_SIZE = 1048576;
+const static size_t MAX_BINARY_FILE_SIZE = 1048576;
 
 const char* HYPHEN_PATH_PREFIX = "/system/i18n/hyphen-data/hyph-";
 constexpr char SYSTEM_HYPHENATOR_SUFFIX[] = ".hyb";
