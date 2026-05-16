@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2026 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,212 +13,116 @@
  * limitations under the License.
  */
 
-#ifndef TYPE_H
-#define TYPE_H
+#ifndef BLOBAL_I18N_LITE_HYPHENATION_H
+#define BLOBAL_I18N_LITE_HYPHENATION_H
 
-/**
-* @addtogroup I18N
-* @{
-*
-* @brief Provides functions related to internationalization (i18n), with which you can format date, time and numbers.
-*
-* @since 2.2
-* @version 1.0
-*/
-
-/**
-* @file Types.h
-*
-* @brief Declares enumerated types of time, date, and number formatting.
-*
-* @since 2.2
-* @version 1.0
-*/
-
-#define CONST_CAST const_cast<char *>
-#define CHAR_CAST reinterpret_cast<char const *>
-
+#include <cstdint>
+#include <cstring>
 #include <string>
+#include <vector>
 
 namespace OHOS {
 namespace I18N {
-/**
-* @brief Enumerates formatting statuses.
-*
-* @since 2.2
-* @version 1.0
-*/
-enum I18nStatus {
-    /* Success */
-    ISUCCESS = 0,
 
-    /* Error */
-    IERROR
+enum HyphenType {
+    NO_BREAK = 0,
+    BREAK = 1,
+    BREAK_NO_INSERT = 2,
+    BREAK_AND_REPLACE = 3,
+    BREAK_INSERT_AND_NEXT = 4
 };
 
-/**
-* @brief Enumerates number formatting types.
-*
-* @since 2.2
-* @version 1.0
-*/
-enum NumberFormatType {
-    /* Formats a number into a decimal. */
-    DECIMAL,
-
-    /* Formats a number into a percentage. */
-    PERCENT
+struct Trie {
+    uint32_t version;
+    uint32_t char_mask;
+    uint32_t link_shift;
+    uint32_t link_mask;
+    uint32_t pattern_shift;
+    uint32_t n_entries;
+    uint32_t data[1];
 };
 
-/**
-* @brief Enumerates date formatting patterns.
-*
-* @since 2.2
-* @version 1.0
-*/
-enum AvailableDateTimeFormatPattern {
-    /* Displays hour, minute, and second in 12-hour format. */
-    HOUR12_MINUTE_SECOND,
+struct Pattern {
+    uint32_t version;
+    uint32_t n_entries;
+    uint32_t pattern_offset;
+    uint32_t pattern_size;
+    uint32_t data[1];
 
-    /* Displays hour, minute, and second in 24-hour format. */
-    HOUR24_MINUTE_SECOND,
+    static uint32_t len(uint32_t entry)
+    {
+        return entry >> 26;
+    }
 
-    /* Displays hour, minute, and second in the default time used in a country/region. */
-    HOUR_MINUTE_SECOND,
+    static uint32_t shift(uint32_t entry)
+    {
+        return (entry >> 20) & 0x3f;
+    }
 
-    /* Displays hour and minute in 12-hour format. */
-    HOUR12_MINUTE,
-
-    /* Displays hour and minute in 24-hour format. */
-    HOUR24_MINUTE,
-
-    /* Displays hour and minute in the default time format used in a country/region. */
-    HOUR_MINUTE,
-
-    /* Displays month (abbreviated) and day of the week, and day. */
-    ABBR_MONTH_WEEKDAY_DAY,
-
-    /* Displays month (abbreviated) and day. */
-    ABBR_MONTH_DAY,
-
-    /* Display year, month, day, and day of the week, for example, Friday December 18, 2020. */
-    FULL,
-
-    /* Displays year, month, and day, for example, Dec 18, 2020 */
-    MEDIUM,
-
-    /* Displays year, month, and day in numeric pattern, for example, 12/18/2020. */
-    SHORT,
-
-    /* Displays year, month (abbreviated), day of the week (abbreviated), and day. */
-    YEAR_ABBR_MONTH_ABBR_WEEKDAY_DAY,
-
-    /* Displays year, month (wide), day of the week (abbreviated), and day. */
-    YEAR_WIDE_MONTH_ABBR_WEEKDAY_DAY,
-
-    /* Displays year, month (short), day of the week (wide), and day. */
-    YEAR_SHORT_MONTH_WIDE_WEEKDAY_DAY,
-
-    /* Displays year, month (short), day of the week (abbreviated), and day. */
-    YEAR_SHORT_MONTH_ABBR_WEEKDAY_DAY,
-
-    /* Displays year, month (abbreviated), day of the week (wide), and day. */
-    YEAR_ABBR_MONTH_WIDE_WEEKDAY_DAY,
-
-    /* Displays year, month (wide), and day. */
-    YEAR_WIDE_MONTH_DAY,
-
-    /* Display week day */
-    WEEK_DAY,
-
-    /* Display numeric month-day, and week day */
-    NUMBER_MONTH_ABBR_WEEK_DAY,
-
-    /* Display numeric month-day */
-    NUMBER_MONTH_DAY,
-
-    /* Display year, month (abbreviated) */
-    YEAR_ABBR_MONTH,
-    
-    /* Display year, month (wide), day of the week (wide), and day. */
-    YEAR_WIDE_MONTH_WIDE_WEEKDAY_DAY,
-
-    /* Display month (wide), day of the week (wide), and day. */
-    WIDE_MONTH_WIDE_WEEKDAY_DAY,
-
-    /* Display month (abbreviated) */
-    ABBR_MONTH,
-
-    /* Display day of the week (wide) */
-    WIDE_WEEKDAY
+    const uint8_t* buf(uint32_t entry) const
+    {
+        return reinterpret_cast<const uint8_t*>(this) + pattern_offset + (entry & 0xfffff);
+    }
 };
 
-enum ElapsedPatternType {
-    /* Minute:Second */
-    ELAPSED_MINUTE_SECOND,
+struct AlphabetTable1 {
+    uint32_t version;
+    uint32_t n_entries;
+    uint32_t data[1];
 
-    /* Minute:Second:Millisecond */
-    ELAPSED_MINUTE_SECOND_MILLISECOND,
+    static uint32_t codepoint(uint32_t entry)
+    {
+        return entry >> 11;
+    }
 
-    /* HOUR:MINUTE:SECOND */
-    ELAPSED_HOUR_MINUTE_SECOND,
-
-    /* HOUR:MINUTE */
-    ELAPSED_HOUR_MINUTE
+    static uint32_t value(uint32_t entry)
+    {
+        return entry & 0x7ff;
+    }
 };
 
-enum DateTimeDataType {
-    /* Abbreviated (format style) */
-    FORMAT_ABBR,
+class Hyphenation {
+public:
+    static Hyphenation* createInstance(const char* lang);
 
-    /* Wide (format style) */
-    FORMAT_WIDE,
+    std::vector<int> getBreakCandidate(const char* word);
+    std::vector<int> getBreakCandidate(const char* word, int minPrefix, int minSuffix);
 
-    /* Abbreviated (stand-alone style) */
-    STANDALONE_ABBR,
+    static std::vector<const char*> getHyphenation(const char* lang, HyphenType type);
 
-    /* Wide (stand-alone style) */
-    STANDALONE_WIDE
+    std::vector<int> hyphenationWithNoRule(const char* word);
+
+    ~Hyphenation();
+
+private:
+    explicit Hyphenation(const char* lang);
+
+    bool checkAlienChars(const std::vector<uint32_t>& codepoints) const;
+    void processNoPatterns(const std::vector<uint32_t>& codepoints,
+                           std::vector<int>& result) const;
+    void processHyphenBreak(const std::vector<uint32_t>& codepoints,
+                             std::vector<int>& result, size_t i) const;
+
+    std::vector<uint8_t> convertToCharCodes(const std::vector<uint32_t>& codepoints,
+                                              size_t len) const;
+    void matchPatterns(const char* word, const std::vector<uint8_t>& charCodes,
+                       size_t len, std::vector<int>& result) const;
+
+    const char* getHyphenCharByLocale(const char* locale) const;
+    bool preCharIsPolishHyphen(uint32_t prevChar, size_t i,
+        const std::vector<uint32_t>& codepoints) const;
+    bool isPreCharIsCatalanHyphen(uint32_t prevChar, size_t i,
+        size_t len, const std::vector<uint32_t>& codepoints) const;
+
+    std::string m_locale;
+    int m_minPrefix;
+    int m_minSuffix;
+    void* m_patternData;
+    size_t m_patternSize;
+    int m_hyphenLocale;
 };
 
-/**
-* @brief Enumerates plural rule types.
-*
-* @since 2.2
-* @version 1.0
-*/
-enum PluralRuleType {
-    /* Zero */
-    ZERO,
-    /* One */
-    ONE,
-    /* Two */
-    TWO,
-    /* Few */
-    FEW,
-    /* Many */
-    MANY,
-    /* Other */
-    OTHER
-};
+}
+}
 
-/**
-* @brief Measure Format types.
-*
-* @since 2.2
-* @version 1.0
-*/
-enum MeasureFormatType {
-    /* Short */
-    MEASURE_SHORT = 0,
-    /* Medium */
-    MEASURE_MEDIUM,
-    /* Long */
-    MEASURE_LONG,
-    /* Full */
-    MEASURE_FULL,
-};
-} // namespace I18N
-} // namespace OHOS
-/** @} */
 #endif
