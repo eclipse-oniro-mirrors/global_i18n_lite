@@ -295,7 +295,6 @@ std::string MapLocaleToFile(const std::string& locale)
         { "en-US", "en-us" },
         { "en-GB", "en-gb" },
         { "sr-Latn", "sr" },
-        { "el", "el-monoton" },
         { "de", "de-1996" }
     };
 
@@ -744,8 +743,8 @@ std::vector<const char*> Hyphenation::GetHyphenation(const char* lang, HyphenTyp
             result.push_back(hyphen);
             break;
         case HyphenType::BREAK_INSERT_AND_NEXT:
-            result.push_back(hyphen);
-            result.push_back(hyphen);
+            result.push_back("\u200D\u2010");
+            result.push_back("\u200D");
             break;
         default:
             break;
