@@ -453,7 +453,7 @@ Hyphenation::Hyphenation(const char* lang)
     mMinPrefix = GetDefaultMinPrefix(locale);
     mMinSuffix = GetDefaultMinSuffix(locale);
     mHyphenLocale = ParseLocale(locale);
-    auto result = LoadPatternFile(locale);
+    auto result = LoadPatternFile(lang);
     if (result.first != nullptr) {
         mPatternData = const_cast<uint8_t*>(result.first);
         mPatternSize = result.second;
