@@ -458,29 +458,6 @@ HWTEST_F(I18NTest, HyphenationTest015, TestSize.Level1)
     EXPECT_EQ(result[5], 1);
     EXPECT_EQ(result[9], 1);
     EXPECT_EQ(result[11], 1);
-    result = hyphen->GetBreakCandidate("vernederlandste");
-    Print("vernederlandste", result, "ver-ne-der-lands-te");
-    EXPECT_EQ(result[3], 1);
-    EXPECT_EQ(result[5], 1);
-    EXPECT_EQ(result[8], 1);
-    EXPECT_EQ(result[13], 1);
-    result = hyphen->GetBreakCandidate("waterstaatsingenieurs");
-    Print("waterstaatsingenieurs", result, "wa-ter-staats-in-ge-ni-eurs");
-    EXPECT_EQ(result[5], 1);
-    result = hyphen->GetBreakCandidate("palingsteken");
-    Print("palingsteken", result, "pa-ling-ste-ken");
-    EXPECT_EQ(result[2], 1);
-    EXPECT_EQ(result[6], 1);
-    EXPECT_EQ(result[9], 1);
-    result = hyphen->GetBreakCandidate("kettingsteken");
-    Print("kettingsteken", result, "ket-ting-ste-ken");
-    EXPECT_EQ(result[3], 1);
-    EXPECT_EQ(result[7], 1);
-    EXPECT_EQ(result[10], 1);
-    result = hyphen->GetBreakCandidate("donderaal");
-    Print("donderaal", result, "don-der-aal");
-    EXPECT_EQ(result[3], 1);
-    EXPECT_EQ(result[6], 1);
     delete hyphen;
 }
 
@@ -763,6 +740,31 @@ HWTEST_F(I18NTest, HyphenationTest022, TestSize.Level1)
  */
 HWTEST_F(I18NTest, HyphenationTest023, TestSize.Level1)
 {
+    Hyphenation* hyphen = Hyphenation::CreateInstance("nl");
+    auto result = hyphen->GetBreakCandidate("vernederlandste");
+    Print("vernederlandste", result, "ver-ne-der-lands-te");
+    EXPECT_EQ(result[3], 1);
+    EXPECT_EQ(result[5], 1);
+    EXPECT_EQ(result[8], 1);
+    EXPECT_EQ(result[13], 1);
+    result = hyphen->GetBreakCandidate("waterstaatsingenieurs");
+    Print("waterstaatsingenieurs", result, "wa-ter-staats-in-ge-ni-eurs");
+    EXPECT_EQ(result[5], 1);
+    result = hyphen->GetBreakCandidate("palingsteken");
+    Print("palingsteken", result, "pa-ling-ste-ken");
+    EXPECT_EQ(result[2], 1);
+    EXPECT_EQ(result[6], 1);
+    EXPECT_EQ(result[9], 1);
+    result = hyphen->GetBreakCandidate("kettingsteken");
+    Print("kettingsteken", result, "ket-ting-ste-ken");
+    EXPECT_EQ(result[3], 1);
+    EXPECT_EQ(result[7], 1);
+    EXPECT_EQ(result[10], 1);
+    result = hyphen->GetBreakCandidate("donderaal");
+    Print("donderaal", result, "don-der-aal");
+    EXPECT_EQ(result[3], 1);
+    EXPECT_EQ(result[6], 1);
+    delete hyphen;
 }
 } // namespace I18N
 } // namespace OHOS
