@@ -27,17 +27,17 @@ using namespace testing;
 
 namespace OHOS {
 namespace I18N {
-class I18NTest : public testing::Test {
+class HyphenationTest : public testing::Test {
 public:
     void SetUp();
     void TearDown();
 };
 
-void I18NTest::SetUp()
+void HyphenationTest::SetUp()
 {
 }
 
-void I18NTest::TearDown()
+void HyphenationTest::TearDown()
 {
 }
 
@@ -56,7 +56,7 @@ void Print(const char* word, std::vector<int> result, const char* expected)
  * @tc.desc: Test LocaleInfo constructor1
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest001, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest001, TestSize.Level1)
 {
     const char* alocale = "bg";
     Hyphenation* hyphen = Hyphenation::CreateInstance(alocale);
@@ -80,7 +80,7 @@ HWTEST_F(I18NTest, HyphenationTest001, TestSize.Level1)
  * @tc.desc: Test LocaleInfo constructor2
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest002, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest002, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("da");
     auto result = hyphen->GetBreakCandidate("stavelse"); // sta-vel-se
@@ -99,7 +99,7 @@ HWTEST_F(I18NTest, HyphenationTest002, TestSize.Level1)
  * @tc.desc: Test LocaleInfo default Constructor
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest003, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest003, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("de");
     auto result = hyphen->GetBreakCandidate("Wörterbuch"); // Wör-ter-buch
@@ -140,7 +140,7 @@ HWTEST_F(I18NTest, HyphenationTest003, TestSize.Level1)
  * @tc.desc: Test LocaleInfo copy constructor
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest004, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest004, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("en-GB");
     auto result = hyphen->GetBreakCandidate("dictionary"); // dic-tion-ar-y
@@ -173,7 +173,7 @@ HWTEST_F(I18NTest, HyphenationTest004, TestSize.Level1)
  * @tc.desc: Test LocaleInfo equals function
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest005, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest005, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("en-US");
     auto result = hyphen->GetBreakCandidate("dictionary"); // dic-tion-ar-y
@@ -202,7 +202,7 @@ HWTEST_F(I18NTest, HyphenationTest005, TestSize.Level1)
  * @tc.desc: Test LocaleInfo GetLanguage function
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest006, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest006, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("es");
     auto result = hyphen->GetBreakCandidate("llamar"); // lla-mar
@@ -224,7 +224,7 @@ HWTEST_F(I18NTest, HyphenationTest006, TestSize.Level1)
  * @tc.desc: Test LocaleInfo GetRegion function
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest007, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest007, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("fr");
     auto result = hyphen->GetBreakCandidate("dictionnaire"); // dic-tion-nai-re
@@ -251,7 +251,7 @@ HWTEST_F(I18NTest, HyphenationTest007, TestSize.Level1)
  * @tc.desc: Test LocaleInfo GetScript function
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest008, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest008, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("hr");
     auto result = hyphen->GetBreakCandidate("rječnik"); // rječ-nik
@@ -270,7 +270,7 @@ HWTEST_F(I18NTest, HyphenationTest008, TestSize.Level1)
  * @tc.desc: Test LocaleInfo GetId function
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest009, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest009, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("lt");
     auto result = hyphen->GetBreakCandidate("kompiuteris"); // kom-piu-te-ris
@@ -289,7 +289,7 @@ HWTEST_F(I18NTest, HyphenationTest009, TestSize.Level1)
  * @tc.desc: Test LocaleInfo IsDefaultLocale function
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest010, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest010, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("pl");
     auto result = hyphen->GetBreakCandidate("półach"); // pó-łach
@@ -307,7 +307,7 @@ HWTEST_F(I18NTest, HyphenationTest010, TestSize.Level1)
  * @tc.desc: Test DateTimeFormat Constructor
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest011, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest011, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("pt");
     auto result = hyphen->GetBreakCandidate("hardware"); // hard-ware
@@ -332,7 +332,7 @@ HWTEST_F(I18NTest, HyphenationTest011, TestSize.Level1)
  * @tc.desc: Test DateTimeFormat Init function
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest012, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest012, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("sl");
     auto result = hyphen->GetBreakCandidate("računalnik"); // ra-ču-nal-nik
@@ -348,7 +348,7 @@ HWTEST_F(I18NTest, HyphenationTest012, TestSize.Level1)
  * @tc.desc: Test DateTimeFormat Format function
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest013, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest013, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("be");
     auto result = hyphen->GetBreakCandidate("Беларусь"); // Бе-ла-русь
@@ -377,7 +377,7 @@ HWTEST_F(I18NTest, HyphenationTest013, TestSize.Level1)
  * @tc.desc: Test DateTimeFormat Format function
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest014, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest014, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("nl");
     auto result = hyphen->GetBreakCandidate("Streuexperiment");
@@ -431,7 +431,7 @@ HWTEST_F(I18NTest, HyphenationTest014, TestSize.Level1)
  * @tc.desc: Test DateTimeFormat Format function
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest015, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest015, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("nl");
     auto result = hyphen->GetBreakCandidate("beschermengelen");
@@ -466,7 +466,7 @@ HWTEST_F(I18NTest, HyphenationTest015, TestSize.Level1)
  * @tc.desc: Test DateTimeFormat ApplyPattern function
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest016, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest016, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("el");
     auto result = hyphen->GetBreakCandidate("ργδζθκλξραυστφχψ");
@@ -495,7 +495,7 @@ HWTEST_F(I18NTest, HyphenationTest016, TestSize.Level1)
  * @tc.desc: Test DateTimeFormat ApplyPattern function
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest017, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest017, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("ru");
     auto result = hyphen->GetBreakCandidate("выиграл");
@@ -551,7 +551,7 @@ HWTEST_F(I18NTest, HyphenationTest017, TestSize.Level1)
  * @tc.desc: Test DateTimeFormat ApplyPattern function
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest018, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest018, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("ka");
     auto result = hyphen->GetBreakCandidate("კრდათვრიმც");
@@ -574,7 +574,7 @@ HWTEST_F(I18NTest, HyphenationTest018, TestSize.Level1)
  * @tc.desc: Test DateTimeFormat GetWeekName
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest019, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest019, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("it");
     auto result = hyphen->GetBreakCandidate("Asistenzauot");
@@ -608,7 +608,7 @@ HWTEST_F(I18NTest, HyphenationTest019, TestSize.Level1)
  * @tc.desc: Test DateTimeFormat GetMonthName
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest020, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest020, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("uk");
     auto result = hyphen->GetBreakCandidate("ийпінхастгфпінхаст");
@@ -640,7 +640,7 @@ HWTEST_F(I18NTest, HyphenationTest020, TestSize.Level1)
  * @tc.desc: Test numberFormat format integer
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest021, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest021, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("ru");
     auto result = hyphen->GetBreakCandidate("аккаунт");
@@ -697,7 +697,7 @@ HWTEST_F(I18NTest, HyphenationTest021, TestSize.Level1)
  * @tc.desc: Test numberFormat format no group integer
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest022, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest022, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("ru");
     auto result = hyphen->GetBreakCandidate("помни");
@@ -738,7 +738,7 @@ HWTEST_F(I18NTest, HyphenationTest022, TestSize.Level1)
  * @tc.desc: Test numberFormat format double
  * @tc.type: FUNC
  */
-HWTEST_F(I18NTest, HyphenationTest023, TestSize.Level1)
+HWTEST_F(HyphenationTest, HyphenationTest023, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("nl");
     auto result = hyphen->GetBreakCandidate("vernederlandste");
