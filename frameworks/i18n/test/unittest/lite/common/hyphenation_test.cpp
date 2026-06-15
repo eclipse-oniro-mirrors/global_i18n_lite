@@ -53,7 +53,7 @@ void Print(const char* word, std::vector<int> result, const char* expected)
 
 /**
  * @tc.name: HyphenationTest001
- * @tc.desc: Test LocaleInfo constructor1
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest001, TestSize.Level1)
@@ -77,7 +77,7 @@ HWTEST_F(HyphenationTest, HyphenationTest001, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest002
- * @tc.desc: Test LocaleInfo constructor2
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest002, TestSize.Level1)
@@ -96,7 +96,7 @@ HWTEST_F(HyphenationTest, HyphenationTest002, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest003
- * @tc.desc: Test LocaleInfo default Constructor
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest003, TestSize.Level1)
@@ -137,7 +137,7 @@ HWTEST_F(HyphenationTest, HyphenationTest003, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest004
- * @tc.desc: Test LocaleInfo copy constructor
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest004, TestSize.Level1)
@@ -170,7 +170,7 @@ HWTEST_F(HyphenationTest, HyphenationTest004, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest005
- * @tc.desc: Test LocaleInfo equals function
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest005, TestSize.Level1)
@@ -180,7 +180,7 @@ HWTEST_F(HyphenationTest, HyphenationTest005, TestSize.Level1)
     Print("dictionary", result, "dic-tio-nary");
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[6], 1);
-    result = hyphen->GetBreakCandidate("color"); // col-or
+    result = hyphen->GetBreakCandidate("color"); // color
     Print("color", result, "color");
     EXPECT_EQ(result[0], 0);
     EXPECT_EQ(result[1], 0);
@@ -199,7 +199,7 @@ HWTEST_F(HyphenationTest, HyphenationTest005, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest006
- * @tc.desc: Test LocaleInfo GetLanguage function
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest006, TestSize.Level1)
@@ -221,7 +221,7 @@ HWTEST_F(HyphenationTest, HyphenationTest006, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest007
- * @tc.desc: Test LocaleInfo GetRegion function
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest007, TestSize.Level1)
@@ -248,7 +248,7 @@ HWTEST_F(HyphenationTest, HyphenationTest007, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest008
- * @tc.desc: Test LocaleInfo GetScript function
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest008, TestSize.Level1)
@@ -267,7 +267,7 @@ HWTEST_F(HyphenationTest, HyphenationTest008, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest009
- * @tc.desc: Test LocaleInfo GetId function
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest009, TestSize.Level1)
@@ -286,7 +286,7 @@ HWTEST_F(HyphenationTest, HyphenationTest009, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest010
- * @tc.desc: Test LocaleInfo IsDefaultLocale function
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest010, TestSize.Level1)
@@ -304,7 +304,7 @@ HWTEST_F(HyphenationTest, HyphenationTest010, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest011
- * @tc.desc: Test DateTimeFormat Constructor
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest011, TestSize.Level1)
@@ -329,7 +329,7 @@ HWTEST_F(HyphenationTest, HyphenationTest011, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest012
- * @tc.desc: Test DateTimeFormat Init function
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest012, TestSize.Level1)
@@ -345,7 +345,7 @@ HWTEST_F(HyphenationTest, HyphenationTest012, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest013
- * @tc.desc: Test DateTimeFormat Format function
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest013, TestSize.Level1)
@@ -374,7 +374,7 @@ HWTEST_F(HyphenationTest, HyphenationTest013, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest014
- * @tc.desc: Test DateTimeFormat Format function
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest014, TestSize.Level1)
@@ -428,7 +428,7 @@ HWTEST_F(HyphenationTest, HyphenationTest014, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest015
- * @tc.desc: Test DateTimeFormat Format function
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest015, TestSize.Level1)
@@ -463,7 +463,7 @@ HWTEST_F(HyphenationTest, HyphenationTest015, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest016
- * @tc.desc: Test DateTimeFormat ApplyPattern function
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest016, TestSize.Level1)
@@ -492,7 +492,7 @@ HWTEST_F(HyphenationTest, HyphenationTest016, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest017
- * @tc.desc: Test DateTimeFormat ApplyPattern function
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest017, TestSize.Level1)
@@ -548,7 +548,7 @@ HWTEST_F(HyphenationTest, HyphenationTest017, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest018
- * @tc.desc: Test DateTimeFormat ApplyPattern function
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest018, TestSize.Level1)
@@ -571,7 +571,7 @@ HWTEST_F(HyphenationTest, HyphenationTest018, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest019
- * @tc.desc: Test DateTimeFormat GetWeekName
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest019, TestSize.Level1)
@@ -605,7 +605,7 @@ HWTEST_F(HyphenationTest, HyphenationTest019, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest020
- * @tc.desc: Test DateTimeFormat GetMonthName
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest020, TestSize.Level1)
@@ -637,7 +637,7 @@ HWTEST_F(HyphenationTest, HyphenationTest020, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest021
- * @tc.desc: Test numberFormat format integer
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest021, TestSize.Level1)
@@ -694,7 +694,7 @@ HWTEST_F(HyphenationTest, HyphenationTest021, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest022
- * @tc.desc: Test numberFormat format no group integer
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest022, TestSize.Level1)
@@ -735,7 +735,7 @@ HWTEST_F(HyphenationTest, HyphenationTest022, TestSize.Level1)
 
 /**
  * @tc.name: HyphenationTest023
- * @tc.desc: Test numberFormat format double
+ * @tc.desc: Test Hyphenation.GetBreakCandidate
  * @tc.type: FUNC
  */
 HWTEST_F(HyphenationTest, HyphenationTest023, TestSize.Level1)
