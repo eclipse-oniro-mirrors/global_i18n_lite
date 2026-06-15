@@ -60,12 +60,10 @@ HWTEST_F(HyphenationTest, HyphenationTest001, TestSize.Level1)
 {
     const char* alocale = "bg";
     Hyphenation* hyphen = Hyphenation::CreateInstance(alocale);
-    auto result = hyphen->GetBreakCandidate("България"); //Бъл-га-ри-я
-    Print("България", result, "Бъл-га-рия");
+    auto result = hyphen->GetBreakCandidate("България"); //Бъл-га-рия
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[5], 1);
-    result = hyphen->GetBreakCandidate("алгоритъм"); // ал-го-ритъм
-    Print("алгоритъм", result, "ал-го-ри-тъм");
+    result = hyphen->GetBreakCandidate("алгоритъм"); // ал-го-ри-тъм
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[4], 1);
     result = hyphen->GetBreakCandidate("майка"); // май-ка
@@ -84,11 +82,9 @@ HWTEST_F(HyphenationTest, HyphenationTest002, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("da");
     auto result = hyphen->GetBreakCandidate("stavelse"); // sta-vel-se
-    Print("stavelse", result, "sta-vel-se");
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[6], 1);
     result = hyphen->GetBreakCandidate("afbryderknappen"); // afbryderk-nap-pen
-    Print("afbryderknappen", result, "afbryderk-nap-pen");
     EXPECT_EQ(result[9], 1);
     EXPECT_EQ(result[12], 1);
     delete hyphen;
@@ -103,31 +99,23 @@ HWTEST_F(HyphenationTest, HyphenationTest003, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("de");
     auto result = hyphen->GetBreakCandidate("Wörterbuch"); // Wör-ter-buch
-    Print("Wörterbuch", result, "Wör-ter-buch");
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[6], 1);
     result = hyphen->GetBreakCandidate("Ärmel"); // Är-mel
-    Print("Ärmel", result, "Är-mel");
     EXPECT_EQ(result[2], 1);
-    result = hyphen->GetBreakCandidate("Übermut"); // Ü-ber-mut
-    Print("Übermut", result, "Über-mut");
+    result = hyphen->GetBreakCandidate("Übermut"); // Über-mut
     EXPECT_EQ(result[4], 1);
     result = hyphen->GetBreakCandidate("Außenseiter"); // Au-ßen-sei-ter
-    Print("Außenseiter", result, "Au-ßen-sei-ter");
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[5], 1);
     EXPECT_EQ(result[8], 1);
     result = hyphen->GetBreakCandidate("schließen"); // schlie-ßen
-    Print("schließen", result, "schlie-ßen");
     EXPECT_EQ(result[6], 1);
-    result = hyphen->GetBreakCandidate("Katze"); // Ka-tze
-    Print("Katze", result, "Kat-ze");
+    result = hyphen->GetBreakCandidate("Katze"); // Kat-ze
     EXPECT_EQ(result[3], 1);
-    result = hyphen->GetBreakCandidate("Ecke"); // Ec-ke
-    Print("Ecke", result, "Ecke");
+    result = hyphen->GetBreakCandidate("Ecke"); // Ecke
     EXPECT_EQ(result[2], 0);
     result = hyphen->GetBreakCandidate("Donaudampfschifffahrt"); // Do-nau-dampf-schiff-fahrt
-    Print("Donaudampfschifffahrt", result, "Do-nau-dampf-schiff-fahrt");
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[5], 1);
     EXPECT_EQ(result[10], 1);
@@ -143,27 +131,21 @@ HWTEST_F(HyphenationTest, HyphenationTest003, TestSize.Level1)
 HWTEST_F(HyphenationTest, HyphenationTest004, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("en-GB");
-    auto result = hyphen->GetBreakCandidate("dictionary"); // dic-tion-ar-y
-    Print("dictionary", result, "dic-tion-ary");
+    auto result = hyphen->GetBreakCandidate("dictionary"); // dic-tion-ary
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[7], 1);
     result = hyphen->GetBreakCandidate("colour"); // col-our
-    Print("colour", result, "col-our");
     EXPECT_EQ(result[3], 1);
     result = hyphen->GetBreakCandidate("well-known"); // well-known
-    Print("well-known", result, "well-known");
     EXPECT_EQ(result[5], 2);
-    result = hyphen->GetBreakCandidate("accommodate"); // ac-com-mo-date
-    Print("accommodate", result, "ac-com-mod-ate");
+    result = hyphen->GetBreakCandidate("accommodate"); // ac-com-mod-ate
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[5], 1);
     EXPECT_EQ(result[8], 1);
     result = hyphen->GetBreakCandidate("university"); // uni-ver-sity
-    Print("university", result, "uni-ver-sity");
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[6], 1);
     result = hyphen->GetBreakCandidate("however"); // how-ever
-    Print("however", result, "how-ever");
     EXPECT_EQ(result[3], 1);
     delete hyphen;
 }
@@ -176,22 +158,18 @@ HWTEST_F(HyphenationTest, HyphenationTest004, TestSize.Level1)
 HWTEST_F(HyphenationTest, HyphenationTest005, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("en-US");
-    auto result = hyphen->GetBreakCandidate("dictionary"); // dic-tion-ar-y
-    Print("dictionary", result, "dic-tio-nary");
+    auto result = hyphen->GetBreakCandidate("dictionary"); // dic-tio-nary
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[6], 1);
     result = hyphen->GetBreakCandidate("color"); // color
-    Print("color", result, "color");
     EXPECT_EQ(result[0], 0);
     EXPECT_EQ(result[1], 0);
     EXPECT_EQ(result[2], 0);
     EXPECT_EQ(result[3], 0);
     EXPECT_EQ(result[4], 0);
     result = hyphen->GetBreakCandidate("well-known"); // well-known
-    Print("well-known", result, "well-known");
     EXPECT_EQ(result[5], 2);
     result = hyphen->GetBreakCandidate("analyze"); // an-a-lyze
-    Print("analyze", result, "an-a-lyze");
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[3], 1);
     delete hyphen;
@@ -206,13 +184,10 @@ HWTEST_F(HyphenationTest, HyphenationTest006, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("es");
     auto result = hyphen->GetBreakCandidate("llamar"); // lla-mar
-    Print("llamar", result, "lla-mar");
     EXPECT_EQ(result[3], 1);
     result = hyphen->GetBreakCandidate("mucho"); // mu-cho
-    Print("mucho", result, "mu-cho");
     EXPECT_EQ(result[2], 1);
-    result = hyphen->GetBreakCandidate("diccionario"); // dic-cio-nar-io
-    Print("diccionario", result, "dic-cio-na-rio");
+    result = hyphen->GetBreakCandidate("diccionario"); // dic-cio-na-rio
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[6], 1);
     EXPECT_EQ(result[8], 1);
@@ -227,19 +202,15 @@ HWTEST_F(HyphenationTest, HyphenationTest006, TestSize.Level1)
 HWTEST_F(HyphenationTest, HyphenationTest007, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("fr");
-    auto result = hyphen->GetBreakCandidate("dictionnaire"); // dic-tion-nai-re
-    Print("dictionnaire", result, "dic-tion-naire");
+    auto result = hyphen->GetBreakCandidate("dictionnaire"); // dic-tion-naire
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[7], 1);
     result = hyphen->GetBreakCandidate("d'accord"); // d'ac-cord
-    Print("d'accord", result, "d'ac-cord");
     EXPECT_EQ(result[4], 1);
     result = hyphen->GetBreakCandidate("téléphone"); // té-lé-phone
-    Print("téléphone", result, "té-lé-phone");
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[4], 1);
     result = hyphen->GetBreakCandidate("antiarché"); // an-ti-ar-ché
-    Print("antiarché", result, "an-ti-ar-ché");
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[4], 1);
     EXPECT_EQ(result[6], 1);
@@ -255,10 +226,8 @@ HWTEST_F(HyphenationTest, HyphenationTest008, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("hr");
     auto result = hyphen->GetBreakCandidate("rječnik"); // rječ-nik
-    Print("rječnik", result, "rječ-nik");
     EXPECT_EQ(result[4], 1);
     result = hyphen->GetBreakCandidate("algoritam"); // al-go-ri-tam
-    Print("algoritam", result, "al-go-ri-tam");
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[4], 1);
     EXPECT_EQ(result[6], 1);
@@ -274,12 +243,10 @@ HWTEST_F(HyphenationTest, HyphenationTest009, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("lt");
     auto result = hyphen->GetBreakCandidate("kompiuteris"); // kom-piu-te-ris
-    Print("kompiuteris", result, "kom-piu-te-ris");
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[6], 1);
     EXPECT_EQ(result[8], 1);
-    result = hyphen->GetBreakCandidate("skiemuo"); // ski-emuo
-    Print("skiemuo", result, "skie-muo");
+    result = hyphen->GetBreakCandidate("skiemuo"); // skie-muo
     EXPECT_EQ(result[4], 1);
     delete hyphen;
 }
@@ -293,10 +260,8 @@ HWTEST_F(HyphenationTest, HyphenationTest010, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("pl");
     auto result = hyphen->GetBreakCandidate("półach"); // pó-łach
-    Print("półach", result, "pó-łach");
     EXPECT_EQ(result[2], 1);
     result = hyphen->GetBreakCandidate("komputer"); // kom-pu-ter
-    Print("komputer", result, "kom-pu-ter");
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[5], 1);
     delete hyphen;
@@ -311,16 +276,12 @@ HWTEST_F(HyphenationTest, HyphenationTest011, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("pt");
     auto result = hyphen->GetBreakCandidate("hardware"); // hard-ware
-    Print("hardware", result, "hard-ware");
     EXPECT_EQ(result[4], 1);
     result = hyphen->GetBreakCandidate("software"); // soft-ware
-    Print("software", result, "soft-ware");
     EXPECT_EQ(result[4], 1);
     result = hyphen->GetBreakCandidate("bênção"); // bên-ção
-    Print("bênção", result, "bên-ção");
     EXPECT_EQ(result[3], 1);
     result = hyphen->GetBreakCandidate("dicionário"); // di-cio-ná-rio
-    Print("dicionário", result, "di-cio-ná-rio");
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[5], 1);
     EXPECT_EQ(result[7], 1);
@@ -336,7 +297,6 @@ HWTEST_F(HyphenationTest, HyphenationTest012, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("sl");
     auto result = hyphen->GetBreakCandidate("računalnik"); // ra-ču-nal-nik
-    Print("računalnik", result, "ra-ču-nal-nik");
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[4], 1);
     EXPECT_EQ(result[7], 1);
@@ -352,20 +312,16 @@ HWTEST_F(HyphenationTest, HyphenationTest013, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("be");
     auto result = hyphen->GetBreakCandidate("Беларусь"); // Бе-ла-русь
-    Print("Беларусь", result, "Бе-ла-русь");
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[4], 1);
-    result = hyphen->GetBreakCandidate("камп'ютар"); // кам-п'ю-тар
-    Print("камп'ютар", result, "ка-мп'ю-тар");
+    result = hyphen->GetBreakCandidate("камп'ютар"); // ка-мп'ю-тар
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[6], 1);
     result = hyphen->GetBreakCandidate("выязычэнне"); // вы-язы-чэн-не
-    Print("выязычэнне", result, "вы-язы-чэн-не");
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[5], 1);
     EXPECT_EQ(result[8], 1);
-    result = hyphen->GetBreakCandidate("навукова"); // наву-ко-ва
-    Print("навукова", result, "на-ву-ко-ва");
+    result = hyphen->GetBreakCandidate("навукова"); // на-ву-ко-ва
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[4], 1);
     EXPECT_EQ(result[6], 1);
@@ -380,45 +336,30 @@ HWTEST_F(HyphenationTest, HyphenationTest013, TestSize.Level1)
 HWTEST_F(HyphenationTest, HyphenationTest014, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("nl");
-    auto result = hyphen->GetBreakCandidate("Streuexperiment");
-    Print("Streuexperiment", result, "Streu-experi-ment");
+    auto result = hyphen->GetBreakCandidate("Streuexperiment"); // Streu-experi-ment
     EXPECT_EQ(result[5], 1);
     EXPECT_EQ(result[11], 1);
-    result = hyphen->GetBreakCandidate("STREUEXPERIMENT");
-    Print("STREUEXPERIMENT", result, "STREU-EXPERI-MENT");
+    result = hyphen->GetBreakCandidate("STREUEXPERIMENT"); // STREU-EXPERI-MENT
     EXPECT_EQ(result[5], 1);
     EXPECT_EQ(result[11], 1);
-    result = hyphen->GetBreakCandidate("AIOUEKIOUAE");
-    Print("AIOUEKIOUAE", result, "AIOUE-KIOUAE");
+    result = hyphen->GetBreakCandidate("AIOUEKIOUAE"); // AIOUE-KIOUAE
     EXPECT_EQ(result[5], 1);
-    result = hyphen->GetBreakCandidate("Iouëloaae");
-    Print("Iouëloaae", result, "Iouë-loaae");
+    result = hyphen->GetBreakCandidate("Iouëloaae"); // Iouë-loaae
     EXPECT_EQ(result[4], 1);
-    result = hyphen->GetBreakCandidate("Egostischoïsch");
-    Print("Egostischoïsch", result, "Egostischo-ïsch");
+    result = hyphen->GetBreakCandidate("Egostischoïsch"); // Egostischo-ïsch
     EXPECT_EQ(result[10], 1);
-    result = hyphen->GetBreakCandidate("EGCÜHSËECH");
-    Print("EGCÜHSËECH", result, "EGC-ÜHS-ËECH");
+    result = hyphen->GetBreakCandidate("EGCÜHSËECH"); // EGC-ÜHS-ËECH
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[6], 1);
-    result = hyphen->GetBreakCandidate("Systematischen Antenmechanik");
-    Print("Systematischen Antenmechanik", result, "Systematischen A[no break]ntenmechanik");
-    result = hyphen->GetBreakCandidate("Systematischen Aëtenmechanik");
-    Print("Systematischen Aëtenmechanik", result, "Systematischen A[no break]ëtenmechanik");
-    result = hyphen->GetBreakCandidate("SYSTEMATISCHEN FNTENMECHANIK");
-    Print("SYSTEMATISCHEN FNTENMECHANIK", result, "SYSTEMATISCHEN F[no break]NTENMECHANIK");
-    result = hyphen->GetBreakCandidate("aandachtstrekkers");
-    Print("aandachtstrekkers", result, "aan-dachts-trek-kers");
+    result = hyphen->GetBreakCandidate("aandachtstrekkers"); // aan-dachts-trek-kers
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[9], 1);
     EXPECT_EQ(result[13], 1);
-    result = hyphen->GetBreakCandidate("onthoofdingen");
-    Print("onthoofdingen", result, "ont-hoof-din-gen");
+    result = hyphen->GetBreakCandidate("onthoofdingen"); // ont-hoof-din-gen
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[7], 1);
     EXPECT_EQ(result[10], 1);
-    result = hyphen->GetBreakCandidate("achtendertigste");
-    Print("achtendertigste", result, "acht-en-der-tig-ste");
+    result = hyphen->GetBreakCandidate("achtendertigste"); // acht-en-der-tig-ste
     EXPECT_EQ(result[4], 1);
     EXPECT_EQ(result[6], 1);
     EXPECT_EQ(result[9], 1);
@@ -434,27 +375,23 @@ HWTEST_F(HyphenationTest, HyphenationTest014, TestSize.Level1)
 HWTEST_F(HyphenationTest, HyphenationTest015, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("nl");
-    auto result = hyphen->GetBreakCandidate("beschermengelen");
-    Print("beschermengelen", result, "be-scherm-en-ge-len");
+    auto result = hyphen->GetBreakCandidate("beschermengelen"); // be-scherm-en-ge-len
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[8], 1);
     EXPECT_EQ(result[10], 1);
     EXPECT_EQ(result[12], 1);
-    result = hyphen->GetBreakCandidate("bijstandstrekkers");
-    Print("bijstandstrekkers", result, "bij-stands-trek-kers");
+    result = hyphen->GetBreakCandidate("bijstandstrekkers"); // bij-stands-trek-kers
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[9], 1);
     EXPECT_EQ(result[13], 1);
-    result = hyphen->GetBreakCandidate("ministersportefeuilles");
-    Print("ministersportefeuilles", result, "mi-nis-ters-por-te-feuil-les");
+    result = hyphen->GetBreakCandidate("ministersportefeuilles"); // mi-nis-ters-por-te-feuil-les
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[5], 1);
     EXPECT_EQ(result[9], 1);
     EXPECT_EQ(result[12], 1);
     EXPECT_EQ(result[14], 1);
     EXPECT_EQ(result[19], 1);
-    result = hyphen->GetBreakCandidate("schilderstalent");
-    Print("schilderstalent", result, "schil-ders-ta-lent");
+    result = hyphen->GetBreakCandidate("schilderstalent"); // schil-ders-ta-lent
     EXPECT_EQ(result[5], 1);
     EXPECT_EQ(result[9], 1);
     EXPECT_EQ(result[11], 1);
@@ -470,22 +407,16 @@ HWTEST_F(HyphenationTest, HyphenationTest016, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("el");
     auto result = hyphen->GetBreakCandidate("ργδζθκλξραυστφχψ");
-    Print("ργδζθκλξραυστφχψ", result, "ργδζθκλξ-ραυστφχψ");
     EXPECT_EQ(result[8], 1);
     result = hyphen->GetBreakCandidate("Βγδαβγδαθθελστιφ");
-    Print("Βγδαβγδαθθελστιφ", result, "Βγδαβγδαθ-θελστιφ");
     EXPECT_EQ(result[9], 1);
     result = hyphen->GetBreakCandidate("ργδζθκλξραϋστφχψ");
-    Print("ργδζθκλξραϋστφχψ", result, "ργδζθκλξ-ραϋστφχψ");
     EXPECT_EQ(result[8], 1);
     result = hyphen->GetBreakCandidate("ργδζθκλξροΫστφχψ");
-    Print("ργδζθκλξροΫστφχψ", result, "ργδζθκλξρο-Ϋστφχψ");
     EXPECT_EQ(result[10], 1);
     result = hyphen->GetBreakCandidate("βγδζθκλξραίστφχ");
-    Print("βγδζθκλξραίστφχ", result, "βγδζθκλξ-ραίστφχ");
     EXPECT_EQ(result[8], 1);
     result = hyphen->GetBreakCandidate("βγδζθκλξράυστφχ");
-    Print("βγδζθκλξράυστφχ", result, "βγδζθκλξρά-υστφχ");
     EXPECT_EQ(result[10], 1);
     delete hyphen;
 }
@@ -499,47 +430,30 @@ HWTEST_F(HyphenationTest, HyphenationTest017, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("ru");
     auto result = hyphen->GetBreakCandidate("выиграл");
-    Print("выиграл", result, "вы-играл");
     EXPECT_EQ(result[2], 1);
     result = hyphen->GetBreakCandidate("выключена");
-    Print("выключена", result, "вы-ключена");
     EXPECT_EQ(result[2], 1);
     result = hyphen->GetBreakCandidate("Войдите");
-    Print("Войдите", result, "Вой-дите");
     EXPECT_EQ(result[3], 1);
     result = hyphen->GetBreakCandidate("надежности");
-    Print("надежности", result, "над-ежности");
     EXPECT_EQ(result[3], 1);
     result = hyphen->GetBreakCandidate("Заботьтесь");
-    Print("Заботьтесь", result, "Заботь-тесь");
     EXPECT_EQ(result[6], 1);
     result = hyphen->GetBreakCandidate("объективный");
-    Print("объективный", result, "объ-ективный");
     EXPECT_EQ(result[3], 1);
     result = hyphen->GetBreakCandidate("использовать");
-    Print("использовать", result, "и[no break]спользовать");
-    
     result = hyphen->GetBreakCandidate("данных");
-    Print("данных", result, "д[no break]анных");
-   
     result = hyphen->GetBreakCandidate("приложения");
-    Print("приложения", result, "п[no break]риложения");
-    
     result = hyphen->GetBreakCandidate("статуса");
-    Print("статуса", result, "статуса");
     EXPECT_EQ(result[2], 0);
     EXPECT_EQ(result[6], 0);
     result = hyphen->GetBreakCandidate("значок");
-    Print("значок", result, "значок");
     EXPECT_EQ(result[5], 0);
     result = hyphen->GetBreakCandidate("Удалить");
-    Print("Удалить", result, "Удалить");
     EXPECT_EQ(result[6], 0);
     result = hyphen->GetBreakCandidate("приложений");
-    Print("приложений", result, "приложений");
     EXPECT_EQ(result[9], 0);
     result = hyphen->GetBreakCandidate("Станьтщф");
-    Print("Станьтщф", result, "Станьтщф");
     EXPECT_EQ(result[5], 0);
     EXPECT_EQ(result[6], 0);
     EXPECT_EQ(result[7], 0);
@@ -555,16 +469,12 @@ HWTEST_F(HyphenationTest, HyphenationTest018, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("ka");
     auto result = hyphen->GetBreakCandidate("კრდათვრიმც");
-    Print("კრდათვრიმც", result, "კრდათ-ვრიმც");
     EXPECT_EQ(result[5], 1);
     result = hyphen->GetBreakCandidate("კრბდოყანკ");
-    Print("კრბდოყანკ", result, "კრბდო-ყანკ");
     EXPECT_EQ(result[5], 1);
     result = hyphen->GetBreakCandidate("ატფო");
-    Print("ატფო", result, "ატ-ფო");
     EXPECT_EQ(result[2], 1);
     result = hyphen->GetBreakCandidate("სახლისთვის");
-    Print("სახლისთვის", result, "სახლის-თვის");
     EXPECT_EQ(result[6], 1);
     delete hyphen;
 }
@@ -578,27 +488,20 @@ HWTEST_F(HyphenationTest, HyphenationTest019, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("it");
     auto result = hyphen->GetBreakCandidate("Asistenzauot");
-    Print("Asistenzauot", result, "Asistenza-uot");
     EXPECT_EQ(result[9], 1);
     result = hyphen->GetBreakCandidate("intrfacnmmtcia");
-    Print("intrfacnmmtcia", result, "intr-facnmmt-cia");
     EXPECT_EQ(result[4], 1);
     EXPECT_EQ(result[11], 1);
     result = hyphen->GetBreakCandidate("gnocchi");
-    Print("gnocchi", result, "gnoc-chi");
     EXPECT_EQ(result[4], 1);
     result = hyphen->GetBreakCandidate("scala");
-    Print("scala", result, "sca-la");
     EXPECT_EQ(result[3], 1);
     result = hyphen->GetBreakCandidate("bachi");
-    Print("bachi", result, "ba-chi");
     EXPECT_EQ(result[2], 1);
     result = hyphen->GetBreakCandidate("figliastro");
-    Print("figliastro", result, "fi-glia-stro");
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[6], 1);
     result = hyphen->GetBreakCandidate("biscia");
-    Print("biscia", result, "bi-scia");
     EXPECT_EQ(result[2], 1);
     delete hyphen;
 }
@@ -612,25 +515,18 @@ HWTEST_F(HyphenationTest, HyphenationTest020, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("uk");
     auto result = hyphen->GetBreakCandidate("ийпінхастгфпінхаст");
-    Print("ийпінхастгфпінхаст", result, "ийпінхастг-фпінхаст");
     EXPECT_EQ(result[10], 1);
     result = hyphen->GetBreakCandidate("кільце");
-    Print("кільце", result, "кіль-це");
     EXPECT_EQ(result[4], 1);
-    result = hyphen->GetBreakCandidate("низько");
-    Print("низько", result, "низь-ко");
+    result = hyphen->GetBreakCandidate("низько"); // низь-ко
     EXPECT_EQ(result[4], 1);
-    result = hyphen->GetBreakCandidate("об’ява");
-    Print("об’ява", result, "об’-ява");
+    result = hyphen->GetBreakCandidate("об’ява"); // об’-ява
     EXPECT_EQ(result[3], 1);
-    result = hyphen->GetBreakCandidate("багатоступінчастий");
-    Print("багатоступінчастий", result, "багато-ступінчастий");
+    result = hyphen->GetBreakCandidate("багатоступінчастий"); // багато-ступінчастий
     EXPECT_EQ(result[6], 1);
-    result = hyphen->GetBreakCandidate("восьмигранний");
-    Print("восьмигранний", result, "восьми-гранний");
+    result = hyphen->GetBreakCandidate("восьмигранний"); // восьми-гранний
     EXPECT_EQ(result[6], 1);
-    result = hyphen->GetBreakCandidate("тупінхастий");
-    Print("тупінхастий", result, "тупін-хастий");
+    result = hyphen->GetBreakCandidate("тупінхастий"); // тупін-хастий
     EXPECT_EQ(result[5], 1);
     delete hyphen;
 }
@@ -643,51 +539,40 @@ HWTEST_F(HyphenationTest, HyphenationTest020, TestSize.Level1)
 HWTEST_F(HyphenationTest, HyphenationTest021, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("ru");
-    auto result = hyphen->GetBreakCandidate("аккаунт");
-    Print("аккаунт", result, "аккаунт");
+    auto result = hyphen->GetBreakCandidate("аккаунт"); // аккаунт
     EXPECT_EQ(result[5], 0);
     EXPECT_EQ(result[6], 0);
-    result = hyphen->GetBreakCandidate("устройств");
-    Print("устройств", result, "устройств");
+    result = hyphen->GetBreakCandidate("устройств"); // устройств
     EXPECT_EQ(result[6], 0);
     EXPECT_EQ(result[7], 0);
     EXPECT_EQ(result[8], 0);
-    result = hyphen->GetBreakCandidate("получить");
-    Print("получить", result, "получить");
+    result = hyphen->GetBreakCandidate("получить"); // получить
     EXPECT_EQ(result[7], 0);
-    result = hyphen->GetBreakCandidate("автозапуск");
-    Print("автозапуск", result, "ав-то-запуск");
+    result = hyphen->GetBreakCandidate("автозапуск"); // ав-то-запуск
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[4], 1);
-    result = hyphen->GetBreakCandidate("большой");
-    Print("большой", result, "боль-шой");
+    result = hyphen->GetBreakCandidate("большой"); // боль-шой
     EXPECT_EQ(result[4], 1);
-    result = hyphen->GetBreakCandidate("возможно");
-    Print("возможно", result, "воз-мож-но");
+    result = hyphen->GetBreakCandidate("возможно"); // воз-мож-но
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[6], 1);
-    result = hyphen->GetBreakCandidate("возможностей");
-    Print("возможностей", result, "воз-мож-нос-тей");
+    result = hyphen->GetBreakCandidate("возможностей"); // воз-мож-нос-тей
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[6], 1);
     EXPECT_EQ(result[9], 1);
-    result = hyphen->GetBreakCandidate("возникновении");
-    Print("возникновении", result, "воз-ник-но-ве-нии");
+    result = hyphen->GetBreakCandidate("возникновении"); // воз-ник-но-ве-нии
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[6], 1);
     EXPECT_EQ(result[8], 1);
-    result = hyphen->GetBreakCandidate("воспроизвести");
-    Print("воспроизвести", result, "вос-про-из-вес-ти");
+    result = hyphen->GetBreakCandidate("воспроизвести"); // вос-про-из-вес-ти
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[6], 1);
-    result = hyphen->GetBreakCandidate("восстановите");
-    Print("восстановите", result, "вос-ста-но-ви-те");
+    result = hyphen->GetBreakCandidate("восстановите"); // вос-ста-но-ви-те
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[6], 1);
     EXPECT_EQ(result[8], 1);
     EXPECT_EQ(result[10], 1);
-    result = hyphen->GetBreakCandidate("домну");
-    Print("домну", result, "домну");
+    result = hyphen->GetBreakCandidate("домну"); // домну
     EXPECT_EQ(result[3], 0);
     delete hyphen;
 }
@@ -700,35 +585,25 @@ HWTEST_F(HyphenationTest, HyphenationTest021, TestSize.Level1)
 HWTEST_F(HyphenationTest, HyphenationTest022, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("ru");
-    auto result = hyphen->GetBreakCandidate("помни");
-    Print("помни", result, "помни");
+    auto result = hyphen->GetBreakCandidate("помни"); // помни
     EXPECT_EQ(result[2], 0);
-    result = hyphen->GetBreakCandidate("умнем");
-    Print("умнем", result, "умнем");
+    result = hyphen->GetBreakCandidate("умнем"); // умнем
     EXPECT_EQ(result[3], 0);
-    result = hyphen->GetBreakCandidate("умнет");
-    Print("умнет", result, "умнет");
+    result = hyphen->GetBreakCandidate("умнет"); // умнет
     EXPECT_EQ(result[3], 0);
-    result = hyphen->GetBreakCandidate("грэс");
-    Print("грэс", result, "грэс");
+    result = hyphen->GetBreakCandidate("грэс"); // грэс
     EXPECT_EQ(result[2], 0);
-    result = hyphen->GetBreakCandidate("бездн");
-    Print("бездн", result, "бездн");
+    result = hyphen->GetBreakCandidate("бездн"); // бездн
     EXPECT_EQ(result[2], 0);
-    result = hyphen->GetBreakCandidate("аккаунт");
-    Print("аккаунт", result, "акка-унт");
+    result = hyphen->GetBreakCandidate("аккаунт"); // акка-унт
     EXPECT_EQ(result[4], 1);
-    result = hyphen->GetBreakCandidate("объектов");
-    Print("объектов", result, "объ-ектов");
+    result = hyphen->GetBreakCandidate("объектов"); // объ-ектов
     EXPECT_EQ(result[3], 1);
-    result = hyphen->GetBreakCandidate("использовать");
-    Print("использовать", result, "исполь-зовать");
+    result = hyphen->GetBreakCandidate("использовать"); // исполь-зовать
     EXPECT_EQ(result[6], 1);
-    result = hyphen->GetBreakCandidate("онлайнуслуг");
-    Print("онлайнуслуг", result, "онлайн-услуг");
+    result = hyphen->GetBreakCandidate("онлайнуслуг"); // онлайн-услуг
     EXPECT_EQ(result[6], 1);
-    result = hyphen->GetBreakCandidate("онлайнконтента");
-    Print("онлайнконтента", result, "онлайн-контента");
+    result = hyphen->GetBreakCandidate("онлайнконтента"); // онлайн-контента
     EXPECT_EQ(result[6], 1);
     delete hyphen;
 }
@@ -741,27 +616,22 @@ HWTEST_F(HyphenationTest, HyphenationTest022, TestSize.Level1)
 HWTEST_F(HyphenationTest, HyphenationTest023, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("nl");
-    auto result = hyphen->GetBreakCandidate("vernederlandste");
-    Print("vernederlandste", result, "ver-ne-der-lands-te");
+    auto result = hyphen->GetBreakCandidate("vernederlandste");// ver-ne-der-lands-te
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[5], 1);
     EXPECT_EQ(result[8], 1);
     EXPECT_EQ(result[13], 1);
     result = hyphen->GetBreakCandidate("waterstaatsingenieurs");
-    Print("waterstaatsingenieurs", result, "wa-ter-staats-in-ge-ni-eurs");
-    EXPECT_EQ(result[5], 1);
-    result = hyphen->GetBreakCandidate("palingsteken");
-    Print("palingsteken", result, "pa-ling-ste-ken");
+    EXPECT_EQ(result[5], 1); // wa-ter-staats-in-ge-ni-eurs
+    result = hyphen->GetBreakCandidate("palingsteken"); // pa-ling-ste-ken
     EXPECT_EQ(result[2], 1);
     EXPECT_EQ(result[6], 1);
     EXPECT_EQ(result[9], 1);
-    result = hyphen->GetBreakCandidate("kettingsteken");
-    Print("kettingsteken", result, "ket-ting-ste-ken");
+    result = hyphen->GetBreakCandidate("kettingsteken"); // ket-ting-ste-ken
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[7], 1);
     EXPECT_EQ(result[10], 1);
-    result = hyphen->GetBreakCandidate("donderaal");
-    Print("donderaal", result, "don-der-aal");
+    result = hyphen->GetBreakCandidate("donderaal"); // don-der-aal
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[6], 1);
     delete hyphen;
