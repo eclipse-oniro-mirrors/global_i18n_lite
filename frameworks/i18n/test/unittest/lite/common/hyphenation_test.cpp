@@ -616,7 +616,7 @@ HWTEST_F(HyphenationTest, HyphenationTest022, TestSize.Level1)
 HWTEST_F(HyphenationTest, HyphenationTest023, TestSize.Level1)
 {
     Hyphenation* hyphen = Hyphenation::CreateInstance("nl");
-    auto result = hyphen->GetBreakCandidate("vernederlandste");// ver-ne-der-lands-te
+    auto result = hyphen->GetBreakCandidate("vernederlandste"); // ver-ne-der-lands-te
     EXPECT_EQ(result[3], 1);
     EXPECT_EQ(result[5], 1);
     EXPECT_EQ(result[8], 1);
