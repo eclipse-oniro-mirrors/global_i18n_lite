@@ -41,16 +41,6 @@ void HyphenationTest::TearDown()
 {
 }
 
-void Print(const char* word, std::vector<int> result, const char* expected)
-{
-    std::string str = "";
-    for (size_t i = 0; i < result.size() ;i++) {
-        if (i > 0) str += ",";
-        str += std::to_string(result[i]);
-    }
-    printf("word:%s, result: %s expected:%s \r\n", word, str.c_str(), expected);
-}
-
 /**
  * @tc.name: HyphenationTest001
  * @tc.desc: Test Hyphenation.GetBreakCandidate
