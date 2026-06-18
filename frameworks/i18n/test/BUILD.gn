@@ -18,7 +18,10 @@ if (ohos_kernel_type != "liteos_m") {
   unittest("I18nTest") {
     output_extension = "bin"
 
-    sources = [ "unittest/lite/common/i18n_test.cpp" ]
+    sources = [
+      "unittest/lite/common/hyphenation_test.cpp",
+      "unittest/lite/common/i18n_test.cpp",
+    ]
 
     include_dirs = [
       "//base/global/i18n_lite/interfaces/kits/i18n/include",
