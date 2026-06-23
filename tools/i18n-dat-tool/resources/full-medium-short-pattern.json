@@ -1050,18 +1050,18 @@
     "dd/MM/yy"
   ],
   "zh-Hant":   [
-    "y 年 M 月 d 日 EEEE",
-    "y 年 M 月 d 日",
+    "y年M月d日 EEEE",
+    "y年M月d日",
     "y/M/d"
   ],
   "zh-Hant-HK":   [
-    "y 年 M 月 d 日 EEEE",
-    "y 年 M 月 d 日",
+    "y年M月d日 EEEE",
+    "y年M月d日",
     "d/M/y"
   ],
   "zh-Hant-MO":   [
-    "y 年 M 月 d 日 EEEE",
-    "y 年 M 月 d 日",
+    "y年M月d日 EEEE",
+    "y年M月d日",
     "d/M/y"
   ]
 }
