@@ -71,7 +71,7 @@
                             "types.h",
                             "week_info.h"
                         ],
-                        "header_base": "//base/global/i18n_lite/interfaces/kits/i18n/zone/include"
+                        "header_base": "//base/global/i18n_lite/interfaces/kits/i18n/include"
                     }
                 },
                 {
