@@ -187,7 +187,7 @@ def content2bytes(all_metas, string_pool, dat_save_path):
             total_meta2bts += meta2bts
 
     bts = header_bts + total_locale_index2bts + total_meta2bts + string_pool2bts
-    flags = os.O_WRONLY | os.O_CREAT
+    flags = os.O_WRONLY
     modes = stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH
     with os.fdopen(os.open(dat_save_path, flags, modes), 'wb') as dat_file:
         dat_file.write(bts)
