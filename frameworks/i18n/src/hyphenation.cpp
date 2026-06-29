@@ -18,11 +18,11 @@
 #include <algorithm>
 #include <cctype>
 #include <climits>
+#include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <map>
 #include <string>
-#include <stdlib.h>
 #include <vector>
 #include <sys/stat.h>
 
