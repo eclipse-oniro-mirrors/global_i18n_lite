@@ -334,7 +334,11 @@ std::pair<const uint8_t*, size_t> LoadPatternFile(const std::string& locale)
     if (stat(hyFilePath.c_str(), &buffer) != 0) {
         return std::make_pair(nullptr, 0);
     }
-    std::ifstream file(hyFilePath, std::ios::binary | std::ios::ate);
+    char* realHyFilePath = realpath(hyFilePath.c_str(), nullptr);
+    if (realHyFilePath == nullptr) {
+        return std::make_pair(nullptr, 0);
+    }
+    std::ifstream file(realHyFilePath, std::ios::binary | std::ios::ate);
     if (!file.is_open()) {
         return std::make_pair(nullptr, 0);
     }
@@ -665,14 +669,14 @@ void Hyphenation::MatchPatterns(const char* word, const std::vector<uint8_t>& ch
                 continue;
             }
             uint32_t patEntry = pattern->data[patIx];
-            int patLen = Pattern::Len(patEntry);
-            int patShiftVal = Pattern::Shift(patEntry);
+            uint32_t patLen = Pattern::Len(patEntry);
+            uint32_t patShiftVal = Pattern::Shift(patEntry);
             const uint8_t* patBuf = pattern->Buf(patEntry);
-            int offset = j + 1 - (patLen + patShiftVal);
+            uint32_t offset = j + 1 - (patLen + patShiftVal);
 
-            int start = std::max(static_cast<int>(mMinPrefix) - offset, 0);
-            int end = std::min(patLen, static_cast<int>(maxOffset) - offset);
-            for (int k = start; k < end; k++) {
+            uint32_t start = std::max(static_cast<uint32_t>(mMinPrefix) - offset, 0);
+            uint32_t end = std::min(patLen, maxOffset - offset);
+            for (uint32_t k = start; k < end; k++) {
                 buffer[offset + k] = std::max(buffer[offset + k], patBuf[k]);
             }
         }
