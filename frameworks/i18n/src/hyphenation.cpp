@@ -675,9 +675,9 @@ void Hyphenation::MatchPatterns(const char* word, const std::vector<uint8_t>& ch
             const uint8_t* patBuf = pattern->Buf(patEntry);
             uint32_t offset = j + 1 - (patLen + patShiftVal);
 
-            uint32_t start = std::max(static_cast<uint32_t>(mMinPrefix) - offset, 0);
-            uint32_t end = std::min(patLen, maxOffset - offset);
-            for (uint32_t k = start; k < end; k++) {
+            int start = std::max(mMinPrefix - static_cast<int>(offset), 0);
+            int end = std::min(static_cast<int>(patLen), static_cast<int>(maxOffset - offset));
+            for (int k = start; k < end; k++) {
                 buffer[offset + k] = std::max(buffer[offset + k], patBuf[k]);
             }
         }
