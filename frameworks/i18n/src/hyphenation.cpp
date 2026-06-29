@@ -19,6 +19,7 @@
 #include <cctype>
 #include <cstring>
 #include <fstream>
+#include <limits.h> 
 #include <map>
 #include <string>
 #include <vector>
@@ -334,11 +335,11 @@ std::pair<const uint8_t*, size_t> LoadPatternFile(const std::string& locale)
     if (stat(hyFilePath.c_str(), &buffer) != 0) {
         return std::make_pair(nullptr, 0);
     }
-    char* realHyFilePath = realpath(hyFilePath.c_str(), nullptr);
-    if (realHyFilePath == nullptr) {
+    char resolvedPath[PATH_MAX];
+    if (realpath(hyFilePath.c_str(), resolvedPath) == nullptr) {
         return std::make_pair(nullptr, 0);
     }
-    std::ifstream file(realHyFilePath, std::ios::binary | std::ios::ate);
+    std::ifstream file(resolvedPath, std::ios::binary | std::ios::ate);
     if (!file.is_open()) {
         return std::make_pair(nullptr, 0);
     }
