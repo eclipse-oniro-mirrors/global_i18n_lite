@@ -19,7 +19,6 @@
 #include <cctype>
 #include <cstring>
 #include <fstream>
-#include <limits.h> 
 #include <map>
 #include <string>
 #include <vector>
@@ -42,6 +41,7 @@ constexpr uint32_t CHAR_HYPHENATION_POINT = 0x2027;
 constexpr uint32_t CHAR_DOUBLE_OBLIQUE_HYPHEN = 0x2E17;
 constexpr uint32_t CHAR_DOUBLE_HYPHEN = 0x2E40;
 constexpr size_t MAX_HYPHENATED_SIZE = 64;
+constexpr size_t HYB_FILENAME_LENGTH = 20;
 constexpr size_t PRE_CHAR_OFFSET = 2;
 constexpr size_t ADD_ARRAY_HEAD_TAIL = 2;
 const static int DEFAULT_MIN_VAL = 2;
@@ -335,7 +335,7 @@ std::pair<const uint8_t*, size_t> LoadPatternFile(const std::string& locale)
     if (stat(hyFilePath.c_str(), &buffer) != 0) {
         return std::make_pair(nullptr, 0);
     }
-    char resolvedPath[PATH_MAX];
+    char resolvedPath[strlen(HYPHEN_PATH_PREFIX) + HYB_FILENAME_LENGTH];
     if (realpath(hyFilePath.c_str(), resolvedPath) == nullptr) {
         return std::make_pair(nullptr, 0);
     }
