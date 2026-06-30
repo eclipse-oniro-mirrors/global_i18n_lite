@@ -17,8 +17,6 @@
 
 #include <algorithm>
 #include <cctype>
-#include <climits>
-#include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <map>
@@ -336,17 +334,10 @@ std::pair<const uint8_t*, size_t> LoadPatternFile(const std::string& locale)
     if (stat(hyFilePath.c_str(), &buffer) != 0) {
         return std::make_pair(nullptr, 0);
     }
-    char* resolvedPath = new char[PATH_MAX];
-    if (realpath(hyFilePath.c_str(), resolvedPath) == nullptr) {
-        delete[] resolvedPath;
-        return std::make_pair(nullptr, 0);
-    }
-    std::ifstream file(resolvedPath, std::ios::binary | std::ios::ate);
+    std::ifstream file(hyFilePath, std::ios::binary | std::ios::ate);
     if (!file.is_open()) {
-        delete[] resolvedPath;
         return std::make_pair(nullptr, 0);
     }
-    delete[] resolvedPath;
     std::streamsize size = file.tellg();
     file.seekg(0, std::ios::beg);
     if (static_cast<size_t>(size) > MAX_BINARY_FILE_SIZE) {
