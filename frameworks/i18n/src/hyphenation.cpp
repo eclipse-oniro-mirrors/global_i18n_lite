@@ -665,13 +665,13 @@ void Hyphenation::MatchPatterns(const char* word, const std::vector<uint8_t>& ch
                 continue;
             }
             uint32_t patEntry = pattern->data[patIx];
-            int patLen = Pattern::Len(patEntry);
-            int patShiftVal = Pattern::Shift(patEntry);
+            uint32_t patLen = Pattern::Len(patEntry);
+            uint32_t patShiftVal = Pattern::Shift(patEntry);
             const uint8_t* patBuf = pattern->Buf(patEntry);
-            int offset = j + 1 - (patLen + patShiftVal);
+            uint32_t offset = j + 1 - (patLen + patShiftVal);
 
-            int start = std::max(static_cast<int>(mMinPrefix) - offset, 0);
-            int end = std::min(patLen, static_cast<int>(maxOffset) - offset);
+            int start = std::max(mMinPrefix - static_cast<int>(offset), 0);
+            int end = std::min(static_cast<int>(patLen), static_cast<int>(maxOffset - offset));
             for (int k = start; k < end; k++) {
                 buffer[offset + k] = std::max(buffer[offset + k], patBuf[k]);
             }
