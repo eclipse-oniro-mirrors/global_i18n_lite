@@ -84,6 +84,7 @@ if (defined(ohos_lite)) {
   }
 } else {
   ohos_static_library("global_i18n_simulator") {
+    branch_protector_ret = "pac_ret"
     sources = locale_sources
     configs += [ ":locale_config" ]
     deps = [ ":global_dat" ]
